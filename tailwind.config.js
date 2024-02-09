@@ -2,7 +2,23 @@
 export default {
   content: [],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "rgba(var(--primary))",
+        secondary: "rgba(var(--secondary))",
+        "copy-primary": "rgba(var(--copy-primary))",
+        "copy-secondary": "rgba(var(--copy-secondary))",
+        "toggle-bg": "rgba(var(--toggle-bg))",
+        "toggle-center": "rgba(var(--toggle-center))",
+        "toggle-border": "rgba(var(--toggle-border))",
+        background: "rgba(var(--background))",
+        border: "rgba(var(--border))",
+        card: "rgba(var(--card))",
+        tooltip: "rgba(var(--tooltip))",
+        toolbar: "rgba(var(--toolbar))",
+        delete: "rgba(var(--delete))",
+      }
+    },
   },
   plugins: [require("daisyui")],
   daisyui: {
