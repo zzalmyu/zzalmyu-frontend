@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   theme: {
     extend: {
       colors: {
@@ -17,7 +17,7 @@ export default {
         tooltip: "rgba(var(--tooltip))",
         toolbar: "rgba(var(--toolbar))",
         delete: "rgba(var(--delete))",
-      }
+      },
     },
   },
   plugins: [require("daisyui")],
