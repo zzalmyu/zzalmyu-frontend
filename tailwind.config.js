@@ -8,6 +8,7 @@ export default {
         secondary: "rgba(var(--secondary))",
         "copy-primary": "rgba(var(--copy-primary))",
         "copy-secondary": "rgba(var(--copy-secondary))",
+        "copy-cta": "rgba(var(--copy-cta))",
         "toggle-bg": "rgba(var(--toggle-bg))",
         "toggle-center": "rgba(var(--toggle-center))",
         "toggle-border": "rgba(var(--toggle-border))",
