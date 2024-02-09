@@ -12,6 +12,10 @@
   }
 }
 
+* {
+  @apply transition-colors duration-200;
+}
+
 .a11y-hidden {
   @apply absolute m-[-1px] h-1 w-1 overflow-hidden whitespace-nowrap;
   clip: rect(0 0 0 0);
