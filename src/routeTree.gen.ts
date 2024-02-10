@@ -10,64 +10,64 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./pages/__root";
-import { Route as IndexImport } from "./pages/index";
-import { Route as UploadListIndexImport } from "./pages/UploadList/index";
-import { Route as UploadIndexImport } from "./pages/Upload/index";
-import { Route as LikeListIndexImport } from "./pages/LikeList/index";
-import { Route as AdminIndexImport } from "./pages/Admin/index";
+import { Route as rootRoute } from "./pages/__root"
+import { Route as IndexImport } from "./pages/index"
+import { Route as UploadListIndexImport } from "./pages/UploadList/index"
+import { Route as UploadIndexImport } from "./pages/Upload/index"
+import { Route as LikeListIndexImport } from "./pages/LikeList/index"
+import { Route as AdminIndexImport } from "./pages/Admin/index"
 
 // Create/Update Routes
 
 const IndexRoute = IndexImport.update({
   path: "/",
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const UploadListIndexRoute = UploadListIndexImport.update({
   path: "/UploadList/",
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const UploadIndexRoute = UploadIndexImport.update({
   path: "/Upload/",
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const LikeListIndexRoute = LikeListIndexImport.update({
   path: "/LikeList/",
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 const AdminIndexRoute = AdminIndexImport.update({
   path: "/Admin/",
   getParentRoute: () => rootRoute,
-} as any);
+} as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
     "/": {
-      preLoaderRoute: typeof IndexImport;
-      parentRoute: typeof rootRoute;
-    };
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
     "/Admin/": {
-      preLoaderRoute: typeof AdminIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+      preLoaderRoute: typeof AdminIndexImport
+      parentRoute: typeof rootRoute
+    }
     "/LikeList/": {
-      preLoaderRoute: typeof LikeListIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+      preLoaderRoute: typeof LikeListIndexImport
+      parentRoute: typeof rootRoute
+    }
     "/Upload/": {
-      preLoaderRoute: typeof UploadIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+      preLoaderRoute: typeof UploadIndexImport
+      parentRoute: typeof rootRoute
+    }
     "/UploadList/": {
-      preLoaderRoute: typeof UploadListIndexImport;
-      parentRoute: typeof rootRoute;
-    };
+      preLoaderRoute: typeof UploadListIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -79,6 +79,6 @@ export const routeTree = rootRoute.addChildren([
   LikeListIndexRoute,
   UploadIndexRoute,
   UploadListIndexRoute,
-]);
+])
 
 /* prettier-ignore-end */
