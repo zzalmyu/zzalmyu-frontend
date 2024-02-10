@@ -4,6 +4,6 @@ const Upload = () => {
   return <div>짤 업로드 페이지</div>;
 };
 
-export const Route = createFileRoute("/Upload/")({
+export const Route = createFileRoute("/Upload-Zzal/")({
   component: Upload,
 });

@@ -10,12 +10,12 @@
 
 // Import Routes
 
-import { Route as rootRoute } from "./pages/__root"
-import { Route as IndexImport } from "./pages/index"
-import { Route as UploadListIndexImport } from "./pages/UploadList/index"
-import { Route as UploadIndexImport } from "./pages/Upload/index"
-import { Route as LikeListIndexImport } from "./pages/LikeList/index"
-import { Route as AdminIndexImport } from "./pages/Admin/index"
+import { Route as rootRoute } from "./routes/__root"
+import { Route as IndexImport } from "./routes/index"
+import { Route as UploadZzalIndexImport } from "./routes/Upload-Zzal/index"
+import { Route as MyUploadedZzalIndexImport } from "./routes/My-Uploaded-Zzal/index"
+import { Route as MyLikedZzalIndexImport } from "./routes/My-Liked-Zzal/index"
+import { Route as AdminIndexImport } from "./routes/Admin/index"
 
 // Create/Update Routes
 
@@ -24,18 +24,18 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UploadListIndexRoute = UploadListIndexImport.update({
-  path: "/UploadList/",
+const UploadZzalIndexRoute = UploadZzalIndexImport.update({
+  path: "/Upload-Zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
-const UploadIndexRoute = UploadIndexImport.update({
-  path: "/Upload/",
+const MyUploadedZzalIndexRoute = MyUploadedZzalIndexImport.update({
+  path: "/My-Uploaded-Zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
-const LikeListIndexRoute = LikeListIndexImport.update({
-  path: "/LikeList/",
+const MyLikedZzalIndexRoute = MyLikedZzalIndexImport.update({
+  path: "/My-Liked-Zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -56,16 +56,16 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof rootRoute
     }
-    "/LikeList/": {
-      preLoaderRoute: typeof LikeListIndexImport
+    "/My-Liked-Zzal/": {
+      preLoaderRoute: typeof MyLikedZzalIndexImport
       parentRoute: typeof rootRoute
     }
-    "/Upload/": {
-      preLoaderRoute: typeof UploadIndexImport
+    "/My-Uploaded-Zzal/": {
+      preLoaderRoute: typeof MyUploadedZzalIndexImport
       parentRoute: typeof rootRoute
     }
-    "/UploadList/": {
-      preLoaderRoute: typeof UploadListIndexImport
+    "/Upload-Zzal/": {
+      preLoaderRoute: typeof UploadZzalIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -76,9 +76,9 @@ declare module "@tanstack/react-router" {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   AdminIndexRoute,
-  LikeListIndexRoute,
-  UploadIndexRoute,
-  UploadListIndexRoute,
+  MyLikedZzalIndexRoute,
+  MyUploadedZzalIndexRoute,
+  UploadZzalIndexRoute,
 ])
 
 /* prettier-ignore-end */
