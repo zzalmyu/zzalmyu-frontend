@@ -4,7 +4,6 @@ import { Route as IndexImport } from "./pages/index";
 import { Route as UploadListIndexImport } from "./pages/UploadList/index";
 import { Route as UploadIndexImport } from "./pages/Upload/index";
 import { Route as LikeListIndexImport } from "./pages/LikeList/index";
-import { Route as AuthIndexImport } from "./pages/Auth/index";
 import { Route as AdminIndexImport } from "./pages/Admin/index";
 
 interface RouteOptions extends UpdatableRouteOptions<object, unknown> {
@@ -32,11 +31,6 @@ const LikeListIndexRoute = LikeListIndexImport.update({
   getParentRoute: () => rootRoute,
 } as RouteOptions);
 
-const AuthIndexRoute = AuthIndexImport.update({
-  path: "/Auth/",
-  getParentRoute: () => rootRoute,
-} as RouteOptions);
-
 const AdminIndexRoute = AdminIndexImport.update({
   path: "/Admin/",
   getParentRoute: () => rootRoute,
@@ -50,10 +44,6 @@ declare module "@tanstack/react-router" {
     };
     "/Admin/": {
       preLoaderRoute: typeof AdminIndexImport;
-      parentRoute: typeof rootRoute;
-    };
-    "/Auth/": {
-      preLoaderRoute: typeof AuthIndexImport;
       parentRoute: typeof rootRoute;
     };
     "/LikeList/": {
@@ -74,7 +64,6 @@ declare module "@tanstack/react-router" {
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
   AdminIndexRoute,
-  AuthIndexRoute,
   LikeListIndexRoute,
   UploadIndexRoute,
   UploadListIndexRoute,
