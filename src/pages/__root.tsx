@@ -1,11 +1,12 @@
+import { Fragment } from "react";
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import NotFound from "./-NotFound";
 
 const RootComponent = () => {
   return (
-    <>
+    <Fragment>
       <Outlet />
-    </>
+    </Fragment>
   );
 };
 
