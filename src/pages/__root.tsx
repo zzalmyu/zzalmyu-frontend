@@ -1,5 +1,5 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import NotFound from "./NotFound";
+import NotFound from "./-NotFound";
 
 const RootComponent = () => {
   return (
