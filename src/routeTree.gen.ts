@@ -12,10 +12,10 @@
 
 import { Route as rootRoute } from "./routes/__root"
 import { Route as IndexImport } from "./routes/index"
-import { Route as UploadZzalIndexImport } from "./routes/Upload-Zzal/index"
-import { Route as MyUploadedZzalIndexImport } from "./routes/My-Uploaded-Zzal/index"
-import { Route as MyLikedZzalIndexImport } from "./routes/My-Liked-Zzal/index"
-import { Route as AdminIndexImport } from "./routes/Admin/index"
+import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
+import { Route as MyUploadedZzalIndexImport } from "./routes/my-uploaded-zzal/index"
+import { Route as MyLikedZzalIndexImport } from "./routes/my-liked-zzal/index"
+import { Route as AdminIndexImport } from "./routes/admin/index"
 
 // Create/Update Routes
 
@@ -25,22 +25,22 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const UploadZzalIndexRoute = UploadZzalIndexImport.update({
-  path: "/Upload-Zzal/",
+  path: "/upload-zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
 const MyUploadedZzalIndexRoute = MyUploadedZzalIndexImport.update({
-  path: "/My-Uploaded-Zzal/",
+  path: "/my-uploaded-zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
 const MyLikedZzalIndexRoute = MyLikedZzalIndexImport.update({
-  path: "/My-Liked-Zzal/",
+  path: "/my-liked-zzal/",
   getParentRoute: () => rootRoute,
 } as any)
 
 const AdminIndexRoute = AdminIndexImport.update({
-  path: "/Admin/",
+  path: "/admin/",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -52,19 +52,19 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    "/Admin/": {
+    "/admin/": {
       preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof rootRoute
     }
-    "/My-Liked-Zzal/": {
+    "/my-liked-zzal/": {
       preLoaderRoute: typeof MyLikedZzalIndexImport
       parentRoute: typeof rootRoute
     }
-    "/My-Uploaded-Zzal/": {
+    "/my-uploaded-zzal/": {
       preLoaderRoute: typeof MyUploadedZzalIndexImport
       parentRoute: typeof rootRoute
     }
-    "/Upload-Zzal/": {
+    "/upload-zzal/": {
       preLoaderRoute: typeof UploadZzalIndexImport
       parentRoute: typeof rootRoute
     }

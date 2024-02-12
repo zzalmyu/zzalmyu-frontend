@@ -4,6 +4,6 @@ const Admin = () => {
   return <div>관리자 페이지</div>;
 };
 
-export const Route = createFileRoute("/Admin/")({
+export const Route = createFileRoute("/admin/")({
   component: Admin,
 });
