@@ -1,7 +1,7 @@
 import Upload from "@/assets/svg/upload.svg?react";
 import Home from "@/assets/svg/home.svg?react";
 import Heart from "@/assets/svg/heart.svg?react";
-import Logout from "@/assets/svg/heart.svg?react";
+import Logout from "@/assets/svg/logout.svg?react";
 
 interface Props {
   user: {
@@ -37,7 +37,7 @@ const DropdownMenu = ({ user }: Props) => {
     <ul className="menu menu-horizontal px-0 ">
       <li>
         <details>
-          <summary className="h-9 font-bold hover:bg-transparent focus:bg-transparent">
+          <summary className="h-9 font-bold hover:bg-gray-300 focus:bg-transparent ">
             {user.name}
           </summary>
           <ul className=" right-1 z-[1]  w-48 rounded-box bg-background">
