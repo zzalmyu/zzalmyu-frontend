@@ -1,5 +1,5 @@
+import ThemeToggle from "./ThemeToggle.tsx";
 import Logo from "@/assets/svg/logo.svg";
-import ThemeToggle from "@/components/Layout/Header/ThemeToggle";
 const Header = () => {
   return (
     <div className="navbar bg-background">
