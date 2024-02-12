@@ -1,23 +1,28 @@
+import Upload from "@/assets/svg/upload.svg?react";
+import Home from "@/assets/svg/home.svg?react";
+import Heart from "@/assets/svg/heart.svg?react";
+import Logout from "@/assets/svg/heart.svg?react";
+
 const DropdownMenu = () => {
   const menuItems = [
     {
       url: "/",
-      icon: null,
+      icon: Upload,
       name: "업로드한 짤",
     },
     {
       url: "/",
-      icon: null,
+      icon: Heart,
       name: "좋아요한 짤",
     },
     {
       url: "/",
-      icon: null,
+      icon: Home,
       name: "홈",
     },
     {
       url: "/",
-      icon: null,
+      icon: Logout,
       name: "로그아웃",
     },
   ];
@@ -30,10 +35,12 @@ const DropdownMenu = () => {
             userName
           </summary>
           <ul className=" right-1 z-[1]  w-48 rounded-box bg-background">
-            {menuItems.map(({ url, name }) => (
+            {menuItems.map(({ url, icon: Icon, name }) => (
               <li key={name} className="group ">
                 <a href={url}>
-                  <div className="h-6 w-6 group-hover:text-blue-500"></div>
+                  <div className="h-6 w-6 group-hover:text-blue-500">
+                    <Icon />
+                  </div>
                   <span className="text-right font-bold group-hover:text-blue-500">{name}</span>
                 </a>
               </li>
