@@ -1,5 +1,7 @@
 import ThemeToggle from "./ThemeToggle.tsx";
+import DropdownMenu from "./DropdownMenu.tsx";
 import Logo from "@/assets/svg/logo.svg";
+
 const Header = () => {
   return (
     <div className="navbar bg-background">
@@ -12,6 +14,7 @@ const Header = () => {
         <div className="h-6 w-0.5 bg-gray-400"></div>
         <button className="btn btn-ghost h-6 min-h-9">로그인</button>
         <button className="btn btn-ghost pointer-events-none h-6 min-h-9">Admin</button>
+        <DropdownMenu />
       </div>
     </div>
   );
