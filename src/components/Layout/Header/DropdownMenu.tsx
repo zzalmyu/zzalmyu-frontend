@@ -3,7 +3,13 @@ import Home from "@/assets/svg/home.svg?react";
 import Heart from "@/assets/svg/heart.svg?react";
 import Logout from "@/assets/svg/heart.svg?react";
 
-const DropdownMenu = () => {
+interface Props {
+  user: {
+    name: string;
+  };
+}
+
+const DropdownMenu = ({ user }: Props) => {
   const menuItems = [
     {
       url: "/",
@@ -32,7 +38,7 @@ const DropdownMenu = () => {
       <li>
         <details>
           <summary className="h-9 font-bold hover:bg-transparent focus:bg-transparent">
-            userName
+            {user.name}
           </summary>
           <ul className=" right-1 z-[1]  w-48 rounded-box bg-background">
             {menuItems.map(({ url, icon: Icon, name }) => (
