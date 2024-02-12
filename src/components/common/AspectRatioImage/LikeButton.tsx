@@ -1,11 +1,16 @@
-const LikeButton = () => {
+interface Props {
+  onClick: () => void;
+  isLike: boolean;
+}
+
+const LikeButton = ({ onClick, isLike }: Props) => {
   return (
-    <div className="mt-1 cursor-pointer">
+    <div className="mt-1 cursor-pointer" onClick={onClick}>
       <svg
         width="35"
         height="35"
         viewBox="0 0 51 51"
-        fill="none"
+        fill={isLike ? "#246FFF" : "none"}
         xmlns="http://www.w3.org/2000/svg"
       >
         <circle cx="25.5" cy="25.5" r="25.5" fill="white" />

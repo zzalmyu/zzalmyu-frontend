@@ -1,6 +1,10 @@
-const SendButton = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const SendButton = ({ onClick }: Props) => {
   return (
-    <div className="mt-1 cursor-pointer">
+    <div className="mt-1 cursor-pointer" onClick={onClick}>
       <svg
         width="35"
         height="35"
