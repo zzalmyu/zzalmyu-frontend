@@ -1,6 +1,6 @@
 const SendButton = () => {
   return (
-    <div className="mt-1">
+    <div className="mt-1 cursor-pointer">
       <svg
         width="35"
         height="35"
