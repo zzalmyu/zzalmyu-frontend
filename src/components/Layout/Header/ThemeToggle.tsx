@@ -1,12 +1,35 @@
+import { useState, useEffect } from "react";
+
 const ThemeToggle = () => {
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
+  );
+
+  const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  };
+
+  useEffect(() => {
+    if (theme) {
+      localStorage.setItem("theme", theme);
+      const localTheme = localStorage.getItem("theme");
+      document.querySelector("html")?.setAttribute("data-theme", localTheme || "light");
+    }
+  }, [theme]);
+
   return (
     <label className="grid cursor-pointer place-items-center">
       <input
         type="checkbox"
         value="synthwave"
         className="theme-controller toggle col-span-2 col-start-1 row-start-1 border-toggle-bg bg-toggle-center [--tglbg:theme(colors.toggle-bg)]"
+        onChange={handleToggle}
+        checked={theme === "light" ? false : true}
       />
-      {/*  checked:border-blue-800 checked:bg-blue-300 checked:[--tglbg:theme(colors.blue.900)] */}
       <svg
         className="col-start-1 row-start-1 fill-base-100 stroke-base-100"
         xmlns="http://www.w3.org/2000/svg"
