@@ -20,9 +20,9 @@ const SendButton = ({ onClick }: Props) => {
         <path
           d="M19.1484 26L16 16C23.5313 18.1408 30.6333 21.5228 37 26C30.6337 30.4771 23.5321 33.8591 16.0012 36L19.1484 26ZM19.1484 26H27.7946"
           stroke="#11419E"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         />
       </svg>
     </div>

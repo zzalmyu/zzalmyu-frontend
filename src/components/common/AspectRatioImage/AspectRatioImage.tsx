@@ -9,7 +9,7 @@ interface Props {
 
 const AspectRatioImage = ({ children, src }: Props) => {
   return (
-    <div className="group relative mt-6 w-72 rounded-lg bg-base-100 shadow-xl">
+    <div className="group relative w-72 rounded-lg bg-base-100 shadow-xl">
       <div className="button-container absolute right-2 top-1 z-10 w-fit opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
         {children}
       </div>
