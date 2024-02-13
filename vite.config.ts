@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 
@@ -9,6 +10,7 @@ export default defineConfig({
     svgr({
       include: "**/*.svg",
     }),
+    TanStackRouterVite(),
   ],
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
