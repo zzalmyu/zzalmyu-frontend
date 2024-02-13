@@ -33,8 +33,8 @@ const ThemeToggle = () => {
           checked={theme === "light" ? false : true}
         />
         <div className="absolute flex w-auto items-center gap-2.5 px-1 py-1">
-          <SunDim size={16} strokeWidth={2} color="white" />
-          <Moon size={14} strokeWidth={2.2} color="white" />
+          <SunDim size={16} strokeWidth={2} color="white" aria-label="라이트 모드" />
+          <Moon size={14} strokeWidth={2.2} color="white" aria-label="다크 모드" />
         </div>
       </div>
     </label>
