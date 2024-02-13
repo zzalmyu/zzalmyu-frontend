@@ -11,9 +11,10 @@ const Header = () => {
 
   return (
     <div className="navbar bg-background">
-      <a href="/" className="btn btn-ghost flex items-center text-xl hover:bg-transparent">
-        <img src={Logo} alt="잘뮤니티 로고" className="h-10" />
+      <a href="/" className="btn btn-ghost flex items-center hover:bg-transparent">
+        <Logo />
       </a>
+
       <div className="flex flex-1 items-center justify-end space-x-3 px-2">
         <ThemeToggle />
         {user && !user.isAdmin && (
