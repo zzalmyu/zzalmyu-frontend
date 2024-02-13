@@ -5,7 +5,7 @@
   "singleQuote": false,
   "trailingComma": "all",
   "arrowParens": "always",
-  "endOfLine": "lf",
+  "endOfLine": "auto",
   "bracketSameLine": false,
   "useTabs": false,
   "plugins": ["prettier-plugin-tailwindcss"]
