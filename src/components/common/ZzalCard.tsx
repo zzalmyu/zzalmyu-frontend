@@ -6,14 +6,12 @@ interface ZzalCardProps {
   src: string;
   alt: string;
   isChatImage?: boolean;
-  locationUsed: "HOME" | "MYLIKED" | "MYUPLOADED" | "CHAT";
+  width?: number;
 }
 
-const ZzalCard = ({ children, src, alt, locationUsed, isChatImage = false }: ZzalCardProps) => {
+const ZzalCard = ({ children, src, alt, width = 72, isChatImage = false }: ZzalCardProps) => {
   return (
-    <div
-      className={`group relative ${locationUsed !== "CHAT" ? "w-72" : "w-48"}  rounded-lg bg-base-100 shadow-xl`}
-    >
+    <div className={`group relative w-${width} rounded-lg bg-base-100 shadow-xl`}>
       <div className="button-container absolute right-2 top-1 z-10 w-fit opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
         {children}
       </div>

@@ -12,7 +12,6 @@ const App = () => {
       <ZzalCard
         src="https://jjalbang.today/files/jjalbox/2022/12/20221221_63a1db57406ff.png"
         alt="zzal"
-        locationUsed="HOME"
       >
         <ZzalCard.LikeButton onClick={handleClick} isLiked={true} />
         <ZzalCard.SendButton onClick={handleClick} />
