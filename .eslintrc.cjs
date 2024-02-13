@@ -6,6 +6,7 @@ module.exports = {
     "plugin:@typescript-eslint/recommended",
     "plugin:react-hooks/recommended",
     "prettier",
+    "plugin:prettier/recommended",
   ],
   ignorePatterns: ["dist", ".eslintrc.cjs", "*.html", "*.cjs", "*.mjs", "*.js"],
   parser: "@typescript-eslint/parser",
@@ -82,5 +83,6 @@ module.exports = {
         pathGroupsExcludedImportTypes: ["builtin"],
       },
     ],
+    "prettier/prettier": ["error"],
   },
 };
