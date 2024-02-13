@@ -4,10 +4,11 @@ import { Heart, SendHorizontal } from "lucide-react";
 interface ZzalCardProps {
   children?: ReactNode;
   src: string;
+  alt: string;
   locationUsed: "HOME" | "MYLIKED" | "MYUPLOADED" | "CHAT";
 }
 
-const ZzalCard = ({ children, src, locationUsed }: ZzalCardProps) => {
+const ZzalCard = ({ children, src, alt, locationUsed }: ZzalCardProps) => {
   return (
     <div
       className={`group relative ${locationUsed !== "CHAT" ? "w-72" : "w-48"}  rounded-lg bg-base-100 shadow-xl`}
@@ -18,7 +19,7 @@ const ZzalCard = ({ children, src, locationUsed }: ZzalCardProps) => {
       <figure
         className={`${locationUsed !== "CHAT" ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`}
       >
-        <img src={src} alt="zzal" className="h-full w-full rounded-lg object-cover" />
+        <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
       </figure>
     </div>
   );
