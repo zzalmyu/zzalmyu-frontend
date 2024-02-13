@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import AspectRatioImage from "@/components/common/AspectRatioImage/AspectRatioImage";
+import AspectRatioImage from "@/components/common/AspectRatioImage";
 
 const App = () => {
   const handleClick = () => {
