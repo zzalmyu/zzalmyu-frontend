@@ -9,23 +9,23 @@ interface Props {
 const DropdownMenu = ({ user }: Props) => {
   const menuItems = [
     {
-      url: "/my-uploaded-zzal/",
-      icon: FolderUp,
+      path: "/my-uploaded-zzal/",
+      Icon: FolderUp,
       name: "업로드한 짤",
     },
     {
-      url: "/my-liked-zzal/",
-      icon: Heart,
+      path: "/my-liked-zzal/",
+      Icon: Heart,
       name: "좋아요한 짤",
     },
     {
-      url: "/",
-      icon: Home,
+      path: "/",
+      Icon: Home,
       name: "홈",
     },
     {
-      url: "/",
-      icon: LogOut,
+      path: "/",
+      Icon: LogOut,
       name: "로그아웃",
     },
   ];
@@ -38,9 +38,9 @@ const DropdownMenu = ({ user }: Props) => {
             {user.name}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
-            {menuItems.map(({ url, icon: Icon, name }, index) => (
+            {menuItems.map(({ path, Icon, name }, index) => (
               <li key={`${index}-${name}`} className="group">
-                <Link to={url}>
+                <Link to={path}>
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} aria-label={name} />
                   </div>
