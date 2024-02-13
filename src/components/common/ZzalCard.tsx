@@ -31,8 +31,8 @@ interface LikeButtonProps {
 
 const LikeButton = ({ onClick, isLiked }: LikeButtonProps) => {
   return (
-    <div
-      className="mt-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
+    <button
+      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-white"
       onClick={onClick}
     >
       <Heart
@@ -41,7 +41,7 @@ const LikeButton = ({ onClick, isLiked }: LikeButtonProps) => {
         strokeWidth={isLiked ? 0 : 2}
         fill={isLiked ? "#ED0000" : "none"}
       />
-    </div>
+    </button>
   );
 };
 
@@ -51,12 +51,12 @@ interface SendButtonProps {
 
 const SendButton = ({ onClick }: SendButtonProps) => {
   return (
-    <div
-      className="mt-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primary"
+    <button
+      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
       onClick={onClick}
     >
       <SendHorizontal aria-label="보내기" size={20} fill="white" />
-    </div>
+    </button>
   );
 };
 
