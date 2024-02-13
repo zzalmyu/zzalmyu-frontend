@@ -23,8 +23,8 @@ const ThemeToggle = () => {
   }, [theme]);
 
   return (
-    <label className="flex cursor-pointer place-items-center">
-      <div className="flex ">
+    <label className="cursor-pointer place-items-center">
+      <div className="flex">
         <input
           type="checkbox"
           value="synthwave"
@@ -32,7 +32,7 @@ const ThemeToggle = () => {
           onChange={handleToggle}
           checked={theme !== "light"}
         />
-        <div className="absolute flex w-auto items-center gap-2.5 px-1 py-1">
+        <div className="absolute flex w-auto items-center gap-2.5 p-1">
           <SunDim size={16} strokeWidth={2} color="white" aria-label="라이트 모드" />
           <Moon size={14} strokeWidth={2.2} color="white" aria-label="다크 모드" />
         </div>

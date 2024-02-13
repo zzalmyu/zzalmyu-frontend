@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className="navbar bg-background">
       <Link to={"/"} className="btn btn-ghost flex items-center hover:bg-transparent">
-        <Logo />
+        <Logo aria-label={"짤뮤니티 로고"} />
       </Link>
 
       <div className="flex flex-1 items-center justify-end space-x-3 px-2">
@@ -25,7 +25,7 @@ const Header = () => {
             </button>
           </Link>
         )}
-        <div className="h-6 w-0.5 bg-gray-400"></div>
+        <div className="h-6 w-0.5 bg-text-primary"></div>
         {!user && <button className="btn btn-ghost h-6 min-h-9">로그인</button>}
         {user && user.isAdmin && (
           <Link to={"/admin/"} className="btn btn-ghost h-6 min-h-9 text-text-primary">
