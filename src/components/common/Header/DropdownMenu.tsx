@@ -33,12 +33,12 @@ const DropdownMenu = ({ user }: Props) => {
     <ul className="menu menu-horizontal px-0 ">
       <li>
         <details>
-          <summary className="h-9 font-bold hover:bg-gray-300 focus:bg-transparent ">
+          <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent ">
             {user.name}
           </summary>
-          <ul className=" right-1 z-[1]  w-44 rounded-box bg-background">
+          <ul className="right-1  z-[1] w-44 rounded-box bg-background text-text-primary">
             {menuItems.map(({ icon: Icon, name }) => (
-              <li key={name} className="group ">
+              <li key={name} className="group">
                 <div>
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} aria-label={name} />

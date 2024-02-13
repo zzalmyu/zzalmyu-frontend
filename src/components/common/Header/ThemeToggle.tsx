@@ -28,7 +28,7 @@ const ThemeToggle = () => {
         <input
           type="checkbox"
           value="synthwave"
-          className="theme-controller toggle relative col-span-2 col-start-1 row-start-1 border-toggle-bg bg-toggle-center [--tglbg:theme(colors.toggle-bg)]"
+          className="theme-controller toggle relative col-span-2 col-start-1 row-start-1 border-surface1 bg-surface2 [--tglbg:theme(colors.surface1)]"
           onChange={handleToggle}
           checked={theme === "light" ? false : true}
         />
