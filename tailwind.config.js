@@ -2,8 +2,11 @@
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
-    { pattern: /bg-(primary|secondary|background)/ },
-    { pattern: /text-(text-primary|text-secondary)/ },
+    {
+      pattern:
+        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/,
+    },
+    { pattern: /text-(text-primary|text-secondary|white|black|neutral)/ },
   ],
   theme: {
     extend: {
