@@ -1,6 +1,5 @@
-import { Fragment } from "react";
 import { RouterProvider, createRouter } from "@tanstack/react-router";
-import ModalProvider from "@/components/ModalProvider";
+import { OverlayProvider } from "@toss/use-overlay";
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({
@@ -10,10 +9,9 @@ const router = createRouter({
 
 const App = () => {
   return (
-    <Fragment>
+    <OverlayProvider>
       <RouterProvider router={router} />
-      <ModalProvider />
-    </Fragment>
+    </OverlayProvider>
   );
 };
 
