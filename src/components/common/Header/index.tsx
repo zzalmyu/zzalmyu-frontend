@@ -13,7 +13,7 @@ const Header = () => {
   return (
     <div className="navbar bg-background">
       <Link to="/" className="btn btn-ghost flex items-center hover:bg-transparent">
-        <Logo aria-label={"짤뮤니티 로고"} />
+        <Logo aria-label="짤뮤니티 로고" />
       </Link>
 
       <div className="flex flex-1 items-center justify-end space-x-3 px-2">
