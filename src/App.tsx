@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import AspectRatioImage from "@/components/common/AspectRatioImage";
+import ZzalCard from "@/components/common/ZzalCard";
 
 const App = () => {
   const handleClick = () => {
@@ -9,13 +9,14 @@ const App = () => {
   return (
     <Fragment>
       <div className="bg-primary text-copy-cta">hello react</div>
-      <AspectRatioImage
+      <ZzalCard
         src="https://jjalbang.today/files/jjalbox/2022/12/20221221_63a1db57406ff.png"
+        alt="zzal"
         locationUsed="HOME"
       >
-        <AspectRatioImage.LikeButton onClick={handleClick} isLiked={true} />
-        <AspectRatioImage.SendButton onClick={handleClick} />
-      </AspectRatioImage>
+        <ZzalCard.LikeButton onClick={handleClick} isLiked={true} />
+        <ZzalCard.SendButton onClick={handleClick} />
+      </ZzalCard>
     </Fragment>
   );
 };

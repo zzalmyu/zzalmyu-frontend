@@ -36,7 +36,12 @@ const LikeButton = ({ onClick, isLiked }: LikeButtonProps) => {
       className="mt-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
       onClick={onClick}
     >
-      <Heart aria-label="좋아요" size={18} fill={isLiked ? "#246FFF" : "none"} />
+      <Heart
+        aria-label="좋아요"
+        size={18}
+        strokeWidth={isLiked ? 0 : 2}
+        fill={isLiked ? "#ED0000" : "none"}
+      />
     </div>
   );
 };
