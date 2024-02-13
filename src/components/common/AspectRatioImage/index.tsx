@@ -1,14 +1,14 @@
 import { ReactNode } from "react";
-import SendButton from "./SendButton";
-import LikeButton from "./LikeButton";
+import { Heart } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 
-interface Props {
+interface AspectRatioImageProps {
   children?: ReactNode;
   src: string;
   locationUsed: "HOME" | "MYLIKED" | "MYUPLOADED" | "CHAT";
 }
 
-const AspectRatioImage = ({ children, src, locationUsed }: Props) => {
+const AspectRatioImage = ({ children, src, locationUsed }: AspectRatioImageProps) => {
   return (
     <div
       className={`group relative ${locationUsed !== "CHAT" ? "w-72" : "w-48"}  rounded-lg bg-base-100 shadow-xl`}
@@ -21,6 +21,37 @@ const AspectRatioImage = ({ children, src, locationUsed }: Props) => {
       >
         <img src={src} alt="zzal" className="h-full w-full rounded-lg object-cover" />
       </figure>
+    </div>
+  );
+};
+
+interface LikeButtonProps {
+  onClick: () => void;
+  isLiked: boolean;
+}
+
+const LikeButton = ({ onClick, isLiked }: LikeButtonProps) => {
+  return (
+    <div
+      className="mt-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-white"
+      onClick={onClick}
+    >
+      <Heart aria-label="좋아요" size={18} fill={isLiked ? "#246FFF" : "none"} />
+    </div>
+  );
+};
+
+interface SendButtonProps {
+  onClick: () => void;
+}
+
+const SendButton = ({ onClick }: SendButtonProps) => {
+  return (
+    <div
+      className="mt-1 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-primary"
+      onClick={onClick}
+    >
+      <SendHorizontal aria-label="보내기" size={20} fill="white" />
     </div>
   );
 };
