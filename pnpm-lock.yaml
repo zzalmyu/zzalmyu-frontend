@@ -11,6 +11,9 @@ dependencies:
   '@tanstack/react-router':
     specifier: ^1.15.22
     version: 1.15.22(react-dom@18.2.0)(react@18.2.0)
+  '@tanstack/router-vite-plugin':
+    specifier: ^1.15.22
+    version: 1.15.22
   '@toss/use-overlay':
     specifier: ^1.3.8
     version: 1.3.8(react@18.2.0)
@@ -1149,6 +1152,21 @@ packages:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
       use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/router-generator@1.15.22:
+    resolution: {integrity: sha512-E3yDWSTt2pH05rV4QZF3ghlzqWEPjo9iKWDxSfKEQUPripxYEduhguAaybzbbB+XKN0BdvQq+08yl/lQg7Tc3Q==}
+    engines: {node: '>=12'}
+    dependencies:
+      prettier: 3.2.5
+      zod: 3.22.4
+    dev: false
+
+  /@tanstack/router-vite-plugin@1.15.22:
+    resolution: {integrity: sha512-KUJIeWwj/cifazq3bau59yG2CgSeyDr4cStqA0N556pG2x0gD4UBc8t8bLDX1s8OpSBIVe9X18llwkRfp4x7BA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@tanstack/router-generator': 1.15.22
     dev: false
 
   /@tanstack/store@0.1.3:
@@ -3897,7 +3915,6 @@ packages:
     resolution: {integrity: sha512-3/GWa9aOC0YeD7LUfvOG2NiDyhOWRvt1k+rcKhOuYnMY24iiCphgneUfJDyFXd6rZCAnuLBv6UeAULtrhT/F4A==}
     engines: {node: '>=14'}
     hasBin: true
-    dev: true
 
   /prop-types@15.8.1:
     resolution: {integrity: sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==}
@@ -4895,3 +4912,7 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
     dev: true
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+    dev: false
