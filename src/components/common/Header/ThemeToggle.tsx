@@ -23,14 +23,14 @@ const ThemeToggle = () => {
   }, [theme]);
 
   return (
-    <label className="grid cursor-pointer place-items-center">
+    <label className="flex cursor-pointer place-items-center">
       <div className="flex ">
         <input
           type="checkbox"
           value="synthwave"
           className="theme-controller toggle relative col-span-2 col-start-1 row-start-1 border-surface1 bg-surface2 [--tglbg:theme(colors.surface1)]"
           onChange={handleToggle}
-          checked={theme === "light" ? false : true}
+          checked={theme !== "light"}
         />
         <div className="absolute flex w-auto items-center gap-2.5 px-1 py-1">
           <SunDim size={16} strokeWidth={2} color="white" aria-label="라이트 모드" />

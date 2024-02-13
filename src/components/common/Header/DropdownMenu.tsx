@@ -38,8 +38,8 @@ const DropdownMenu = ({ user }: Props) => {
             {user.name}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
-            {menuItems.map(({ url, icon: Icon, name }) => (
-              <li key={name} className="group">
+            {menuItems.map(({ url, icon: Icon, name }, index) => (
+              <li key={`${index}-${name}`} className="group">
                 <Link to={url}>
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} aria-label={name} />

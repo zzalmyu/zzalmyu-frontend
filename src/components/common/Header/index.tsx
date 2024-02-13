@@ -28,9 +28,9 @@ const Header = () => {
         <div className="h-6 w-0.5 bg-gray-400"></div>
         {!user && <button className="btn btn-ghost h-6 min-h-9">로그인</button>}
         {user && user.isAdmin && (
-          <button className="btn btn-ghost pointer-events-none h-6 min-h-9 text-text-primary">
+          <Link to={"/admin/"} className="btn btn-ghost h-6 min-h-9 text-text-primary">
             Admin
-          </button>
+          </Link>
         )}
 
         {user && !user.isAdmin && <DropdownMenu user={user} />}
