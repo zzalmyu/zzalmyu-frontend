@@ -1,7 +1,4 @@
-import Upload from "@/assets/svg/upload.svg";
-import Home from "@/assets/svg/home.svg";
-import Heart from "@/assets/svg/heart.svg";
-import Logout from "@/assets/svg/logout.svg";
+import { Home, Heart, FolderUp, LogOut } from "lucide-react";
 
 interface Props {
   user: {
@@ -13,7 +10,7 @@ const DropdownMenu = ({ user }: Props) => {
   const menuItems = [
     {
       url: "/",
-      icon: Upload,
+      icon: FolderUp,
       name: "업로드한 짤",
     },
     {
@@ -28,7 +25,7 @@ const DropdownMenu = ({ user }: Props) => {
     },
     {
       url: "/",
-      icon: Logout,
+      icon: LogOut,
       name: "로그아웃",
     },
   ];
@@ -40,12 +37,12 @@ const DropdownMenu = ({ user }: Props) => {
           <summary className="h-9 font-bold hover:bg-gray-300 focus:bg-transparent ">
             {user.name}
           </summary>
-          <ul className=" right-1 z-[1]  w-48 rounded-box bg-background">
+          <ul className=" right-1 z-[1]  w-44 rounded-box bg-background">
             {menuItems.map(({ url, icon: Icon, name }) => (
               <li key={name} className="group ">
                 <a href={url}>
                   <div className="h-6 w-6 group-hover:text-blue-500">
-                    <Icon />
+                    <Icon size={20} />
                   </div>
                   <span className="text-right font-bold group-hover:text-blue-500">{name}</span>
                 </a>
