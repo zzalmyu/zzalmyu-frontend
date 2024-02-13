@@ -5,6 +5,7 @@
 @layer base {
   html {
     font-size: "100%";
+    @apply bg-background text-text-primary;
   }
 
   body {
