@@ -5,10 +5,11 @@ interface ZzalCardProps {
   children?: ReactNode;
   src: string;
   alt: string;
+  isChatImage?: boolean;
   locationUsed: "HOME" | "MYLIKED" | "MYUPLOADED" | "CHAT";
 }
 
-const ZzalCard = ({ children, src, alt, locationUsed }: ZzalCardProps) => {
+const ZzalCard = ({ children, src, alt, locationUsed, isChatImage = false }: ZzalCardProps) => {
   return (
     <div
       className={`group relative ${locationUsed !== "CHAT" ? "w-72" : "w-48"}  rounded-lg bg-base-100 shadow-xl`}
@@ -17,7 +18,7 @@ const ZzalCard = ({ children, src, alt, locationUsed }: ZzalCardProps) => {
         {children}
       </div>
       <figure
-        className={`${locationUsed !== "CHAT" ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`}
+        className={`${isChatImage ? "none" : "transition duration-300 ease-in-out hover:brightness-75"}`}
       >
         <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
       </figure>
