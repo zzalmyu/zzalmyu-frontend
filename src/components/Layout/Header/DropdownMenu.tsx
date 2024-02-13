@@ -1,7 +1,7 @@
-import Upload from "@/assets/svg/upload.svg?react";
-import Home from "@/assets/svg/home.svg?react";
-import Heart from "@/assets/svg/heart.svg?react";
-import Logout from "@/assets/svg/logout.svg?react";
+import Upload from "@/assets/svg/upload.svg";
+import Home from "@/assets/svg/home.svg";
+import Heart from "@/assets/svg/heart.svg";
+import Logout from "@/assets/svg/logout.svg";
 
 interface Props {
   user: {
