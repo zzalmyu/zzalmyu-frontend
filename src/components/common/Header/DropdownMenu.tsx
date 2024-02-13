@@ -1,5 +1,5 @@
 import { Home, Heart, FolderUp, LogOut } from "lucide-react";
-
+import { Link } from "@tanstack/react-router";
 interface Props {
   user: {
     name: string;
@@ -40,12 +40,12 @@ const DropdownMenu = ({ user }: Props) => {
           <ul className=" right-1 z-[1]  w-44 rounded-box bg-background">
             {menuItems.map(({ url, icon: Icon, name }) => (
               <li key={name} className="group ">
-                <a href={url}>
+                <Link href={url}>
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} />
                   </div>
                   <span className="text-right font-bold group-hover:text-blue-500">{name}</span>
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

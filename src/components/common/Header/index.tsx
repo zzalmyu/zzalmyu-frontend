@@ -1,3 +1,4 @@
+import { Link } from "@tanstack/react-router";
 import ThemeToggle from "./ThemeToggle.tsx";
 import DropdownMenu from "./DropdownMenu.tsx";
 import Logo from "@/assets/svg/logo.svg";
@@ -11,9 +12,9 @@ const Header = () => {
 
   return (
     <div className="navbar bg-background">
-      <a href="/" className="btn btn-ghost flex items-center hover:bg-transparent">
+      <Link href="/" className="btn btn-ghost flex items-center hover:bg-transparent">
         <Logo />
-      </a>
+      </Link>
 
       <div className="flex flex-1 items-center justify-end space-x-3 px-2">
         <ThemeToggle />
