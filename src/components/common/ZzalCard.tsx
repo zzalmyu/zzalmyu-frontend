@@ -1,14 +1,13 @@
 import { ReactNode } from "react";
-import { Heart } from "lucide-react";
-import { SendHorizontal } from "lucide-react";
+import { Heart, SendHorizontal } from "lucide-react";
 
-interface AspectRatioImageProps {
+interface ZzalCardProps {
   children?: ReactNode;
   src: string;
   locationUsed: "HOME" | "MYLIKED" | "MYUPLOADED" | "CHAT";
 }
 
-const AspectRatioImage = ({ children, src, locationUsed }: AspectRatioImageProps) => {
+const ZzalCard = ({ children, src, locationUsed }: ZzalCardProps) => {
   return (
     <div
       className={`group relative ${locationUsed !== "CHAT" ? "w-72" : "w-48"}  rounded-lg bg-base-100 shadow-xl`}
@@ -56,7 +55,7 @@ const SendButton = ({ onClick }: SendButtonProps) => {
   );
 };
 
-AspectRatioImage.SendButton = SendButton;
-AspectRatioImage.LikeButton = LikeButton;
+ZzalCard.SendButton = SendButton;
+ZzalCard.LikeButton = LikeButton;
 
-export default AspectRatioImage;
+export default ZzalCard;
