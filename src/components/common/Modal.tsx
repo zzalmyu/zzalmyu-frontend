@@ -1,37 +1,71 @@
-import React from "react";
-import { createPortal } from "react-dom";
-type Props = {
-  children: React.ReactNode;
-  id: string;
-  open: boolean;
-  onClose: () => void;
-  hasCloseButton?: boolean;
-};
+import { ReactNode } from "react";
 
-const Modal = ({ id, children, open, onClose, hasCloseButton }: Props) => {
-  return createPortal(
-    <dialog className={`modal ${open ? "modal-open" : ""}`} id={id}>
-      <div className="modal-box h-[23rem] w-[20rem] bg-background pt-[70px] sm:h-[23rem] sm:w-[37rem]">
-        <>
-          {hasCloseButton && (
-            <form method="dialog">
-              <button
-                className="btn btn-circle btn-ghost btn-sm absolute right-2 top-2"
-                onClick={onClose}
-              >
-                ✕
-              </button>
-            </form>
-          )}
+interface Props {
+  children: ReactNode;
+  isOpen: boolean;
+  onClose: () => void;
+  size?: "sm" | "base";
+}
+const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
+  const MODAL_PADDING_VARIANTS = {
+    sm: "py-[1.5rem] px-[0.5rem]",
+    base: "p-[3rem]",
+  };
+  const MODAL_WIDTH_VARIANTS = {
+    sm: "w-[22rem] sm:w-[33rem]",
+    base: "w-[22rem] sm:w-[37rem]",
+  };
+  const MODAL_HEIGHT_VARIANTS = {
+    sm: "min-h-[15rem] sm:min-h-[15rem]",
+    base: "min-h-[23rem] sm:min-h-[23rem]",
+  };
+  return (
+    isOpen && (
+      <>
+        <div
+          // eslint-disable-next-line prettier/prettier
+          className="fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary opacity-40"
+          onClick={onClose}
+        ></div>
+
+        <div
+          // eslint-disable-next-line prettier/prettier
+          className={`text-text-primary ${MODAL_HEIGHT_VARIANTS[size]} ${MODAL_WIDTH_VARIANTS[size]} ${MODAL_PADDING_VARIANTS[size]} fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[32px] bg-background`}
+        >
           {children}
-        </>
-      </div>
-      <form method="dialog" className="modal-backdrop">
-        <button onClick={onClose}>close</button>
-      </form>
-    </dialog>,
-    document.body,
+        </div>
+      </>
+    )
   );
 };
 
+interface HeaderProps {
+  hasCloseButton?: boolean;
+  children: ReactNode;
+}
+const ModalHeader = ({ hasCloseButton = false, children }: HeaderProps) => {
+  return (
+    <div className="relative mb-8 text-xl font-extrabold">
+      <div className="flex justify-center">{children}</div>
+      {hasCloseButton && (
+        <button className="absolute rounded-[50%] bg-transparent hover:bg-neutral-300">✕</button>
+      )}
+    </div>
+  );
+};
+interface BodyProps {
+  children: ReactNode;
+}
+const ModalBody = ({ children }: BodyProps) => {
+  return <div>{children}</div>;
+};
+interface FooterProps {
+  children: ReactNode;
+}
+const ModalFooter = ({ children }: FooterProps) => {
+  return <div className="mt-8">{children}</div>;
+};
+Modal.Header = ModalHeader;
+Modal.Body = ModalBody;
+Modal.Footer = ModalFooter;
 export default Modal;
