@@ -1,6 +1,6 @@
 import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
-import { $toggleTag } from "@/store/tag";
+import { $selectedTags } from "@/store/tag";
 
 interface Props {
   content: string;
@@ -9,14 +9,23 @@ interface Props {
   className?: string;
 }
 
+const MAX_TAG = 5;
+
 const TagBadge = ({ content, isClickable = false, className }: Props) => {
-  const [selectedTag, toggleTag] = useAtom($toggleTag);
-  const isSelectedTag = selectedTag.includes(content);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const isSelectedTag = selectedTags.includes(content);
 
   const handleClickTag = () => {
     if (!isClickable) return;
 
-    toggleTag(content);
+    if (selectedTags.includes(content)) {
+      setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== content));
+      return;
+    }
+
+    if (selectedTags.length < MAX_TAG) {
+      setSelectedTags((previousState) => [...previousState, content]);
+    }
   };
 
   const badgeClasses = cn("rounded-2xl px-4 py-2 text-white font-bold bg-tag", {
