@@ -20,37 +20,47 @@ const TagSearchForm = ({ className }: Props) => {
     const tag = formData.get("tag") as string;
     const input = event.currentTarget.elements.namedItem("tag") as HTMLInputElement;
 
-    if (selectedTags.length >= MAX_TAG || selectedTags.includes(tag)) {
-      return;
+    if (selectedTags.length < MAX_TAG && !selectedTags.includes(tag)) {
+      setSelectedTags((previousState) => [...previousState, tag]);
     }
-
-    setSelectedTags((previousState) => [...previousState, tag]);
 
     input.value = "";
   };
 
-  const handleClickDeleteTag = (deleteTag: string) => () => {
-    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== deleteTag));
+  const handleClickDeleteTag = (tag: string) => () => {
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
+  };
+
+  const handleClickResetTagButton = () => {
+    setSelectedTags([]);
   };
 
   return (
-    <div className={cn(`flex min-w-[607px] flex-col flex-wrap `, className)}>
+    // TODO: [2024.02.14] px 추후 pxr로 변환
+    <div className={cn(`flex w-[650px] flex-col flex-wrap `, className)}>
       <form onSubmit={handleSubmitForm}>
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
         </label>
-        <div className=" flex flex-wrap items-center rounded-3xl border border-black px-5 py-2">
+        <div className=" flex max-w-[700px] flex-wrap  items-center rounded-3xl border border-black px-4">
           <input
             id="tagInput"
             name="tag"
             className="min-h-16 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
+
+          {selectedTags.length > 0 && (
+            <button onClick={handleClickResetTagButton} className="mr-4" type="button">
+              <XCircle />
+            </button>
+          )}
+
           <button type="submit">
             <Search aria-label="검색" />
           </button>
         </div>
       </form>
-      <ul className="mt-4 flex items-center pl-2">
+      <ul className="mt-4 flex min-h-8 flex-wrap items-center gap-2 pl-2">
         {selectedTags.map((selectedTag, index) => (
           <li
             key={`${index}-${selectedTag}`}
