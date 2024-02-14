@@ -41,7 +41,7 @@ const TagSearchForm = ({ className }: Props) => {
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
         </label>
-        <div className=" flex max-w-650pxr flex-wrap  items-center rounded-3xl border border-black px-4">
+        <div className="flex max-w-650pxr flex-wrap items-center rounded-3xl border border-black px-4">
           <input
             id="tagInput"
             name="tag"
