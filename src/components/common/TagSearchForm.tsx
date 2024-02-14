@@ -36,13 +36,12 @@ const TagSearchForm = ({ className }: Props) => {
   };
 
   return (
-    // TODO: [2024.02.14] px 추후 pxr로 변환
-    <div className={cn(`flex w-[650px] flex-col flex-wrap `, className)}>
+    <div className={cn(`flex w-650pxr flex-col flex-wrap `, className)}>
       <form onSubmit={handleSubmitForm}>
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
         </label>
-        <div className=" flex max-w-[700px] flex-wrap  items-center rounded-3xl border border-black px-4">
+        <div className=" flex max-w-650pxr flex-wrap  items-center rounded-3xl border border-black px-4">
           <input
             id="tagInput"
             name="tag"
