@@ -1,3 +1,11 @@
+import ReportedDetailButton from "./ReportedDetailButton";
+
+interface ReportedImageList {
+  imageId: string;
+  reportCount: number;
+  createdAt: string;
+}
+
 const ReportedImageList = () => {
   const reportData = [
     {
@@ -20,13 +28,7 @@ const ReportedImageList = () => {
     },
   ];
 
-  interface ReportedImage {
-    imageId: string;
-    reportCount: number;
-    createdAt: string;
-  }
-
-  const reportedImage: ReportedImage[] = [];
+  const reportedImage: ReportedImageList[] = [];
 
   reportData.forEach((item) => {
     const imageId = item.image_id;
@@ -59,7 +61,7 @@ const ReportedImageList = () => {
                 <td className="text-center">{item.imageId}</td>
                 <td className="text-center">{item.reportCount}</td>
                 <td className="text-center">
-                  <button>상세보기</button>
+                  <ReportedDetailButton imageId={item.imageId} />
                 </td>
               </tr>
             );
