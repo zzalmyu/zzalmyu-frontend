@@ -15,13 +15,13 @@ const LoginModal = ({ isOpen, onClose }: Props) => {
       <Modal.Body>
         <div className="flex flex-col items-center gap-3">
           <a href="/oauth2/authorization/google">
-            <GoogleLoginButton />
+            <GoogleLoginButton aria-label="구글 로그인" />
           </a>
           <a href="/oauth2/authorization/kakao">
-            <KakaoLoginButton />
+            <KakaoLoginButton aria-label="카카오 로그인" />
           </a>
           <a href="/oauth2/authorization/naver">
-            <NaverLoginButton />
+            <NaverLoginButton aria-label="네이버 로그인" />
           </a>
         </div>
       </Modal.Body>
