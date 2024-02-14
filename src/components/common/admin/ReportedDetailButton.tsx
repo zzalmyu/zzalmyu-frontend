@@ -9,10 +9,7 @@ const ReportedDetailButton = ({ imageId }: ReportedDetailButton) => {
 
   return (
     <>
-      <button
-        className="btn btn-sm bg-neutral-700 text-xs text-neutral-200"
-        onClick={handleClickOpen}
-      >
+      <button className="btn btn-neutral btn-sm text-xs" onClick={handleClickOpen}>
         상세보기
       </button>
     </>

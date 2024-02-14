@@ -37,7 +37,6 @@ const ReportedImageList = () => {
     existingItem
       ? (existingItem.reportCount += 1)
       : reportedImage.push({ imageId, reportCount: 1, createdAt });
-    console.log(reportedImage);
   });
 
   return (
@@ -46,21 +45,20 @@ const ReportedImageList = () => {
       <table className="table">
         <thead>
           <tr className="border-0 bg-card">
-            {/* TODO: 각 th 요소에 text-text-primary 속성 추가 */}
-            <th className="text-center">Date</th>
-            <th className="text-center">게시물 ID</th>
-            <th className="text-center">신고 횟수</th>
-            <th className="text-center">게시물 상세보기</th>
+            <th className="text-center text-text-primary">Date</th>
+            <th className="text-center text-text-primary">게시물 ID</th>
+            <th className="text-center text-text-primary">신고 횟수</th>
+            <th className="text-center text-text-primary">게시물 상세보기</th>
           </tr>
         </thead>
         <tbody>
           {reportedImage.map((item, index) => {
             return (
               <tr key={index} className="border-b-1 border-card last:border-0">
-                <td className="text-center">{item.createdAt.slice(0, 10)}</td>
-                <td className="text-center">{item.imageId}</td>
-                <td className="text-center">{item.reportCount}</td>
-                <td className="text-center">
+                <td className="text-center text-text-primary">{item.createdAt.slice(0, 10)}</td>
+                <td className="text-center text-text-primary">{item.imageId}</td>
+                <td className="text-center text-text-primary">{item.reportCount}</td>
+                <td className="text-center text-text-primary">
                   <ReportedDetailButton imageId={item.imageId} />
                 </td>
               </tr>
