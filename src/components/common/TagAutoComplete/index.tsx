@@ -1,0 +1,75 @@
+import React, { useEffect, useRef, useState } from "react";
+
+interface Props {
+  tagList: { [key: string]: string }[];
+  onSelectTagName: (tagName: string) => void;
+}
+
+const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
+  const [cursorIndex, setCursorIndex] = useState(0);
+  const ulRef = useRef<HTMLUListElement>(null);
+
+  const handleKeydownTagFocus = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    const { key } = event;
+
+    if (key === "ArrowUp") {
+      setCursorIndex((cursor) => {
+        return cursor - 1 < 0 ? tagList.length - 1 : cursor - 1;
+      });
+    } else if (key === "ArrowDown") {
+      setCursorIndex((cursor) => {
+        return cursor + 1 >= tagList.length ? 0 : cursor + 1;
+      });
+    }
+  };
+
+  const handleKeyUpTagSelect = (event: React.KeyboardEvent<HTMLUListElement>) => {
+    const { key } = event;
+
+    if (key === "Enter") onSelectTagName(tagList[cursorIndex].tagName);
+  };
+
+  const handleClickTagName = (tagIndex: number) => {
+    setCursorIndex(tagIndex);
+    onSelectTagName(tagList[tagIndex].tagName);
+  };
+
+  const handleMouseOverSetCursorIndexAndFocusing = (tagIndex: number) => {
+    setCursorIndex(tagIndex);
+    ulRef.current?.focus();
+  };
+
+  useEffect(() => {
+    ulRef.current?.focus();
+  }, []);
+
+  return (
+    <ul
+      className="box-border w-4/5 rounded-box border-2 p-2 shadow-xl outline-none"
+      ref={ulRef}
+      onKeyDown={handleKeydownTagFocus}
+      onKeyUp={handleKeyUpTagSelect}
+      onBlur={() => setCursorIndex(-1)}
+      tabIndex={0}
+    >
+      {tagList.length === 0 ? (
+        <li className="rounded-md px-1.5">
+          <div>검색 결과가 없습니다</div>
+        </li>
+      ) : (
+        tagList.map(({ tagName }, index) => (
+          <li
+            key={index}
+            className={`${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`}
+            onMouseOver={() => handleMouseOverSetCursorIndexAndFocusing(index)}
+            onClick={() => handleClickTagName(index)}
+          >
+            <div>{tagName}</div>
+          </li>
+        ))
+      )}
+    </ul>
+  );
+};
+
+export default TagAutoComplete;

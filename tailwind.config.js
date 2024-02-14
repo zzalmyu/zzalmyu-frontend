@@ -3,9 +3,9 @@ export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
     { pattern: /w-/ },
-    { 
-      pattern: 
-        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/, 
+    {
+      pattern:
+        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/,
     },
     { pattern: /text-(text-primary|text-secondary|white|black|neutral)/ },
   ],
@@ -36,7 +36,7 @@ export default {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
+          ...require("daisyui/src/theming/themes")["light"],
           "--secondary": "#E2F4FF",
           "--text-primary": "#000000",
           "--text-secondary": "#535353",
@@ -49,7 +49,7 @@ export default {
           "--toolbar": "#858383",
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          ...require("daisyui/src/theming/themes")["dark"],
           "--secondary": "#2600BD",
           "--text-primary": "#FFFFFF",
           "--text-secondary": "#8EB4FF",
