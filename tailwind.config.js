@@ -1,16 +1,29 @@
 /** @type {import('tailwindcss').Config} */
+
+const pxToRem = (px, base = 16) => `${px / base}rem`;
+
+const range = (start, end) => {
+  return Array.from({ length: end - start + 1 }, (_, index) => index + start);
+};
+
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
     { pattern: /w-/ },
-    { 
-      pattern: 
-        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/, 
+    {
+      pattern:
+        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/,
     },
     { pattern: /text-(text-primary|text-secondary|white|black|neutral)/ },
   ],
   theme: {
     extend: {
+      spacing: {
+        ...range(1, 1400).reduce((accumulate, px) => {
+          accumulate[`${px}pxr`] = pxToRem(px);
+          return accumulate;
+        }, {}),
+      },
       colors: {
         white: "#FFFFFF",
         black: "#000000",
