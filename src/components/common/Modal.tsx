@@ -20,6 +20,7 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
     base: "min-h-[23rem] sm:min-h-[23rem]",
   };
   return (
+    // TODO: [2024.02.14] text-primary, text-secondary prettier 에러 해결
     isOpen && (
       <>
         <div
