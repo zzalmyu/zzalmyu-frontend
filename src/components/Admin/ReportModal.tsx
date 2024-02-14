@@ -7,13 +7,13 @@ interface Props {
   onClose: () => void;
 }
 
-const ReportModal = ({ isOpen, onClose }: Props) => {
-  const reportData = [
-    { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
-    { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
-    { Date: "2024-02-06 10:01:00", UserEmail: "heejin2@asdf.com" },
-  ];
+const reportLists = [
+  { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
+  { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
+  { Date: "2024-02-06 10:01:00", UserEmail: "heejin2@asdf.com" },
+];
 
+const ReportModal = ({ isOpen, onClose }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <Modal.Body>
@@ -31,11 +31,11 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
               </tr>
             </thead>
             <tbody>
-              {reportData.map((item, index) => {
+              {reportLists.map((reportingUser, index) => {
                 return (
                   <tr key={index} className="border-b-2 border-neutral-300 last:border-0">
-                    <td className="text-center font-bold">{item.Date.slice(0, 10)}</td>
-                    <td className="text-center font-bold">{item.UserEmail}</td>
+                    <td className="text-center font-bold">{reportingUser.Date.slice(0, 10)}</td>
+                    <td className="text-center font-bold">{reportingUser.UserEmail}</td>
                   </tr>
                 );
               })}
