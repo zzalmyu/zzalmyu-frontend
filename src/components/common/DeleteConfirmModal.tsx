@@ -1,37 +1,17 @@
-import { Fragment } from "react";
-import { AlertTriangle, Check, Trash2 } from "lucide-react";
-import { MutationFunction, useMutation } from "@tanstack/react-query";
-import { cn } from "@/utils/tailwind";
+import { AlertTriangle, Trash2 } from "lucide-react";
 import Modal from "@/components/common/modals/Modal";
 
-interface Props<TData, TVariables> {
+interface Props {
   isOpen: boolean;
   onClose: () => void;
-  onDelete: MutationFunction<TData, TVariables>;
-  variables: TVariables;
+  onDelete: () => void;
 }
 
-const DeleteConfirmModal = <TData, TVariables>({
-  isOpen,
-  onClose,
-  onDelete,
-  variables,
-}: Props<TData, TVariables>) => {
-  const mutation = useMutation({
-    mutationFn: onDelete,
-  });
-  const { status, mutate } = mutation;
+const DeleteConfirmModal = ({ isOpen, onClose, onDelete }: Props) => {
+  // TODO: [2024.02.15] 제거하기 api 로직 연결
   const handleDelete = () => {
-    mutate(
-      { ...variables },
-      {
-        onSuccess: () => {
-          setTimeout(() => {
-            onClose();
-          }, 600);
-        },
-      },
-    );
+    onDelete();
+    onClose();
   };
 
   return (
@@ -53,28 +33,11 @@ const DeleteConfirmModal = <TData, TVariables>({
               취소
             </button>
             <button
-              className={cn(
-                status === "success"
-                  ? "bg-green-500 hover:outline-none"
-                  : "bg-delete hover:outline-delete",
-                `flex h-12 w-32 items-center justify-evenly rounded-[90px] text-white outline outline-offset-2 outline-transparent transition-[outline_background-color]`,
-              )}
+              className="flex h-12 w-32 items-center justify-evenly rounded-90pxr bg-delete text-white outline outline-offset-2 outline-transparent transition-[outline_background-color] hover:outline-delete"
               onClick={handleDelete}
-              disabled={status !== "idle"}
             >
-              {status === "idle" && (
-                <Fragment>
-                  <Trash2 color="#FFFF" strokeWidth={2} />
-                  제거하기
-                </Fragment>
-              )}
-              {status === "pending" && (
-                <span
-                  className="loading loading-spinner loading-xs text-white"
-                  aria-label="제거 중"
-                />
-              )}
-              {status === "success" && <Check aria-label="제거 성공" />}
+              <Trash2 color="#FFFF" strokeWidth={2} aria-label="제거하기" />
+              제거하기
             </button>
           </div>
         </div>
