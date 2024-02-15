@@ -23,13 +23,11 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <Modal.Body>
         <div className="flex items-start">
-          <div className="w-2/5">
-            <ZzalCard
-              src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9928383A5BBECBB111"
-              alt="신고 상세 이미지"
-              // TODO: [2024.02.15] width속성 string으로 확장 후 width="full" 추가
-            />
-          </div>
+          <ZzalCard
+            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9928383A5BBECBB111"
+            alt="신고 상세 이미지"
+            // TODO: [2024.02.15] width속성 string으로 확장 후 width="full" 추가
+          />
           <div className="ml-5 max-h-96 w-3/5 overflow-auto rounded-xl">
             <table className="table bg-card">
               <thead>
