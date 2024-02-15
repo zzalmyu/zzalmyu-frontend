@@ -1,5 +1,3 @@
-import ReportedDetailButton from "./ReportedDetailButton";
-
 interface ReportedImageList {
   imageId: string;
   reportCount: number;
@@ -41,6 +39,10 @@ const ReportedImageList = () => {
       : reportedImages.push({ imageId, reportCount: 1, createdAt });
   });
 
+  const handleClickOpen = (imageId: string) => {
+    console.log(`${imageId}에 해당하는 모달을 띄워줘야 합니다.`);
+  };
+
   return (
     <div>
       <div className="pb-5 text-lg font-bold">신고된 사진 리스트</div>
@@ -63,7 +65,12 @@ const ReportedImageList = () => {
                 <td className="text-center text-text-primary">{reportedImage.imageId}</td>
                 <td className="text-center text-text-primary">{reportedImage.reportCount}</td>
                 <td className="text-center text-text-primary">
-                  <ReportedDetailButton imageId={reportedImage.imageId} />
+                  <button
+                    className="btn btn-neutral btn-sm text-xs"
+                    onClick={() => handleClickOpen(reportedImage.imageId)}
+                  >
+                    상세보기
+                  </button>
                 </td>
               </tr>
             );
