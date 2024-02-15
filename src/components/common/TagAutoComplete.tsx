@@ -36,7 +36,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
     onSelectTagName(tags[tagIndex]);
   };
 
-  const handleMouseOverSetCursorIndex = (tagIndex: number) => {
+  const handleMouseOverTag = (tagIndex: number) => {
     setCursorIndex(tagIndex);
     ulRef.current?.focus();
   };
@@ -65,7 +65,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
             className={cn(
               `${index === cursorIndex && "bg-gray-200 font-bold"}  box-border rounded-md px-1.5 py-2`,
             )}
-            onMouseOver={() => handleMouseOverSetCursorIndex(index)}
+            onMouseOver={() => handleMouseOverTag(index)}
             onClick={() => handleClickTagName(index)}
           >
             <div>{tag}</div>
