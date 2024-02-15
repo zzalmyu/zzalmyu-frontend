@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  tagList: { [key: string]: string }[];
+  tags: { [key: string]: string }[];
   onSelectTagName: (tagName: string) => void;
 }
 
-const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
+const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
   const [cursorIndex, setCursorIndex] = useState(0);
   const ulRef = useRef<HTMLUListElement>(null);
 
@@ -14,12 +14,12 @@ const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
 
     if (key === "ArrowUp") {
       setCursorIndex((cursor) => {
-        return cursor - 1 < 0 ? tagList.length - 1 : cursor - 1;
+        return cursor - 1 < 0 ? tags.length - 1 : cursor - 1;
       });
     }
     if (key === "ArrowDown") {
       setCursorIndex((cursor) => {
-        return cursor + 1 >= tagList.length ? 0 : cursor + 1;
+        return cursor + 1 >= tags.length ? 0 : cursor + 1;
       });
     }
   };
@@ -27,12 +27,12 @@ const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
   const handleKeyUpTagSelect = (event: React.KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
 
-    if (key === "Enter") return onSelectTagName(tagList[cursorIndex].tagName);
+    if (key === "Enter") return onSelectTagName(tags[cursorIndex].tagName);
   };
 
   const handleClickTagName = (tagIndex: number) => {
     setCursorIndex(tagIndex);
-    onSelectTagName(tagList[tagIndex].tagName);
+    onSelectTagName(tags[tagIndex].tagName);
   };
 
   const handleMouseOverSetCursorIndex = (tagIndex: number) => {
@@ -53,12 +53,12 @@ const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
       onBlur={() => setCursorIndex(-1)}
       tabIndex={0}
     >
-      {tagList.length === 0 ? (
+      {tags.length === 0 ? (
         <li className="rounded-md px-1.5">
           <div>검색 결과가 없습니다</div>
         </li>
       ) : (
-        tagList.map(({ tagName }, index) => (
+        tags.map(({ tagName }, index) => (
           <li
             key={index}
             className={`${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`}
