@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import ReportedImageList from "@/components/admin/ReportedImageList";
+import ReportedImageList from "@/components/Admin/ReportedImageList";
 
 const Admin = () => {
   return (

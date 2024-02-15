@@ -16,14 +16,14 @@ const reports = [
   {
     id: "3",
     createdAt: "2024-02-08 23:03:20",
-    imageId: "image2",
+    imageId: "image3",
     reportUserId: "heejin1@asdf.com",
     reportCount: 4,
   },
 ];
 
 const ReportedImageList = () => {
-  const handleClickDetailViewButton = (imageId: string) => {
+  const handleClickDetailViewButton = (imageId: string) => () => {
     console.log(`${imageId}에 해당하는 모달을 띄워줘야 합니다.`);
   };
 
@@ -40,18 +40,17 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {reports.map((reportImage, index) => {
-            const { createdAt, imageId, reportCount } = reportImage;
+          {reports.map(({ createdAt, imageId, reportCount }, index) => {
             const createdDate = createdAt.slice(0, 10);
             return (
-              <tr key={index} className="border-b-1 border-card last:border-0">
+              <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
                 <td className="text-center text-text-primary">{createdDate}</td>
                 <td className="text-center text-text-primary">{imageId}</td>
                 <td className="text-center text-text-primary">{reportCount}</td>
                 <td className="text-center text-text-primary">
                   <button
                     className="btn btn-neutral btn-sm text-xs"
-                    onClick={() => handleClickDetailViewButton(imageId)}
+                    onClick={handleClickDetailViewButton(imageId)}
                   >
                     상세보기
                   </button>
