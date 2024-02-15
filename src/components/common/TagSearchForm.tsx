@@ -3,12 +3,11 @@ import { useAtom } from "jotai";
 import { XCircle, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
+import { MAX_SEARCH_TAG } from "@/constants/tag";
 
 interface Props {
   className?: string;
 }
-
-const MAX_TAG = 5;
 
 const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
@@ -20,7 +19,7 @@ const TagSearchForm = ({ className }: Props) => {
     const tag = formData.get("tag") as string;
     const input = event.currentTarget.elements.namedItem("tag") as HTMLInputElement;
 
-    if (selectedTags.length < MAX_TAG && !selectedTags.includes(tag)) {
+    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tag)) {
       setSelectedTags((previousState) => [...previousState, tag]);
     }
 

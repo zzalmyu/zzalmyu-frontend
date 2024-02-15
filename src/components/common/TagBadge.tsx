@@ -1,6 +1,7 @@
 import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
+import { MAX_SEARCH_TAG } from "@/constants/tag";
 
 interface Props {
   content: string;
@@ -8,8 +9,6 @@ interface Props {
   onClick?: () => void;
   className?: string;
 }
-
-const MAX_TAG = 5;
 
 const TagBadge = ({ content, isClickable = false, className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
@@ -23,7 +22,7 @@ const TagBadge = ({ content, isClickable = false, className }: Props) => {
       return;
     }
 
-    if (selectedTags.length < MAX_TAG) {
+    if (selectedTags.length < MAX_SEARCH_TAG) {
       setSelectedTags((previousState) => [...previousState, content]);
     }
   };
