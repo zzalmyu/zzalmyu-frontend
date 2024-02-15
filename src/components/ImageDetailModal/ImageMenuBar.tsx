@@ -2,10 +2,10 @@ import { useState } from "react";
 import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 
 const ImageMenuBar = () => {
-  const [liked, setLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
 
   const handleClickLike = () => {
-    setLiked((prevLiked) => !prevLiked);
+    setIsLiked((prevLiked) => !prevLiked);
   };
 
   const menuItems = [
@@ -25,7 +25,11 @@ const ImageMenuBar = () => {
               className="tooltip tooltip-top sm:tooltip-right"
               data-tip={name}
             >
-              <Icon size={20} color={Icon === Heart && liked ? "red" : "white"} aria-label={name} />
+              <Icon
+                size={20}
+                color={Icon === Heart && isLiked ? "red" : "white"}
+                aria-label={name}
+              />
             </button>
           </li>
         ))}

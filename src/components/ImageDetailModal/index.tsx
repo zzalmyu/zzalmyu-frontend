@@ -8,8 +8,10 @@ interface Props {
 }
 
 const ImageDetailModal = ({ isOpen, onClose }: Props) => {
-  const src = "https://blog.kakaocdn.net/dn/bI2bwB/btsEP4W1m9P/os7ZrAK0fYhgOgBSKIiktk/img.png";
-  const alt = "짤이미지";
+  const ZZALCARD_SRC =
+    "https://blog.kakaocdn.net/dn/bI2bwB/btsEP4W1m9P/os7ZrAK0fYhgOgBSKIiktk/img.png";
+  const ZZALCARD_ALT = "짤이미지";
+
   const tags = [
     "일이삼사오육칠팔구십",
     "일이삼사오육칠팔구십",
@@ -27,7 +29,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         <TagNavigator tags={tags} />
         <div className="my-5 flex justify-center">
           <div className="relative flex">
-            <ZzalCard src={src} alt={alt} />
+            <ZzalCard src={ZZALCARD_SRC} alt={ZZALCARD_ALT} />
             <ImageController />
           </div>
         </div>
