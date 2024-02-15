@@ -16,7 +16,8 @@ const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
       setCursorIndex((cursor) => {
         return cursor - 1 < 0 ? tagList.length - 1 : cursor - 1;
       });
-    } else if (key === "ArrowDown") {
+    }
+    if (key === "ArrowDown") {
       setCursorIndex((cursor) => {
         return cursor + 1 >= tagList.length ? 0 : cursor + 1;
       });
@@ -26,7 +27,7 @@ const TagAutoComplete = ({ tagList = [], onSelectTagName }: Props) => {
   const handleKeyUpTagSelect = (event: React.KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
 
-    if (key === "Enter") onSelectTagName(tagList[cursorIndex].tagName);
+    if (key === "Enter") return onSelectTagName(tagList[cursorIndex].tagName);
   };
 
   const handleClickTagName = (tagIndex: number) => {
