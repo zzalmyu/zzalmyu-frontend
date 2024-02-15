@@ -57,8 +57,7 @@ export default {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
-
+          ...require("daisyui/src/theming/themes")["light"],
           "--secondary": "#E2F4FF",
           "--text-primary": "0 0 0",
           "--text-secondary": "#535353",
@@ -71,7 +70,7 @@ export default {
           "--toolbar": "#858383",
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
+          ...require("daisyui/src/theming/themes")["dark"],
           "--secondary": "#2600BD",
           "--text-primary": "255 255 255",
           "--text-secondary": "#8EB4FF",
