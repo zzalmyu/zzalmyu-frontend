@@ -1,6 +1,6 @@
 import { FormEvent } from "react";
 import { useAtom } from "jotai";
-import { XCircle, Search } from "lucide-react";
+import { XCircle, Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
@@ -47,18 +47,12 @@ const TagSearchForm = ({ className }: Props) => {
             className="min-h-16 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
 
-          {selectedTags.length > 0 && (
-            <button onClick={handleClickResetTagButton} className="mr-4" type="button">
-              <XCircle />
-            </button>
-          )}
-
           <button type="submit">
             <Search aria-label="검색" />
           </button>
         </div>
       </form>
-      <ul className="mt-4 flex min-h-8 flex-wrap items-center gap-2 pl-2">
+      <ul className="flex-column mt-4 flex min-h-8 flex-wrap items-center gap-2 pl-2">
         {selectedTags.map((selectedTag, index) => (
           <li
             key={`${index}-${selectedTag}`}
@@ -73,6 +67,11 @@ const TagSearchForm = ({ className }: Props) => {
           </li>
         ))}
       </ul>
+      {selectedTags.length > 0 && (
+        <button onClick={handleClickResetTagButton} className="flex-column mr-4 flex" type="button">
+          <RotateCw aria-label="태그 초기화" />
+        </button>
+      )}
     </div>
   );
 };
