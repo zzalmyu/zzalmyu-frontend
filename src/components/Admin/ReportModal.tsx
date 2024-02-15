@@ -1,5 +1,5 @@
 import { Trash2 } from "lucide-react";
-import Modal from "../common/Modal";
+import Modal from "../common/modals/Modal.tsx";
 import ZzalCard from "../common/ZzalCard";
 
 interface Props {
@@ -30,13 +30,13 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <Modal.Body>
-        <div className="flex items-start">
+        <div className="flex flex-col items-center sm:flex-row sm:items-start">
           <ZzalCard
             src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9928383A5BBECBB111"
             alt="신고 상세 이미지"
             // TODO: [2024.02.15] width속성 string으로 확장 후 width="full" 추가
           />
-          <div className="ml-5 max-h-96 w-3/5 overflow-auto rounded-xl">
+          <div className="mt-3 max-h-200pxr w-280pxr overflow-auto rounded-xl sm:ml-5 sm:max-h-96 sm:w-3/5 sm:overflow-auto sm:rounded-xl">
             <table className="table bg-card">
               <thead>
                 <tr>
@@ -50,8 +50,12 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
                     key={`${index}-${userEmail}`}
                     className="border-b-2 border-neutral-300 last:border-0"
                   >
-                    <td className="text-center font-bold">{reportDate(date)}</td>
-                    <td className="text-center font-bold">{userEmail}</td>
+                    <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
+                      {reportDate(date)}
+                    </td>
+                    <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
+                      {userEmail}
+                    </td>
                   </tr>
                 ))}
               </tbody>
