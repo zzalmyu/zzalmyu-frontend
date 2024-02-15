@@ -25,9 +25,10 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   size?: "sm" | "base" | "lg";
+  className?: string;
 }
 
-const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
+const Modal = ({ children, isOpen, onClose, size = "base", className }: Props) => {
   const handleClickModal = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
   };
@@ -36,7 +37,7 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
     isOpen && (
       <ModalProvider onClose={onClose}>
         <div
-          className="overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40"
+          className={`overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40 ${className}`}
           onClick={onClose}
         >
           <div
