@@ -24,23 +24,29 @@ interface Props {
 }
 
 const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
+  const handleClickModal = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    event.stopPropagation();
+  };
+
   return (
     isOpen && (
       <>
         <div
-          className="fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary opacity-40"
+          // eslint-disable-next-line prettier/prettier
+          className="overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40"
           onClick={onClose}
-        ></div>
-
-        <div
-          className={cn(
-            MODAL_HEIGHT_VARIANTS[size],
-            MODAL_WIDTH_VARIANTS[size],
-            MODAL_PADDING_VARIANTS[size],
-            "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[32px] bg-background text-text-primary",
-          )}
         >
-          {children}
+          <div
+            className={cn(
+              MODAL_HEIGHT_VARIANTS[size],
+              MODAL_WIDTH_VARIANTS[size],
+              MODAL_PADDING_VARIANTS[size],
+              "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[32pxr] bg-background text-text-primary",
+            )}
+            onClick={handleClickModal}
+          >
+            {children}
+          </div>
         </div>
       </>
     )
