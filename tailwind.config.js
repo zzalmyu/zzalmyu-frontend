@@ -9,6 +9,7 @@ const range = (start, end) => {
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
+    { pattern: /rounded-/ },
     { pattern: /w-/ },
     {
       pattern:
@@ -41,6 +42,9 @@ export default {
         toolbar: "var(--toolbar)",
         delete: "#ED0000",
         tag: "#570DF8",
+      },
+      borderRadius: {
+        "4xl": "2rem",
       },
     },
   },
