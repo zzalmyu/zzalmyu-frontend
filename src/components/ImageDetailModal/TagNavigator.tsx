@@ -21,7 +21,7 @@ const TagNavigator = ({ tags }: Props) => {
       {currentGroupTags.map((tag, index) => (
         <span
           key={index}
-          className=" badge-base badge-mg badge m-1  cursor-pointer bg-primary font-medium text-white hover:brightness-75"
+          className=" badge-base badge badge-md m-1  cursor-pointer bg-primary font-medium text-white hover:brightness-75"
         >
           {tag}
         </span>
