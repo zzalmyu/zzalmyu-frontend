@@ -31,12 +31,12 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
     if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
   };
 
-  const handleClickTagName = (tagIndex: number) => {
+  const handleClickTagName = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
     onSelectTagName(tags[tagIndex]);
   };
 
-  const handleMouseOverTag = (tagIndex: number) => {
+  const handleMouseOverTag = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
     ulRef.current?.focus();
   };
@@ -65,8 +65,8 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
             className={cn(
               `${index === cursorIndex && "bg-gray-200 font-bold"}  box-border rounded-md px-1.5 py-2`,
             )}
-            onMouseOver={() => handleMouseOverTag(index)}
-            onClick={() => handleClickTagName(index)}
+            onMouseOver={handleMouseOverTag(index)}
+            onClick={handleClickTagName(index)}
           >
             <div>{tag}</div>
           </li>
