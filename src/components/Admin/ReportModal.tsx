@@ -43,7 +43,10 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
               <tbody>
                 {reportUsers.map(({ date, userEmail }, index) => {
                   return (
-                    <tr key={index} className="border-b-2 border-neutral-300 last:border-0">
+                    <tr
+                      key={`${index}-${userEmail}`}
+                      className="border-b-2 border-neutral-300 last:border-0"
+                    >
                       <td className="text-center font-bold">{date.slice(0, 10)}</td>
                       <td className="text-center font-bold">{userEmail}</td>
                     </tr>
