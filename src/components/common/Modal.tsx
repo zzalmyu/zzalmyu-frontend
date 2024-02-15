@@ -21,7 +21,7 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
   const MODAL_HEIGHT_VARIANTS = {
     sm: "min-h-[15rem] sm:min-h-[15rem]",
     base: "min-h-[23rem] sm:min-h-[23rem]",
-    lg: "min-h-[30rem] sm:min-h-[40rem]",
+    lg: "min-h-[30rem] sm:min-h-[35rem]",
   };
   return (
     // TODO: [2024.02.14] text-primary, text-secondary prettier 에러 해결

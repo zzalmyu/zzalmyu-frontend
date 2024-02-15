@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
-import ReportModal from "@/components/admin/ReportModal";
+import ReportModal from "@/components/Admin/ReportModal";
 
 const Admin = () => {
   const modalOverlay = useOverlay();
