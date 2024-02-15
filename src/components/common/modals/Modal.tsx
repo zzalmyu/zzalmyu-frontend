@@ -3,18 +3,19 @@ import { cn } from "@/utils/tailwind";
 import ModalHeader from "./ModalHeader";
 import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
+import ModalProvider from "./ModalProvider";
 
 const MODAL_PADDING_VARIANTS = {
-  sm: "py-[1.5rem] px-[0.5rem]",
-  base: "p-[3rem]",
+  sm: "py-24pxr px-8pxr",
+  base: "p-48pxr",
 };
 const MODAL_WIDTH_VARIANTS = {
-  sm: "w-[22rem] sm:w-[33rem]",
-  base: "w-[22rem] sm:w-[37rem]",
+  sm: "w-352pxr sm:w-528pxr",
+  base: "w-352pxr sm:w-592pxr",
 };
 const MODAL_HEIGHT_VARIANTS = {
-  sm: "min-h-[15rem] sm:min-h-[15rem]",
-  base: "min-h-[23rem] sm:min-h-[23rem]",
+  sm: "min-h-240pxr sm:min-h-240pxr",
+  base: "min-h-368pxr sm:min-h-368pxr",
 };
 interface Props {
   children: ReactNode;
@@ -30,7 +31,7 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
 
   return (
     isOpen && (
-      <>
+      <ModalProvider onClose={onClose}>
         <div
           // eslint-disable-next-line prettier/prettier
           className="overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40"
@@ -41,14 +42,14 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
               MODAL_HEIGHT_VARIANTS[size],
               MODAL_WIDTH_VARIANTS[size],
               MODAL_PADDING_VARIANTS[size],
-              "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[2rem] bg-background text-text-primary",
+              "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-32pxr bg-background text-text-primary",
             )}
             onClick={handleClickModal}
           >
             {children}
           </div>
         </div>
-      </>
+      </ModalProvider>
     )
   );
 };
