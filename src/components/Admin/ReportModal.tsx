@@ -51,7 +51,7 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
         </div>
         <div className="flex justify-center">
           <button className="btn fixed bottom-10 w-48 rounded-full bg-delete hover:bg-delete hover:opacity-75">
-            <Trash2 color="#FFFF" strokeWidth={2} />
+            <Trash2 color="#FFFF" strokeWidth={2} aria-label="제거 아이콘" />
             <span className="text-white">제거하기</span>
           </button>
         </div>
