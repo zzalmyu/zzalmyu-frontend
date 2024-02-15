@@ -1,44 +1,21 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-
+import { cn } from "@/utils/tailwind";
 interface Props {
   tags: string[];
 }
 
+const MAX_TAG_PER_GROUP = 3;
+
 const TagNavigator = ({ tags }: Props) => {
-  const MAX_TAGS = 3;
   const [currentGroup, setCurrentGroup] = useState(1);
-  const maxGroup = Math.ceil(tags.length / MAX_TAGS);
-  const startIndex = (currentGroup - 1) * MAX_TAGS;
-  const endIndex = startIndex + MAX_TAGS;
+  const maxGroup = Math.ceil(tags.length / MAX_TAG_PER_GROUP);
+  const startIndex = (currentGroup - 1) * MAX_TAG_PER_GROUP;
+  const endIndex = startIndex + MAX_TAG_PER_GROUP;
   const currentGroupTags = tags.slice(startIndex, endIndex);
 
   const handleClickPrevious = () => setCurrentGroup((prevGroup) => prevGroup - 1);
   const handleClickNext = () => setCurrentGroup((prevGroup) => prevGroup + 1);
-
-  const renderTagItems = () => (
-    <div className="flex flex-wrap justify-center">
-      {currentGroupTags.map((tag, index) => (
-        <span
-          key={`${index}-${tag}`}
-          className=" badge-base badge badge-md mx-2 my-1 cursor-pointer bg-primary font-medium text-white hover:brightness-75"
-        >
-          {tag}
-        </span>
-      ))}
-    </div>
-  );
-
-  const renderIndicator = (
-    <div className="mt-2 flex justify-center">
-      {Array.from({ length: maxGroup }, (_, index) => (
-        <div
-          key={index}
-          className={`m-2 h-2 w-2 rounded-full bg-neutral ${currentGroup === index + 1 && "scale-150"}`}
-        />
-      ))}
-    </div>
-  );
 
   return (
     <div className="relative">
@@ -50,7 +27,16 @@ const TagNavigator = ({ tags }: Props) => {
             aria-label="이전으로 이동"
           />
         )}
-        {renderTagItems()}
+        <div className="flex flex-wrap justify-center">
+          {currentGroupTags.map((tag, index) => (
+            <span
+              key={`${index}-${tag}`}
+              className=" badge-base badge badge-md mx-2 my-1 cursor-pointer bg-primary font-medium text-white hover:brightness-75"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
         {currentGroup < maxGroup && (
           <ChevronRight
             onClick={handleClickNext}
@@ -59,7 +45,18 @@ const TagNavigator = ({ tags }: Props) => {
           />
         )}
       </div>
-      {tags.length > MAX_TAGS && renderIndicator}
+      {tags.length > MAX_TAG_PER_GROUP && (
+        <div className="mt-2 flex justify-center">
+          {Array.from({ length: maxGroup }, (_, index) => (
+            <div
+              key={`${index}-indicator`}
+              className={cn("m-2", "h-2", "w-2", "rounded-full", "bg-neutral", {
+                "scale-150": currentGroup === index + 1,
+              })}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

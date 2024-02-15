@@ -1,4 +1,4 @@
-import ImageController from "./ImageMenuBar";
+import ImageMenuBar from "./ImageMenuBar";
 import TagNavigator from "./TagNavigator";
 import ZzalCard from "@/components/common/ZzalCard";
 import Modal from "@/components/common/Modal";
@@ -30,7 +30,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         <div className="my-5 flex justify-center">
           <div className="relative flex">
             <ZzalCard src={ZZALCARD_SRC} alt={ZZALCARD_ALT} />
-            <ImageController />
+            <ImageMenuBar />
           </div>
         </div>
       </Modal.Body>
