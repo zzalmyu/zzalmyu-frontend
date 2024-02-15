@@ -8,20 +8,23 @@ import ModalProvider from "./ModalProvider";
 const MODAL_PADDING_VARIANTS = {
   sm: "py-24pxr px-8pxr",
   base: "p-48pxr",
+  lg: "p-48pxr",
 };
 const MODAL_WIDTH_VARIANTS = {
   sm: "w-352pxr sm:w-528pxr",
   base: "w-352pxr sm:w-592pxr",
+  lg: "w-352pxr sm:w-960pxr ",
 };
 const MODAL_HEIGHT_VARIANTS = {
   sm: "min-h-240pxr sm:min-h-240pxr",
   base: "min-h-368pxr sm:min-h-368pxr",
+  lg: "min-h-560pxr sm:min-h-560pxr",
 };
 interface Props {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  size?: "sm" | "base";
+  size?: "sm" | "base" | "lg";
 }
 
 const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
