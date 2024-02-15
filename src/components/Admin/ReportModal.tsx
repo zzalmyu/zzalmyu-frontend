@@ -23,6 +23,10 @@ const reportUsers = [
 ];
 
 const ReportModal = ({ isOpen, onClose }: Props) => {
+  const reportDate = (date: string) => {
+    return date.slice(0, 10);
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="lg">
       <Modal.Body>
@@ -41,17 +45,15 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {reportUsers.map(({ date, userEmail }, index) => {
-                  return (
-                    <tr
-                      key={`${index}-${userEmail}`}
-                      className="border-b-2 border-neutral-300 last:border-0"
-                    >
-                      <td className="text-center font-bold">{date.slice(0, 10)}</td>
-                      <td className="text-center font-bold">{userEmail}</td>
-                    </tr>
-                  );
-                })}
+                {reportUsers.map(({ date, userEmail }, index) => (
+                  <tr
+                    key={`${index}-${userEmail}`}
+                    className="border-b-2 border-neutral-300 last:border-0"
+                  >
+                    <td className="text-center font-bold">{reportDate(date)}</td>
+                    <td className="text-center font-bold">{userEmail}</td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
