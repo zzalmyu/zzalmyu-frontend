@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, KeyboardEvent } from "react";
 import { cn } from "@/utils/tailwind";
 
 interface Props {
@@ -10,7 +10,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
   const [cursorIndex, setCursorIndex] = useState(0);
   const ulRef = useRef<HTMLUListElement>(null);
 
-  const handleKeydownTagFocus = (event: React.KeyboardEvent<HTMLUListElement>) => {
+  const handleKeydownTagFocus = (event: KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
 
     if (key === "ArrowUp") {
@@ -25,7 +25,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
     }
   };
 
-  const handleKeyUpTagSelect = (event: React.KeyboardEvent<HTMLUListElement>) => {
+  const handleKeyUpTagSelect = (event: KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
 
     if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
