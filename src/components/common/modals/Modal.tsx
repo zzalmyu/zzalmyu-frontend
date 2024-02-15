@@ -41,7 +41,7 @@ const Modal = ({ children, isOpen, onClose, size = "base" }: Props) => {
               MODAL_HEIGHT_VARIANTS[size],
               MODAL_WIDTH_VARIANTS[size],
               MODAL_PADDING_VARIANTS[size],
-              "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[32pxr] bg-background text-text-primary",
+              "fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-[2rem] bg-background text-text-primary",
             )}
             onClick={handleClickModal}
           >
