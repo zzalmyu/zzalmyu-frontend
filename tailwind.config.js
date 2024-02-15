@@ -30,7 +30,7 @@ export default {
         neutral: "#535353",
         primary: "#246FFF",
         secondary: "var(--secondary)",
-        "text-primary": "var(--text-primary)",
+        "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
         "text-secondary": "var(--text-secondary)",
         surface1: "var(--surface1)",
         surface2: "var(--surface2)",
@@ -52,7 +52,7 @@ export default {
           ...require("daisyui/src/theming/themes")["[data-theme=light]"],
 
           "--secondary": "#E2F4FF",
-          "--text-primary": "#000000",
+          "--text-primary": "0 0 0",
           "--text-secondary": "#535353",
           "--surface1": "#78C6FF",
           "--surface2": "#FFB015",
@@ -65,7 +65,7 @@ export default {
         dark: {
           ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
           "--secondary": "#2600BD",
-          "--text-primary": "#FFFFFF",
+          "--text-primary": "255 255 255",
           "--text-secondary": "#8EB4FF",
           "--surface1": "#552AFF",
           "--surface2": "#B2B9FF",
