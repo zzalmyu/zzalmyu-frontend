@@ -22,9 +22,10 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   ];
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal.Header hasCloseButton={true}> </Modal.Header>
       <Modal.Body>
         <TagNavigator tags={tags} />
-        <div className="my-10 flex justify-center">
+        <div className="my-5 flex justify-center">
           <div className="relative flex">
             <ZzalCard src={src} alt={alt} />
             <ImageController />
