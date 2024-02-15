@@ -6,6 +6,13 @@ const range = (start, end) => {
   return Array.from({ length: end - start + 1 }, (_, index) => index + start);
 };
 
+const getPxrSystem = () => {
+  return range(1, 1400).reduce((accumulate, px) => {
+    accumulate[`${px}pxr`] = pxToRem(px);
+    return accumulate;
+  }, {});
+};
+
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
@@ -20,10 +27,10 @@ export default {
   theme: {
     extend: {
       spacing: {
-        ...range(1, 1400).reduce((accumulate, px) => {
-          accumulate[`${px}pxr`] = pxToRem(px);
-          return accumulate;
-        }, {}),
+        ...getPxrSystem(),
+      },
+      borderRadius: {
+        ...getPxrSystem(),
       },
       colors: {
         white: "#FFFFFF",
@@ -42,9 +49,6 @@ export default {
         toolbar: "var(--toolbar)",
         delete: "#ED0000",
         tag: "#570DF8",
-      },
-      borderRadius: {
-        "4xl": "2rem",
       },
     },
   },
