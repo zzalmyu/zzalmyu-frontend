@@ -11,7 +11,7 @@ interface Props {
 const LoginModal = ({ isOpen, onClose }: Props) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <Modal.Header hasCloseButton={true}>로그인</Modal.Header>
+      <Modal.Header>로그인</Modal.Header>
       <Modal.Body>
         <div className="flex flex-col items-center gap-3">
           <a href="/oauth2/authorization/google">
