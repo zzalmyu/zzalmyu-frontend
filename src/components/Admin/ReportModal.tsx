@@ -8,14 +8,18 @@ interface Props {
 }
 
 const reportUsers = [
-  { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-08 23:03:20", UserEmail: "heejin1@asdf.com" },
-  { Date: "2024-02-07 10:01:00", UserEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
 ];
 
 const ReportModal = ({ isOpen, onClose }: Props) => {
@@ -37,11 +41,11 @@ const ReportModal = ({ isOpen, onClose }: Props) => {
                 </tr>
               </thead>
               <tbody>
-                {reportUsers.map((reportUser, index) => {
+                {reportUsers.map(({ date, userEmail }, index) => {
                   return (
                     <tr key={index} className="border-b-2 border-neutral-300 last:border-0">
-                      <td className="text-center font-bold">{reportUser.Date.slice(0, 10)}</td>
-                      <td className="text-center font-bold">{reportUser.UserEmail}</td>
+                      <td className="text-center font-bold">{date.slice(0, 10)}</td>
+                      <td className="text-center font-bold">{userEmail}</td>
                     </tr>
                   );
                 })}
