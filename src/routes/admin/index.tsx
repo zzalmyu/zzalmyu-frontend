@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
+import ReportedImageList from "@/components/Admin/ReportedImageList";
 
 const Admin = () => {
-  return <div>관리자 페이지</div>;
+  return (
+    <div>
+      <ReportedImageList />
+    </div>
+  );
 };
 
 export const Route = createFileRoute("/admin/")({
