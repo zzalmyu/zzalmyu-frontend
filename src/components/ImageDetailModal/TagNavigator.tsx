@@ -50,9 +50,10 @@ const TagNavigator = ({ tags }: Props) => {
           {Array.from({ length: maxGroup }, (_, index) => (
             <div
               key={`${index}-indicator`}
-              className={cn("m-2", "h-2", "w-2", "rounded-full", "bg-neutral", {
+              className={cn("m-2", "h-2", "w-2", "rounded-full", "bg-neutral", "cursor-pointer", {
                 "scale-150": currentGroup === index + 1,
               })}
+              onClick={() => setCurrentGroup(index + 1)}
             />
           ))}
         </div>
