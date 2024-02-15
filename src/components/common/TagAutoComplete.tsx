@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { cn } from "@/utils/tailwind";
 
 interface Props {
   tags: Array<string>;
@@ -61,7 +62,9 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
         tags.map((tag, index) => (
           <li
             key={`${index}-${tag}`}
-            className={`${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`}
+            className={cn(
+              `${index === cursorIndex && "bg-gray-200 font-bold"}  box-border rounded-md px-1.5 py-2`,
+            )}
             onMouseOver={() => handleMouseOverSetCursorIndex(index)}
             onClick={() => handleClickTagName(index)}
           >
