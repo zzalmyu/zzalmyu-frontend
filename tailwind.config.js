@@ -1,23 +1,44 @@
 /** @type {import('tailwindcss').Config} */
+
+const pxToRem = (px, base = 16) => `${px / base}rem`;
+
+const range = (start, end) => {
+  return Array.from({ length: end - start + 1 }, (_, index) => index + start);
+};
+
+const getPxrSystem = () => {
+  return range(1, 1400).reduce((accumulate, px) => {
+    accumulate[`${px}pxr`] = pxToRem(px);
+    return accumulate;
+  }, {});
+};
+
 export default {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
   safelist: [
+    { pattern: /rounded-/ },
     { pattern: /w-/ },
-    { 
-      pattern: 
-        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/, 
+    {
+      pattern:
+        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/,
     },
     { pattern: /text-(text-primary|text-secondary|white|black|neutral)/ },
   ],
   theme: {
     extend: {
+      spacing: {
+        ...getPxrSystem(),
+      },
+      borderRadius: {
+        ...getPxrSystem(),
+      },
       colors: {
         white: "#FFFFFF",
         black: "#000000",
         neutral: "#535353",
         primary: "#246FFF",
         secondary: "var(--secondary)",
-        "text-primary": "var(--text-primary)",
+        "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
         "text-secondary": "var(--text-secondary)",
         surface1: "var(--surface1)",
         surface2: "var(--surface2)",
@@ -39,7 +60,7 @@ export default {
           ...require("daisyui/src/theming/themes")["[data-theme=light]"],
 
           "--secondary": "#E2F4FF",
-          "--text-primary": "#000000",
+          "--text-primary": "0 0 0",
           "--text-secondary": "#535353",
           "--surface1": "#78C6FF",
           "--surface2": "#FFB015",
@@ -52,7 +73,7 @@ export default {
         dark: {
           ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
           "--secondary": "#2600BD",
-          "--text-primary": "#FFFFFF",
+          "--text-primary": "255 255 255",
           "--text-secondary": "#8EB4FF",
           "--surface1": "#552AFF",
           "--surface2": "#B2B9FF",

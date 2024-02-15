@@ -1,6 +1,6 @@
 import { AlertTriangle, Check, Trash2 } from "lucide-react";
 import { MutationFunction, useMutation } from "@tanstack/react-query";
-import Modal from "@/components/common/Modal";
+import Modal from "@/components/common/modals/Modal";
 
 const ALERT_CONTENTS = {
   main: "정말로 이 사진을 제거하시겠습니까?",
