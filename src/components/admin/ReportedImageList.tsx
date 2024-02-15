@@ -1,43 +1,27 @@
-interface ReportedImageList {
-  imageId: string;
-  reportCount: number;
-  createdAt: string;
-}
-
 const ReportedImageList = () => {
   const reportLists = [
     {
       id: "1",
-      created_at: "2024-02-08 23:03:20",
-      image_id: "image1",
-      report_user_id: "heejin1@asdf.com",
+      createdAt: "2024-02-08 23:03:20",
+      imageId: "image1",
+      reportUserId: "heejin1@asdf.com",
+      reportCount: 3,
     },
     {
       id: "2",
-      created_at: "2024-02-07 10:01:00",
-      image_id: "image1",
-      report_user_id: "heejin1@asdf.com",
+      createdAt: "2024-02-08 23:03:20",
+      imageId: "image2",
+      reportUserId: "heejin1@asdf.com",
+      reportCount: 3,
     },
     {
       id: "3",
-      created_at: "2024-02-06 10:01:00",
-      image_id: "image2",
-      report_user_id: "heejin1@asdf.com",
+      createdAt: "2024-02-08 23:03:20",
+      imageId: "image2",
+      reportUserId: "heejin1@asdf.com",
+      reportCount: 4,
     },
   ];
-
-  const reportedImages: ReportedImageList[] = [];
-
-  reportLists.forEach((reportedImage) => {
-    const imageId = reportedImage.image_id;
-    const createdAt = reportedImage.created_at;
-    const existingItem = reportedImages.find(
-      (reportedImageObj) => reportedImageObj.imageId === imageId,
-    );
-    existingItem
-      ? (existingItem.reportCount += 1)
-      : reportedImages.push({ imageId, reportCount: 1, createdAt });
-  });
 
   const handleClickOpen = (imageId: string) => {
     console.log(`${imageId}에 해당하는 모달을 띄워줘야 합니다.`);
@@ -45,7 +29,7 @@ const ReportedImageList = () => {
 
   return (
     <div>
-      <div className="pb-5 text-lg font-bold">신고된 사진 리스트</div>
+      <div className="pb-5 text-lg font-bold">신고 내역</div>
       <table className="table">
         <thead>
           <tr className="border-0 bg-card">
@@ -56,7 +40,7 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {reportedImages.map((reportedImage, index) => {
+          {reportLists.map((reportedImage, index) => {
             return (
               <tr key={index} className="border-b-1 border-card last:border-0">
                 <td className="text-center text-text-primary">
