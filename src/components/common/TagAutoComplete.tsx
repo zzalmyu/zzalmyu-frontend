@@ -54,11 +54,12 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
       onBlur={() => setCursorIndex(-1)}
       tabIndex={0}
     >
-      {tags.length === 0 ? (
+      {tags.length === 0 && (
         <li className="rounded-md px-1.5">
           <div>검색 결과가 없습니다</div>
         </li>
-      ) : (
+      )}
+      {tags.length > 0 &&
         tags.map((tag, index) => (
           <li
             key={`${index}-${tag}`}
@@ -70,8 +71,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
           >
             <div>{tag}</div>
           </li>
-        ))
-      )}
+        ))}
     </ul>
   );
 };
