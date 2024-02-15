@@ -7,7 +7,7 @@ interface ReportedImageList {
 }
 
 const ReportedImageList = () => {
-  const reportData = [
+  const reportLists = [
     {
       id: "1",
       created_at: "2024-02-08 23:03:20",
@@ -28,15 +28,17 @@ const ReportedImageList = () => {
     },
   ];
 
-  const reportedImage: ReportedImageList[] = [];
+  const reportedImages: ReportedImageList[] = [];
 
-  reportData.forEach((item) => {
-    const imageId = item.image_id;
-    const createdAt = item.created_at;
-    const existingItem = reportedImage.find((obj) => obj.imageId === imageId);
+  reportLists.forEach((reportedImage) => {
+    const imageId = reportedImage.image_id;
+    const createdAt = reportedImage.created_at;
+    const existingItem = reportedImages.find(
+      (reportedImageObj) => reportedImageObj.imageId === imageId,
+    );
     existingItem
       ? (existingItem.reportCount += 1)
-      : reportedImage.push({ imageId, reportCount: 1, createdAt });
+      : reportedImages.push({ imageId, reportCount: 1, createdAt });
   });
 
   return (
@@ -52,14 +54,16 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {reportedImage.map((item, index) => {
+          {reportedImages.map((reportedImage, index) => {
             return (
               <tr key={index} className="border-b-1 border-card last:border-0">
-                <td className="text-center text-text-primary">{item.createdAt.slice(0, 10)}</td>
-                <td className="text-center text-text-primary">{item.imageId}</td>
-                <td className="text-center text-text-primary">{item.reportCount}</td>
                 <td className="text-center text-text-primary">
-                  <ReportedDetailButton imageId={item.imageId} />
+                  {reportedImage.createdAt.slice(0, 10)}
+                </td>
+                <td className="text-center text-text-primary">{reportedImage.imageId}</td>
+                <td className="text-center text-text-primary">{reportedImage.reportCount}</td>
+                <td className="text-center text-text-primary">
+                  <ReportedDetailButton imageId={reportedImage.imageId} />
                 </td>
               </tr>
             );
