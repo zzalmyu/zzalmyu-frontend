@@ -11,7 +11,7 @@ const ModalHeader = ({ hasCloseButton = false, children }: Props) => {
       <div className="flex justify-center">{children}</div>
       {hasCloseButton && (
         <button
-          className="absolute rounded-[50%] bg-transparent hover:bg-neutral-300"
+          className="absolute -right-30pxr -top-30pxr h-40pxr w-40pxr rounded-full bg-transparent transition-colors hover:bg-neutral-300"
           aria-label="모달 닫기"
         >
           ✕
