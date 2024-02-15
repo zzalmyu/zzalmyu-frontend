@@ -1,3 +1,5 @@
+// index.tsx
+
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
