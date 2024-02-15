@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
-  tags: { [key: string]: string }[];
+  tags: Array<string>;
   onSelectTagName: (tagName: string) => void;
 }
 
@@ -27,12 +27,12 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
   const handleKeyUpTagSelect = (event: React.KeyboardEvent<HTMLUListElement>) => {
     const { key } = event;
 
-    if (key === "Enter") return onSelectTagName(tags[cursorIndex].tagName);
+    if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
   };
 
   const handleClickTagName = (tagIndex: number) => {
     setCursorIndex(tagIndex);
-    onSelectTagName(tags[tagIndex].tagName);
+    onSelectTagName(tags[tagIndex]);
   };
 
   const handleMouseOverSetCursorIndex = (tagIndex: number) => {
@@ -58,14 +58,14 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
           <div>검색 결과가 없습니다</div>
         </li>
       ) : (
-        tags.map(({ tagName }, index) => (
+        tags.map((tag, index) => (
           <li
             key={index}
             className={`${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`}
             onMouseOver={() => handleMouseOverSetCursorIndex(index)}
             onClick={() => handleClickTagName(index)}
           >
-            <div>{tagName}</div>
+            <div>{tag}</div>
           </li>
         ))
       )}
