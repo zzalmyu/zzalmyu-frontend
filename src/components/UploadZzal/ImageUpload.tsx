@@ -91,7 +91,7 @@ const ImageUpload = ({ onChange }: Props) => {
           ✕
         </button>
       )}
-      {!previewUrl ? (
+      {!previewUrl && (
         <Fragment>
           <Upload aria-label="업로드하기" size={72} />
           <div className={`hidden text-center sm:block`}>
@@ -106,9 +106,8 @@ const ImageUpload = ({ onChange }: Props) => {
             onChange={handleFileChange}
           />
         </Fragment>
-      ) : (
-        <ZzalCard src={previewUrl ? previewUrl : ""} alt={""} width={320} />
       )}
+      {previewUrl && <ZzalCard src={previewUrl} alt="업로드 사진" width={320} />}
     </div>
   );
 };
