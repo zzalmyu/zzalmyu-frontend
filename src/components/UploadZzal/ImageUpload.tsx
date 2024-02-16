@@ -1,12 +1,14 @@
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useRef, useState, DragEvent } from "react";
 import { Upload } from "lucide-react";
-import ZzalCard from "../common/ZzalCard";
+import { cn } from "@/utils/tailwind";
+import ZzalCard from "@/components/common/ZzalCard";
 
+type DivDragEvent = DragEvent<HTMLDivElement>;
 interface Props {
   onChange: (file: File | null) => void;
 }
+
 const ImageUpload = ({ onChange }: Props) => {
-  // const [file, setFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -33,41 +35,40 @@ const ImageUpload = ({ onChange }: Props) => {
     }
   };
 
-  const handleDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragEnter = (event: DivDragEvent) => {
     event.preventDefault();
-
     if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
       setDragging(true);
     }
   };
-  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragLeave = (event: DivDragEvent) => {
     event.preventDefault();
-
     setDragging(false);
   };
-  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleDragOver = (event: DivDragEvent) => {
     event.preventDefault();
     event.stopPropagation();
   };
-  const handleFileDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const handleFileDrop = (event: DivDragEvent) => {
     event.preventDefault();
     event.stopPropagation();
-
     if (event.dataTransfer) {
-      const files = event.dataTransfer.files;
-      const changedFile = files[0];
+      const [changedFile] = event.dataTransfer.files;
       onChange(changedFile);
       if (changedFile) {
         setPreviewUrl(URL.createObjectURL(changedFile));
       }
     }
-
     setDragging(false);
   };
 
   return (
     <div
-      className={`relative flex h-400pxr w-320pxr ${!previewUrl && "cursor-pointer"} flex-col items-center justify-center gap-50pxr overflow-clip rounded-[32px] border-4 border-dashed text-2xl font-bold ${dragging ? "border-primary text-primary" : "border-text-secondary text-text-secondary"} transition-colors hover:text-primary`}
+      className={cn(
+        !previewUrl && "cursor-pointer",
+        dragging ? "border-primary text-primary" : "border-text-secondary text-text-secondary",
+        "relative flex h-400pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-[32px] border-4 border-dashed text-2xl font-bold  transition-colors hover:text-primary",
+      )}
       onClick={handleChooseFile}
       onDrop={handleFileDrop}
       onDragEnter={handleDragEnter}
@@ -78,13 +79,14 @@ const ImageUpload = ({ onChange }: Props) => {
         <button
           className="absolute right-7pxr top-7pxr z-10 h-30pxr w-30pxr rounded-full bg-neutral pb-1pxr pl-1pxr text-base text-text-primary outline outline-transparent transition-[outline] hover:outline-delete"
           onClick={handleClickDeleteButton}
+          aria-label="사진 제거하기"
         >
           ✕
         </button>
       )}
       {!previewUrl ? (
         <Fragment>
-          <Upload aria-label="업로드 아이콘" size={72} />
+          <Upload aria-label="업로드하기" size={72} />
           <div className={`hidden text-center sm:block`}>
             사진을 선택하거나 <br /> 여기로 끌어다 놓으세요
           </div>
