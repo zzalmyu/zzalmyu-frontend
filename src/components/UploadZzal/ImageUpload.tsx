@@ -1,4 +1,4 @@
-import { Fragment, useRef, useState, DragEvent } from "react";
+import { Fragment, useRef, useState, DragEvent, ChangeEvent } from "react";
 import { Upload } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import ZzalCard from "@/components/common/ZzalCard";
@@ -18,10 +18,10 @@ const ImageUpload = ({ onChange }: Props) => {
     setPreviewUrl(null);
   };
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      const files = event.target.files;
-      const changedFile = files[0];
+  const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const { files } = event.target;
+    if (files) {
+      const [changedFile] = files;
       onChange(changedFile);
       if (changedFile) {
         setPreviewUrl(URL.createObjectURL(changedFile));
@@ -37,23 +37,30 @@ const ImageUpload = ({ onChange }: Props) => {
 
   const handleDragEnter = (event: DivDragEvent) => {
     event.preventDefault();
-    if (event.dataTransfer.items && event.dataTransfer.items.length > 0) {
+
+    const { items } = event.dataTransfer;
+    if (items && items.length > 0) {
       setDragging(true);
     }
   };
+
   const handleDragLeave = (event: DivDragEvent) => {
     event.preventDefault();
     setDragging(false);
   };
+
   const handleDragOver = (event: DivDragEvent) => {
     event.preventDefault();
     event.stopPropagation();
   };
+
   const handleFileDrop = (event: DivDragEvent) => {
     event.preventDefault();
     event.stopPropagation();
-    if (event.dataTransfer) {
-      const [changedFile] = event.dataTransfer.files;
+
+    const { dataTransfer } = event;
+    if (dataTransfer) {
+      const [changedFile] = dataTransfer.files;
       onChange(changedFile);
       if (changedFile) {
         setPreviewUrl(URL.createObjectURL(changedFile));
