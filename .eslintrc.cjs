@@ -83,6 +83,5 @@ module.exports = {
         pathGroupsExcludedImportTypes: ["builtin"],
       },
     ],
-    "prettier/prettier": ["error"],
   },
 };
