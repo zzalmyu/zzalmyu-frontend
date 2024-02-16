@@ -6,7 +6,7 @@ interface ZzalCardProps {
   src: string;
   alt: string;
   isChatImage?: boolean;
-  width?: number;
+  width?: number | string;
 }
 
 const ZzalCard = ({ children, src, alt, width = 72, isChatImage = false }: ZzalCardProps) => {
