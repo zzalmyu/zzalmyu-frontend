@@ -12,11 +12,13 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <OverlayProvider>
-        <RouterProvider router={router} />
-      </OverlayProvider>
-    </QueryClientProvider>
+    <div className="h-[100vh]">
+      <QueryClientProvider client={queryClient}>
+        <OverlayProvider>
+          <RouterProvider router={router} />
+        </OverlayProvider>
+      </QueryClientProvider>
+    </div>
   );
 };
 
