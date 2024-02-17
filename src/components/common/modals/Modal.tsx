@@ -37,7 +37,7 @@ const Modal = ({ children, isOpen, onClose, size = "base", className }: Props) =
     isOpen && (
       <ModalProvider onClose={onClose}>
         <div
-          className={"overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40 "}
+          className="overlay fixed left-0 top-0 z-40 h-[100vh] w-[100vw] bg-text-primary/40 "
           onClick={onClose}
         >
           <div

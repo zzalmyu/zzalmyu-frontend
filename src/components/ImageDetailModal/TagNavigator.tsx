@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/utils/tailwind";
+
 interface Props {
   tags: string[];
 }
@@ -50,7 +51,7 @@ const TagNavigator = ({ tags }: Props) => {
           {Array.from({ length: maxGroup }, (_, index) => (
             <div
               key={`${index}-indicator`}
-              className={cn("m-2", "h-2", "w-2", "rounded-full", "bg-neutral", "cursor-pointer", {
+              className={cn("m-2 h-2 w-2 cursor-pointer rounded-full bg-neutral", {
                 "scale-150": currentGroup === index + 1,
               })}
               onClick={() => setCurrentGroup(index + 1)}

@@ -1,7 +1,6 @@
 import NaverLoginButton from "@/assets/svg/naver-login-btn.svg";
 import KakaoLoginButton from "@/assets/svg/kakao-login-btn.svg";
 import GoogleLoginButton from "@/assets/svg/google-login-btn.svg";
-
 import Modal from "@/components/common/modals/Modal";
 
 interface Props {

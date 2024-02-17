@@ -2,6 +2,7 @@ import ImageMenuBar from "./ImageMenuBar";
 import TagNavigator from "./TagNavigator";
 import ZzalCard from "@/components/common/ZzalCard";
 import Modal from "@/components/common/modals/Modal";
+
 interface Props {
   isOpen: boolean;
   onClose: () => void;
