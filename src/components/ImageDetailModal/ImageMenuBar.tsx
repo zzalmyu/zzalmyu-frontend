@@ -22,7 +22,7 @@ const ImageMenuBar = () => {
           <li key={`${index}-${name}`}>
             <button
               onClick={onClick}
-              className="tooltip tooltip-top sm:tooltip-right"
+              className="tooltip tooltip-top sm:tooltip-right focus:bg-transparent"
               data-tip={name}
             >
               <Icon
