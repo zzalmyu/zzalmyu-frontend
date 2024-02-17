@@ -23,7 +23,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
     "음악",
   ];
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} className="p-40pxr">
       <Modal.Header hasCloseButton={true}> </Modal.Header>
       <Modal.Body>
         <TagNavigator tags={tags} />

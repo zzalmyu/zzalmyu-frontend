@@ -27,7 +27,7 @@ const TagNavigator = ({ tags }: Props) => {
             aria-label="이전으로 이동"
           />
         )}
-        <div className="flex flex-wrap justify-center">
+        <div className="flex flex-wrap justify-center px-10">
           {currentGroupTags.map((tag, index) => (
             <span
               key={`${index}-${tag}`}
