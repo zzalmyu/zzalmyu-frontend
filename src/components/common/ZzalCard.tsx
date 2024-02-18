@@ -5,18 +5,18 @@ interface ZzalCardProps {
   children?: ReactNode;
   src: string;
   alt: string;
-  isChatImage?: boolean;
-  width?: number;
+  hasAnimation?: boolean;
+  width?: number | string;
 }
 
-const ZzalCard = ({ children, src, alt, width = 72, isChatImage = false }: ZzalCardProps) => {
+const ZzalCard = ({ children, src, alt, width = 72, hasAnimation = true }: ZzalCardProps) => {
   return (
     <div className={`group relative w-${width} rounded-lg bg-base-100 shadow-xl`}>
       <div className="button-container absolute right-2 top-1 z-10 w-fit opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
         {children}
       </div>
       <figure
-        className={`${isChatImage ? "none" : "transition duration-300 ease-in-out hover:brightness-75"}`}
+        className={`${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`}
       >
         <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
       </figure>
