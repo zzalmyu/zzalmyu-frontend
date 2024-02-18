@@ -16,6 +16,7 @@ import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as MyUploadedZzalIndexImport } from "./routes/my-uploaded-zzal/index"
 import { Route as MyLikedZzalIndexImport } from "./routes/my-liked-zzal/index"
 import { Route as AdminIndexImport } from "./routes/admin/index"
+import { Route as AdminImageDetailIndexImport } from "./routes/admin-image-detail/index"
 
 // Create/Update Routes
 
@@ -44,12 +45,21 @@ const AdminIndexRoute = AdminIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const AdminImageDetailIndexRoute = AdminImageDetailIndexImport.update({
+  path: "/admin-image-detail/",
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
     "/": {
       preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    "/admin-image-detail/": {
+      preLoaderRoute: typeof AdminImageDetailIndexImport
       parentRoute: typeof rootRoute
     }
     "/admin/": {
@@ -75,6 +85,7 @@ declare module "@tanstack/react-router" {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
+  AdminImageDetailIndexRoute,
   AdminIndexRoute,
   MyLikedZzalIndexRoute,
   MyUploadedZzalIndexRoute,
