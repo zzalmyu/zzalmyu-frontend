@@ -1,3 +1,7 @@
+import { useState } from "react";
+import { Link } from "@tanstack/react-router";
+import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
+
 const reports = [
   {
     id: "1",
@@ -20,16 +24,30 @@ const reports = [
     reportUserId: "heejin1@asdf.com",
     reportCount: 4,
   },
+  {
+    id: "4",
+    createdAt: "2024-02-08 23:03:20",
+    imageId: "image4",
+    reportUserId: "heejin1@asdf.com",
+    reportCount: 100,
+  },
+  {
+    id: "5",
+    createdAt: "2024-02-08 23:03:20",
+    imageId: "image5",
+    reportUserId: "heejin1@asdf.com",
+    reportCount: 12,
+  },
 ];
 
 const ReportedImageList = () => {
-  const handleClickDetailViewButton = (imageId: string) => () => {
-    console.log(`${imageId}에 해당하는 모달을 띄워줘야 합니다.`);
+  const [showAllReports, setShowAllReports] = useState(false);
+  const toggleShowAllReports = () => {
+    setShowAllReports((prevShowAllReports: boolean) => !prevShowAllReports);
   };
 
   return (
-    <div>
-      <div className="pb-5 text-lg font-bold">신고 내역</div>
+    <div className="flex flex-col items-center">
       <table className="table">
         <thead>
           <tr className="border-0 bg-card">
@@ -40,26 +58,42 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {reports.map(({ createdAt, imageId, reportCount }, index) => {
-            const createdDate = createdAt.slice(0, 10);
-            return (
-              <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
-                <td className="text-center text-text-primary">{createdDate}</td>
-                <td className="text-center text-text-primary">{imageId}</td>
-                <td className="text-center text-text-primary">{reportCount}</td>
-                <td className="text-center text-text-primary">
-                  <button
-                    className="btn btn-neutral btn-sm text-xs"
-                    onClick={handleClickDetailViewButton(imageId)}
-                  >
-                    상세보기
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+          {reports
+            .slice(0, showAllReports ? reports.length : 3)
+            .map(({ createdAt, imageId, reportCount }, index) => {
+              const createdDate = createdAt.slice(0, 10);
+              return (
+                <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
+                  <td className="text-center text-text-primary">{createdDate}</td>
+                  <td className="text-center text-text-primary">{imageId}</td>
+                  <td className="text-center text-text-primary">{reportCount}</td>
+                  <td className="text-center text-text-primary">
+                    <Link to="/admin-image-detail/">
+                      <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
+      {showAllReports ? (
+        <ArrowUpCircle
+          size={35}
+          strokeWidth={1.5}
+          className="m-12 cursor-pointer"
+          onClick={toggleShowAllReports}
+          aria-label="리스트 더보기"
+        />
+      ) : (
+        <ArrowDownCircle
+          size={35}
+          strokeWidth={1.5}
+          className="m-12 cursor-pointer"
+          onClick={toggleShowAllReports}
+          aria-label="리스트 축소하기"
+        />
+      )}
     </div>
   );
 };
