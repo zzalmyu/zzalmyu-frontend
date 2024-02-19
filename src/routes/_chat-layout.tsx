@@ -15,7 +15,7 @@ function ChatLayoutComponent() {
   return (
     <>
       <div className="flex flex-1 items-stretch transition duration-500">
-        <section className="relative w-full flex-1 border-2 border-green-500 ">
+        <section className="relative w-full flex-1">
           <div className="absolute bottom-15pxr right-15pxr">
             <ChatToggleButton />
           </div>
