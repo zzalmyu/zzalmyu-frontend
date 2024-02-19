@@ -14,7 +14,7 @@ function ChatLayoutComponent() {
   const [shouldRenderCategory, handleTransitionEnd, triggerAnimation] = useAnimation(isChatOpen);
   return (
     <>
-      <div className="flex flex-1 items-stretch transition duration-500">
+      <div className="flex flex-1 items-stretch overflow-x-hidden transition duration-500">
         <section className="relative w-full flex-1">
           <div className="absolute bottom-15pxr right-15pxr">
             <ChatToggleButton />
@@ -26,7 +26,7 @@ function ChatLayoutComponent() {
             onTransitionEnd={handleTransitionEnd}
             className={cn(
               "flex-[0.6] bg-secondary p-20pxr transition-[all] duration-500",
-              !triggerAnimation && " flex-[0.000001]",
+              !triggerAnimation && "flex-[0.000001] translate-x-10",
             )}
           >
             <div className="h-full w-full rounded-16pxr bg-background"></div>
