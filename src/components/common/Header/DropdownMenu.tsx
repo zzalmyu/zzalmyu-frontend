@@ -1,5 +1,7 @@
+import { useRef } from "react";
 import { Home, Heart, FolderUp, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+
 interface Props {
   user: {
     name: string;
@@ -30,17 +32,32 @@ const DropdownMenu = ({ user }: Props) => {
     },
   ];
 
+  const detailsRef = useRef<HTMLDetailsElement>(null);
+
+  const toggleDetails = () => {
+    if (detailsRef.current) {
+      detailsRef.current.open = !detailsRef.current.open;
+    }
+  };
+
   return (
-    <ul className="menu menu-horizontal px-0 ">
+    <ul className="menu menu-horizontal px-0">
       <li>
-        <details>
-          <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent ">
+        <details ref={detailsRef}>
+          <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
             {user.name}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name }, index) => (
-              <li key={`${index}-${name}`} className="group">
-                <Link to={path}>
+              <li key={`${index}-${name}`} className="group" onClick={toggleDetails}>
+                <Link
+                  to={path}
+                  activeProps={{
+                    style: {
+                      background: "transparent",
+                    },
+                  }}
+                >
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} aria-label={name} />
                   </div>
