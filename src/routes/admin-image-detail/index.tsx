@@ -47,6 +47,8 @@ const AdminImageDetail = () => {
             <ZzalCard
               src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9928383A5BBECBB111"
               alt="신고 상세 이미지"
+              width="100"
+              hasAnimation={false}
             />
             <div className="mt-3 flex w-280pxr justify-end rounded-xl  sm:ml-5 sm:mt-0 sm:max-h-96 sm:w-3/5 sm:rounded-xl">
               <table className="table bg-card">

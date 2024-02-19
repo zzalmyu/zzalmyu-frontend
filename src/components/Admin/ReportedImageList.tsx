@@ -42,6 +42,8 @@ const reports = [
 
 const ReportedImageList = () => {
   const [showAllReports, setShowAllReports] = useState(false);
+  const hasReports = reports && reports.length > 0;
+
   const toggleShowAllReports = () => {
     setShowAllReports((prevShowAllReports: boolean) => !prevShowAllReports);
   };
@@ -58,42 +60,51 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {reports
-            .slice(0, showAllReports ? reports.length : 3)
-            .map(({ createdAt, imageId, reportCount }, index) => {
-              const createdDate = createdAt.slice(0, 10);
-              return (
-                <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
-                  <td className="text-center text-text-primary">{createdDate}</td>
-                  <td className="text-center text-text-primary">{imageId}</td>
-                  <td className="text-center text-text-primary">{reportCount}</td>
-                  <td className="text-center text-text-primary">
-                    <Link to="/admin-image-detail/">
-                      <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
+          {hasReports ? (
+            reports
+              .slice(0, showAllReports ? reports.length : 3)
+              .map(({ createdAt, imageId, reportCount }, index) => {
+                const createdDate = createdAt.slice(0, 10);
+                return (
+                  <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
+                    <td className="text-center text-text-primary">{createdDate}</td>
+                    <td className="text-center text-text-primary">{imageId}</td>
+                    <td className="text-center text-text-primary">{reportCount}</td>
+                    <td className="text-center text-text-primary">
+                      <Link to="/admin-image-detail/">
+                        <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
+                      </Link>
+                    </td>
+                  </tr>
+                );
+              })
+          ) : (
+            <tr>
+              <td colSpan={4} className="text-center text-text-primary">
+                신고된 이미지가 없습니다.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
-      {showAllReports ? (
-        <ArrowUpCircle
-          size={35}
-          strokeWidth={1.5}
-          className="m-12 cursor-pointer"
-          onClick={toggleShowAllReports}
-          aria-label="리스트 더보기"
-        />
-      ) : (
-        <ArrowDownCircle
-          size={35}
-          strokeWidth={1.5}
-          className="m-12 cursor-pointer"
-          onClick={toggleShowAllReports}
-          aria-label="리스트 축소하기"
-        />
-      )}
+      {hasReports &&
+        (showAllReports ? (
+          <ArrowUpCircle
+            size={35}
+            strokeWidth={1.5}
+            className="m-12 cursor-pointer"
+            onClick={toggleShowAllReports}
+            aria-label="리스트 더보기"
+          />
+        ) : (
+          <ArrowDownCircle
+            size={35}
+            strokeWidth={1.5}
+            className="m-12 cursor-pointer"
+            onClick={toggleShowAllReports}
+            aria-label="리스트 축소하기"
+          />
+        ))}
     </div>
   );
 };
