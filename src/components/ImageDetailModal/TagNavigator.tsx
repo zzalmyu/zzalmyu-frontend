@@ -17,7 +17,7 @@ const TagNavigator = ({ tags }: Props) => {
 
   const handleClickPrevious = () => setCurrentGroup((prevGroup) => prevGroup - 1);
   const handleClickNext = () => setCurrentGroup((prevGroup) => prevGroup + 1);
-  const handleClickIndicator = (index: number) => setCurrentGroup(index + 1);
+  const handleClickIndicator = (index: number) => () => setCurrentGroup(index + 1);
 
   return (
     <div className="relative">
@@ -55,7 +55,7 @@ const TagNavigator = ({ tags }: Props) => {
               className={cn("m-2 h-2 w-2 cursor-pointer rounded-full bg-neutral", {
                 "scale-150": currentGroup === index + 1,
               })}
-              onClick={() => handleClickIndicator(index)}
+              onClick={handleClickIndicator(index)}
             />
           ))}
         </div>
