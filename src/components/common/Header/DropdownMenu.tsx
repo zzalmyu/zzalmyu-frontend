@@ -52,11 +52,8 @@ const DropdownMenu = ({ user }: Props) => {
               <li key={`${index}-${name}`} className="group" onClick={toggleDetails}>
                 <Link
                   to={path}
-                  activeProps={{
-                    style: {
-                      background: "transparent",
-                    },
-                  }}
+                  className="[&.active]:text-white "
+                  activeProps={{ className: "bg-transparent" }}
                 >
                   <div className="h-6 w-6 group-hover:text-blue-500">
                     <Icon size={20} aria-label={name} />
