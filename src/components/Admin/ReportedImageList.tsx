@@ -6,37 +6,50 @@ const reports = [
   {
     id: "1",
     createdAt: "2024-02-08 23:03:20",
-    imageId: "image1",
+    tags: [
+      {
+        tagId: 1,
+        tagName: "강아지",
+      },
+      {
+        tagId: 2,
+        tagName: "토끼",
+      },
+    ],
     reportUserId: "heejin1@asdf.com",
     reportCount: 3,
   },
   {
-    id: "2",
+    id: "1",
     createdAt: "2024-02-08 23:03:20",
-    imageId: "image2",
+    tags: [
+      {
+        tagId: 1,
+        tagName: "강아지",
+      },
+      {
+        tagId: 2,
+        tagName: "토끼",
+      },
+    ],
     reportUserId: "heejin1@asdf.com",
     reportCount: 3,
   },
   {
-    id: "3",
+    id: "1",
     createdAt: "2024-02-08 23:03:20",
-    imageId: "image3",
+    tags: [
+      {
+        tagId: 1,
+        tagName: "강아지",
+      },
+      {
+        tagId: 2,
+        tagName: "토끼",
+      },
+    ],
     reportUserId: "heejin1@asdf.com",
-    reportCount: 4,
-  },
-  {
-    id: "4",
-    createdAt: "2024-02-08 23:03:20",
-    imageId: "image4",
-    reportUserId: "heejin1@asdf.com",
-    reportCount: 100,
-  },
-  {
-    id: "5",
-    createdAt: "2024-02-08 23:03:20",
-    imageId: "image5",
-    reportUserId: "heejin1@asdf.com",
-    reportCount: 12,
+    reportCount: 3,
   },
 ];
 
@@ -54,7 +67,7 @@ const ReportedImageList = () => {
         <thead>
           <tr className="border-0 bg-card">
             <th className="text-center text-text-primary">Date</th>
-            <th className="text-center text-text-primary">게시물 ID</th>
+            <th className="text-center text-text-primary">이미지 태그</th>
             <th className="text-center text-text-primary">신고 횟수</th>
             <th className="text-center text-text-primary">게시물 상세보기</th>
           </tr>
@@ -63,12 +76,16 @@ const ReportedImageList = () => {
           {hasReports &&
             reports
               .slice(0, showAllReports ? reports.length : 3)
-              .map(({ createdAt, imageId, reportCount }, index) => {
+              .map(({ createdAt, tags, reportCount }, index) => {
                 const createdDate = createdAt.slice(0, 10);
+                const tagNames = tags.map((tag) => tag.tagName).join(", ");
                 return (
-                  <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
+                  <tr
+                    key={`${index}-${createdDate}`}
+                    className="border-b-1 border-card last:border-0"
+                  >
                     <td className="text-center text-text-primary">{createdDate}</td>
-                    <td className="text-center text-text-primary">{imageId}</td>
+                    <td className="text-center text-text-primary">{tagNames}</td>
                     <td className="text-center text-text-primary">{reportCount}</td>
                     <td className="text-center text-text-primary">
                       <Link to="/admin/reports/id/">

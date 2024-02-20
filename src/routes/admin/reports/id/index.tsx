@@ -15,6 +15,15 @@ const reportUsers = [
   { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
   { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
   { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
 ];
 
 const AdminImageDetail = () => {
@@ -30,14 +39,14 @@ const AdminImageDetail = () => {
   };
 
   return (
-    <div className="mw-450pxr flex h-full w-full flex-col p-40pxr">
+    <div className="flex h-full w-full flex-col p-40pxr">
       <div className="px-0 pb-5 text-xl font-bold sm:px-10">
         <div className="breadcrumbs text-lg">
           <ul>
             <li>
               <Link to={"/admin/reports/"}>신고 내역</Link>
             </li>
-            <li>image1</li>
+            <li>상세보기</li>
           </ul>
         </div>
       </div>
@@ -50,7 +59,7 @@ const AdminImageDetail = () => {
               width="100"
               hasAnimation={false}
             />
-            <div className="mt-3 flex w-280pxr justify-end rounded-xl  sm:ml-5 sm:mt-0 sm:max-h-96 sm:w-3/5 sm:rounded-xl">
+            <div className="mb-50pxr mt-3 flex max-h-420pxr w-280pxr  justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-3/5 sm:rounded-xl">
               <table className="table bg-card">
                 <thead>
                   <tr>

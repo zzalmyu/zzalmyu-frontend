@@ -3,7 +3,7 @@ import ReportedImageList from "@/components/Admin/ReportedImageList";
 
 const Admin = () => {
   return (
-    <div className="mw-450pxr flex h-full w-full flex-col p-40pxr">
+    <div className="flex h-full w-full flex-col p-40pxr">
       <div className="px-0 pb-5 text-lg font-bold sm:px-10">
         <div className="breadcrumbs text-lg">
           <ul>
