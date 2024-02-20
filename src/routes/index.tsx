@@ -3,6 +3,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
+import ImageDetailModal from "@/components/ImageDetailModal";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 
 const Home = () => {
@@ -18,6 +19,10 @@ const Home = () => {
   const handleClickLogin = () => {
     loginOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
   };
+  const ImageOverlay = useOverlay();
+  const handleClickImageDetail = () => {
+    ImageOverlay.open(({ isOpen, close }) => <ImageDetailModal isOpen={isOpen} onClose={close} />);
+  };
   return (
     <div>
       <div className="w-full">여긴 메인(홈) 페이지</div>
@@ -27,6 +32,9 @@ const Home = () => {
         </button>
         <button onClick={handleClickLogin} className="rounded-xl border-2 border-primary ">
           LOGIN
+        </button>
+        <button onClick={handleClickImageDetail} className="rounded-xl border-2 border-primary ">
+          IMAGE_DETAIL
         </button>
       </div>
     </div>
