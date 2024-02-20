@@ -11,7 +11,7 @@ const Admin = () => {
   };
 
   return (
-    <div>
+    <div className="h-full w-full">
       <ReportedImageList />
       <button onClick={handleClickModal}>상세보기</button>
     </div>
