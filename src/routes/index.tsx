@@ -1,6 +1,5 @@
 // index.tsx
 
-import { Fragment } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
@@ -20,7 +19,7 @@ const Home = () => {
     loginOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
   };
   return (
-    <Fragment>
+    <div>
       <div className="w-full">여긴 메인(홈) 페이지</div>
       <div className="flex w-[10rem] flex-col gap-5">
         <button onClick={handleClickAlert} className="rounded-xl border-2 border-primary ">
@@ -30,10 +29,10 @@ const Home = () => {
           LOGIN
         </button>
       </div>
-    </Fragment>
+    </div>
   );
 };
 
-export const Route = createFileRoute("/_chat-layout/")({
+export const Route = createFileRoute("/")({
   component: Home,
 });
