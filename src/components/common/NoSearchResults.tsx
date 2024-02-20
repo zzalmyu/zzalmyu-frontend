@@ -4,7 +4,7 @@ interface Props {
   onClick: (isTagReset: boolean) => void;
 }
 
-const NotSearch = ({ onClick }: Props) => {
+const NoSearchResults = ({ onClick }: Props) => {
   return (
     <div className="flex h-400pxr w-[35%] min-w-96 flex-col items-center rounded-xl bg-card">
       <SearchX aria-label="검색 실패" size={60} className="mt-80pxr" />
@@ -20,4 +20,4 @@ const NotSearch = ({ onClick }: Props) => {
   );
 };
 
-export default NotSearch;
+export default NoSearchResults;
