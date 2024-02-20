@@ -42,7 +42,7 @@ const reports = [
 
 const ReportedImageList = () => {
   const [showAllReports, setShowAllReports] = useState(false);
-  const hasReports = reports && reports.length > 0;
+  const hasReports = reports?.length > 0;
 
   const toggleShowAllReports = () => {
     setShowAllReports((prevShowAllReports: boolean) => !prevShowAllReports);
@@ -60,7 +60,7 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {hasReports ? (
+          {hasReports &&
             reports
               .slice(0, showAllReports ? reports.length : 3)
               .map(({ createdAt, imageId, reportCount }, index) => {
@@ -71,14 +71,14 @@ const ReportedImageList = () => {
                     <td className="text-center text-text-primary">{imageId}</td>
                     <td className="text-center text-text-primary">{reportCount}</td>
                     <td className="text-center text-text-primary">
-                      <Link to="/admin-image-detail/">
+                      <Link to="/admin/reports/id/">
                         <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
                       </Link>
                     </td>
                   </tr>
                 );
-              })
-          ) : (
+              })}
+          {!hasReports && (
             <tr>
               <td colSpan={4} className="text-center text-text-primary">
                 신고된 이미지가 없습니다.

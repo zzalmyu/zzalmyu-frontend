@@ -35,7 +35,7 @@ const AdminImageDetail = () => {
         <div className="breadcrumbs text-lg">
           <ul>
             <li>
-              <Link to={"/admin/"}>신고 내역</Link>
+              <Link to={"/admin/reports/"}>신고 내역</Link>
             </li>
             <li>image1</li>
           </ul>
