@@ -1,7 +1,7 @@
 import { SearchX } from "lucide-react";
 
 interface Props {
-  onClick: (inputValue: string) => void;
+  onClick: (isTagReset: boolean) => void;
 }
 
 const NotSearch = ({ onClick }: Props) => {
@@ -12,7 +12,7 @@ const NotSearch = ({ onClick }: Props) => {
       <p className="mt-20pxr text-text-secondary">필터를 삭제하고 다시 시도해보세요.</p>
       <button
         className="mt-40pxr h-40pxr w-180pxr rounded-full bg-primary text-white"
-        onClick={() => onClick("")}
+        onClick={() => onClick(true)}
       >
         되돌아가기
       </button>
