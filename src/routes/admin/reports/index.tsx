@@ -20,6 +20,6 @@ const Admin = () => {
   );
 };
 
-export const Route = createFileRoute("/admin/")({
+export const Route = createFileRoute("/admin/reports/")({
   component: Admin,
 });

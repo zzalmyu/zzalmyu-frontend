@@ -89,6 +89,6 @@ const AdminImageDetail = () => {
   );
 };
 
-export const Route = createFileRoute("/admin-image-detail/")({
+export const Route = createFileRoute("/admin/reports/id/")({
   component: AdminImageDetail,
 });
