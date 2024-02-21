@@ -11,7 +11,7 @@ const ChatToggleButton = () => {
   return (
     <button
       onClick={handleClickToggle}
-      className="flex h-60pxr w-60pxr items-center justify-center rounded-full bg-primary text-white"
+      className="btn flex h-60pxr w-60pxr items-center justify-center rounded-full bg-primary text-white hover:bg-gray-300"
     >
       {isOpen && <ChevronsRight aria-label="채팅 닫기" size={36} />}
       {!isOpen && <MessageSquareMore aria-label="채팅 열기" size={36} />}

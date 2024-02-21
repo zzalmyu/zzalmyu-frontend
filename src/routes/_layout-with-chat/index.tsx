@@ -25,7 +25,7 @@ const Home = () => {
   };
   return (
     <div>
-      <div className="w-full">여긴 메인(홈) 페이지</div>
+      <div>여긴 메인(홈) 페이지</div>
       <div className="flex w-[10rem] flex-col gap-5">
         <button onClick={handleClickAlert} className="rounded-xl border-2 border-primary ">
           ALERT
