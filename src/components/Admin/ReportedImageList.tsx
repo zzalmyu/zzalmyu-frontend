@@ -52,8 +52,6 @@ const reports = [
 ];
 
 const ReportedImageList = () => {
-  const hasReports = reports?.length > 0;
-
   return (
     <div className="flex flex-col items-center">
       <table className="table">
@@ -66,7 +64,7 @@ const ReportedImageList = () => {
           </tr>
         </thead>
         <tbody>
-          {hasReports &&
+          {reports?.length > 0 &&
             reports.map(({ createdAt, tags, reportCount }, index) => {
               const createdDate = createdAt.slice(0, 10);
               const tagNames = tags.map((tag) => tag.tagName).join(", ");
@@ -86,7 +84,7 @@ const ReportedImageList = () => {
                 </tr>
               );
             })}
-          {!hasReports && (
+          {!(reports?.length > 0) && (
             <tr>
               <td colSpan={4} className="text-center text-text-primary">
                 신고된 이미지가 없습니다.
