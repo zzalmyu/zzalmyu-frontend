@@ -1,12 +1,12 @@
 import { useAtom } from "jotai";
 import ZzalCard from "@/components/common/ZzalCard";
-import { $messagePreview } from "@/store/chat";
+import { $peekState } from "@/store/chat";
 
 const MessagePreview = () => {
-  const [messagePreview, setMessagePreview] = useAtom($messagePreview);
-  const { src } = messagePreview;
+  const [peekState, setPeekState] = useAtom($peekState);
+  const { src } = peekState;
   const handleClickCloseButton = () => {
-    setMessagePreview({ src: "" });
+    setPeekState({ src: "", isOpen: false });
   };
 
   return (
