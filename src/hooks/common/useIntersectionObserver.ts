@@ -6,7 +6,7 @@ interface Parameters {
   options?: IntersectionObserverInit;
 }
 
-const defaultOptions = {
+const DEFAULT_OPTIONS = {
   root: null,
   rootMargin: "0px",
   threshold: 0.1,
@@ -15,7 +15,7 @@ const defaultOptions = {
 const useIntersectionObserver = ({
   target,
   handleIntersect,
-  options = defaultOptions,
+  options = DEFAULT_OPTIONS,
 }: Parameters): RefObject<IntersectionObserver | null> => {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
