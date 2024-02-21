@@ -2,9 +2,13 @@ import { useAtom } from "jotai";
 import { ChevronsRight, MessageSquareMore } from "lucide-react";
 import { $isChatOpen } from "@/store/chat";
 
-const ChatToggleButton = () => {
+interface Props {
+  handleScroll: () => void;
+}
+const ChatToggleButton = ({ handleScroll }: Props) => {
   const [isOpen, setIsOpen] = useAtom($isChatOpen);
   const handleClickToggle = () => {
+    handleScroll();
     setIsOpen((prev) => !prev);
   };
 
