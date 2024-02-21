@@ -1,6 +1,4 @@
-import { useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 
 const reports = [
   {
@@ -54,12 +52,7 @@ const reports = [
 ];
 
 const ReportedImageList = () => {
-  const [showAllReports, setShowAllReports] = useState(false);
   const hasReports = reports?.length > 0;
-
-  const toggleShowAllReports = () => {
-    setShowAllReports((prevShowAllReports: boolean) => !prevShowAllReports);
-  };
 
   return (
     <div className="flex flex-col items-center">
@@ -74,27 +67,25 @@ const ReportedImageList = () => {
         </thead>
         <tbody>
           {hasReports &&
-            reports
-              .slice(0, showAllReports ? reports.length : 3)
-              .map(({ createdAt, tags, reportCount }, index) => {
-                const createdDate = createdAt.slice(0, 10);
-                const tagNames = tags.map((tag) => tag.tagName).join(", ");
-                return (
-                  <tr
-                    key={`${index}-${createdDate}`}
-                    className="border-b-1 border-card last:border-0"
-                  >
-                    <td className="text-center text-text-primary">{createdDate}</td>
-                    <td className="text-center text-text-primary">{tagNames}</td>
-                    <td className="text-center text-text-primary">{reportCount}</td>
-                    <td className="text-center text-text-primary">
-                      <Link to="/admin/reports/id/">
-                        <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
-                      </Link>
-                    </td>
-                  </tr>
-                );
-              })}
+            reports.map(({ createdAt, tags, reportCount }, index) => {
+              const createdDate = createdAt.slice(0, 10);
+              const tagNames = tags.map((tag) => tag.tagName).join(", ");
+              return (
+                <tr
+                  key={`${index}-${createdDate}`}
+                  className="border-b-1 border-card last:border-0"
+                >
+                  <td className="text-center text-text-primary">{createdDate}</td>
+                  <td className="text-center text-text-primary">{tagNames}</td>
+                  <td className="text-center text-text-primary">{reportCount}</td>
+                  <td className="text-center text-text-primary">
+                    <Link to="/admin/reports/id/">
+                      <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
+                    </Link>
+                  </td>
+                </tr>
+              );
+            })}
           {!hasReports && (
             <tr>
               <td colSpan={4} className="text-center text-text-primary">
@@ -104,24 +95,6 @@ const ReportedImageList = () => {
           )}
         </tbody>
       </table>
-      {hasReports &&
-        (showAllReports ? (
-          <ArrowUpCircle
-            size={35}
-            strokeWidth={1.5}
-            className="m-12 cursor-pointer"
-            onClick={toggleShowAllReports}
-            aria-label="리스트 더보기"
-          />
-        ) : (
-          <ArrowDownCircle
-            size={35}
-            strokeWidth={1.5}
-            className="m-12 cursor-pointer"
-            onClick={toggleShowAllReports}
-            aria-label="리스트 축소하기"
-          />
-        ))}
     </div>
   );
 };
