@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Heart, SendHorizontal } from "lucide-react";
+import { cn } from "@/utils/tailwind";
 
 interface ZzalCardProps {
   children?: ReactNode;
@@ -16,7 +17,10 @@ const ZzalCard = ({ children, src, alt, width = 72, hasAnimation = true }: ZzalC
         {children}
       </div>
       <figure
-        className={`${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`}
+        className={cn(
+          "h-fit",
+          `${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`,
+        )}
       >
         <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
       </figure>
