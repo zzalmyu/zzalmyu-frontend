@@ -4,34 +4,33 @@ import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import ZzalCard from "@/components/common/ZzalCard";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
+import ReportTableHead from "@/components/common/admin/ReportTableHead";
+import ReportDetailTableBody from "@/components/AdminReportsDetail/ReportDetailTableBody";
 
-const reportUsers = [
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
-  { date: "2024-02-08 23:03:20", userEmail: "heejin1@asdf.com" },
+const reportDetails = [
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
+  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
 ];
+
+const REPORT_DETAILS_HEADERS = ["신고된 날짜", "신고 사용자 이메일"];
 
 const AdminImageDetail = () => {
   const { id } = Route.useParams();
   const deleteConfirmOverlay = useOverlay();
-  const reportDate = (date: string) => {
-    return date.slice(0, 10);
-  };
 
   const handleClickDeleteButton = () => {
     deleteConfirmOverlay.open(({ isOpen, close }) => (
@@ -59,29 +58,10 @@ const AdminImageDetail = () => {
             width="100"
             hasAnimation={false}
           />
-          <div className="mb-50pxr mt-3 flex max-h-420pxr w-280pxr  justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-3/5 sm:rounded-xl">
+          <div className="mb-50pxr mt-3 flex max-h-420pxr justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-4/6 sm:rounded-xl">
             <table className="table bg-card">
-              <thead>
-                <tr>
-                  <th className="text-center text-text-primary">신고된 날짜</th>
-                  <th className="text-center text-text-primary">신고 사용자 이메일</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reportUsers.map(({ date, userEmail }, index) => (
-                  <tr
-                    key={`${index}-${userEmail}`}
-                    className="border-b-2 border-neutral-300 last:border-0"
-                  >
-                    <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
-                      {reportDate(date)}
-                    </td>
-                    <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
-                      {userEmail}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
+              <ReportTableHead headers={REPORT_DETAILS_HEADERS} />
+              <ReportDetailTableBody reportDetails={reportDetails} />
             </table>
             <button
               onClick={handleClickDeleteButton}
