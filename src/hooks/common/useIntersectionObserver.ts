@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useRef } from "react";
 
-interface Props {
+interface Parameters {
   target: RefObject<Element>;
   handleIntersect: (element: Element) => void;
   options?: IntersectionObserverInit;
@@ -16,7 +16,7 @@ const useIntersectionObserver = ({
   target,
   handleIntersect,
   options = defaultOptions,
-}: Props): RefObject<IntersectionObserver | null> => {
+}: Parameters): RefObject<IntersectionObserver | null> => {
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
