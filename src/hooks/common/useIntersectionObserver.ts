@@ -35,7 +35,7 @@ const useIntersectionObserver = ({
     return () => {
       observerRef.current?.disconnect();
     };
-  }, [target, handleIntersect, options]);
+  }, [target, options]);
 
   return observerRef;
 };
