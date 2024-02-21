@@ -7,8 +7,8 @@ const Chat = () => {
   const isChatOpen = useAtomValue($isChatOpen);
 
   return (
-    <div className="relative">
-      <div className="absolute -left-70pxr bottom-15pxr">
+    <div className=" relative overflow-y-clip">
+      <div className="absolute -left-70pxr bottom-15pxr ">
         <ChatToggleButton />
       </div>
       {isChatOpen && <ChatSection />}
