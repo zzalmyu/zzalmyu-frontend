@@ -16,7 +16,7 @@ import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as MyUploadedZzalIndexImport } from "./routes/my-uploaded-zzal/index"
 import { Route as MyLikedZzalIndexImport } from "./routes/my-liked-zzal/index"
 import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
-import { Route as AdminReportsIdIndexImport } from "./routes/admin/reports/id/index"
+import { Route as AdminReportsIdIndexImport } from "./routes/admin/reports/$id/index"
 
 // Create/Update Routes
 
@@ -46,7 +46,7 @@ const AdminReportsIndexRoute = AdminReportsIndexImport.update({
 } as any)
 
 const AdminReportsIdIndexRoute = AdminReportsIdIndexImport.update({
-  path: "/admin/reports/id/",
+  path: "/admin/reports/$id/",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,7 +74,7 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AdminReportsIndexImport
       parentRoute: typeof rootRoute
     }
-    "/admin/reports/id/": {
+    "/admin/reports/$id/": {
       preLoaderRoute: typeof AdminReportsIdIndexImport
       parentRoute: typeof rootRoute
     }

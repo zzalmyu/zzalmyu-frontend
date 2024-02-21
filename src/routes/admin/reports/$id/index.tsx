@@ -31,6 +31,8 @@ const AdminImageDetail = () => {
     return date.slice(0, 10);
   };
 
+  const { id } = Route.useParams();
+
   const alertOverlay = useOverlay();
   const handleClickAlert = () => {
     alertOverlay.open(({ isOpen, close }) => (
@@ -46,7 +48,7 @@ const AdminImageDetail = () => {
             <li>
               <Link to={"/admin/reports/"}>신고 내역</Link>
             </li>
-            <li>상세보기</li>
+            <li>{id}</li>
           </ul>
         </div>
       </div>
@@ -98,6 +100,6 @@ const AdminImageDetail = () => {
   );
 };
 
-export const Route = createFileRoute("/admin/reports/id/")({
+export const Route = createFileRoute("/admin/reports/$id/")({
   component: AdminImageDetail,
 });
