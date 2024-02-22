@@ -1,4 +1,3 @@
-export interface GetTagsResponse {
-  tagId: 0;
-  tagName: string;
-}
+import { tag } from "./tag";
+
+export type GetTagsResponse = tag[];
