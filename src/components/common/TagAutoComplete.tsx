@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/tailwind";
-import { tag } from "@/types/tag";
-import { tags } from "@/types/tags";
+import { Tag } from "@/types/tag";
+import { Tags } from "@/types/tags";
 
 interface Props {
-  tags: tags;
-  onSelectTagName: (tag: tag) => void;
+  tags: Tags;
+  onSelectTagName: (tag: Tag) => void;
 }
 
 const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
