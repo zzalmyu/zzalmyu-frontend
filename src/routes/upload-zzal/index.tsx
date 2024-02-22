@@ -1,15 +1,19 @@
 import { useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import Toast from "@/components/common/Toast";
 import RecommendTag from "@/components/common/RecommendTag";
 import TagSearchForm from "@/components/common/TagSearchForm";
+import { $selectedTags } from "@/store/tag";
 
 const recommendTags = ["분노", "스트레스", "박명수", "직장인", "잠좀자자"];
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
+  const [selectedTags] = useAtom($selectedTags);
+
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("파일을 업로드해주세요");
   const [toastColor, setToastColor] = useState("primary");
@@ -24,7 +28,11 @@ const UploadZzal = () => {
 
   const handleShowToast = () => {
     if (!file) {
-      setToastMessage("파일을 업로드해주세요");
+      setToastMessage("사진을 등록해주세요!");
+      setToastColor("delete");
+      setIncludeButton(false);
+    } else if (!selectedTags.length) {
+      setToastMessage("1개 이상의 태그를 등록해주세요!");
       setToastColor("delete");
       setIncludeButton(false);
     } else {
