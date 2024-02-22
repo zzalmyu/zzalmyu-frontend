@@ -1,10 +1,18 @@
+import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import Pending from "./MyLikedZzal.pendingComponent";
 import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
 import ZzalCard from "@/components/common/ZzalCard";
+import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 
 const MyLikedZzal = () => {
-  const { zzals } = useGetMyLikedZzals();
+  const fetchMoreRef = useRef(null);
+  const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
+
+  useIntersectionObserver({
+    target: fetchMoreRef,
+    handleIntersect: handleFetchNextPage,
+  });
 
   return (
     <div className="p-4 text-center">
@@ -15,6 +23,7 @@ const MyLikedZzal = () => {
             <ZzalCard src={path} alt="" />
           </div>
         ))}
+        <div ref={fetchMoreRef} />
       </div>
     </div>
   );
