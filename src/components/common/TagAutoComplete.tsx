@@ -62,16 +62,16 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
         </li>
       )}
       {tags.length > 0 &&
-        tags.map((tag, index) => (
+        tags.map(({ tagId, tagName }, index) => (
           <li
-            key={`${index}-${tag}`}
+            key={`${tagId}`}
             className={cn(
-              `${index === cursorIndex && "bg-gray-200 font-bold"}  box-border rounded-md px-1.5 py-2`,
+              `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
             )}
             onMouseOver={handleMouseOverTag(index)}
             onClick={handleClickTagName(index)}
           >
-            <div>{tag.tagName}</div>
+            <div>{tagName}</div>
           </li>
         ))}
     </ul>
