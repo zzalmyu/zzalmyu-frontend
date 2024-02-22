@@ -15,7 +15,8 @@ import { Route as IndexImport } from "./routes/index"
 import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as MyUploadedZzalIndexImport } from "./routes/my-uploaded-zzal/index"
 import { Route as MyLikedZzalIndexImport } from "./routes/my-liked-zzal/index"
-import { Route as AdminIndexImport } from "./routes/admin/index"
+import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
+import { Route as AdminReportsIdIndexImport } from "./routes/admin/reports/$id/index"
 
 // Create/Update Routes
 
@@ -39,8 +40,13 @@ const MyLikedZzalIndexRoute = MyLikedZzalIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminIndexRoute = AdminIndexImport.update({
-  path: "/admin/",
+const AdminReportsIndexRoute = AdminReportsIndexImport.update({
+  path: "/admin/reports/",
+  getParentRoute: () => rootRoute,
+} as any)
+
+const AdminReportsIdIndexRoute = AdminReportsIdIndexImport.update({
+  path: "/admin/reports/$id/",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -50,10 +56,6 @@ declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
     "/": {
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    "/admin/": {
-      preLoaderRoute: typeof AdminIndexImport
       parentRoute: typeof rootRoute
     }
     "/my-liked-zzal/": {
@@ -68,6 +70,14 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof UploadZzalIndexImport
       parentRoute: typeof rootRoute
     }
+    "/admin/reports/": {
+      preLoaderRoute: typeof AdminReportsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    "/admin/reports/$id/": {
+      preLoaderRoute: typeof AdminReportsIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -75,10 +85,11 @@ declare module "@tanstack/react-router" {
 
 export const routeTree = rootRoute.addChildren([
   IndexRoute,
-  AdminIndexRoute,
   MyLikedZzalIndexRoute,
   MyUploadedZzalIndexRoute,
   UploadZzalIndexRoute,
+  AdminReportsIndexRoute,
+  AdminReportsIdIndexRoute,
 ])
 
 /* prettier-ignore-end */
