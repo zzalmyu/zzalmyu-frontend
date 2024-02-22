@@ -5,16 +5,36 @@ import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import Toast from "@/components/common/Toast";
 
 const UploadZzal = () => {
-  const [, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [showToast, setShowToast] = useState(false);
-  const handleChangeUpload = (changedFile: File | null) => setFile(changedFile);
+  const [toastMessage, setToastMessage] = useState("파일을 업로드해주세요");
+  const [toastColor, setToastColor] = useState("primary");
+  const [includeButton, setIncludeButton] = useState(false);
+  const [toastTimer, setToastTimer] = useState<NodeJS.Timeout | undefined>();
+
+  const handleChangeUpload = (changedFile: File | null) => {
+    setFile(changedFile);
+    setShowToast(false);
+    clearTimeout(toastTimer);
+  };
 
   const handleShowToast = () => {
+    if (!file) {
+      setToastMessage("파일을 업로드해주세요");
+      setToastColor("delete");
+      setIncludeButton(false);
+    } else {
+      setToastMessage("성공적으로 업로드가 되었습니다.");
+      setToastColor("primary");
+      setIncludeButton(true);
+    }
+
     setShowToast(true);
 
-    setTimeout(() => {
+    const toastTimerId = setTimeout(() => {
       setShowToast(false);
     }, 5000);
+    setToastTimer(toastTimerId);
   };
 
   return (
@@ -35,9 +55,9 @@ const UploadZzal = () => {
       </div>
       {showToast && (
         <Toast
-          toastColor="primary"
-          toastMessage="성공적으로 업로드가 되었습니다"
-          includeButton={true}
+          toastColor={toastColor}
+          toastMessage={toastMessage}
+          includeButton={includeButton}
           buttonMessage="업로드한 짤 페이지로 이동"
           buttonRedirectPath="/my-uploaded-zzal/"
         />
