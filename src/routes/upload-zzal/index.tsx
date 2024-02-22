@@ -3,6 +3,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import Toast from "@/components/common/Toast";
+import RecommendTag from "@/components/common/RecommendTag";
+import TagSearchForm from "@/components/common/TagSearchForm";
+
+const recommendTags = ["분노", "스트레스", "박명수", "직장인", "잠좀자자"];
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -43,8 +47,16 @@ const UploadZzal = () => {
       <UploadGuide />
       <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start">
         <ImageUpload onChange={handleChangeUpload} />
-        <div className="flex h-300pxr flex-1 flex-col justify-between">
-          <div className="w-full border-2 border-text-secondary">searchbar</div>
+        <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
+          <div className="w-full">
+            <div className="float-right">
+              <RecommendTag
+                title="전체 사용자들이 가장 많이 사용한 태그 TOP 8"
+                recommendTags={recommendTags}
+              />
+              <TagSearchForm />
+            </div>
+          </div>
           <button
             className="h-40pxr w-100pxr self-center rounded-[100px] bg-primary font-bold text-white outline outline-2 outline-offset-2 outline-transparent hover:outline-yellow-500 sm:self-end"
             onClick={handleShowToast}
