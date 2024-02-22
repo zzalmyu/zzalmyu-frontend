@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import { Tags } from "@/types/tags";
 
 interface Props {
-  tags: Tags;
+  tags: Tag[];
   onSelectTagName: (tag: Tag) => void;
 }
 
-const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
+const TagAutoComplete = ({ tags, onSelectTagName }: Props) => {
   const [cursorIndex, setCursorIndex] = useState(0);
 
   const handleClickTagName = (tagIndex: number) => () => {
