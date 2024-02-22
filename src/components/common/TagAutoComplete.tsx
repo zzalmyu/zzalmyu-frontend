@@ -64,7 +64,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
       {tags.length > 0 &&
         tags.map(({ tagId, tagName }, index) => (
           <li
-            key={`${tagId}`}
+            key={tagId}
             className={cn(
               `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
             )}
