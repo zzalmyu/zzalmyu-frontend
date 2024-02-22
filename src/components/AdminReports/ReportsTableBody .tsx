@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Report } from "@/types/report";
+import { Report } from "@/types/report.dto";
 
 interface Props {
   reports: Report[];

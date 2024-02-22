@@ -50,8 +50,6 @@ const reports = [
   },
 ];
 
-const REPORT_HEADERS = ["Date", "이미지태그", "신고 횟수", "게시물 상세보기"];
-
 const Admin = () => {
   return (
     <div className="flex h-full w-full flex-col p-40pxr">
@@ -66,7 +64,12 @@ const Admin = () => {
         <div className="w-5/6">
           <div className="flex flex-col items-center">
             <table className="table">
-              <ReportTableHead headers={REPORT_HEADERS} />
+              <ReportTableHead>
+                <ReportTableHead.Th>Date</ReportTableHead.Th>
+                <ReportTableHead.Th>이미지태그</ReportTableHead.Th>
+                <ReportTableHead.Th>신고 횟수</ReportTableHead.Th>
+                <ReportTableHead.Th>게시물 상세보기</ReportTableHead.Th>
+              </ReportTableHead>
               <ReportsTableBody reports={reports} />
             </table>
             <div />

@@ -1,19 +1,21 @@
+import { ReactNode } from "react";
+
 interface Props {
-  headers: string[];
+  children: ReactNode;
 }
 
-const ReportTableHead = ({ headers }: Props) => {
+const ReportTableHead = ({ children }: Props) => {
   return (
     <thead>
-      <tr className="border-0 bg-card">
-        {headers.map((header, index) => (
-          <th key={index} className="text-center text-text-primary">
-            {header}
-          </th>
-        ))}
-      </tr>
+      <tr className="border-0 bg-card">{children}</tr>
     </thead>
   );
 };
+
+const Th = ({ children }: Props) => {
+  return <th className="text-center text-text-primary">{children}</th>;
+};
+
+ReportTableHead.Th = Th;
 
 export default ReportTableHead;

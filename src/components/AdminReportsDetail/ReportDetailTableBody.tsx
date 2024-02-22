@@ -1,4 +1,4 @@
-import { ReportDetail } from "@/types/report";
+import { ReportDetail } from "@/types/report.dto";
 
 interface Props {
   reportDetails: ReportDetail[];

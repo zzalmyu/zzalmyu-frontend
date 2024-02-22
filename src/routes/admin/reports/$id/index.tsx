@@ -26,8 +26,6 @@ const reportDetails = [
   { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
 ];
 
-const REPORT_DETAILS_HEADERS = ["신고된 날짜", "신고 사용자 이메일"];
-
 const AdminImageDetail = () => {
   const { id } = Route.useParams();
   const deleteConfirmOverlay = useOverlay();
@@ -60,7 +58,10 @@ const AdminImageDetail = () => {
           />
           <div className="mb-50pxr mt-3 flex max-h-420pxr justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-4/6 sm:rounded-xl">
             <table className="table bg-card">
-              <ReportTableHead headers={REPORT_DETAILS_HEADERS} />
+              <ReportTableHead>
+                <ReportTableHead.Th>신고된 날짜</ReportTableHead.Th>
+                <ReportTableHead.Th>신고 사용자 이메일</ReportTableHead.Th>
+              </ReportTableHead>
               <ReportDetailTableBody reportDetails={reportDetails} />
             </table>
             <button
