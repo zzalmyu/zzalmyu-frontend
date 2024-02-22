@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
+import { AlertCircle } from "lucide-react";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
-import Toast from "@/components/common/Toast";
 import RecommendTag from "@/components/common/RecommendTag";
 import TagSearchForm from "@/components/common/TagSearchForm";
 import { $selectedTags } from "@/store/tag";
@@ -74,13 +74,23 @@ const UploadZzal = () => {
         </div>
       </div>
       {showToast && (
-        <Toast
-          toastColor={toastColor}
-          toastMessage={toastMessage}
-          includeButton={includeButton}
-          buttonMessage="업로드한 짤 페이지로 이동"
-          buttonRedirectPath="/my-uploaded-zzal/"
-        />
+        <div className="toast toast-end toast-top mt-14">
+          <div role="alert" className="alert shadow-lg">
+            <AlertCircle viewBox="0 0 24 24" className={`h-6 w-6 shrink-0 stroke-${toastColor}`} />
+            <span>{toastMessage}</span>
+            {includeButton && (
+              <Link to="/my-uploaded-zzal/">
+                <div>
+                  <button
+                    className={`btn btn-sm bg-${toastColor} text-white hover:bg-${toastColor} hover:opacity-75`}
+                  >
+                    업로드한 짤 페이지로 이동
+                  </button>
+                </div>
+              </Link>
+            )}
+          </div>
+        </div>
       )}
     </div>
   );
