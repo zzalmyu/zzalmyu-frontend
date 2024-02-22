@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import { cn } from "@/utils/tailwind";
+import { GetTagsResponse } from "@/types/tag.dto";
 
 interface Props {
-  tags: Array<string>;
-  onSelectTagName: (tagName: string) => void;
+  tags: GetTagsResponse[];
+  onSelectTagName: (tag: GetTagsResponse) => void;
 }
 
 const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
@@ -70,7 +71,7 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
             onMouseOver={handleMouseOverTag(index)}
             onClick={handleClickTagName(index)}
           >
-            <div>{tag}</div>
+            <div>{tag.tagName}</div>
           </li>
         ))}
     </ul>
