@@ -4,4 +4,4 @@ export const $isChatOpen = atom(false);
 
 export const $isPeekOpen = atom(false);
 
-export const $previewImage = atom<string>("");
+export const $previewImage = atom("");
