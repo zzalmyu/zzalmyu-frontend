@@ -36,7 +36,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
     setScrollPosition();
   }, [setScrollPosition]);
   return (
-    <section className="relative h-full w-500pxr bg-secondary p-20pxr ">
+    <section className="relative h-full w-full bg-secondary p-20pxr ">
       <div
         ref={ref}
         className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"

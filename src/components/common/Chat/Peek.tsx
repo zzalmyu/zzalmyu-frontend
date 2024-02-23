@@ -19,7 +19,7 @@ const Peek = () => {
     >
       <div
         onClick={handleClickPeekTip}
-        className="z-10 flex w-full cursor-pointer items-center justify-center gap-10pxr px-15pxr py-5pxr text-center text-sm font-bold text-white transition-colors hover:bg-gray-300/20"
+        className="z-10 flex w-full cursor-pointer items-center justify-center gap-10pxr px-15pxr py-5pxr text-center text-xs font-bold text-white transition-colors hover:bg-gray-300/20 sm:text-sm"
       >
         {isPeekOpen ? (
           <ChevronsDown aria-label="미리보기 숨기기" />
@@ -29,7 +29,7 @@ const Peek = () => {
         {isPeekOpen ? (
           <span className="flex-1">미리보기가 불편하실 땐 숨겨보세요!</span>
         ) : (
-          <span className="flex-1">전송하기를 눌러 채팅에 바로 사진을 사용해보세요!</span>
+          <span className="flex-1">보고 있는사진을 채팅에 사용해보세요!</span>
         )}
         {isPeekOpen ? (
           <ChevronsDown aria-label="미리보기 숨기기" />
@@ -38,7 +38,6 @@ const Peek = () => {
         )}
       </div>
       <MessagePreview />
-
       <div className="absolute bottom-5 right-5">
         <ChatSendButton onClick={() => {}} />
       </div>

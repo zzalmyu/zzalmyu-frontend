@@ -20,9 +20,13 @@ const Chat = () => {
       chatRoomRef.current.scrollTop = parseInt(top, 10);
     }
   };
+
   return (
-    <div className="relative overflow-y-clip">
-      <div className="absolute -left-70pxr bottom-15pxr ">
+    //  overflow-x-clip sm:overflow-x-auto sm:overflow-y-clip
+    <div className="relative h-full border-2 border-blue-300 bg-neutral sm:h-full ">
+      <div
+        className={`absolute -top-70pxr right-5pxr hidden sm:-left-70pxr sm:bottom-15pxr sm:right-auto sm:top-auto sm:block`}
+      >
         <ChatToggleButton handleScroll={handleScroll} />
       </div>
       {isChatOpen && <ChatSection ref={chatRoomRef} setScrollPosition={setScrollPosition} />}
