@@ -2,11 +2,12 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
-import { useSetAtom } from "jotai";
+import { useAtomValue } from "jotai";
 import LoginModal from "@/components/LoginModal";
 import ImageDetailModal from "@/components/ImageDetailModal";
+import useMessagePreview from "@/hooks/chat/useMessagePreview";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
-import { $peekState } from "@/store/chat";
+import { $previewImage } from "@/store/chat";
 
 const Home = () => {
   // TODO: [2024.02.14] AlertModal 테스트 임시 코드 제거
@@ -26,7 +27,8 @@ const Home = () => {
     ImageOverlay.open(({ isOpen, close }) => <ImageDetailModal isOpen={isOpen} onClose={close} />);
   };
 
-  const setPeekState = useSetAtom($peekState);
+  const { setMessagePreview, deleteMessagePreview } = useMessagePreview();
+  const previewImage = useAtomValue($previewImage);
 
   return (
     <div>
@@ -43,20 +45,20 @@ const Home = () => {
         </button>
         <button
           className="rounded-xl bg-primary p-5pxr text-white"
-          onClick={() =>
-            setPeekState((prev) =>
-              prev.src
-                ? { isOpen: false, src: "" }
-                : {
-                    isOpen: true,
-                    src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
-                  },
-            )
-          }
+          onClick={() => {
+            console.log(previewImage);
+
+            if (!previewImage) {
+              setMessagePreview(
+                "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
+              );
+            } else deleteMessagePreview();
+          }}
         >
           src 토글
         </button>
       </div>
+      {/* <ChatRoom /> */}
     </div>
   );
 };
