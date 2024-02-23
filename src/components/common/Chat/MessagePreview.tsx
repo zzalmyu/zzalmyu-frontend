@@ -5,6 +5,7 @@ import { $peekState } from "@/store/chat";
 const MessagePreview = () => {
   const [peekState, setPeekState] = useAtom($peekState);
   const { src } = peekState;
+
   const handleClickCloseButton = () => {
     setPeekState({ src: "", isOpen: false });
   };

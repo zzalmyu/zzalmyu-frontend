@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { useAtom } from "jotai";
 import { ChevronsDown, ChevronsUp } from "lucide-react";
 import { cn } from "@/utils/tailwind";
@@ -21,20 +22,19 @@ const Peek = () => {
         onClick={handleClickPeekTip}
         className="z-10 flex w-full cursor-pointer items-center justify-center gap-10pxr px-15pxr py-5pxr text-center text-xs font-bold text-white transition-colors hover:bg-gray-300/20 sm:text-sm"
       >
-        {isPeekOpen ? (
-          <ChevronsDown aria-label="미리보기 숨기기" />
-        ) : (
-          <ChevronsUp aria-label="미리보기 보기" />
+        {isPeekOpen && (
+          <Fragment>
+            <ChevronsDown aria-label="미리보기 숨기기" />
+            <span className="flex-1">미리보기가 불편하실 땐 숨겨보세요!</span>
+            <ChevronsDown aria-label="미리보기 숨기기" />
+          </Fragment>
         )}
-        {isPeekOpen ? (
-          <span className="flex-1">미리보기가 불편하실 땐 숨겨보세요!</span>
-        ) : (
-          <span className="flex-1">보고 있는사진을 채팅에 사용해보세요!</span>
-        )}
-        {isPeekOpen ? (
-          <ChevronsDown aria-label="미리보기 숨기기" />
-        ) : (
-          <ChevronsUp aria-label="미리보기 보기" />
+        {!isPeekOpen && (
+          <Fragment>
+            <ChevronsUp aria-label="미리보기 보기" />
+            <span className="flex-1">보고 있는사진을 채팅에 사용해보세요!</span>
+            <ChevronsUp aria-label="미리보기 보기" />
+          </Fragment>
         )}
       </div>
       <MessagePreview />
