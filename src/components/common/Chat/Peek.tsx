@@ -4,13 +4,15 @@ import { ChevronsDown, ChevronsUp } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import ChatSendButton from "./ChatSendButton";
 import MessagePreview from "./MessagePreview";
-import { $peekState } from "@/store/chat";
+import { $isPeekOpen } from "@/store/chat";
 
 const Peek = () => {
-  const [{ isOpen: isPeekOpen }, setPeekState] = useAtom($peekState);
+  const [isPeekOpen, setIsPeekOpen] = useAtom($isPeekOpen);
+
   const handleClickPeekTip = () => {
-    setPeekState((prev) => ({ ...prev, isOpen: !prev.isOpen && !!prev.src }));
+    setIsPeekOpen((prev) => !prev);
   };
+
   return (
     <div
       className={cn(
@@ -37,9 +39,12 @@ const Peek = () => {
           </Fragment>
         )}
       </div>
-      <MessagePreview />
-      <div className="absolute bottom-5 right-5">
-        <ChatSendButton onClick={() => {}} />
+      <div className="flex min-h-200pxr w-full items-center justify-center">
+        <MessagePreview />
+        <div className="absolute bottom-5 right-5">
+          {/* TODO: [2024.02.23] WS 이미지 전송 연결 */}
+          <ChatSendButton onClick={() => {}} />
+        </div>
       </div>
     </div>
   );
