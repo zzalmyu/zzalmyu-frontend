@@ -1,5 +1,3 @@
-// index.tsx
-
 import { createFileRoute } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtomValue } from "jotai";
@@ -58,7 +56,6 @@ const Home = () => {
           src 토글
         </button>
       </div>
-      {/* <ChatRoom /> */}
     </div>
   );
 };
