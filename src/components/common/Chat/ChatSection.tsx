@@ -1,6 +1,5 @@
 import { forwardRef, useEffect } from "react";
 import Message from "./Message";
-import Messages from "./Messages";
 import Peek from "./Peek";
 
 const DUMMY_MESSAGES = [
@@ -41,11 +40,11 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
         ref={ref}
         className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"
       >
-        <Messages>
+        <div className="flex flex-1 flex-col ">
           {DUMMY_MESSAGES.map(({ src, isUser }, index) => (
             <Message key={`${index}-${src}`} src={src} isUser={isUser} />
           ))}
-        </Messages>
+        </div>
       </div>
       <Peek />
     </section>
