@@ -2,6 +2,7 @@ import { forwardRef, useEffect } from "react";
 import Message from "./Message";
 import Peek from "./Peek";
 
+// TODO: [2024.02.23] 더미 데이터 제거 및 WS 연결
 const DUMMY_MESSAGES = [
   {
     src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
