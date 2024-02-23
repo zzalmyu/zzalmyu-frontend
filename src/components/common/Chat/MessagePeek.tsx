@@ -27,14 +27,14 @@ const MessagePeek = () => {
         {isPeekOpen && (
           <Fragment>
             <ChevronsDown aria-label="미리보기 숨기기" />
-            <span className="flex-1">미리보기가 불편하실 땐 숨겨보세요!</span>
+            <span className="flex-1">미리보기를 숨겨보세요!</span>
             <ChevronsDown aria-label="미리보기 숨기기" />
           </Fragment>
         )}
         {!isPeekOpen && (
           <Fragment>
             <ChevronsUp aria-label="미리보기 보기" />
-            <span className="flex-1">보고 있는사진을 채팅에 사용해보세요!</span>
+            <span className="flex-1">사진으로 채팅해보세요!</span>
             <ChevronsUp aria-label="미리보기 보기" />
           </Fragment>
         )}
