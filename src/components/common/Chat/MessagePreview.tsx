@@ -1,11 +1,10 @@
-import { useAtomValue } from "jotai";
-import useMessagePreview from "@/hooks/chat/useMessagePreview";
+import { useAtomValue, useSetAtom } from "jotai";
 import ZzalCard from "@/components/common/ZzalCard";
-import { $previewImage } from "@/store/chat";
+import { $deleteMessagePreview, $previewImage } from "@/store/chat";
 
 const MessagePreview = () => {
   const previewImage = useAtomValue($previewImage);
-  const { deleteMessagePreview } = useMessagePreview();
+  const deleteMessagePreview = useSetAtom($deleteMessagePreview);
 
   return (
     <div className="relative w-1/3 rounded-lg border-4 border-dashed border-yellow-400">
