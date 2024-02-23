@@ -8,8 +8,7 @@ import RecommendTag from "@/components/common/RecommendTag";
 import TagSearchForm from "@/components/common/TagSearchForm";
 import { $selectedTags } from "@/store/tag";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
-
-const recommendTags = ["분노", "스트레스", "박명수", "직장인", "잠좀자자"];
+import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -20,6 +19,9 @@ const UploadZzal = () => {
   const [toastColor, setToastColor] = useState("primary");
   const [includeButton, setIncludeButton] = useState(false);
   const [toastTimer, setToastTimer] = useState<NodeJS.Timeout | undefined>();
+
+  const { popularTags } = useGetPopularTags();
+  const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
 
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
@@ -72,8 +74,8 @@ const UploadZzal = () => {
           <div className="w-full">
             <div className="float-right">
               <RecommendTag
-                title="전체 사용자들이 가장 많이 사용한 태그 TOP 8"
-                recommendTags={recommendTags}
+                title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
+                recommendTags={popularTagsName}
               />
               <TagSearchForm />
             </div>
