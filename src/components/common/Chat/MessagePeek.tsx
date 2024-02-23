@@ -4,10 +4,10 @@ import { ChevronsDown, ChevronsUp } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import ChatSendButton from "./ChatSendButton";
 import MessagePreview from "./MessagePreview";
-import { $isPeekOpen } from "@/store/chat";
+import { $isMessagePeekOpen } from "@/store/chat";
 
-const Peek = () => {
-  const [isPeekOpen, setIsPeekOpen] = useAtom($isPeekOpen);
+const MessagePeek = () => {
+  const [isPeekOpen, setIsPeekOpen] = useAtom($isMessagePeekOpen);
 
   const handleClickPeekTip = () => {
     setIsPeekOpen((prev) => !prev);
@@ -50,4 +50,4 @@ const Peek = () => {
   );
 };
 
-export default Peek;
+export default MessagePeek;

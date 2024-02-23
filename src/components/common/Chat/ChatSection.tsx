@@ -1,6 +1,6 @@
 import { forwardRef, useEffect } from "react";
 import Message from "./Message";
-import Peek from "./Peek";
+import MessagePeek from "./MessagePeek";
 
 // TODO: [2024.02.23] 더미 데이터 제거 및 WS 연결
 const DUMMY_MESSAGES = [
@@ -32,7 +32,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
   }, [setScrollPosition]);
 
   return (
-    <section className="relative h-full w-full bg-secondary p-20pxr ">
+    <section className="relative h-full w-full bg-secondary p-20pxr">
       <div
         ref={ref}
         className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"
@@ -43,7 +43,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
           ))}
         </div>
       </div>
-      <Peek />
+      <MessagePeek />
     </section>
   );
 });
