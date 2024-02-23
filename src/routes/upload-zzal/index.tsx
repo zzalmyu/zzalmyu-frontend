@@ -7,6 +7,7 @@ import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
 import TagSearchForm from "@/components/common/TagSearchForm";
 import { $selectedTags } from "@/store/tag";
+import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 
 const recommendTags = ["분노", "스트레스", "박명수", "직장인", "잠좀자자"];
 
@@ -26,6 +27,17 @@ const UploadZzal = () => {
     clearTimeout(toastTimer);
   };
 
+  const createUploadZzal = usePostUploadZzal();
+  const handleUploadZzal = () => {
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      createUploadZzal.mutate({
+        file: imageUrl,
+        dto: { tagIdList: selectedTags },
+      });
+    }
+  };
+
   const handleShowToast = () => {
     if (!file) {
       setToastMessage("사진을 등록해주세요!");
@@ -39,6 +51,7 @@ const UploadZzal = () => {
       setToastMessage("성공적으로 업로드가 되었습니다.");
       setToastColor("primary");
       setIncludeButton(true);
+      handleUploadZzal();
     }
 
     setShowToast(true);
