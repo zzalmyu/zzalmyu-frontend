@@ -4,7 +4,7 @@ import Chat from "@/components/common/Chat";
 const LayoutWithChat = () => {
   return (
     <div className="relative flex h-full flex-col overflow-hidden sm:flex-row">
-      <div className="flex-1 overflow-auto border-2 border-green-500">
+      <div className="flex-1 overflow-auto">
         <Outlet />
       </div>
       <Chat />
