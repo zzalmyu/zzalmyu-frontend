@@ -4,7 +4,7 @@ interface Props {
   reportDetails: ReportDetail[];
 }
 
-const ReportDetailTableBody = ({ reportDetails }: Props) => {
+const ReportDetailsTableBody = ({ reportDetails }: Props) => {
   return (
     <tbody>
       {reportDetails.map(({ reportDate, reportUserEmail }, index) => {
@@ -27,4 +27,4 @@ const ReportDetailTableBody = ({ reportDetails }: Props) => {
   );
 };
 
-export default ReportDetailTableBody;
+export default ReportDetailsTableBody;

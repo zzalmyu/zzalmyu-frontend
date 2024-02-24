@@ -5,30 +5,15 @@ import { useOverlay } from "@toss/use-overlay";
 import ZzalCard from "@/components/common/ZzalCard";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
-import ReportDetailTableBody from "@/components/AdminReportsDetail/ReportDetailTableBody";
-
-const reportDetails = [
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-  { reportDate: "2024-02-08 23:03:20", reportUserEmail: "heejin1@asdf.com" },
-];
+import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
+import useGetReportsDetails from "@/hooks/api/report/UseGetReportDetails";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
   const deleteConfirmOverlay = useOverlay();
+  const { reportDetails, isLoading } = useGetReportsDetails(imageId);
+
+  if (isLoading || !reportDetails) return <>로딩중...</>;
 
   const handleClickDeleteButton = () => {
     deleteConfirmOverlay.open(({ isOpen, close }) => (
@@ -44,16 +29,16 @@ const AdminImageDetail = () => {
             <li>
               <Link to="/admin/reports/">신고 내역</Link>
             </li>
-            <li>{imageId}</li>
+            <li>{reportDetails[0].imageTitle}</li>
           </ul>
         </div>
       </div>
       <div className="flex justify-center">
-        <div className="flex flex-col items-center sm:flex-row sm:items-start">
+        <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
           <ZzalCard
-            src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F9928383A5BBECBB111"
+            src={reportDetails[0].imageUrl}
             alt="신고 상세 이미지"
-            width="100"
+            width="2/6"
             hasAnimation={false}
           />
           <div className="mb-50pxr mt-3 flex max-h-420pxr justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-4/6 sm:rounded-xl">
@@ -62,7 +47,7 @@ const AdminImageDetail = () => {
                 <ReportTableHead.Th>신고된 날짜</ReportTableHead.Th>
                 <ReportTableHead.Th>신고 사용자 이메일</ReportTableHead.Th>
               </ReportTableHead>
-              <ReportDetailTableBody reportDetails={reportDetails} />
+              <ReportDetailsTableBody reportDetails={reportDetails} />
             </table>
             <button
               onClick={handleClickDeleteButton}
