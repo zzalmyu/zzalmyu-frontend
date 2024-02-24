@@ -1,56 +1,20 @@
+import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import Pending from "./AdminReports.pendingComponent";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportsTableBody from "@/components/AdminReports/ReportsTableBody ";
-
-const reports = [
-  {
-    imageId: 1,
-    lastReportAt: "2024-02-21T05:24:26.139Z",
-    reportCount: 3,
-    tags: [
-      {
-        tagId: 1,
-        tagName: "강아지",
-      },
-      {
-        tagId: 2,
-        tagName: "토끼",
-      },
-    ],
-  },
-  {
-    imageId: 1,
-    lastReportAt: "2024-02-21T05:24:26.139Z",
-    reportCount: 3,
-    tags: [
-      {
-        tagId: 1,
-        tagName: "강아지",
-      },
-      {
-        tagId: 2,
-        tagName: "토끼",
-      },
-    ],
-  },
-  {
-    imageId: 1,
-    lastReportAt: "2024-02-21T05:24:26.139Z",
-    reportCount: 3,
-    tags: [
-      {
-        tagId: 1,
-        tagName: "강아지",
-      },
-      {
-        tagId: 2,
-        tagName: "토끼",
-      },
-    ],
-  },
-];
+import useGetReports from "@/hooks/api/report/useGetReports";
+import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 
 const Admin = () => {
+  const fetchMoreRef = useRef(null);
+  const { reports, handleFetchNextPage } = useGetReports();
+
+  useIntersectionObserver({
+    target: fetchMoreRef,
+    handleIntersect: handleFetchNextPage,
+  });
+
   return (
     <div className="flex h-full w-full flex-col p-40pxr">
       <div className="px-0 pb-5 text-lg font-bold sm:px-10">
@@ -72,6 +36,7 @@ const Admin = () => {
               </ReportTableHead>
               <ReportsTableBody reports={reports} />
             </table>
+            <div ref={fetchMoreRef} />
             <div />
           </div>
         </div>
@@ -82,4 +47,5 @@ const Admin = () => {
 
 export const Route = createFileRoute("/admin/reports/")({
   component: Admin,
+  pendingComponent: Pending,
 });
