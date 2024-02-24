@@ -16,7 +16,7 @@ import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as MyUploadedZzalIndexImport } from "./routes/my-uploaded-zzal/index"
 import { Route as MyLikedZzalIndexImport } from "./routes/my-liked-zzal/index"
 import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
-import { Route as AdminReportsIdIndexImport } from "./routes/admin/reports/$id/index"
+import { Route as AdminReportsImageIdIndexImport } from "./routes/admin/reports/$imageId/index"
 
 // Create/Update Routes
 
@@ -45,8 +45,8 @@ const AdminReportsIndexRoute = AdminReportsIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminReportsIdIndexRoute = AdminReportsIdIndexImport.update({
-  path: "/admin/reports/$id/",
+const AdminReportsImageIdIndexRoute = AdminReportsImageIdIndexImport.update({
+  path: "/admin/reports/$imageId/",
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -74,8 +74,8 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof AdminReportsIndexImport
       parentRoute: typeof rootRoute
     }
-    "/admin/reports/$id/": {
-      preLoaderRoute: typeof AdminReportsIdIndexImport
+    "/admin/reports/$imageId/": {
+      preLoaderRoute: typeof AdminReportsImageIdIndexImport
       parentRoute: typeof rootRoute
     }
   }
@@ -89,7 +89,7 @@ export const routeTree = rootRoute.addChildren([
   MyUploadedZzalIndexRoute,
   UploadZzalIndexRoute,
   AdminReportsIndexRoute,
-  AdminReportsIdIndexRoute,
+  AdminReportsImageIdIndexRoute,
 ])
 
 /* prettier-ignore-end */

@@ -27,7 +27,7 @@ const reportDetails = [
 ];
 
 const AdminImageDetail = () => {
-  const { id } = Route.useParams();
+  const { imageId } = Route.useParams();
   const deleteConfirmOverlay = useOverlay();
 
   const handleClickDeleteButton = () => {
@@ -44,7 +44,7 @@ const AdminImageDetail = () => {
             <li>
               <Link to="/admin/reports/">신고 내역</Link>
             </li>
-            <li>{id}</li>
+            <li>{imageId}</li>
           </ul>
         </div>
       </div>
@@ -78,6 +78,6 @@ const AdminImageDetail = () => {
   );
 };
 
-export const Route = createFileRoute("/admin/reports/$id/")({
+export const Route = createFileRoute("/admin/reports/$imageId/")({
   component: AdminImageDetail,
 });
