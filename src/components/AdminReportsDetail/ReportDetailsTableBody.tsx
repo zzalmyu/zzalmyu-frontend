@@ -7,13 +7,10 @@ interface Props {
 const ReportDetailsTableBody = ({ reportDetails }: Props) => {
   return (
     <tbody>
-      {reportDetails.map(({ reportDate, reportUserEmail }, index) => {
+      {reportDetails.map(({ reportDate, reportUserEmail }) => {
         const shortReportDate = reportDate.slice(0, 10);
         return (
-          <tr
-            key={`${index}-${reportUserEmail}`}
-            className="border-b-2 border-neutral-300 last:border-0"
-          >
+          <tr key={reportUserEmail} className="border-b-2 border-neutral-300 last:border-0">
             <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
               {shortReportDate}
             </td>

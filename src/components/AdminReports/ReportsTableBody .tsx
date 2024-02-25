@@ -8,11 +8,11 @@ interface Props {
 const ReportsTableBody = ({ reports }: Props) => {
   return (
     <tbody>
-      {reports.map(({ imageId, lastReportAt, tags, reportCount }, index) => {
+      {reports.map(({ imageId, lastReportAt, tags, reportCount }) => {
         const shortLastReportAt = lastReportAt.slice(0, 10);
         const tagNames = tags.map((tag) => tag.tagName).join(", ");
         return (
-          <tr key={`${index}-${imageId}`} className="border-b-1 border-card last:border-0">
+          <tr key={imageId} className="border-b-1 border-card last:border-0">
             <td className="text-center text-text-primary">{shortLastReportAt}</td>
             <td className="text-center text-text-primary">{tagNames}</td>
             <td className="text-center text-text-primary">{reportCount}</td>
