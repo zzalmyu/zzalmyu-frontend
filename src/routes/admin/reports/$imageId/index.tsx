@@ -6,10 +6,12 @@ import ZzalCard from "@/components/common/ZzalCard";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
-import useGetReportsDetails from "@/hooks/api/report/UseGetReportDetails";
+import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
+import useDeleteReport from "@/hooks/api/report/useDeleteReport";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
+  const { deleteReport } = useDeleteReport();
   const deleteConfirmOverlay = useOverlay();
   const { reportDetails, isLoading } = useGetReportsDetails(imageId);
 
@@ -17,7 +19,13 @@ const AdminImageDetail = () => {
 
   const handleClickDeleteButton = () => {
     deleteConfirmOverlay.open(({ isOpen, close }) => (
-      <DeleteConfirmModal isOpen={isOpen} onClose={close} onDelete={() => {}} />
+      <DeleteConfirmModal
+        isOpen={isOpen}
+        onClose={close}
+        onDelete={() => {
+          deleteReport(imageId);
+        }}
+      />
     ));
   };
 
