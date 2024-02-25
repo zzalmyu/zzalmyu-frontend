@@ -7,11 +7,11 @@ import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
 import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
-import useDeleteReport from "@/hooks/api/report/useDeleteReport";
+import useDeleteReportedImage from "@/hooks/api/report/useDeleteReportedImage";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
-  const { deleteReport } = useDeleteReport();
+  const { deleteReportedImage } = useDeleteReportedImage();
   const deleteConfirmOverlay = useOverlay();
   const { reportDetails, isLoading } = useGetReportsDetails(imageId);
 
@@ -23,7 +23,7 @@ const AdminImageDetail = () => {
         isOpen={isOpen}
         onClose={close}
         onDelete={() => {
-          deleteReport(imageId);
+          deleteReportedImage(imageId);
         }}
       />
     ));

@@ -9,7 +9,7 @@ export const getReports = (offset: number) =>
 export const getReportDetails = (imageId: string) =>
   http.get<GetReportDetailsResponse>({ url: `/api/v1/report/${imageId}` });
 
-export const deleteReport = async (imageId: string) => {
+export const deleteReportedImage = async (imageId: string) => {
   await http.delete({ url: `/api/v1/report/${imageId}` });
   return imageId;
 };

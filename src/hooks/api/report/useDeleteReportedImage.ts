@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { deleteReport } from "@/apis/report";
+import { deleteReportedImage } from "@/apis/report";
 import { Report } from "@/types/report";
 
 const useDeleteReportedImage = () => {
@@ -8,7 +8,7 @@ const useDeleteReportedImage = () => {
   const navigate = useNavigate({ from: "/admin/reports/$imagId" });
 
   const { mutate, ...rest } = useMutation({
-    mutationFn: deleteReport,
+    mutationFn: deleteReportedImage,
     onSuccess: (imageId) => {
       queryClient.setQueryData(
         ["reports"],
@@ -40,7 +40,7 @@ const useDeleteReportedImage = () => {
     },
   });
 
-  return { deleteReport: mutate, ...rest };
+  return { deleteReportedImage: mutate, ...rest };
 };
 
 export default useDeleteReportedImage;
