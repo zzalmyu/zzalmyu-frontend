@@ -1,6 +1,7 @@
 export interface PostUploadZzalTagRequest {
-  file: string;
+  file: File;
   dto: {
-    tagIdList: Array<string>;
+    tagIdList: Array<number>;
+    title: string;
   };
 }

@@ -22,20 +22,19 @@ const UploadZzal = () => {
 
   const { popularTags } = useGetPopularTags();
   const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
-
+  console.log(popularTags);
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
     setShowToast(false);
     clearTimeout(toastTimer);
   };
 
-  const createUploadZzal = usePostUploadZzal();
+  const postUploadZzal = usePostUploadZzal();
   const handleUploadZzal = () => {
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      createUploadZzal.mutate({
-        file: imageUrl,
-        dto: { tagIdList: selectedTags },
+      postUploadZzal.mutate({
+        file: file,
+        dto: { tagIdList: [4, 5, 7], title: file.name },
       });
     }
   };
