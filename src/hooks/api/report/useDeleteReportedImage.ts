@@ -15,7 +15,7 @@ const useDeleteReportedImage = () => {
         ["reports"],
         ({ pages, pageParams }: { pages: Report[][]; pageParams: number[] }) => {
           const updatedPages = pages.map((page) =>
-            page.filter((report) => report.imageId !== parseInt(imageId)),
+            page.filter((report) => report.imageId !== imageId),
           );
 
           return { pages: updatedPages, pageParams };
