@@ -21,9 +21,7 @@ const useDeleteReportedImage = () => {
         },
       );
 
-      queryClient.invalidateQueries({
-        queryKey: ["reports"],
-      });
+      queryClient.invalidateQueries({ queryKey: ["reports"] });
 
       console.log("사진이 삭제되었습니다.");
       {
