@@ -6,13 +6,15 @@ import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
 import TagSearchForm from "@/components/common/TagSearchForm";
-import { $selectedTags } from "@/store/tag";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
+import { $selectedTags } from "@/store/tag";
+import { $previewUrl } from "@/store/zzal";
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [selectedTags] = useAtom($selectedTags);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [, setPreviewUrl] = useAtom($previewUrl);
 
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("파일을 업로드해주세요");
@@ -22,23 +24,13 @@ const UploadZzal = () => {
 
   const { popularTags } = useGetPopularTags();
   const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
-  console.log(popularTags);
+
+  const postUploadZzal = usePostUploadZzal();
+
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
     setShowToast(false);
     clearTimeout(toastTimer);
-  };
-
-  const postUploadZzal = usePostUploadZzal();
-  const handleUploadZzal = () => {
-    if (file) {
-      postUploadZzal.mutate({
-        file: file,
-        // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
-        tagIdList: [2, 3, 4],
-        title: file.name.substring(0, file.name.indexOf(".")),
-      });
-    }
   };
 
   const handleShowToast = () => {
@@ -51,9 +43,6 @@ const UploadZzal = () => {
       setToastColor("delete");
       setIncludeButton(false);
     } else {
-      setToastMessage("성공적으로 업로드가 되었습니다.");
-      setToastColor("primary");
-      setIncludeButton(true);
       handleUploadZzal();
     }
 
@@ -63,6 +52,28 @@ const UploadZzal = () => {
       setShowToast(false);
     }, 5000);
     setToastTimer(toastTimerId);
+  };
+
+  const handleUploadZzal = () => {
+    if (file) {
+      postUploadZzal.mutate({
+        file: file,
+        // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
+        tagIdList: [2, 3, 4],
+        title: file.name.substring(0, file.name.indexOf(".")),
+      });
+      postUploadZzal.isError &&
+        (setToastMessage("사진 업로드에 실패했습니다."),
+        setToastColor("delete"),
+        setIncludeButton(false));
+      postUploadZzal.isSuccess &&
+        (setToastMessage("성공적으로 업로드가 되었습니다."),
+        setToastColor("primary"),
+        setIncludeButton(true),
+        setFile(null),
+        setPreviewUrl(null),
+        setSelectedTags([]));
+    }
   };
 
   return (
