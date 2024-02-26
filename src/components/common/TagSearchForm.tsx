@@ -1,9 +1,11 @@
-import { FormEvent } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAtom } from "jotai";
 import { XCircle, Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
+import { useGetTags } from "@/hooks/apis/tag/useGetTags";
+import TagAutoComplete from "@/components/common/TagAutoComplete";
 
 interface Props {
   className?: string;
@@ -11,19 +13,21 @@ interface Props {
 
 const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [inputText, setInputText] = useState("");
+
+  const { data: tagAutoComplete, refetch } = useGetTags(inputText);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
     const tag = formData.get("tag") as string;
-    const input = event.currentTarget.elements.namedItem("tag") as HTMLInputElement;
 
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tag)) {
       setSelectedTags((previousState) => [...previousState, tag]);
     }
 
-    input.value = "";
+    setInputText("");
   };
 
   const handleClickDeleteTag = (tag: string) => () => {
@@ -34,8 +38,20 @@ const TagSearchForm = ({ className }: Props) => {
     setSelectedTags([]);
   };
 
+  const handleChangeInputText = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputText(event.target.value);
+  };
+
+  const handleCloseAutoComplete = () => {
+    setInputText("");
+  };
+
+  useEffect(() => {
+    refetch();
+  }, [inputText]);
+
   return (
-    <div className={cn(`flex w-650pxr flex-col flex-wrap `, className)}>
+    <div className={cn(`relative flex w-650pxr flex-col flex-wrap `, className)}>
       <form onSubmit={handleSubmitForm}>
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
@@ -44,14 +60,20 @@ const TagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
+            value={inputText}
+            onChange={handleChangeInputText}
             className="min-h-16 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
-
           <button type="submit">
             <Search aria-label="검색" />
           </button>
         </div>
       </form>
+      <div className="absolute top-70pxr flex w-full justify-center">
+        {tagAutoComplete && inputText && (
+          <TagAutoComplete tags={tagAutoComplete} onCloseAutoComplete={handleCloseAutoComplete} />
+        )}
+      </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (
           <button onClick={handleClickResetTagButton} className=" mr-4 mt-4 pl-4" type="button">
