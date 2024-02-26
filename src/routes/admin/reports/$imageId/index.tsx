@@ -18,14 +18,16 @@ const AdminImageDetail = () => {
   if (isLoading || !reportDetails) return <>로딩중...</>;
   const { imageUrl, imageTitle, reports } = reportDetails;
 
+  const handleClickDeleteConfirm = (imageId: string) => () => {
+    deleteReportedImage(imageId);
+  };
+
   const handleClickDeleteButton = () => {
     deleteConfirmOverlay.open(({ isOpen, close }) => (
       <DeleteConfirmModal
         isOpen={isOpen}
         onClose={close}
-        onDelete={() => {
-          deleteReportedImage(imageId);
-        }}
+        onDelete={handleClickDeleteConfirm(imageId)}
       />
     ));
   };
