@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { deleteReportedImage } from "@/apis/report";
@@ -22,19 +23,11 @@ const useDeleteReportedImage = () => {
       );
 
       queryClient.invalidateQueries({ queryKey: ["reports"] });
-
-      console.log("사진이 삭제되었습니다.");
-      {
-        /*TODO: [2024.02.24] 토스트 메세지로 변경하기 */
-      }
-
+      toast.success("사진이 삭제되었습니다");
       navigate({ to: "/admin/reports" });
     },
-    onError: (error) => {
-      console.error("사진 삭제에 실패했습니다.", error);
-      {
-        /*TODO: [2024.02.24] 토스트 메세지로 변경하기 */
-      }
+    onError: () => {
+      toast.error("사진 삭제에 실패했습니다.");
     },
   });
 
