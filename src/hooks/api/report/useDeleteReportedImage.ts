@@ -6,7 +6,7 @@ import { Report } from "@/types/report";
 
 const useDeleteReportedImage = () => {
   const queryClient = useQueryClient();
-  const navigate = useNavigate({ from: "/admin/reports/$imagId" });
+  const navigate = useNavigate({ from: "/admin/reports/$imageId" });
 
   const { mutate, ...rest } = useMutation({
     mutationFn: deleteReportedImage,
