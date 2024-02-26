@@ -1,18 +1,29 @@
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
+import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
+import { $selectedTags } from "@/store/tag";
+import { MAX_SEARCH_TAG } from "@/constants/tag";
 
 interface Props {
   tags: Tag[];
-  onSelectTagName: (tag: Tag) => void;
+  onCloseAutoComplete: () => void;
 }
 
-const TagAutoComplete = ({ tags, onSelectTagName }: Props) => {
-  const [cursorIndex, setCursorIndex] = useState(0);
+const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
+  const [cursorIndex, setCursorIndex] = useState(-1);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [isOpen, setIsOpen] = useState(true);
+  const ulRef = useRef<HTMLUListElement | null>(null);
 
   const handleClickTagName = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
-    onSelectTagName(tags[tagIndex]);
+
+    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tags[tagIndex].tagName)) {
+      setSelectedTags((previousState) => [...previousState, tags[tagIndex].tagName]);
+    }
+
+    onCloseAutoComplete();
   };
 
   const handleMouseOverTag = (tagIndex: number) => () => {
@@ -20,61 +31,51 @@ const TagAutoComplete = ({ tags, onSelectTagName }: Props) => {
   };
 
   useEffect(() => {
-    const handleKeydownTagFocus = (event: KeyboardEvent) => {
-      const { key } = event;
-
-      if (key === "ArrowUp") {
-        setCursorIndex((cursor) => {
-          return cursor - 1 < 0 ? tags.length - 1 : cursor - 1;
-        });
-      }
-      if (key === "ArrowDown") {
-        setCursorIndex((cursor) => {
-          return cursor + 1 >= tags.length ? 0 : cursor + 1;
-        });
-      }
+    const handleClickOutside = (event: MouseEvent) => {
+      if (isOpen && !ulRef.current?.contains(event.target as HTMLElement)) setIsOpen(false);
     };
 
-    const handleKeyUpTagSelect = (event: KeyboardEvent) => {
-      const { key } = event;
-
-      if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
-    };
-
-    window.addEventListener("keydown", handleKeydownTagFocus);
-    window.addEventListener("keyup", handleKeyUpTagSelect);
+    window.addEventListener("click", handleClickOutside);
 
     return () => {
-      window.removeEventListener("keydown", handleKeydownTagFocus);
-      window.removeEventListener("keyup", handleKeyUpTagSelect);
+      window.removeEventListener("click", handleClickOutside);
     };
-  });
+  }, []);
+
+  useEffect(() => {
+    setIsOpen(true);
+  }, [tags]);
 
   return (
-    <ul
-      className="box-border w-4/5 rounded-box border-2 p-2 shadow-xl outline-none"
-      onBlur={() => setCursorIndex(-1)}
-      tabIndex={0}
-    >
-      {tags.length === 0 && (
-        <li className="rounded-md px-1.5">
-          <div>검색 결과가 없습니다</div>
-        </li>
+    <Fragment>
+      {isOpen && (
+        <ul
+          className="box-border w-[95%] rounded-box border-2 bg-white p-2 shadow-xl outline-none"
+          onBlur={() => setCursorIndex(-1)}
+          tabIndex={0}
+          ref={ulRef}
+        >
+          {tags.length === 0 && (
+            <li className="rounded-md px-1.5">
+              <div>검색 결과가 없습니다</div>
+            </li>
+          )}
+          {tags.length > 0 &&
+            tags.map(({ tagId, tagName }, index) => (
+              <li
+                key={tagId}
+                className={cn(
+                  `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
+                )}
+                onMouseOver={handleMouseOverTag(index)}
+                onClick={handleClickTagName(index)}
+              >
+                <div>{tagName}</div>
+              </li>
+            ))}
+        </ul>
       )}
-      {tags.length > 0 &&
-        tags.map(({ tagId, tagName }, index) => (
-          <li
-            key={tagId}
-            className={cn(
-              `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
-            )}
-            onMouseOver={handleMouseOverTag(index)}
-            onClick={handleClickTagName(index)}
-          >
-            <div>{tagName}</div>
-          </li>
-        ))}
-    </ul>
+    </Fragment>
   );
 };
 
