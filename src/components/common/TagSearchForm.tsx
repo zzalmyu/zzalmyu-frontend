@@ -15,7 +15,7 @@ const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [inputText, setInputText] = useState("");
 
-  const { data: tagAutoComplete, refetch } = useGetTags(inputText);
+  const { data: autoCompletedTags, refetch } = useGetTags(inputText);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -70,8 +70,8 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        {tagAutoComplete && inputText && (
-          <TagAutoComplete tags={tagAutoComplete} onCloseAutoComplete={handleCloseAutoComplete} />
+        {autoCompletedTags && inputText && (
+          <TagAutoComplete tags={autoCompletedTags} onCloseAutoComplete={handleCloseAutoComplete} />
         )}
       </div>
       <div className="flex items-center">
