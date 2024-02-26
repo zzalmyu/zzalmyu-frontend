@@ -16,6 +16,7 @@ const AdminImageDetail = () => {
   const { reportDetails, isLoading } = useGetReportsDetails(imageId);
 
   if (isLoading || !reportDetails) return <>로딩중...</>;
+  const { imageUrl, imageTitle, reports } = reportDetails;
 
   const handleClickDeleteButton = () => {
     deleteConfirmOverlay.open(({ isOpen, close }) => (
@@ -37,25 +38,20 @@ const AdminImageDetail = () => {
             <li>
               <Link to="/admin/reports/">신고 내역</Link>
             </li>
-            <li>{reportDetails[0].imageTitle}</li>
+            <li>{imageTitle}</li>
           </ul>
         </div>
       </div>
       <div className="flex justify-center">
         <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
-          <ZzalCard
-            src={reportDetails[0].imageUrl}
-            alt="신고 상세 이미지"
-            width="2/6"
-            hasAnimation={false}
-          />
+          <ZzalCard src={imageUrl} alt="신고 상세 이미지" width="2/6" hasAnimation={false} />
           <div className="mb-50pxr mt-3 flex max-h-420pxr justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-4/6 sm:rounded-xl">
             <table className="table bg-card">
               <ReportTableHead>
                 <ReportTableHead.Th>신고된 날짜</ReportTableHead.Th>
                 <ReportTableHead.Th>신고 사용자 이메일</ReportTableHead.Th>
               </ReportTableHead>
-              <ReportDetailsTableBody reportDetails={reportDetails} />
+              <ReportDetailsTableBody reportedAtByList={reports} />
             </table>
             <button
               onClick={handleClickDeleteButton}

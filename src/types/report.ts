@@ -9,7 +9,11 @@ export interface Report {
 export interface ReportDetail {
   imageTitle: string;
   imageUrl: string;
+  reports: ReportedAtBy[];
+  tags?: Tag[];
+}
+
+export interface ReportedAtBy {
   reportDate: string;
   reportUserEmail: string;
-  tags?: Tag[];
 }

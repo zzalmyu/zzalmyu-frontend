@@ -1,13 +1,13 @@
-import { ReportDetail } from "@/types/report";
+import { ReportedAtBy } from "@/types/report";
 
 interface Props {
-  reportDetails: ReportDetail[];
+  reportedAtByList: ReportedAtBy[];
 }
 
-const ReportDetailsTableBody = ({ reportDetails }: Props) => {
+const ReportDetailsTableBody = ({ reportedAtByList }: Props) => {
   return (
     <tbody>
-      {reportDetails.map(({ reportDate, reportUserEmail }) => {
+      {reportedAtByList.map(({ reportDate, reportUserEmail }) => {
         const shortReportDate = reportDate.slice(0, 10);
         return (
           <tr key={reportUserEmail} className="border-b-2 border-neutral-300 last:border-0">
