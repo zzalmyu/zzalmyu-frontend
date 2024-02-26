@@ -70,8 +70,11 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        {autoCompletedTags && inputText && (
-          <TagAutoComplete tags={autoCompletedTags} onCloseAutoComplete={handleCloseAutoComplete} />
+        {inputText && (
+          <TagAutoComplete
+            tags={autoCompletedTags || []}
+            onCloseAutoComplete={handleCloseAutoComplete}
+          />
         )}
       </div>
       <div className="flex items-center">

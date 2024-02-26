@@ -48,31 +48,25 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
 
   return (
     <Fragment>
-      {isOpen && (
+      {isOpen && tags.length > 0 && (
         <ul
           className="box-border w-[95%] rounded-box border-2 bg-white p-2 shadow-xl outline-none"
           onBlur={() => setCursorIndex(-1)}
           tabIndex={0}
           ref={ulRef}
         >
-          {tags.length === 0 && (
-            <li className="rounded-md px-1.5">
-              <div>검색 결과가 없습니다</div>
+          {tags.map(({ tagId, tagName }, index) => (
+            <li
+              key={tagId}
+              className={cn(
+                `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
+              )}
+              onMouseOver={handleMouseOverTag(index)}
+              onClick={handleClickTagName(index)}
+            >
+              <div>{tagName}</div>
             </li>
-          )}
-          {tags.length > 0 &&
-            tags.map(({ tagId, tagName }, index) => (
-              <li
-                key={tagId}
-                className={cn(
-                  `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
-                )}
-                onMouseOver={handleMouseOverTag(index)}
-                onClick={handleClickTagName(index)}
-              >
-                <div>{tagName}</div>
-              </li>
-            ))}
+          ))}
         </ul>
       )}
     </Fragment>
