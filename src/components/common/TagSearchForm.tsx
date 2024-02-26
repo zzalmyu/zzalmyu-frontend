@@ -13,9 +13,9 @@ interface Props {
 
 const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
-  const [inputText, setInputText] = useState("");
+  const [tagKeyword, setTagKeyword] = useState("");
 
-  const { data: autoCompletedTags, refetch } = useGetTags(inputText);
+  const { data: autoCompletedTags, refetch } = useGetTags(tagKeyword);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,7 +27,7 @@ const TagSearchForm = ({ className }: Props) => {
       setSelectedTags((previousState) => [...previousState, tag]);
     }
 
-    setInputText("");
+    setTagKeyword("");
   };
 
   const handleClickDeleteTag = (tag: string) => () => {
@@ -39,16 +39,16 @@ const TagSearchForm = ({ className }: Props) => {
   };
 
   const handleChangeInputText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setInputText(event.target.value);
+    setTagKeyword(event.target.value);
   };
 
   const handleCloseAutoComplete = () => {
-    setInputText("");
+    setTagKeyword("");
   };
 
   useEffect(() => {
     refetch();
-  }, [inputText]);
+  }, [tagKeyword]);
 
   return (
     <div className={cn(`relative flex w-650pxr flex-col flex-wrap `, className)}>
@@ -60,7 +60,7 @@ const TagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
-            value={inputText}
+            value={tagKeyword}
             onChange={handleChangeInputText}
             className="min-h-16 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
@@ -70,7 +70,7 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        {inputText && (
+        {tagKeyword && (
           <TagAutoComplete
             tags={autoCompletedTags || []}
             onCloseAutoComplete={handleCloseAutoComplete}
