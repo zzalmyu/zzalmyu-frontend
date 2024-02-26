@@ -6,7 +6,7 @@ export interface Report {
   reportCount: number;
   tags: Tag[];
 }
-export interface ReportDetail {
+export interface ReportDetails {
   imageTitle: string;
   imageUrl: string;
   reports: ReportedAtBy[];
