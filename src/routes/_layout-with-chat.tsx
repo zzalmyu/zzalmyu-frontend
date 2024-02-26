@@ -3,8 +3,8 @@ import Chat from "@/components/common/Chat";
 
 const LayoutWithChat = () => {
   return (
-    <div className="flex h-full">
-      <div className="flex-1">
+    <div className="relative flex h-full flex-col overflow-hidden sm:flex-row">
+      <div className="flex-1 overflow-auto">
         <Outlet />
       </div>
       <Chat />
