@@ -1,35 +1,14 @@
-import { useEffect, useRef, useState, KeyboardEvent } from "react";
+import { useEffect, useState } from "react";
 import { cn } from "@/utils/tailwind";
+import { Tag } from "@/types/tag";
 
 interface Props {
-  tags: Array<string>;
-  onSelectTagName: (tagName: string) => void;
+  tags: Tag[];
+  onSelectTagName: (tag: Tag) => void;
 }
 
-const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
+const TagAutoComplete = ({ tags, onSelectTagName }: Props) => {
   const [cursorIndex, setCursorIndex] = useState(0);
-  const ulRef = useRef<HTMLUListElement>(null);
-
-  const handleKeydownTagFocus = (event: KeyboardEvent<HTMLUListElement>) => {
-    const { key } = event;
-
-    if (key === "ArrowUp") {
-      setCursorIndex((cursor) => {
-        return cursor - 1 < 0 ? tags.length - 1 : cursor - 1;
-      });
-    }
-    if (key === "ArrowDown") {
-      setCursorIndex((cursor) => {
-        return cursor + 1 >= tags.length ? 0 : cursor + 1;
-      });
-    }
-  };
-
-  const handleKeyUpTagSelect = (event: KeyboardEvent<HTMLUListElement>) => {
-    const { key } = event;
-
-    if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
-  };
 
   const handleClickTagName = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
@@ -38,19 +17,42 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
 
   const handleMouseOverTag = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
-    ulRef.current?.focus();
   };
 
   useEffect(() => {
-    ulRef.current?.focus();
-  }, []);
+    const handleKeydownTagFocus = (event: KeyboardEvent) => {
+      const { key } = event;
+
+      if (key === "ArrowUp") {
+        setCursorIndex((cursor) => {
+          return cursor - 1 < 0 ? tags.length - 1 : cursor - 1;
+        });
+      }
+      if (key === "ArrowDown") {
+        setCursorIndex((cursor) => {
+          return cursor + 1 >= tags.length ? 0 : cursor + 1;
+        });
+      }
+    };
+
+    const handleKeyUpTagSelect = (event: KeyboardEvent) => {
+      const { key } = event;
+
+      if (key === "Enter") return onSelectTagName(tags[cursorIndex]);
+    };
+
+    window.addEventListener("keydown", handleKeydownTagFocus);
+    window.addEventListener("keyup", handleKeyUpTagSelect);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeydownTagFocus);
+      window.removeEventListener("keyup", handleKeyUpTagSelect);
+    };
+  });
 
   return (
     <ul
       className="box-border w-4/5 rounded-box border-2 p-2 shadow-xl outline-none"
-      ref={ulRef}
-      onKeyDown={handleKeydownTagFocus}
-      onKeyUp={handleKeyUpTagSelect}
       onBlur={() => setCursorIndex(-1)}
       tabIndex={0}
     >
@@ -60,16 +62,16 @@ const TagAutoComplete = ({ tags = [], onSelectTagName }: Props) => {
         </li>
       )}
       {tags.length > 0 &&
-        tags.map((tag, index) => (
+        tags.map(({ tagId, tagName }, index) => (
           <li
-            key={`${index}-${tag}`}
+            key={tagId}
             className={cn(
-              `${index === cursorIndex && "bg-gray-200 font-bold"}  box-border rounded-md px-1.5 py-2`,
+              `${index === cursorIndex && "bg-gray-200 font-bold"} box-border rounded-md px-1.5 py-2`,
             )}
             onMouseOver={handleMouseOverTag(index)}
             onClick={handleClickTagName(index)}
           >
-            <div>{tag}</div>
+            <div>{tagName}</div>
           </li>
         ))}
     </ul>

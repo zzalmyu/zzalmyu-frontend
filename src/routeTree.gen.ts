@@ -13,10 +13,11 @@
 import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutWithChatImport } from "./routes/_layout-with-chat"
 import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
-import { Route as AdminIndexImport } from "./routes/admin/index"
 import { Route as LayoutWithChatIndexImport } from "./routes/_layout-with-chat/index"
+import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
 import { Route as LayoutWithChatMyUploadedZzalIndexImport } from "./routes/_layout-with-chat/my-uploaded-zzal/index"
 import { Route as LayoutWithChatMyLikedZzalIndexImport } from "./routes/_layout-with-chat/my-liked-zzal/index"
+import { Route as AdminReportsIdIndexImport } from "./routes/admin/reports/$id/index"
 
 // Create/Update Routes
 
@@ -30,14 +31,14 @@ const UploadZzalIndexRoute = UploadZzalIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const AdminIndexRoute = AdminIndexImport.update({
-  path: "/admin/",
-  getParentRoute: () => rootRoute,
-} as any)
-
 const LayoutWithChatIndexRoute = LayoutWithChatIndexImport.update({
   path: "/",
   getParentRoute: () => LayoutWithChatRoute,
+} as any)
+
+const AdminReportsIndexRoute = AdminReportsIndexImport.update({
+  path: "/admin/reports/",
+  getParentRoute: () => rootRoute,
 } as any)
 
 const LayoutWithChatMyUploadedZzalIndexRoute =
@@ -52,6 +53,11 @@ const LayoutWithChatMyLikedZzalIndexRoute =
     getParentRoute: () => LayoutWithChatRoute,
   } as any)
 
+const AdminReportsIdIndexRoute = AdminReportsIdIndexImport.update({
+  path: "/admin/reports/$id/",
+  getParentRoute: () => rootRoute,
+} as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
@@ -63,10 +69,6 @@ declare module "@tanstack/react-router" {
     "/_layout-with-chat/": {
       preLoaderRoute: typeof LayoutWithChatIndexImport
       parentRoute: typeof LayoutWithChatImport
-    }
-    "/admin/": {
-      preLoaderRoute: typeof AdminIndexImport
-      parentRoute: typeof rootRoute
     }
     "/upload-zzal/": {
       preLoaderRoute: typeof UploadZzalIndexImport
@@ -80,6 +82,14 @@ declare module "@tanstack/react-router" {
       preLoaderRoute: typeof LayoutWithChatMyUploadedZzalIndexImport
       parentRoute: typeof LayoutWithChatImport
     }
+    "/admin/reports/": {
+      preLoaderRoute: typeof AdminReportsIndexImport
+      parentRoute: typeof rootRoute
+    }
+    "/admin/reports/$id/": {
+      preLoaderRoute: typeof AdminReportsIdIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -91,8 +101,9 @@ export const routeTree = rootRoute.addChildren([
     LayoutWithChatMyLikedZzalIndexRoute,
     LayoutWithChatMyUploadedZzalIndexRoute,
   ]),
-  AdminIndexRoute,
   UploadZzalIndexRoute,
+  AdminReportsIndexRoute,
+  AdminReportsIdIndexRoute,
 ])
 
 /* prettier-ignore-end */
