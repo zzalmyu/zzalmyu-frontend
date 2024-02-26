@@ -34,7 +34,9 @@ const UploadZzal = () => {
     if (file) {
       postUploadZzal.mutate({
         file: file,
-        dto: { tagIdList: [4, 5, 7], title: file.name },
+        // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
+        tagIdList: [2, 3, 4],
+        title: file.name.substring(0, file.name.indexOf(".")),
       });
     }
   };
