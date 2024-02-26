@@ -1,12 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
+import { useAtom } from "jotai";
 import { postUploadZzal } from "@/apis/zzal";
+import { $previewUrl } from "@/store/zzal";
+import { $selectedTags } from "@/store/tag";
 
 const usePostUploadZzal = () => {
+  const [, setPreviewUrl] = useAtom($previewUrl);
+  const [, setSelectedTags] = useAtom($selectedTags);
+
   const mutation = useMutation({
-    mutationFn: ({ file, dto }: { file: File; dto: { tagIdList: Array<number>; title: string } }) =>
-      postUploadZzal({ file, dto }),
-    onSuccess: () => console.log("postUploadZzal success"),
-    onError: () => console.log("postUploadZzal error"),
+    mutationFn: postUploadZzal,
+    onSuccess: () => {
+      console.log("postUploadZzal success"), setPreviewUrl(null), setSelectedTags([]);
+    },
+    onError: () => console.log(`postUploadZzal error.`),
   });
 
   return mutation;

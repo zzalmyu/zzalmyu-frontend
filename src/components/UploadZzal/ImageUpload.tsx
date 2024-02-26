@@ -1,13 +1,15 @@
 import { Fragment, useRef, useState, DragEvent, ChangeEvent } from "react";
 import { Upload } from "lucide-react";
+import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import ZzalCard from "@/components/common/ZzalCard";
+import { $previewUrl } from "@/store/zzal";
 interface Props {
   onChange: (file: File | null) => void;
 }
 
 const ImageUpload = ({ onChange }: Props) => {
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [previewUrl, setPreviewUrl] = useAtom($previewUrl);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 

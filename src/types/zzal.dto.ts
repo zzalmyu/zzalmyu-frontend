@@ -1,4 +1,4 @@
-export interface PostUploadZzalTagRequest {
+export interface PostUploadZzalRequest {
   file: File;
   dto: {
     tagIdList: Array<number>;
