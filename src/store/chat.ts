@@ -6,12 +6,12 @@ export const $isMessagePeekOpen = atom(false);
 
 export const $previewImage = atom("");
 
-export const $setMessagePreview = atom(null, (_, set, previewImage: string) => {
+export const $setMessagePreview = atom(null, (_get, set, previewImage: string) => {
   set($previewImage, previewImage);
   set($isMessagePeekOpen, true);
 });
 
-export const $deleteMessagePreview = atom(null, (_, set) => {
+export const $deleteMessagePreview = atom(null, (_get, set) => {
   set($isMessagePeekOpen, false);
   set($previewImage, "");
 });
