@@ -46,7 +46,7 @@ const AdminImageDetail = () => {
       </div>
       <div className="flex justify-center">
         <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
-          <ZzalCard src={imageUrl} alt="신고 상세 이미지" width="2/6" hasAnimation={false} />
+          <ZzalCard src={imageUrl} alt={imageTitle} width="2/6" hasAnimation={false} />
           <div className="mb-50pxr mt-3 flex max-h-420pxr justify-end overflow-auto rounded-xl sm:ml-5 sm:mt-0 sm:w-4/6 sm:rounded-xl">
             <table className="table bg-card">
               <ReportTableHead>

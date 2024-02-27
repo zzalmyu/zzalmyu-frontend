@@ -1,10 +1,9 @@
 import { GetReportsResponse, GetReportDetailsResponse } from "@/types/report.dto";
 import http from "./core";
+import { PAGINATION_LIMIT } from "@/constants/api";
 
-const REPORTS_THRESHOLD = 10;
-
-export const getReports = (offset: number) =>
-  http.get<GetReportsResponse>({ url: `/v1/report?page=${offset}&size=${REPORTS_THRESHOLD}` });
+export const getReports = (page: number) =>
+  http.get<GetReportsResponse>({ url: `/v1/report?page=${page}&size=${PAGINATION_LIMIT}` });
 
 export const getReportDetails = (imageId: string) =>
   http.get<GetReportDetailsResponse>({ url: `/v1/report/${imageId}` });

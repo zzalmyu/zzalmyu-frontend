@@ -2,16 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getReportDetails } from "@/apis/report";
 
 const useGetReportsDetails = (imageId: string) => {
-  const {
-    data: reportDetails,
-    isLoading,
-    isError,
-  } = useQuery({
+  const { data: reportDetails, ...rest } = useQuery({
     queryKey: ["reportDetails", imageId],
     queryFn: () => getReportDetails(imageId),
   });
 
-  return { reportDetails, isLoading, isError };
+  return { reportDetails, ...rest };
 };
 
 export default useGetReportsDetails;
