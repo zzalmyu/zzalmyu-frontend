@@ -2,9 +2,9 @@ name: zzalmyu frontend continuous developments
 
 on:
   push:
-    branches: [main]
+    branches: [main, \#70/chore/github-actions]
   pull_request:
-    branches: [main]
+    branches: [main, \#70/chore/github-actions]
 
 jobs:
   build-and-deploy:
