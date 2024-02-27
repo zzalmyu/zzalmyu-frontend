@@ -38,7 +38,7 @@ jobs:
       - name: Deploy to AWS S3
         env:
           BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
-        run: aws s3 sync build/ s3://$BUCKET_NAME --delete
+        run: aws s3 sync ./dist s3://$BUCKET_NAME --delete
 
       - name: CloudFront Invalidation
         env:
