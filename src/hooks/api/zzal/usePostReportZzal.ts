@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { postReportZzal } from "@/apis/zzal";
+import { postReportZzal } from "@/apis/report";
 
 const usePostReportZzal = () => {
   const mutation = useMutation({

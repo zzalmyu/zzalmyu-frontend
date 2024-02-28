@@ -10,3 +10,7 @@ export interface ReportDetail {
   reportUserEmail: string;
   tags?: { tagId: number; tagName: string }[];
 }
+
+export interface ReportZzal {
+  imageId: number;
+}
