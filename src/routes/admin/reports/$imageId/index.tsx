@@ -8,14 +8,13 @@ import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
 import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
 import useDeleteReportedImage from "@/hooks/api/report/useDeleteReportedImage";
+import Pending from "@/routes/admin/reports/AdminReports.pendingComponent";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
   const { deleteReportedImage } = useDeleteReportedImage();
   const deleteConfirmOverlay = useOverlay();
-  const { reportDetails, isLoading } = useGetReportsDetails(imageId);
-
-  if (isLoading || !reportDetails) return <>로딩중...</>;
+  const { reportDetails } = useGetReportsDetails(imageId);
   const { imageUrl, imageTitle, reports } = reportDetails;
 
   const handleClickDeleteConfirm = (imageId: string) => () => {
@@ -71,4 +70,5 @@ const AdminImageDetail = () => {
 
 export const Route = createFileRoute("/admin/reports/$imageId/")({
   component: AdminImageDetail,
+  pendingComponent: Pending,
 });
