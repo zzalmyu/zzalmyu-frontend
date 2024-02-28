@@ -2,9 +2,9 @@ name: zzalmyu frontend continuous developments
 
 on:
   push:
-    branches: main
+    branches: [main, \#70/chore/github-actions]
   pull_request:
-    branches: main
+    branches: [main, \#70/chore/github-actions]
 
 jobs:
   build-and-deploy:
@@ -22,8 +22,11 @@ jobs:
           node-version: "20.11.1"
           cache: "pnpm"
 
-      - name: Install Dependencies
-        run: pnpm install
+      - uses: pnpm/action-setup@v3
+        name: Install pnpm
+        with:
+          version: 8
+          run_install: false
 
       - name: Build
         run: pnpm run build
