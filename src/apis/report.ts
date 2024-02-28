@@ -9,4 +9,4 @@ export const getReportDetails = (imageId: string) =>
   http.get<GetReportDetailsResponse>({ url: `/v1/report/${imageId}` });
 
 export const deleteReportedImage = (imageId: string) =>
-  http.delete({ url: `/v1/report/${imageId}` });
+  http.delete<number>({ url: `/v1/report/${imageId}` });
