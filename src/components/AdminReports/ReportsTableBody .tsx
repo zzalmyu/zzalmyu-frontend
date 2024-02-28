@@ -10,10 +10,9 @@ const ReportsTableBody = ({ reports }: Props) => {
   return (
     <tbody>
       {reports.map(({ imageId, imageTitle, lastReportAt, reportCount }) => {
-        const shortLastReportAt = formatDate(lastReportAt);
         return (
           <tr key={imageId} className="border-b-1 border-card last:border-0">
-            <td className="text-center text-text-primary">{shortLastReportAt}</td>
+            <td className="text-center text-text-primary">{formatDate(lastReportAt)}</td>
             <td className="text-center text-text-primary">{imageTitle}</td>
             <td className="text-center text-text-primary">{reportCount}</td>
             <td className="text-center text-text-primary">
