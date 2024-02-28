@@ -60,6 +60,7 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
             <li
               key={tagId}
               className={cn(
+                "px-1.5 py-2",
                 index === cursorIndex && "box-border rounded-md bg-gray-200 px-1.5 py-2 font-bold",
               )}
               onMouseOver={handleMouseOverTag(index)}
