@@ -6,9 +6,9 @@ import ModalFooter from "./ModalFooter";
 import ModalProvider from "./ModalProvider";
 
 const MODAL_PADDING_VARIANTS = {
-  sm: "py-24pxr px-8pxr",
   base: "p-48pxr",
   lg: "p-48pxr",
+  none: "p-0",
 };
 const MODAL_WIDTH_VARIANTS = {
   sm: "w-352pxr sm:w-528pxr",
@@ -25,10 +25,18 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   size?: "sm" | "base" | "lg";
+  padding?: "base" | "lg" | "none";
   className?: string;
 }
 
-const Modal = ({ children, isOpen, onClose, size = "base", className }: Props) => {
+const Modal = ({
+  children,
+  isOpen,
+  onClose,
+  size = "base",
+  padding = "base",
+  className,
+}: Props) => {
   const handleClickModal = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
   };
@@ -44,7 +52,7 @@ const Modal = ({ children, isOpen, onClose, size = "base", className }: Props) =
             className={cn(
               MODAL_HEIGHT_VARIANTS[size],
               MODAL_WIDTH_VARIANTS[size],
-              MODAL_PADDING_VARIANTS[size],
+              MODAL_PADDING_VARIANTS[padding],
               `fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-32pxr bg-background text-text-primary ${className}`,
             )}
             onClick={handleClickModal}
