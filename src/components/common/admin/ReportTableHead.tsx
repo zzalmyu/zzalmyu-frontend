@@ -7,7 +7,7 @@ interface Props {
 const ReportTableHead = ({ children }: Props) => {
   return (
     <thead>
-      <tr className="border-0 bg-card">{children}</tr>
+      <tr className="sticky top-0 bg-card">{children}</tr>
     </thead>
   );
 };
