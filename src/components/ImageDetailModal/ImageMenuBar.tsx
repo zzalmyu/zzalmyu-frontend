@@ -3,18 +3,18 @@ import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 
 const ImageMenuBar = () => {
-  const imageId = 149; // TODO: [2024-02-28] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
+  const imageId = 152; // TODO: [2024-02-28] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClickLike = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
 
-  const postReportZzal = usePostReportZzal();
+  const reportZzal = usePostReportZzal();
 
   const handleReportZzal = () => {
-    postReportZzal.mutate({
-      imageId: imageId,
+    reportZzal({
+      imageId,
     });
   };
 

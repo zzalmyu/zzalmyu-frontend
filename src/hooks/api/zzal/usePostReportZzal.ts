@@ -2,13 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 import { postReportZzal } from "@/apis/report";
 
 const usePostReportZzal = () => {
-  const mutation = useMutation({
+  const { mutate: reportZzal } = useMutation({
     mutationFn: postReportZzal,
-    onSuccess: () => console.log("postReportZzal success"),
-    onError: () => console.log("postReportZzal error"),
   });
 
-  return mutation;
+  return reportZzal;
 };
 
 export default usePostReportZzal;
