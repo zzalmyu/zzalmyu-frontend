@@ -1,6 +1,7 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, ChangeEvent, useState, useRef } from "react";
 import { useAtom } from "jotai";
 import { XCircle, Search, RotateCw } from "lucide-react";
+import { debounce } from "@/utils/debounce";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
@@ -14,8 +15,13 @@ interface Props {
 const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [tagKeyword, setTagKeyword] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data: autoCompletedTags, refetch } = useGetTags(tagKeyword);
+  const { data: autoCompletedTags } = useGetTags(tagKeyword);
+
+  const debouncedRefetch = debounce((keyword: string) => {
+    setTagKeyword(keyword);
+  }, 300);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,17 +44,13 @@ const TagSearchForm = ({ className }: Props) => {
     setSelectedTags([]);
   };
 
-  const handleChangeInputText = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setTagKeyword(event.target.value);
+  const handleChangeInputText = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedRefetch(event.target.value);
   };
 
   const handleCloseAutoComplete = () => {
-    setTagKeyword("");
+    if (inputRef && inputRef.current) inputRef.current.value = "";
   };
-
-  useEffect(() => {
-    refetch();
-  }, [tagKeyword]);
 
   return (
     <div className={cn(`relative flex w-650pxr flex-col flex-wrap `, className)}>
@@ -60,7 +62,7 @@ const TagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
-            value={tagKeyword}
+            ref={inputRef}
             onChange={handleChangeInputText}
             className="min-h-16 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
@@ -70,12 +72,10 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        {tagKeyword && (
-          <TagAutoComplete
-            tags={autoCompletedTags || []}
-            onCloseAutoComplete={handleCloseAutoComplete}
-          />
-        )}
+        <TagAutoComplete
+          tags={autoCompletedTags || []}
+          onCloseAutoComplete={handleCloseAutoComplete}
+        />
       </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (
