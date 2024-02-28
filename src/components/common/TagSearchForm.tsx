@@ -5,7 +5,7 @@ import { debounce } from "@/utils/debounce";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
-import { useGetTags } from "@/hooks/apis/tag/useGetTags";
+import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import TagAutoComplete from "@/components/common/TagAutoComplete";
 
 interface Props {
