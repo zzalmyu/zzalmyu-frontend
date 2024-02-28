@@ -1,13 +1,13 @@
 type Timer = ReturnType<typeof setTimeout>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debounce = <Functioin extends (...args: any[]) => void>(
-  targetFunction: Functioin,
+export const debounce = <TFunction extends (...args: any[]) => void>(
+  targetFunction: TFunction,
   delay: number,
-): ((...args: Parameters<Functioin>) => void) => {
+): ((...args: Parameters<TFunction>) => void) => {
   let timer: Timer;
 
-  return function (this: unknown, ...args: Parameters<Functioin>) {
+  return function (this: unknown, ...args: Parameters<TFunction>) {
     clearTimeout(timer as Timer);
 
     timer = setTimeout(() => {
