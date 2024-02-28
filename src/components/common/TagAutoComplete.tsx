@@ -24,6 +24,7 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
     }
 
     onCloseAutoComplete();
+    setIsOpen(false);
   };
 
   const handleMouseOverTag = (tagIndex: number) => () => {
