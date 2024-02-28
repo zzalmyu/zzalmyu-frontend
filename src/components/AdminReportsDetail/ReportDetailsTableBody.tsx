@@ -1,14 +1,14 @@
 import { formatDate } from "@/utils/formatDate";
-import { ReportedAtBy } from "@/types/report";
+import { ReportByUser } from "@/types/report";
 
 interface Props {
-  reportedAtByList: ReportedAtBy[];
+  reportsByUser: ReportByUser[];
 }
 
-const ReportDetailsTableBody = ({ reportedAtByList }: Props) => {
+const ReportDetailsTableBody = ({ reportsByUser }: Props) => {
   return (
     <tbody>
-      {reportedAtByList.map(({ reportDate, reportUserEmail }, index) => {
+      {reportsByUser.map(({ reportDate, reportUserEmail }, index) => {
         const shortReportDate = formatDate(reportDate);
         return (
           <tr

@@ -7,10 +7,10 @@ export interface Report {
 export interface ReportDetails {
   imageTitle: string;
   imageUrl: string;
-  reports: ReportedAtBy[];
+  reports: ReportByUser[];
 }
 
-export interface ReportedAtBy {
+export interface ReportByUser {
   reportDate: string;
   reportUserEmail: string;
 }

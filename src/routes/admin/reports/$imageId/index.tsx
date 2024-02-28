@@ -54,7 +54,7 @@ const AdminImageDetail = () => {
                     <ReportTableHead.Th>신고된 날짜</ReportTableHead.Th>
                     <ReportTableHead.Th>신고 사용자 이메일</ReportTableHead.Th>
                   </ReportTableHead>
-                  <ReportDetailsTableBody reportedAtByList={reports} />
+                  <ReportDetailsTableBody reportsByUser={reports} />
                 </table>
               </div>
               <button
