@@ -30,7 +30,7 @@ const Admin = () => {
             <table className="table">
               <ReportTableHead>
                 <ReportTableHead.Th>Date</ReportTableHead.Th>
-                <ReportTableHead.Th>이미지태그</ReportTableHead.Th>
+                <ReportTableHead.Th>이미지 제목</ReportTableHead.Th>
                 <ReportTableHead.Th>신고 횟수</ReportTableHead.Th>
                 <ReportTableHead.Th>게시물 상세보기</ReportTableHead.Th>
               </ReportTableHead>
