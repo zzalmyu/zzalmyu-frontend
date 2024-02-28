@@ -10,7 +10,7 @@ const ImageMenuBar = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
 
-  const reportZzal = usePostReportZzal();
+  const { reportZzal } = usePostReportZzal();
 
   const handleClickReportButton = () => {
     reportZzal(imageId);
