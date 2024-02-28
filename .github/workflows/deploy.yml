@@ -13,10 +13,17 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Install NVM and get latest LTS version
+        run: |
+          wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          echo "NODE_VERSION=$(nvm version-remote --lts)" >> $GITHUB_ENV
+
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2
         with:
-          node-version: "20.11.1"
+          node-version: ${{ env.NODE_VERSION }}
 
       - uses: pnpm/action-setup@v3
         name: Install pnpm
