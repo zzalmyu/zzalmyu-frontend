@@ -33,7 +33,10 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (isOpen && !ulRef.current?.contains(event.target as HTMLElement)) setIsOpen(false);
+      if (isOpen && !ulRef.current?.contains(event.target as HTMLElement)) {
+        setIsOpen(false);
+        setCursorIndex(-1);
+      }
     };
 
     window.addEventListener("click", handleClickOutside);
@@ -45,6 +48,7 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
 
   useEffect(() => {
     setIsOpen(true);
+    setCursorIndex(-1);
   }, [tags]);
 
   return (
