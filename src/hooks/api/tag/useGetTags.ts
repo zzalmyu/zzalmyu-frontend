@@ -4,7 +4,7 @@ import { getSearchTag } from "@/apis/tag";
 export const useGetTags = (tag: string) => {
   const MAX_TAG_RESPONSE_COUNT = 5;
 
-  return useQuery({
+  const { data, ...rest } = useQuery({
     queryKey: ["tag", tag] as const,
     queryFn: () => getSearchTag(tag),
     select: (tags) => {
@@ -13,4 +13,9 @@ export const useGetTags = (tag: string) => {
     },
     enabled: !!tag,
   });
+
+  return {
+    autoCompletedTags: data,
+    ...rest,
+  };
 };

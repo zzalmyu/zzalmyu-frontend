@@ -17,7 +17,7 @@ const TagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data: autoCompletedTags } = useGetTags(tagKeyword);
+  const { autoCompletedTags } = useGetTags(tagKeyword);
 
   const debouncedRefetch = debounce((keyword: string) => {
     setTagKeyword(keyword);
