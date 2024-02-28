@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { formatDate } from "@/utils/formatDate";
 import { Report } from "@/types/report";
 
 interface Props {
@@ -11,7 +12,7 @@ const ReportsTableBody = ({ reports }: Props) => {
       {reports
         .filter(({ tags }) => tags.length > 0)
         .map(({ imageId, lastReportAt, tags, reportCount }) => {
-          const shortLastReportAt = lastReportAt.slice(0, 10);
+          const shortLastReportAt = formatDate(lastReportAt);
           const tagNames = tags.map((tag) => tag.tagName).join(", ");
           return (
             <tr key={imageId} className="border-b-1 border-card last:border-0">

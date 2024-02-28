@@ -1,3 +1,4 @@
+import { formatDate } from "@/utils/formatDate";
 import { ReportedAtBy } from "@/types/report";
 
 interface Props {
@@ -8,7 +9,7 @@ const ReportDetailsTableBody = ({ reportedAtByList }: Props) => {
   return (
     <tbody>
       {reportedAtByList.map(({ reportDate, reportUserEmail }, index) => {
-        const shortReportDate = reportDate.slice(0, 10);
+        const shortReportDate = formatDate(reportDate);
         return (
           <tr
             key={`${index}-${reportUserEmail}`}
