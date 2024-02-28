@@ -12,17 +12,15 @@ const ImageMenuBar = () => {
 
   const reportZzal = usePostReportZzal();
 
-  const handleReportZzal = () => {
-    reportZzal({
-      imageId,
-    });
+  const handleClickReportButton = () => {
+    reportZzal({ imageId });
   };
 
   const menuItems = [
     { Icon: FolderDown, name: "다운로드", onClick: () => {} },
     { Icon: Heart, name: "좋아요", onClick: handleClickLike },
     { Icon: SendHorizontal, name: "채팅 전송", onClick: () => {} },
-    { Icon: Siren, name: "신고하기", onClick: handleReportZzal },
+    { Icon: Siren, name: "신고하기", onClick: handleClickReportButton },
   ];
 
   return (
