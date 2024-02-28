@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSearchTag } from "@/apis/tag";
 
 export const useGetTags = (tag: string) => {
-  const MAX_TAG_RESPONSE_COUNT = 5;
+  const MAX_TAG_RESPONSE_COUNT = 10;
 
   const { data, ...rest } = useQuery({
     queryKey: ["tag", tag] as const,
@@ -11,7 +11,6 @@ export const useGetTags = (tag: string) => {
       const tagsResponse = tags.filter((_, index) => index < MAX_TAG_RESPONSE_COUNT);
       return tagsResponse;
     },
-    enabled: !!tag,
   });
 
   return {
