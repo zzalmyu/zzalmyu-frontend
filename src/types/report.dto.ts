@@ -1,4 +1,4 @@
-import { Report, ReportDetail } from "./report";
+import { Report, ReportDetails } from "./report";
 
-export type GetReportResponse = Report[];
-export type GetReportDetailResponse = ReportDetail[];
+export type GetReportsResponse = Report[];
+export type GetReportDetailsResponse = ReportDetails;
