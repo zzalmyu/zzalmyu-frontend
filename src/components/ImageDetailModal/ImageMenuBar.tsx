@@ -13,7 +13,7 @@ const ImageMenuBar = () => {
   const reportZzal = usePostReportZzal();
 
   const handleClickReportButton = () => {
-    reportZzal({ imageId });
+    reportZzal(imageId);
   };
 
   const menuItems = [
