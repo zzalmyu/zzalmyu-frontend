@@ -7,7 +7,7 @@ import { cn } from "@/utils/tailwind";
 import TagErrorBoundary from "./TagErrorBoundary";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
-import TagAutoComplete from "@/components/common/TagAutoComplete";
+import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
 
 interface Props {
   className?: string;
