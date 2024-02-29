@@ -1,11 +1,12 @@
-import { FormEvent, ChangeEvent, useState, useRef } from "react";
+import { FormEvent, ChangeEvent, useState, useRef, Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useAtom } from "jotai";
 import { XCircle, Search, RotateCw } from "lucide-react";
 import { debounce } from "@/utils/debounce";
 import { cn } from "@/utils/tailwind";
+import TagErrorBoundary from "./TagErrorBoundary";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
-import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import TagAutoComplete from "@/components/common/TagAutoComplete";
 
 interface Props {
@@ -17,11 +18,9 @@ const TagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { autoCompletedTags } = useGetTags(tagKeyword);
-
   const debouncedRefetch = debounce((keyword: string) => {
     setTagKeyword(keyword);
-  }, 300);
+  }, 200);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -72,10 +71,11 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        <TagAutoComplete
-          tags={autoCompletedTags || []}
-          onCloseAutoComplete={handleCloseAutoComplete}
-        />
+        <ErrorBoundary fallbackRender={TagErrorBoundary}>
+          <Suspense>
+            <TagAutoComplete keyword={tagKeyword} onCloseAutoComplete={handleCloseAutoComplete} />
+          </Suspense>
+        </ErrorBoundary>
       </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (

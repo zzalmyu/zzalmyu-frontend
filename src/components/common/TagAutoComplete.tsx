@@ -1,26 +1,34 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
-import { Tag } from "@/types/tag";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
+import { useGetTags } from "@/hooks/api/tag/useGetTags";
 
 interface Props {
-  tags: Tag[];
+  keyword: string;
   onCloseAutoComplete: () => void;
 }
 
-const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
+const TagAutoComplete = ({ keyword, onCloseAutoComplete }: Props) => {
   const [cursorIndex, setCursorIndex] = useState(-1);
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [isOpen, setIsOpen] = useState(true);
   const ulRef = useRef<HTMLUListElement | null>(null);
 
+  const { autoCompletedTags } = useGetTags(keyword);
+
   const handleClickTagName = (tagIndex: number) => () => {
     setCursorIndex(tagIndex);
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tags[tagIndex].tagName)) {
-      setSelectedTags((previousState) => [...previousState, tags[tagIndex].tagName]);
+    if (
+      selectedTags.length < MAX_SEARCH_TAG &&
+      !selectedTags.includes(autoCompletedTags[tagIndex].tagName)
+    ) {
+      setSelectedTags((previousSelectedTags) => [
+        ...previousSelectedTags,
+        autoCompletedTags[tagIndex].tagName,
+      ]);
     }
 
     onCloseAutoComplete();
@@ -32,6 +40,8 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
   };
 
   useEffect(() => {
+    if (!isOpen) return;
+
     const handleClickOutside = (event: MouseEvent) => {
       if (isOpen && !ulRef.current?.contains(event.target as HTMLElement)) {
         setIsOpen(false);
@@ -44,23 +54,23 @@ const TagAutoComplete = ({ tags, onCloseAutoComplete }: Props) => {
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [isOpen]);
 
   useEffect(() => {
     setIsOpen(true);
     setCursorIndex(-1);
-  }, [tags]);
+  }, [autoCompletedTags]);
 
   return (
     <Fragment>
-      {isOpen && tags.length > 0 && (
+      {isOpen && autoCompletedTags.length > 0 && (
         <ul
           className="box-border w-[95%] rounded-box border-2 bg-white p-2 shadow-xl outline-none"
           onBlur={() => setCursorIndex(-1)}
           tabIndex={0}
           ref={ulRef}
         >
-          {tags.map(({ tagId, tagName }, index) => (
+          {autoCompletedTags.map(({ tagId, tagName }, index) => (
             <li
               key={tagId}
               className={cn(
