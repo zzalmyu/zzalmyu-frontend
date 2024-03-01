@@ -6,8 +6,8 @@ import ModalFooter from "./ModalFooter";
 import ModalProvider from "./ModalProvider";
 
 const MODAL_PADDING_VARIANTS = {
+  sm: "py-24pxr px-8pxr",
   base: "p-48pxr",
-  lg: "p-48pxr",
   none: "p-0",
 };
 const MODAL_WIDTH_VARIANTS = {
@@ -25,7 +25,7 @@ interface Props {
   isOpen: boolean;
   onClose: () => void;
   size?: "sm" | "base" | "lg";
-  padding?: "base" | "lg" | "none";
+  padding?: "sm" | "base" | "none";
   className?: string;
 }
 
