@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import ButtonWithIcon from "./ButtonWithIcon";
-import TagNavigator from "./TagNavigator";
+import TagSlider from "./TagSlider";
 import Modal from "@/components/common/modals/Modal";
 
 interface Props {
@@ -92,7 +92,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
               <Hash
                 size={20}
                 strokeWidth={2.5}
-                aria-label={isTagNavigatorOpen ? "태그 닫기" : "태그 열기"}
+                aria-label={isTagNavigatorOpen ? "태그 숨기기" : "태그 보기"}
               />
             </button>
             <ButtonWithIcon Icon={Siren} text="신고하기" onClick={handleReportZzal} />
@@ -110,7 +110,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
             "top-0": !isTagNavigatorOpen,
           })}
         >
-          <TagNavigator tags={tags.map((tag) => tag.name)} />
+          <TagSlider tags={tags} />
         </div>
       </div>
       <div className=" max-h-500pxr overflow-auto">
