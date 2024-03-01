@@ -47,6 +47,7 @@ export default {
         card: "var(--card)",
         tooltip: "var(--tooltip)",
         toolbar: "var(--toolbar)",
+        icon: "var(--icon)",
         delete: "#ED0000",
         tag: "#570DF8",
       },
@@ -68,6 +69,7 @@ export default {
           "--card": "#D9D9D9",
           "--tooltip": "#535353",
           "--toolbar": "#858383",
+          "--icon": "#807F7F",
         },
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
@@ -81,6 +83,7 @@ export default {
           "--card": "#00194A",
           "--tooltip": "#11419E",
           "--toolbar": "#002873",
+          "--icon": "#FFFFFF",
         },
       },
     ],
