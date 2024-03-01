@@ -7,10 +7,7 @@ export const useGetTags = (tag: string) => {
   const { data, ...rest } = useSuspenseQuery({
     queryKey: ["tag", tag] as const,
     queryFn: () => getSearchTag(tag),
-    select: (tags) => {
-      const tagsResponse = tags.filter((_, index) => index < MAX_TAG_RESPONSE_COUNT);
-      return tagsResponse;
-    },
+    select: (tags) => tags.filter((_tag, index) => index < MAX_TAG_RESPONSE_COUNT),
   });
 
   return {
