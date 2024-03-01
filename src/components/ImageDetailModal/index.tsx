@@ -1,6 +1,8 @@
-import ImageMenuBar from "./ImageMenuBar";
+import { useState } from "react";
+import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
+import { cn } from "@/utils/tailwind";
+import ButtonWithIcon from "./ButtonWithIcon";
 import TagNavigator from "./TagNavigator";
-import ZzalCard from "@/components/common/ZzalCard";
 import Modal from "@/components/common/modals/Modal";
 
 interface Props {
@@ -8,33 +10,125 @@ interface Props {
   onClose: () => void;
 }
 
-const ImageDetailModal = ({ isOpen, onClose }: Props) => {
-  const ZZALCARD_SRC =
-    "https://blog.kakaocdn.net/dn/bI2bwB/btsEP4W1m9P/os7ZrAK0fYhgOgBSKIiktk/img.png";
-  const ZZALCARD_ALT = "짤이미지";
+const imageDetials = {
+  imageId: 1,
+  uploadUserId: 123,
+  imgUrl:
+    "https://zzalmyu-bucket.s3.ap-northeast-2.amazonaws.com/upload/keroro9073%40gmail.comtemp_image1626418983561547350.jpg",
+  imageLikeYn: true,
+  tags: [
+    {
+      id: 0,
+      name: "일이삼사오육칠팔구십",
+      splitName: "o",
+      createdAt: "2024-03-01T05:59:48.528Z",
+    },
+    {
+      id: 0,
+      name: "일이삼사오육칠팔구십",
+      splitName: "o",
+      createdAt: "2024-03-01T05:59:48.528Z",
+    },
+    {
+      id: 0,
+      name: "일이삼사오육칠팔구십",
+      splitName: "o",
+      createdAt: "2024-03-01T05:59:48.528Z",
+    },
+    { id: 0, name: "음식", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 0, name: "여행", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 0, name: "무한도전", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 0, name: "운동", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+  ],
+  imageTitle: "안유진",
+};
 
-  const tags = [
-    "일이삼사오육칠팔구십",
-    "일이삼사오육칠팔구십",
-    "일이삼사오육칠팔구십",
-    "음식",
-    "여행",
-    "운동",
-    "영화",
-    "음악",
-  ];
+const ImageDetailModal = ({ isOpen, onClose }: Props) => {
+  const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
+  const { imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetials;
+  const [isLiked, setIsLiked] = useState(imageLikeYn);
+  const isUploader = uploadUserId === 123;
+  {
+    /*TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기 */
+  }
+
+  const toggleTagNavigator = () => {
+    setIsTagNavigatorOpen(!isTagNavigatorOpen);
+  };
+
+  const handleClickLike = () => {
+    setIsLiked((prevLiked) => !prevLiked);
+  };
+
+  const handleDownloadZzal = () => {};
+
+  const handleSendToChat = () => {};
+
+  const handleReportZzal = () => {};
+
+  const handleDeleteZzal = () => {};
+
   return (
-    <Modal isOpen={isOpen} onClose={onClose} className="p-40pxr">
-      <Modal.Header hasCloseButton={true}> </Modal.Header>
-      <Modal.Body>
-        <TagNavigator tags={tags} />
-        <div className="my-5 flex justify-center">
-          <div className="relative flex">
-            <ZzalCard src={ZZALCARD_SRC} alt={ZZALCARD_ALT} />
-            <ImageMenuBar />
+    <Modal isOpen={isOpen} onClose={onClose} padding="none" size="sm">
+      <div className="relative flex w-full justify-center">
+        <div className="z-30 flex h-90pxr w-full justify-center bg-background">
+          <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
+            <ButtonWithIcon Icon={FolderDown} text="다운로드" onClick={handleDownloadZzal} />
+            <ButtonWithIcon
+              Icon={SendHorizontal}
+              text="채팅에 전송하기"
+              onClick={handleSendToChat}
+            />
+            <button
+              onClick={toggleTagNavigator}
+              className={cn(
+                "flex h-12 w-12 items-center justify-center rounded-full drop-shadow-[0_0_5px_rgba(0,0,0,0.25)]",
+                {
+                  "bg-primary text-white": isTagNavigatorOpen,
+                  "bg-gray-50 text-gray-500": !isTagNavigatorOpen,
+                },
+              )}
+            >
+              <Hash
+                size={20}
+                strokeWidth={2.5}
+                aria-label={isTagNavigatorOpen ? "태그 닫기" : "태그 열기"}
+              />
+            </button>
+            <ButtonWithIcon Icon={Siren} text="신고하기" onClick={handleReportZzal} />
+            <ButtonWithIcon
+              Icon={Trash2}
+              text="삭제하기"
+              isDisabled={!isUploader}
+              onClick={handleDeleteZzal}
+            />
           </div>
         </div>
-      </Modal.Body>
+        <div
+          className={cn("absolute z-0 w-full transition-all duration-500", {
+            "top-full": isTagNavigatorOpen,
+            "top-0": !isTagNavigatorOpen,
+          })}
+        >
+          <TagNavigator tags={tags.map((tag) => tag.name)} />
+        </div>
+      </div>
+      <div className=" max-h-500pxr overflow-auto">
+        <img src={imgUrl} alt={imageTitle} className="w-full" />
+      </div>
+      <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr hover:text-gray-300">
+        <button onClick={() => {}}>
+          <Copy color="white" size={30} aria-label="복사하기" />
+        </button>
+        <button onClick={handleClickLike}>
+          <Heart
+            color="white"
+            size={30}
+            aria-label="좋아요"
+            className={cn({ "fill-primary": isLiked })}
+          />
+        </button>
+      </div>
     </Modal>
   );
 };
