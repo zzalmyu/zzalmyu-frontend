@@ -1,11 +1,19 @@
 import { useState } from "react";
-import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
+import { FolderDown, SendHorizontal, Siren, Heart, Trash2 } from "lucide-react";
+import useDeleteMyZzal from "@/hooks/api/report/useDeleteMyZzal";
 
 const ImageMenuBar = () => {
+  const imageId = 146; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClickLike = () => {
     setIsLiked((prevLiked) => !prevLiked);
+  };
+
+  const { deleteMyZzal } = useDeleteMyZzal();
+
+  const handleClickDeleteButton = () => {
+    deleteMyZzal(imageId);
   };
 
   const menuItems = [
@@ -13,6 +21,7 @@ const ImageMenuBar = () => {
     { Icon: Heart, name: "좋아요", onClick: handleClickLike },
     { Icon: SendHorizontal, name: "채팅 전송", onClick: () => {} },
     { Icon: Siren, name: "신고하기", onClick: () => {} },
+    { Icon: Trash2, name: "삭제하기", onClick: handleClickDeleteButton },
   ];
 
   return (
