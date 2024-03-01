@@ -10,7 +10,7 @@ interface Props {
   onClose: () => void;
 }
 
-const imageDetials = {
+const imageDetails = {
   imageId: 1,
   uploadUserId: 123,
   imgUrl:
@@ -24,28 +24,28 @@ const imageDetials = {
       createdAt: "2024-03-01T05:59:48.528Z",
     },
     {
-      id: 0,
+      id: 1,
       name: "일이삼사오육칠팔구십",
       splitName: "o",
       createdAt: "2024-03-01T05:59:48.528Z",
     },
     {
-      id: 0,
+      id: 2,
       name: "일이삼사오육칠팔구십",
       splitName: "o",
       createdAt: "2024-03-01T05:59:48.528Z",
     },
-    { id: 0, name: "음식", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 0, name: "여행", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 0, name: "무한도전", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 0, name: "운동", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 3, name: "음식", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 4, name: "여행", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 5, name: "무한도전", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
+    { id: 6, name: "운동", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
   ],
   imageTitle: "안유진",
 };
 
 const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
-  const { imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetials;
+  const { imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetails;
   const [isLiked, setIsLiked] = useState(imageLikeYn);
   const isUploader = uploadUserId === 123;
   {
