@@ -1,10 +1,8 @@
 import { FormEvent, ChangeEvent, useState, useRef, Suspense } from "react";
-import { ErrorBoundary } from "react-error-boundary";
 import { useAtom } from "jotai";
 import { XCircle, Search, RotateCw } from "lucide-react";
 import { debounce } from "@/utils/debounce";
 import { cn } from "@/utils/tailwind";
-import TagErrorBoundary from "./TagErrorBoundary";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
 import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
@@ -71,11 +69,9 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-70pxr flex w-full justify-center">
-        <ErrorBoundary fallbackRender={TagErrorBoundary}>
-          <Suspense>
-            <TagAutoComplete keyword={tagKeyword} onCloseAutoComplete={handleCloseAutoComplete} />
-          </Suspense>
-        </ErrorBoundary>
+        <Suspense fallback={null}>
+          <TagAutoComplete keyword={tagKeyword} onCloseAutoComplete={handleCloseAutoComplete} />
+        </Suspense>
       </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (
