@@ -1,7 +1,9 @@
 import { ReactNode, createContext, useContext } from "react";
 import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
+import { useSetAtom } from "jotai";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
+import { $previewImage } from "@/store/chat";
 
 interface ZzalCardProps {
   children?: ReactNode;
@@ -72,15 +74,17 @@ const LikeButton = ({ isLiked }: LikeButtonProps) => {
   );
 };
 
-interface SendButtonProps {
-  onClick: () => void;
-}
+const SendButton = () => {
+  const { src } = useContext(ZzalCardContext);
+  const setPreviewImage = useSetAtom($previewImage);
 
-const SendButton = ({ onClick }: SendButtonProps) => {
+  const handleClickSendImageSrc = () => {
+    setPreviewImage(src);
+  };
   return (
     <button
       className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
-      onClick={onClick}
+      onClick={handleClickSendImageSrc}
     >
       <SendHorizontal aria-label="보내기" size={20} fill="white" />
     </button>
