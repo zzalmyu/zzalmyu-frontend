@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
+import { useOverlay } from "@toss/use-overlay";
+import ReportConfirmModal from "../ReportConfirmModal";
 
 const ImageMenuBar = () => {
   const [isLiked, setIsLiked] = useState(false);
@@ -8,11 +10,23 @@ const ImageMenuBar = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
 
+  const reportConfirmOverlay = useOverlay();
+
+  const handleClickReportButton = () => {
+    reportConfirmOverlay.open(({ isOpen, close }) => (
+      <ReportConfirmModal
+        isOpen={isOpen}
+        onClose={close}
+        onReport={() => "짤 이미지 신고 api 연결"} // TODO: [2024-03-03] 짤 이미지 신고 api 연결 - onReport={handleClickReportConfirm(imageId)}
+      />
+    ));
+  };
+
   const menuItems = [
     { Icon: FolderDown, name: "다운로드", onClick: () => {} },
     { Icon: Heart, name: "좋아요", onClick: handleClickLike },
     { Icon: SendHorizontal, name: "채팅 전송", onClick: () => {} },
-    { Icon: Siren, name: "신고하기", onClick: () => {} },
+    { Icon: Siren, name: "신고하기", onClick: handleClickReportButton },
   ];
 
   return (
