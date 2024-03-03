@@ -2,8 +2,12 @@ import { useState } from "react";
 import { FolderDown, SendHorizontal, Siren, Heart, Trash2 } from "lucide-react";
 import useDeleteMyZzal from "@/hooks/api/report/useDeleteMyZzal";
 
-const ImageMenuBar = () => {
-  const imageId = 146; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
+interface Props {
+  onClose: () => void;
+}
+
+const ImageMenuBar = ({ onClose }: Props) => {
+  const imageId = 166; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
   const [isLiked, setIsLiked] = useState(false);
 
   const handleClickLike = () => {
@@ -13,7 +17,7 @@ const ImageMenuBar = () => {
   const { deleteMyZzal } = useDeleteMyZzal();
 
   const handleClickDeleteButton = () => {
-    deleteMyZzal(imageId);
+    deleteMyZzal(imageId, { onSuccess: () => onClose() });
   };
 
   const menuItems = [
