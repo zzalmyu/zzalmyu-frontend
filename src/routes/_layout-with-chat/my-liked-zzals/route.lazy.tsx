@@ -19,7 +19,7 @@ const MyLikedZzals = () => {
       <h1 className="mb-4 text-2xl font-bold">좋아요 한 짤 페이지</h1>
       <MasonryLayout>
         {zzals.map(({ imageId, path, title }) => (
-          <ZzalCard key={imageId} src={path} alt={title} />
+          <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
         ))}
       </MasonryLayout>
       <div ref={fetchMoreRef} />
@@ -27,6 +27,6 @@ const MyLikedZzals = () => {
   );
 };
 
-export const Route = createLazyFileRoute("/my-liked-zzals")({
+export const Route = createLazyFileRoute("/_layout-with-chat/my-liked-zzals")({
   component: MyLikedZzals,
 });

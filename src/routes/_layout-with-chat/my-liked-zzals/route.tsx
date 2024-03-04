@@ -4,6 +4,6 @@ const PendingComponent = () => {
   return <div>pending my liked zzal</div>;
 };
 
-export const Route = createFileRoute("/my-liked-zzals")({
+export const Route = createFileRoute("/_layout-with-chat/my-liked-zzals")({
   pendingComponent: PendingComponent,
 });
