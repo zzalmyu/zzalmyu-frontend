@@ -14,7 +14,7 @@ const ReportConfirmModal = ({ isOpen, onClose, onReport }: Props) => {
   };
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="p-40pxr">
-      <Modal.Header hasCloseButton={true}> </Modal.Header>
+      <Modal.Header hasCloseButton={true} />
       <Modal.Body>
         <div className="flex flex-col items-center">
           <AlertTriangle color="#ED0000" strokeWidth="1.2" size="84" />
