@@ -3,3 +3,9 @@ export interface PostUploadZzalRequest {
   tagIdList: Array<number>;
   title: string;
 }
+
+export interface GetMyLikedZzalsResponse {
+  imageId: number;
+  path: string;
+  title: string;
+}

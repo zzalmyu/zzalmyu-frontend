@@ -1,4 +1,4 @@
-import { PostUploadZzalRequest } from "@/types/zzal.dto";
+import { PostUploadZzalRequest, GetMyLikedZzalsResponse } from "@/types/zzal.dto";
 import http from "./core";
 
 export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest) => {
@@ -15,3 +15,8 @@ export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest
     },
   });
 };
+
+const SIZE = 10;
+
+export const getMyLikedZzals = (offset: number) =>
+  http.get<GetMyLikedZzalsResponse>({ url: `v1/image/like?page=${offset}&size=${SIZE}` });

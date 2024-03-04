@@ -1,4 +1,4 @@
-export interface GetPopularTagsResponse {
-  tagId: number;
-  tagName: string;
-}
+import { Tag } from "./tag";
+
+export type GetTagsResponse = Tag[];
+export type GetPopularTagsResponse = Tag[];
