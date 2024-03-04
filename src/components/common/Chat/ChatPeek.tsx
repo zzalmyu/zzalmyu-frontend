@@ -17,7 +17,7 @@ const ChatPeek = ({ handleScroll }: Props) => {
   return (
     <div
       onClick={handleClickToggle}
-      className="flex min-h-40pxr w-full cursor-pointer items-center justify-center rounded-t-3xl bg-gray-400 text-white sm:h-full sm:w-40pxr sm:rounded-bl-3xl sm:rounded-tl-3xl sm:rounded-tr-none"
+      className="flex h-40pxr w-full cursor-pointer items-center justify-center rounded-t-3xl bg-gray-400 text-white sm:h-full sm:w-40pxr sm:rounded-bl-3xl sm:rounded-tl-3xl sm:rounded-tr-none"
     >
       {!isChatOpen && <MessageSquareMore strokeWidth={2.5} />}
       {isChatOpen && (
