@@ -8,10 +8,11 @@ interface Props {
 }
 
 const ReportConfirmModal = ({ isOpen, onClose, onReport }: Props) => {
-  const handleReport = () => {
+  const handleClickReportButton = () => {
     onReport();
     onClose();
   };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} className="p-40pxr">
       <Modal.Header hasCloseButton={true} />
@@ -35,7 +36,7 @@ const ReportConfirmModal = ({ isOpen, onClose, onReport }: Props) => {
             </button>
             <button
               className="flex h-12 w-32 items-center justify-evenly rounded-90pxr bg-delete text-white outline outline-offset-2 outline-transparent transition-[outline_background-color] hover:outline-delete"
-              onClick={handleReport}
+              onClick={handleClickReportButton}
             >
               <Siren color="#FFFF" strokeWidth={2} aria-label="신고하기" />
               신고하기
