@@ -25,7 +25,7 @@ const UploadZzal = () => {
     setFile(changedFile);
   };
 
-  const handleShowToast = () => {
+  const handleClickUploadButton = () => {
     if (!file) {
       toast.error("사진을 등록해주세요!");
     } else if (!selectedTags.length) {
@@ -79,7 +79,7 @@ const UploadZzal = () => {
           </div>
           <button
             className="h-40pxr w-100pxr self-center rounded-[100px] bg-primary font-bold text-white outline outline-2 outline-offset-2 outline-transparent hover:outline-yellow-500 sm:self-end"
-            onClick={handleShowToast}
+            onClick={handleClickUploadButton}
           >
             업로드
           </button>
