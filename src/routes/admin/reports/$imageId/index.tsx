@@ -37,7 +37,7 @@ const AdminImageDetail = () => {
         <div className="breadcrumbs pb-20pxr text-lg font-bold">
           <ul>
             <li>
-              <Link to="/admin/reports/">
+              <Link to="/admin/reports">
                 <h1>신고 내역</h1>
               </Link>
             </li>

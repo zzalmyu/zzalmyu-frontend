@@ -19,7 +19,7 @@ const Header = () => {
       <div className="flex flex-1 items-center justify-end space-x-3 px-2">
         <ThemeToggle />
         {user && !user.isAdmin && (
-          <Link to="/upload-zzal/">
+          <Link to="/upload-zzal">
             <button className="btn h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300">
               업로드
             </button>
@@ -28,7 +28,7 @@ const Header = () => {
         <div className="h-6 w-0.5 bg-text-primary"></div>
         {!user && <button className="btn btn-ghost h-6 min-h-9">로그인</button>}
         {user && user.isAdmin && (
-          <Link to="/admin/" className="btn btn-ghost h-6 min-h-9 text-text-primary">
+          <Link to="/admin/reports" className="btn btn-ghost h-6 min-h-9 text-text-primary">
             Admin
           </Link>
         )}
