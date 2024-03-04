@@ -1,22 +1,19 @@
-import { Fragment, forwardRef, useEffect } from "react";
+import { Fragment, forwardRef } from "react";
 import MessagePeek from "./MessagePeek";
 import GreetMessage from "./GreetMessage";
 import ZzalMessage from "./ZzalMessage";
 import useChat from "@/hooks/chat/useChat";
 
 interface Props {
-  setScrollPosition: () => void;
+  handleScrollPosition: () => void;
 }
 
-const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, ref) => {
-  const { handleSendMessage, messages } = useChat();
-
-  useEffect(() => {
-    setScrollPosition();
-  }, [setScrollPosition]);
+const ChatSection = forwardRef<HTMLDivElement, Props>(({ handleScrollPosition }, ref) => {
+  const { handleSendMessage, messages } = useChat(handleScrollPosition);
+  const handleClickSend = () => () => handleSendMessage("zzal");
 
   return (
-    <section className="relative h-full w-full bg-secondary p-20pxr sm:w-[40vw] md:w-450pxr">
+    <section className="relative h-full w-full overflow-hidden bg-secondary p-20pxr sm:w-[40vw] md:w-450pxr">
       <div
         ref={ref}
         className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"
@@ -32,7 +29,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
           ))}
         </div>
       </div>
-      <MessagePeek onClickSend={() => handleSendMessage("zzal")} />
+      <MessagePeek onClickSend={handleClickSend()} />
     </section>
   );
 });

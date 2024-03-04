@@ -20,18 +20,18 @@ interface ZzalMessageRequest {
   email: string;
   image: string;
 }
-interface GreetMessageResponse {
+export interface GreetMessageResponse {
   email: string;
   nickname: string;
   message: string;
 }
-interface ZzalMessageResponse {
+export interface ZzalMessageResponse {
   email: string;
   nickname: string;
   image: string;
 }
 
-const useChat = () => {
+const useChat = (handleScrollPosition: () => void) => {
   const stompRef = useRef<CompatClient | null>(null);
   const mountedRef = useRef(false);
   const [messages, setMessages] = useState<(GreetMessageResponse | ZzalMessageResponse)[]>([]);
@@ -44,15 +44,12 @@ const useChat = () => {
       return new SockJS(`${import.meta.env.VITE_CHAT_URL}`);
     });
     stompRef.current.onConnect = () => {
-      console.log("WS connected");
       stompRef.current?.subscribe(SUBSCRIPTION_DESTINATION, (frame) => {
         try {
           const parsedMessages = JSON.parse(frame.body);
-
-          console.log("parsedMessages: ", parsedMessages);
           setMessages((currentMessages) => [...currentMessages, parsedMessages]);
         } catch (error) {
-          console.error("error on connect: ", error);
+          console.error("STOMP 연결 중 에러 발생: ", error);
         }
       });
 
@@ -78,6 +75,7 @@ const useChat = () => {
       });
     }
   };
+
   useEffect(() => {
     handleConnect();
     return () => {
@@ -86,6 +84,10 @@ const useChat = () => {
       }
     };
   }, []);
+
+  useEffect(() => {
+    handleScrollPosition();
+  }, [messages]);
 
   return { handleSendMessage, messages };
 };
