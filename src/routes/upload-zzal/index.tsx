@@ -19,7 +19,7 @@ const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
 
-  const postUploadZzal = usePostUploadZzal();
+  const { uploadZzal } = usePostUploadZzal();
 
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
@@ -37,27 +37,34 @@ const UploadZzal = () => {
 
   const handleUploadZzal = () => {
     if (file) {
-      postUploadZzal.mutate({
-        file: file,
-        // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
-        tagIdList: [2, 3, 4],
-        title: file.name.substring(0, file.name.indexOf(".")),
-      });
-      postUploadZzal.isError && toast.error("사진 업로드에 실패했습니다."),
-        postUploadZzal.isSuccess &&
-          (toast.success(
-            <div>
-              <span>성공적으로 업로드가 되었습니다.</span>
-              <Link to="/my-uploaded-zzal/">
-                <button className="m-1 rounded bg-primary p-1 text-sm text-white">
-                  업로드한 짤 페이지로 이동
-                </button>
-              </Link>
-            </div>,
-          ),
-          setFile(null),
-          setPreviewUrl(null),
-          setSelectedTags([]));
+      uploadZzal(
+        {
+          file: file,
+          // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
+          tagIdList: [2, 3, 4],
+          title: file.name.substring(0, file.name.indexOf(".")),
+        },
+        {
+          onSuccess: () => {
+            toast.success(
+              <div>
+                <span>성공적으로 업로드가 되었습니다.</span>
+                <Link to="/my-uploaded-zzal/">
+                  <button className="m-1 rounded bg-primary p-1 text-sm text-white">
+                    업로드한 짤 페이지로 이동
+                  </button>
+                </Link>
+              </div>,
+            ),
+              setFile(null),
+              setPreviewUrl(null),
+              setSelectedTags([]);
+          },
+          onError: () => {
+            toast.error("사진 업로드에 실패했습니다.");
+          },
+        },
+      );
     }
   };
 
