@@ -46,7 +46,7 @@ const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onCl
           }
         }}
         className="h-auto w-full"
-        onSlideChange={(e) => setMainImageIndex(e.activeIndex)}
+        onSlideChange={(event) => setMainImageIndex(event.activeIndex)}
         onReachBeginning={() => {
           setShowPrevButton(false);
         }}
