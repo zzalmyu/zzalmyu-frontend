@@ -1,8 +1,7 @@
 import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { OverlayProvider } from "@toss/use-overlay";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 import { routeTree } from "./routeTree.gen";
 
 const router = createRouter({
@@ -24,8 +23,6 @@ const App = () => {
       <OverlayProvider>
         <RouterProvider router={router} />
       </OverlayProvider>
-      <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools position="bottom-right" />
     </QueryClientProvider>
   );
 };
