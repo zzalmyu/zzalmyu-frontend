@@ -16,7 +16,7 @@ const ReportsTableBody = ({ reports }: Props) => {
             <td className="text-center text-text-primary">{imageTitle}</td>
             <td className="text-center text-text-primary">{reportCount}</td>
             <td className="text-center text-text-primary">
-              <Link to={`/admin/reports/${imageId}`}>
+              <Link to="/admin/reports/$imageId" params={{ imageId: String(imageId) }}>
                 <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
               </Link>
             </td>
