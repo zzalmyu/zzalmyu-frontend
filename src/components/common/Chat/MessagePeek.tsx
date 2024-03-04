@@ -6,7 +6,11 @@ import ChatSendButton from "./ChatSendButton";
 import MessagePreview from "./MessagePreview";
 import { $isMessagePeekOpen } from "@/store/chat";
 
-const MessagePeek = () => {
+interface Props {
+  onClickSend: () => void;
+}
+
+const MessagePeek = ({ onClickSend }: Props) => {
   const [isPeekOpen, setIsPeekOpen] = useAtom($isMessagePeekOpen);
 
   const handleClickPeekTip = () => {
@@ -42,8 +46,7 @@ const MessagePeek = () => {
       <div className="flex min-h-200pxr w-full items-center justify-center">
         <MessagePreview />
         <div className="absolute bottom-5 right-5">
-          {/* TODO: [2024.02.23] WS 이미지 전송 연결 */}
-          <ChatSendButton onClick={() => {}} />
+          <ChatSendButton onClick={onClickSend} />
         </div>
       </div>
     </div>

@@ -1,32 +1,16 @@
-import { forwardRef, useEffect } from "react";
-import Message from "./Message";
+import { Fragment, forwardRef, useEffect } from "react";
 import MessagePeek from "./MessagePeek";
-
-// TODO: [2024.02.23] 더미 데이터 제거 및 WS 연결
-const DUMMY_MESSAGES = [
-  {
-    src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
-    isMyMessage: false,
-  },
-  {
-    src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
-    isMyMessage: false,
-  },
-  {
-    src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
-    isMyMessage: true,
-  },
-  {
-    src: "https://i.pinimg.com/564x/bb/26/c6/bb26c6670b60beff3d81ef74771f2c69.jpg",
-    isMyMessage: false,
-  },
-];
+import GreetMessage from "./GreetMessage";
+import ZzalMessage from "./ZzalMessage";
+import useChat from "@/hooks/chat/useChat";
 
 interface Props {
   setScrollPosition: () => void;
 }
 
 const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, ref) => {
+  const { handleSendMessage, messages } = useChat();
+
   useEffect(() => {
     setScrollPosition();
   }, [setScrollPosition]);
@@ -38,12 +22,17 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ setScrollPosition }, re
         className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"
       >
         <div className="flex flex-1 flex-col ">
-          {DUMMY_MESSAGES.map(({ src, isMyMessage }, index) => (
-            <Message key={`${index}-${src}`} src={src} isMyMessage={isMyMessage} />
+          {messages.map((message, index) => (
+            <Fragment key={`${index}-${"message"}`}>
+              {"image" in message && (
+                <ZzalMessage src={message.image} isMyMessage={false} nickname={message.nickname} />
+              )}
+              {"message" in message && <GreetMessage message={message.message} />}
+            </Fragment>
           ))}
         </div>
       </div>
-      <MessagePeek />
+      <MessagePeek onClickSend={() => handleSendMessage("zzal")} />
     </section>
   );
 });
