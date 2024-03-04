@@ -1,7 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
-import { AlertCircle } from "lucide-react";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
@@ -16,12 +16,6 @@ const UploadZzal = () => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [, setPreviewUrl] = useAtom($previewUrl);
 
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("파일을 업로드해주세요");
-  const [toastColor, setToastColor] = useState("primary");
-  const [includeButton, setIncludeButton] = useState(false);
-  const [toastTimer, setToastTimer] = useState<NodeJS.Timeout | undefined>();
-
   const { popularTags } = useGetPopularTags();
   const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
 
@@ -29,29 +23,16 @@ const UploadZzal = () => {
 
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
-    setShowToast(false);
-    clearTimeout(toastTimer);
   };
 
   const handleShowToast = () => {
     if (!file) {
-      setToastMessage("사진을 등록해주세요!");
-      setToastColor("delete");
-      setIncludeButton(false);
+      toast.error("사진을 등록해주세요!");
     } else if (!selectedTags.length) {
-      setToastMessage("1개 이상의 태그를 등록해주세요!");
-      setToastColor("delete");
-      setIncludeButton(false);
+      toast.error("1개 이상의 태그를 등록해주세요!");
     } else {
       handleUploadZzal();
     }
-
-    setShowToast(true);
-
-    const toastTimerId = setTimeout(() => {
-      setShowToast(false);
-    }, 5000);
-    setToastTimer(toastTimerId);
   };
 
   const handleUploadZzal = () => {
@@ -62,17 +43,21 @@ const UploadZzal = () => {
         tagIdList: [2, 3, 4],
         title: file.name.substring(0, file.name.indexOf(".")),
       });
-      postUploadZzal.isError &&
-        (setToastMessage("사진 업로드에 실패했습니다."),
-        setToastColor("delete"),
-        setIncludeButton(false));
-      postUploadZzal.isSuccess &&
-        (setToastMessage("성공적으로 업로드가 되었습니다."),
-        setToastColor("primary"),
-        setIncludeButton(true),
-        setFile(null),
-        setPreviewUrl(null),
-        setSelectedTags([]));
+      postUploadZzal.isError && toast.error("사진 업로드에 실패했습니다."),
+        postUploadZzal.isSuccess &&
+          (toast.success(
+            <div>
+              <span>성공적으로 업로드가 되었습니다.</span>
+              <Link to="/my-uploaded-zzal/">
+                <button className="m-1 rounded bg-primary p-1 text-sm text-white">
+                  업로드한 짤 페이지로 이동
+                </button>
+              </Link>
+            </div>,
+          ),
+          setFile(null),
+          setPreviewUrl(null),
+          setSelectedTags([]));
     }
   };
 
@@ -100,25 +85,6 @@ const UploadZzal = () => {
           </button>
         </div>
       </div>
-      {showToast && (
-        <div className="toast toast-end toast-top mt-14">
-          <div role="alert" className="alert shadow-lg">
-            <AlertCircle viewBox="0 0 24 24" className={`h-6 w-6 shrink-0 stroke-${toastColor}`} />
-            <span>{toastMessage}</span>
-            {includeButton && (
-              <Link to="/my-uploaded-zzal/">
-                <div>
-                  <button
-                    className={`btn btn-sm bg-${toastColor} text-white hover:bg-${toastColor} hover:opacity-75`}
-                  >
-                    업로드한 짤 페이지로 이동
-                  </button>
-                </div>
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
     </div>
   );
 };
