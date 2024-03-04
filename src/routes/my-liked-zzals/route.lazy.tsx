@@ -1,12 +1,11 @@
 import { useRef } from "react";
-import { createFileRoute } from "@tanstack/react-router";
-import Pending from "./MyLikedZzal.pendingComponent";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
 import ZzalCard from "@/components/common/ZzalCard";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 
-const MyLikedZzal = () => {
+const MyLikedZzals = () => {
   const fetchMoreRef = useRef(null);
   const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
 
@@ -28,7 +27,6 @@ const MyLikedZzal = () => {
   );
 };
 
-export const Route = createFileRoute("/my-liked-zzal/")({
-  component: MyLikedZzal,
-  pendingComponent: Pending,
+export const Route = createLazyFileRoute("/my-liked-zzals")({
+  component: MyLikedZzals,
 });
