@@ -2,34 +2,14 @@ import { useEffect, useRef, useState } from "react";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client/dist/sockjs";
 import { useAtomValue } from "jotai";
+import {
+  GreetMessageRequest,
+  GreetMessageResponse,
+  ZzalMessageRequest,
+  ZzalMessageResponse,
+} from "@/types/chat.dto";
 import { $previewImage } from "@/store/chat";
-
-const SUBSCRIPTION_DESTINATION = "/sub/public";
-const PUBLISH_DESTINATION = {
-  zzal: "/pub/image",
-  greet: "/pub/hello",
-} as const;
-const CHANNEL_ID = "public";
-
-interface GreetMessageRequest {
-  channelId: string;
-  email: string;
-}
-interface ZzalMessageRequest {
-  channelId: string;
-  email: string;
-  image: string;
-}
-export interface GreetMessageResponse {
-  email: string;
-  nickname: string;
-  message: string;
-}
-export interface ZzalMessageResponse {
-  email: string;
-  nickname: string;
-  image: string;
-}
+import { CHANNEL_ID, PUBLISH_DESTINATION, SUBSCRIPTION_DESTINATION } from "@/constants/chat";
 
 const useChat = (handleScrollPosition: () => void) => {
   const stompRef = useRef<CompatClient | null>(null);
