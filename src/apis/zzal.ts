@@ -8,7 +8,7 @@ export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest
   formData.append("title", title);
 
   return http.post<PostUploadZzalRequest>({
-    url: `/image`,
+    url: `/v1/image`,
     data: formData,
     headers: {
       "Content-Type": "multipart/form-data",

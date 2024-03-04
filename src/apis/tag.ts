@@ -3,6 +3,6 @@ import http from "./core";
 
 export const getPopularTags = () => {
   return http.get<GetPopularTagsResponse[]>({
-    url: `/tag/popular`,
+    url: `/v1/tag/popular`,
   });
 };
