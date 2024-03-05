@@ -5,38 +5,26 @@ import ModalBody from "./ModalBody";
 import ModalFooter from "./ModalFooter";
 import ModalProvider from "./ModalProvider";
 
-const MODAL_PADDING_VARIANTS = {
-  sm: "py-24pxr px-8pxr",
-  base: "p-48pxr",
-  none: "p-0",
-};
 const MODAL_WIDTH_VARIANTS = {
   sm: "w-352pxr sm:w-528pxr",
-  base: "w-352pxr sm:w-592pxr",
+  md: "w-352pxr sm:w-592pxr",
   lg: "w-352pxr sm:w-960pxr ",
 };
 const MODAL_HEIGHT_VARIANTS = {
   sm: "min-h-240pxr sm:min-h-240pxr",
-  base: "min-h-368pxr sm:min-h-368pxr",
+  md: "min-h-368pxr sm:min-h-368pxr",
   lg: "min-h-560pxr sm:min-h-560pxr",
 };
+
 interface Props {
   children: ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  size?: "sm" | "base" | "lg";
-  padding?: "sm" | "base" | "none";
+  size?: "sm" | "md" | "lg";
   className?: string;
 }
 
-const Modal = ({
-  children,
-  isOpen,
-  onClose,
-  size = "base",
-  padding = "base",
-  className,
-}: Props) => {
+const Modal = ({ children, isOpen, onClose, size = "md", className }: Props) => {
   const handleClickModal = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation();
   };
@@ -52,7 +40,6 @@ const Modal = ({
             className={cn(
               MODAL_HEIGHT_VARIANTS[size],
               MODAL_WIDTH_VARIANTS[size],
-              MODAL_PADDING_VARIANTS[padding],
               `fixed left-[50%] top-[50%] z-50 -translate-x-1/2 -translate-y-1/2 overflow-x-hidden rounded-32pxr bg-background text-text-primary ${className}`,
             )}
             onClick={handleClickModal}

@@ -75,7 +75,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   }
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} padding="none" size="sm">
+    <Modal isOpen={isOpen} onClose={onClose} size="sm">
       <div className="relative flex w-full justify-center">
         <div className="z-30 flex h-90pxr w-full justify-center bg-background">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
