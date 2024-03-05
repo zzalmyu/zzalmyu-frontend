@@ -4,10 +4,10 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
-import RecommendTag from "@/components/common/RecommendTag";
-import TagSearchForm from "@/components/common/TagSearchForm";
+// import RecommendTag from "@/components/common/RecommendTag";
+// import TagSearchForm from "@/components/common/TagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
-import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
+// import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
 import { $previewUrl } from "@/store/zzal";
 
@@ -16,8 +16,8 @@ const UploadZzal = () => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [, setPreviewUrl] = useAtom($previewUrl);
 
-  const { popularTags } = useGetPopularTags();
-  const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
+  // const { popularTags } = useGetPopularTags();
+  // const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
 
   const { uploadZzal } = usePostUploadZzal();
 
@@ -49,7 +49,7 @@ const UploadZzal = () => {
             toast.success(
               <div>
                 <span>성공적으로 업로드가 되었습니다.</span>
-                <Link to="/my-uploaded-zzal/">
+                <Link to="/my-uploaded-zzal">
                   <button className="m-1 rounded bg-primary p-1 text-sm text-white">
                     업로드한 짤 페이지로 이동
                   </button>
@@ -77,11 +77,11 @@ const UploadZzal = () => {
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
             <div className="float-right">
-              <RecommendTag
+              {/* <RecommendTag
                 title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
                 recommendTags={popularTagsName}
-              />
-              <TagSearchForm />
+              /> */}
+              {/* <TagSearchForm /> */}
             </div>
           </div>
           <button
