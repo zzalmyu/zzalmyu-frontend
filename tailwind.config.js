@@ -26,6 +26,11 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        lg: "1220px",
+        md: "920px",
+        sm: "620px",
+      },
       spacing: {
         ...getPxrSystem(),
       },
