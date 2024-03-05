@@ -68,6 +68,12 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
 
   const handleDeleteZzal = () => {};
 
+  const handleCopyZzal = async () => {};
+
+  {
+    /*TODO: [2024.03.05] 해당 handler함수 로직 추가하기*/
+  }
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} padding="none" size="sm">
       <div className="relative flex w-full justify-center">
@@ -117,7 +123,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         <img src={imgUrl} alt={imageTitle} className="w-full" />
       </div>
       <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr hover:text-gray-300">
-        <button onClick={() => {}}>
+        <button onClick={handleCopyZzal}>
           <Copy color="white" size={30} aria-label="복사하기" />
         </button>
         <button onClick={handleClickLike}>
