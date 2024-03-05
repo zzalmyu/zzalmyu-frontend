@@ -1,15 +1,9 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const createImage = (src: string) => {
-  const image = document.createElement("img");
-  image.src = src;
-  return image;
-};
-
-const copyToClipboard = async (pngBlob: Blob) => {
+const copyToClipboard = (pngBlob: Blob) => {
   try {
-    await navigator.clipboard.write([
+    navigator.clipboard.write([
       new ClipboardItem({
         [pngBlob.type]: pngBlob,
       }),
@@ -21,42 +15,43 @@ const copyToClipboard = async (pngBlob: Blob) => {
   }
 };
 
-const copyJpgToClipboard = (imgBlob: Blob) => {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
-  const image = createImage(window.URL.createObjectURL(imgBlob));
-  image.onload = (event) => {
-    if (event && event.target) {
-      const target = event.target as HTMLImageElement;
-      canvas.width = target.width;
-      canvas.height = target.height;
-      if (ctx) {
-        ctx.drawImage(target, 0, 0, target.width, target.height);
-        canvas.toBlob(
-          (blob) => {
-            if (blob) {
-              copyToClipboard(blob);
-            }
-          },
-          "image/png",
-          1,
-        );
-      }
+const copyImageToClipboard = (imageBlob: Blob) => {
+  const image = new Image();
+  image.src = URL.createObjectURL(imageBlob);
+
+  image.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = image.naturalWidth;
+    canvas.height = image.naturalHeight;
+
+    const ctx = canvas.getContext("2d");
+
+    if (!ctx) {
+      console.error("Canvas context를 생성할 수 없습니다.");
+      return;
     }
+
+    ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
+    canvas.toBlob((blob) => {
+      if (blob) {
+        copyToClipboard(blob);
+        return;
+      }
+
+      console.error("Canvas to Blob 변환 실패");
+    }, "image/png");
+  };
+
+  image.onerror = () => {
+    console.error("이미지 로딩 실패");
   };
 };
 
 export const copyZzal = async (imageUrl: string) => {
   try {
-    const imgResponse = await axios.get<Blob>(imageUrl, { responseType: "blob" });
-    const imgBlob = imgResponse.data;
-    const extension = imageUrl.split(".").pop()?.toLowerCase();
+    const { data: imageBlob } = await axios.get<Blob>(imageUrl, { responseType: "blob" });
 
-    if (extension === "jpg") {
-      copyJpgToClipboard(imgBlob);
-    } else {
-      console.error("예상치 못한 파일 형식입니다: " + extension);
-    }
+    copyImageToClipboard(imageBlob);
   } catch (error) {
     toast.error("복사에 실패했습니다.");
     console.error(error);
