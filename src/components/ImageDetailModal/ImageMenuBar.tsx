@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 
@@ -12,7 +13,11 @@ const ImageMenuBar = () => {
   };
 
   const handleClickReportButton = () => {
-    reportZzal(imageId);
+    reportZzal(imageId, {
+      onSuccess: () => {
+        toast.success("신고가 완료되었습니다.");
+      },
+    });
   };
 
   const menuItems = [
