@@ -46,7 +46,7 @@ const copyJpgToClipboard = (imgBlob: Blob) => {
   };
 };
 
-const copyZzal = async (imageUrl: string) => {
+export const copyZzal = async (imageUrl: string) => {
   try {
     const imgResponse = await axios.get(imageUrl, { responseType: "blob" });
     const imgBlob = imgResponse.data;
@@ -62,5 +62,3 @@ const copyZzal = async (imageUrl: string) => {
     console.error(error);
   }
 };
-
-export default copyZzal;
