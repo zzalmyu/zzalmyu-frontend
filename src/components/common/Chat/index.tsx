@@ -4,8 +4,10 @@ import { X } from "lucide-react";
 import { getSessionStorage } from "@/utils/sessionStorage";
 import { cn } from "@/utils/tailwind";
 import MessagePeek from "./MessagePeek";
-import ChatSection from "./ChatSection";
+import ZzalMessage from "./ZzalMessage";
+import GreetMessage from "./GreetMessage";
 import { $isChatOpen } from "@/store/chat";
+import useChat from "@/hooks/chat/useChat";
 
 const Chat = () => {
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
@@ -15,6 +17,9 @@ const Chat = () => {
     if (!chatRoomRef.current) return;
     chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight);
   };
+
+  const { handleSendMessage, messages } = useChat(setScrollToBottom);
+  const handleClickSend = () => handleSendMessage("zzal");
 
   const handleClickChatCloseButton = () => {
     setIsChatOpen(false);
@@ -65,20 +70,23 @@ const Chat = () => {
             <X aria-label="채팅방 숨기기" />
           </button>
         </div>
-        <section className="relative h-full w-full">
-          <div
-            ref={chatRoomRef}
-            className="relative h-full w-full overflow-y-auto rounded-16pxr bg-background pb-15pxr"
-          >
-            <ChatSection ref={chatRoomRef} handleScrollPosition={setScrollToBottom} />
-            {/* <div className="flex flex-1 flex-col ">
-              {DUMMY_MESSAGES.map(({ src, isMyMessage }, index) => (
-                <Message key={`${index}-${src}`} src={src} isMyMessage={isMyMessage} />
-              ))}
-            </div> */}
+        <div ref={chatRoomRef} className="relative h-[calc(100%-3.75rem)] w-full rounded-16pxr">
+          <div className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
+            {messages.map((message, index) => (
+              <Fragment key={`${index}-message`}>
+                {"image" in message && (
+                  <ZzalMessage
+                    src={message.image}
+                    isMyMessage={false}
+                    nickname={message.nickname}
+                  />
+                )}
+                {"message" in message && <GreetMessage message={message.message} />}
+              </Fragment>
+            ))}
           </div>
-          <MessagePeek onClickSend={() => {}} />
-        </section>
+          <MessagePeek onClickSend={handleClickSend} />
+        </div>
       </div>
     </Fragment>
   );
