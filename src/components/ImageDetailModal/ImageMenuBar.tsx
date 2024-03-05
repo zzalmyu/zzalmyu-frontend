@@ -3,6 +3,12 @@ import { toast } from "react-toastify";
 import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 
+interface ApiError extends Error {
+  response: {
+    status: number;
+  };
+}
+
 const ImageMenuBar = () => {
   const { reportZzal } = usePostReportZzal();
   const imageId = 152; // TODO: [2024-02-28] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
@@ -16,6 +22,14 @@ const ImageMenuBar = () => {
     reportZzal(imageId, {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.");
+      },
+      onError: (error: Error) => {
+        const apiError = error as ApiError;
+        if (apiError.response.status === 400) {
+          toast.error("이미 신고가 완료되었습니다.");
+        } else if (apiError.response.status === 500) {
+          toast.error("신고가 올바르게 되지 않았습니다.");
+        }
       },
     });
   };
