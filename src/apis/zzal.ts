@@ -1,5 +1,6 @@
 import { PostUploadZzalRequest, GetMyLikedZzalsResponse } from "@/types/zzal.dto";
 import http from "./core";
+import { PAGINATION_LIMIT } from "@/constants/api";
 
 export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest) => {
   const formData = new FormData();
@@ -16,7 +17,7 @@ export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest
   });
 };
 
-const SIZE = 10;
-
 export const getMyLikedZzals = (offset: number) =>
-  http.get<GetMyLikedZzalsResponse>({ url: `v1/image/like?page=${offset}&size=${SIZE}` });
+  http.get<GetMyLikedZzalsResponse>({
+    url: `/v1/image/like?page=${offset}&size=${PAGINATION_LIMIT}`,
+  });

@@ -1,4 +1,8 @@
-import { GetPopularTagsResponse, GetTagsResponse } from "@/types/tag.dto";
+import {
+  GetPopularTagsResponse,
+  GetTagsResponse,
+  GetTopTagsFromLikedResponse,
+} from "@/types/tag.dto";
 import http from "./core";
 
 export const getPopularTags = () => {
@@ -13,4 +17,9 @@ export const getSearchTag = (tag: string) =>
     params: {
       keyword: tag,
     },
+  });
+
+export const getTopTagsFromLiked = () =>
+  http.get<GetTopTagsFromLikedResponse>({
+    url: "/v1/tag/me/like",
   });
