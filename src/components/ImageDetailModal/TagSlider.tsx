@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper/modules";
@@ -26,7 +26,9 @@ const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onCl
 
   const arrowButtonClasses = "absolute top-0 z-10 h-full from-background from-70%";
 
-  SwiperCore.use([Navigation]);
+  useEffect(() => {
+    SwiperCore.use([Navigation]);
+  }, []);
 
   return (
     <div className={`relative flex w-full bg-background px-20pxr py-10pxr ${className}`}>
@@ -38,7 +40,11 @@ const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onCl
         }}
         navigation={{ prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current }}
         onBeforeInit={(swiper) => {
-          if (swiper.params.navigation && typeof swiper.params.navigation !== "boolean") {
+          if (
+            swiper.params.navigation &&
+            typeof swiper.params.navigation !== "boolean" &&
+            swiper.navigation
+          ) {
             swiper.params.navigation.prevEl = navigationPrevRef.current;
             swiper.params.navigation.nextEl = navigationNextRef.current;
             swiper.activeIndex = mainImageIndex;
