@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { FolderDown, SendHorizontal, Siren, Heart, Trash2 } from "lucide-react";
-import useDeleteMyZzal from "@/hooks/api/report/useDeleteMyZzal";
+import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 const ImageMenuBar = () => {
   const imageId = 166; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
@@ -12,7 +13,14 @@ const ImageMenuBar = () => {
   };
 
   const handleClickDeleteButton = () => {
-    deleteMyZzal(imageId, { onSuccess: () => {} }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
+    deleteMyZzal(imageId, {
+      onSuccess: () => {
+        toast.success("사진이 삭제되었습니다.");
+      },
+      onError: () => {
+        toast.error("사진 삭제에 실패했습니다.");
+      },
+    }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
   };
 
   const menuItems = [
