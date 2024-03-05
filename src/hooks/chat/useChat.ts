@@ -17,7 +17,7 @@ const useChat = (handleScrollPosition: () => void) => {
   const imageSrc = useAtomValue($previewImage);
 
   const handleConnectToChat = () => {
-    if (!stompRef.current) return;
+    if (stompRef.current) return;
 
     stompRef.current = Stomp.over(() => {
       return new SockJS(import.meta.env.VITE_CHAT_URL);
@@ -56,6 +56,7 @@ const useChat = (handleScrollPosition: () => void) => {
   };
 
   useEffect(() => {
+    console.log("hi");
     handleConnectToChat();
     return () => {
       if (stompRef && stompRef.current?.connected) {
