@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 
-interface Props {
+interface DownloadZzalParameters {
   imageUrl: string;
   imageTitle: string;
 }
 
-const downloadZzal = ({ imageUrl, imageTitle }: Props) => {
+export const downloadZzal = ({ imageUrl, imageTitle }: DownloadZzalParameters) => {
   axios
-    .get(imageUrl, {
+    .get<BlobPart>(imageUrl, {
       responseType: "blob",
       headers: { "Cache-Control": "no-cache" },
     })
@@ -28,5 +28,3 @@ const downloadZzal = ({ imageUrl, imageTitle }: Props) => {
       console.error("파일 다운로드 중 오류가 발생했습니다:", error);
     });
 };
-
-export default downloadZzal;
