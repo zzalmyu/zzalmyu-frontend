@@ -73,11 +73,11 @@ const Chat = () => {
       </div>
       <div
         className={cn(
-          "absolute right-0 h-full w-[33%] border border-l-0 border-border transition-[opacity_transform] duration-500 ease-in-out",
+          "absolute right-0 h-full w-[33%] transition-[opacity_transform] duration-500 ease-in-out",
           isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
         )}
       >
-        <div className="sticky left-0 right-0 top-0 flex h-60pxr flex-1 items-center justify-between border-b border-border px-4">
+        <div className="sticky left-0 right-0 top-0 flex h-60pxr flex-1 items-center justify-between border-y border-border px-4">
           <div className="text-xl font-bold text-text-primary">고독한 채팅방</div>
           <button className="btn btn-circle btn-ghost btn-sm" onClick={handleClickChatCloseButton}>
             <X aria-label="채팅방 숨기기" />
