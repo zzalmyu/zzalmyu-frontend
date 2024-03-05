@@ -56,10 +56,9 @@ const useChat = (handleScrollPosition: () => void) => {
   };
 
   useEffect(() => {
-    console.log("hi");
     handleConnectToChat();
     return () => {
-      if (stompRef && stompRef.current?.connected) {
+      if (stompRef.current?.connected) {
         stompRef.current.deactivate();
       }
     };
