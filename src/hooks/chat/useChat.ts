@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import { CompatClient, Stomp } from "@stomp/stompjs";
 import SockJS from "sockjs-client/dist/sockjs";
 import { useAtomValue } from "jotai";
@@ -28,7 +29,7 @@ const useChat = (handleScrollPosition: () => void) => {
           const parsedMessages = JSON.parse(frame.body);
           setMessages((currentMessages) => [...currentMessages, parsedMessages]);
         } catch (error) {
-          console.error("STOMP 연결 중 에러 발생: ", error);
+          toast.error("채팅 연결 중 예상치 못한 오류가 발생했습니다!");
         }
       });
 
