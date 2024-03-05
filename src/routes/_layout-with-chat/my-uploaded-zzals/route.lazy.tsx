@@ -10,8 +10,8 @@ const MyUploadedZzals = () => {
     <div className="flex w-full flex-col items-center">
       <div className="mb-10pxr min-w-650pxr pl-10pxr">
         <div className="mb-8pxr font-semibold">내가 가장 많이 사용한 태그</div>
-        {topTags.map(({ tagName }) => (
-          <TagBadge content={tagName} isClickable className="mr-5pxr" />
+        {topTags.map(({ tagId, tagName }) => (
+          <TagBadge key={tagId} content={tagName} isClickable className="mr-5pxr" />
         ))}
       </div>
       <TagSearchForm />
