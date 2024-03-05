@@ -29,6 +29,16 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
     SwiperCore.use([Navigation]);
   }, []);
 
+  const handleBeforeInit = (swiper: SwiperCore) => {
+    const swiperNavigation = swiper.params.navigation;
+    if (swiperNavigation && typeof swiperNavigation !== "boolean" && swiper.navigation) {
+      swiperNavigation.prevEl = navigationPrevRef.current;
+      swiperNavigation.nextEl = navigationNextRef.current;
+      swiper.activeIndex = mainImageIndex;
+      swiper.navigation.update();
+    }
+  };
+
   return (
     <div className={`relative flex w-full bg-background px-20pxr py-10pxr ${className}`}>
       <Swiper
@@ -38,18 +48,7 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
           type: "fraction",
         }}
         navigation={{ prevEl: navigationPrevRef.current, nextEl: navigationNextRef.current }}
-        onBeforeInit={(swiper) => {
-          if (
-            swiper.params.navigation &&
-            typeof swiper.params.navigation !== "boolean" &&
-            swiper.navigation
-          ) {
-            swiper.params.navigation.prevEl = navigationPrevRef.current;
-            swiper.params.navigation.nextEl = navigationNextRef.current;
-            swiper.activeIndex = mainImageIndex;
-            swiper.navigation.update();
-          }
-        }}
+        onBeforeInit={handleBeforeInit}
         className="h-auto w-full"
         onSlideChange={(event) => setMainImageIndex(event.activeIndex)}
         onReachBeginning={() => {
