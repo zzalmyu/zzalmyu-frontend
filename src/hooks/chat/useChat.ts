@@ -17,6 +17,7 @@ const useChat = (handleScrollPosition: () => void) => {
   const [messages, setMessages] = useState<(GreetMessageResponse | ZzalMessageResponse)[]>([]);
   const imageSrc = useAtomValue($previewImage);
 
+  // TODO: [2024.03.06] 채팅 에러 핸들링 로직 구현
   const handleConnectToChat = () => {
     if (stompRef.current) return;
 
