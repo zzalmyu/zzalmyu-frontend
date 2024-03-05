@@ -1,16 +1,15 @@
 import { useState } from "react";
-import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
+import { FolderDown, SendHorizontal, Siren, Heart } from "lucide-react";
 import ReportConfirmModal from "../ReportConfirmModal";
 
 const ImageMenuBar = () => {
   const [isLiked, setIsLiked] = useState(false);
+  const reportConfirmOverlay = useOverlay();
 
   const handleClickLike = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
-
-  const reportConfirmOverlay = useOverlay();
 
   const handleOpenReportConfirmModal = () => {
     reportConfirmOverlay.open(({ isOpen, close }) => (
