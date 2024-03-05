@@ -27,7 +27,7 @@ const MyLikedZzals = () => {
         ))}
       </div>
       <TagSearchForm />
-      <MasonryLayout>
+      <MasonryLayout className="mt-15pxr">
         {zzals.map(({ imageId, path, title }) => (
           <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
         ))}
