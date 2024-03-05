@@ -1,14 +1,25 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { useAtomValue } from "jotai";
+import { cn } from "@/utils/tailwind";
 import Chat from "@/components/common/Chat";
+import { $isChatOpen } from "@/store/chat";
 
 const LayoutWithChat = () => {
+  const isChatOpen = useAtomValue($isChatOpen);
+
   return (
-    <div className="relative flex h-full flex-col overflow-hidden sm:flex-row">
-      <div className="flex-1 overflow-auto">
+    <div className="relative flex h-full w-full overflow-hidden">
+      <div
+        className={cn(
+          "mt-60pxr h-[calc(100%-3.75rem)] overflow-auto border-r border-border transition-[width] duration-500 ease-in-out",
+          isChatOpen ? "w-[67%]" : "w-full",
+        )}
+      >
         <Outlet />
       </div>
+
       <Chat />
       <ReactQueryDevtools buttonPosition="top-right" />
       <TanStackRouterDevtools position="bottom-right" />

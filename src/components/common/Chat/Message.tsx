@@ -10,7 +10,7 @@ const Message = ({ src, isMyMessage }: Props) => {
     <div
       className={cn(
         isMyMessage ? "self-end" : "self-start",
-        "mx-15pxr my-5pxr w-1/3 rounded-xl bg-surface1 p-5pxr",
+        "mx-4 my-2 w-1/3 rounded-xl bg-surface1 p-5pxr",
       )}
     >
       <ZzalCard src={src} alt="짤 메세지" width={"full"} />
