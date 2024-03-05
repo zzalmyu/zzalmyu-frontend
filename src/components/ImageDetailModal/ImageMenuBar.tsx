@@ -5,12 +5,11 @@ import useDeleteMyZzal from "@/hooks/api/report/useDeleteMyZzal";
 const ImageMenuBar = () => {
   const imageId = 166; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
   const [isLiked, setIsLiked] = useState(false);
+  const { deleteMyZzal } = useDeleteMyZzal();
 
   const handleClickLike = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
-
-  const { deleteMyZzal } = useDeleteMyZzal();
 
   const handleClickDeleteButton = () => {
     deleteMyZzal(imageId, { onSuccess: () => {} }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
