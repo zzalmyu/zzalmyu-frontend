@@ -5,11 +5,11 @@ import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 // import RecommendTag from "@/components/common/RecommendTag";
-// import TagSearchForm from "@/components/common/TagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 // import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
 import { $previewUrl } from "@/store/zzal";
+import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -81,7 +81,7 @@ const UploadZzal = () => {
                 title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
                 recommendTags={popularTagsName}
               /> */}
-              {/* <TagSearchForm /> */}
+              <TagSearchForm />
             </div>
           </div>
           <button
