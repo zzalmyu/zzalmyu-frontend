@@ -1,11 +1,10 @@
 import { Fragment, useEffect, useRef } from "react";
-import { useAtomValue } from "jotai";
+import { useAtom } from "jotai";
+import { X } from "lucide-react";
 import { getSessionStorage } from "@/utils/sessionStorage";
 import { cn } from "@/utils/tailwind";
 import MessagePeek from "./MessagePeek";
 import Message from "./Message";
-import ChatCloseButton from "./ChatCloseButton";
-import ChatToggleButton from "./ChatToggleButton";
 import { $isChatOpen } from "@/store/chat";
 
 // TODO: [2024.02.23] 더미 데이터 제거 및 WS 연결
@@ -33,15 +32,22 @@ const DUMMY_MESSAGES = [
 ];
 
 const Chat = () => {
-  const isChatOpen = useAtomValue($isChatOpen);
+  const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
   const chatRoomRef = useRef<HTMLDivElement>(null);
+
+  const handleClickChatCloseButton = () => {
+    setIsChatOpen(false);
+  };
+  const handleClickChatToggleButton = () => {
+    setIsChatOpen((prev) => !prev);
+  };
 
   useEffect(() => {
     const setScrollPosition = () => {
       if (!chatRoomRef.current) return;
-      const top = getSessionStorage("sidebar-scroll");
+      const top = getSessionStorage("chat-room-scroll");
       if (top !== null) {
-        chatRoomRef.current.scrollTop = parseInt(top, 10);
+        chatRoomRef.current.scrollTop = Number(top);
       }
     };
 
@@ -53,21 +59,29 @@ const Chat = () => {
       <div
         className={cn(
           "absolute top-0 z-10 flex h-60pxr items-center justify-between border border-border bg-background px-4 transition-[width] duration-500 ease-in-out",
-          isChatOpen ? "w-[70%]" : "w-full",
+          isChatOpen ? "w-[67%]" : "w-full",
         )}
       >
         <div className="text-xl font-bold text-text-primary">TITLE</div>
-        <ChatToggleButton />
+        <button
+          className="btn btn-ghost btn-sm rounded-full outline outline-1 outline-border"
+          onClick={handleClickChatToggleButton}
+        >
+          {isChatOpen && "채팅방 숨기기"}
+          {!isChatOpen && "채팅방 보기"}
+        </button>
       </div>
       <div
         className={cn(
-          "absolute right-0 h-full w-[30%] border border-l-0 border-border transition-[opacity_transform] duration-500 ease-in-out",
+          "absolute right-0 h-full w-[33%] border border-l-0 border-border transition-[opacity_transform] duration-500 ease-in-out",
           isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
         )}
       >
         <div className="sticky left-0 right-0 top-0 flex h-60pxr flex-1 items-center justify-between border-b border-border px-4">
           <div className="text-xl font-bold text-text-primary">고독한 채팅방</div>
-          <ChatCloseButton />
+          <button className="btn btn-circle btn-ghost btn-sm" onClick={handleClickChatCloseButton}>
+            <X aria-label="채팅방 숨기기" />
+          </button>
         </div>
         <section className="relative h-full w-full">
           <div
