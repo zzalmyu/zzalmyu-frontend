@@ -5,13 +5,13 @@ import { cn } from "@/utils/tailwind";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: LucideIcon;
-  label: string;
+  iconLabel: string;
   children: ReactNode;
   onClick: () => void;
   isDisabled?: boolean;
 }
 
-const ButtonWithIcon = ({ Icon, label, children, onClick, isDisabled = false }: Props) => {
+const ButtonWithIcon = ({ Icon, iconLabel, children, onClick, isDisabled = false }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -21,7 +21,7 @@ const ButtonWithIcon = ({ Icon, label, children, onClick, isDisabled = false }: 
         "cursor-pointer": !isDisabled,
       })}
     >
-      <Icon aria-label={label} />
+      <Icon aria-label={iconLabel} />
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
     </button>
   );
