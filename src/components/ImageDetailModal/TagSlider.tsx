@@ -40,7 +40,7 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
   };
 
   return (
-    <div className={`relative flex w-full bg-background px-20pxr py-10pxr ${className}`}>
+    <div className={cn("relative flex w-full bg-background px-20pxr py-10pxr", className)}>
       <Swiper
         slidesPerView={"auto"}
         spaceBetween={27}
