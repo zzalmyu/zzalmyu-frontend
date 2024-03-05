@@ -13,15 +13,14 @@ import { CHANNEL_ID, PUBLISH_DESTINATION, SUBSCRIPTION_DESTINATION } from "@/con
 
 const useChat = (handleScrollPosition: () => void) => {
   const stompRef = useRef<CompatClient | null>(null);
-  const mountedRef = useRef(false);
   const [messages, setMessages] = useState<(GreetMessageResponse | ZzalMessageResponse)[]>([]);
   const imageSrc = useAtomValue($previewImage);
 
-  const handleConnect = () => {
-    if (mountedRef.current) return;
+  const handleConnectToChat = () => {
+    if (!stompRef.current) return;
 
     stompRef.current = Stomp.over(() => {
-      return new SockJS(`${import.meta.env.VITE_CHAT_URL}`);
+      return new SockJS(import.meta.env.VITE_CHAT_URL);
     });
     stompRef.current.onConnect = () => {
       stompRef.current?.subscribe(SUBSCRIPTION_DESTINATION, (frame) => {
@@ -36,16 +35,16 @@ const useChat = (handleScrollPosition: () => void) => {
       handleSendMessage("greet");
     };
     stompRef.current.activate();
-    mountedRef.current = true;
   };
+
   const handleSendMessage = (type: "zzal" | "greet") => {
-    if (stompRef && stompRef.current?.connected) {
+    if (stompRef.current?.connected) {
       const messageContent: GreetMessageRequest | ZzalMessageRequest = {
         email: "yjc@test.com",
         channelId: CHANNEL_ID,
       };
-      if (type === "zzal") {
-        if (imageSrc === "") return;
+
+      if (type === "zzal" && imageSrc) {
         (messageContent as ZzalMessageRequest).image = imageSrc;
       }
 
@@ -57,7 +56,7 @@ const useChat = (handleScrollPosition: () => void) => {
   };
 
   useEffect(() => {
-    handleConnect();
+    handleConnectToChat();
     return () => {
       if (stompRef && stompRef.current?.connected) {
         stompRef.current.deactivate();

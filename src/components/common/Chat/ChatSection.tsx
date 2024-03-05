@@ -10,7 +10,7 @@ interface Props {
 
 const ChatSection = forwardRef<HTMLDivElement, Props>(({ handleScrollPosition }, ref) => {
   const { handleSendMessage, messages } = useChat(handleScrollPosition);
-  const handleClickSend = () => () => handleSendMessage("zzal");
+  const handleClickSend = () => handleSendMessage("zzal");
 
   return (
     <section className="relative h-full w-full overflow-hidden bg-secondary p-20pxr sm:w-[40vw] md:w-450pxr">
@@ -20,7 +20,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ handleScrollPosition },
       >
         <div className="flex flex-1 flex-col ">
           {messages.map((message, index) => (
-            <Fragment key={`${index}-${"message"}`}>
+            <Fragment key={`${index}-message`}>
               {"image" in message && (
                 <ZzalMessage src={message.image} isMyMessage={false} nickname={message.nickname} />
               )}
@@ -29,7 +29,7 @@ const ChatSection = forwardRef<HTMLDivElement, Props>(({ handleScrollPosition },
           ))}
         </div>
       </div>
-      <MessagePeek onClickSend={handleClickSend()} />
+      <MessagePeek onClickSend={handleClickSend} />
     </section>
   );
 });

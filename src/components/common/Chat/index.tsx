@@ -14,6 +14,7 @@ const Chat = () => {
     if (!chatRoomRef.current) return;
     setSessionStorage("sidebar-scroll", chatRoomRef.current?.scrollTop);
   };
+
   const setScrollToBottom = () => {
     if (!chatRoomRef.current) return;
     chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight);
