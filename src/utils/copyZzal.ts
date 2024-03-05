@@ -48,7 +48,7 @@ const copyJpgToClipboard = (imgBlob: Blob) => {
 
 export const copyZzal = async (imageUrl: string) => {
   try {
-    const imgResponse = await axios.get(imageUrl, { responseType: "blob" });
+    const imgResponse = await axios.get<Blob>(imageUrl, { responseType: "blob" });
     const imgBlob = imgResponse.data;
     const extension = imageUrl.split(".").pop()?.toLowerCase();
 
