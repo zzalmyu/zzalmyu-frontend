@@ -1,21 +1,21 @@
-import { ReportDetail } from "@/types/report";
+import { formatDate } from "@/utils/formatDate";
+import { ReportByUser } from "@/types/report";
 
 interface Props {
-  reportDetails: ReportDetail[];
+  reportsByUser: ReportByUser[];
 }
 
-const ReportDetailTableBody = ({ reportDetails }: Props) => {
+const ReportDetailsTableBody = ({ reportsByUser }: Props) => {
   return (
     <tbody>
-      {reportDetails.map(({ reportDate, reportUserEmail }, index) => {
-        const shortReportDate = reportDate.slice(0, 10);
+      {reportsByUser.map(({ reportDate, reportUserEmail }, index) => {
         return (
           <tr
             key={`${index}-${reportUserEmail}`}
-            className="border-b-2 border-neutral-300 last:border-0"
+            className="border-b-2 border-neutral-300 last:border-0 hover:bg-neutral-400"
           >
             <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
-              {shortReportDate}
+              {formatDate(reportDate)}
             </td>
             <td className="text-center text-xs font-bold sm:text-center sm:font-bold">
               {reportUserEmail}
@@ -27,4 +27,4 @@ const ReportDetailTableBody = ({ reportDetails }: Props) => {
   );
 };
 
-export default ReportDetailTableBody;
+export default ReportDetailsTableBody;
