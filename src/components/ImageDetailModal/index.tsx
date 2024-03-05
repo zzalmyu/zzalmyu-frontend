@@ -111,7 +111,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
           </div>
         </div>
         <div
-          className={cn("absolute z-0 w-full transition-all duration-500", {
+          className={cn("duration-250 absolute z-0 w-full transition-all", {
             "top-full": isTagNavigatorOpen,
             "top-0": !isTagNavigatorOpen,
           })}
