@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
-import { ChevronLeft, ChevronRight, ChevronLeftCircle, ChevronRightCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { TagDetail } from "@/types/tag";
 import TagBadge from "../common/TagBadge";
@@ -12,11 +12,10 @@ interface Props {
   tags: TagDetail[];
   textSize?: string;
   className?: string;
-  arrowStyle?: "base" | "circle";
   onClick?: () => void;
 }
 
-const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onClick }: Props) => {
+const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
   const [showPrevButton, setShowPrevButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(true);
   const [mainImageIndex, setMainImageIndex] = useState(0);
@@ -79,8 +78,7 @@ const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onCl
           ref={navigationPrevRef}
           aria-label="이전으로 이동"
         >
-          {arrowStyle === "circle" && <ChevronLeftCircle strokeWidth={1.5} />}
-          {arrowStyle !== "circle" && <ChevronLeft strokeWidth={1.5} />}
+          <ChevronLeft strokeWidth={1.5} />
         </button>
 
         <button
@@ -90,8 +88,7 @@ const TagSlider = ({ tags, textSize = "xs", className, arrowStyle = "base", onCl
           ref={navigationNextRef}
           aria-label="다음으로 이동"
         >
-          {arrowStyle === "circle" && <ChevronRightCircle strokeWidth={1.5} />}
-          {arrowStyle !== "circle" && <ChevronRight strokeWidth={1.5} />}
+          <ChevronRight strokeWidth={1.5} />
         </button>
       </Swiper>
     </div>
