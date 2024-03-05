@@ -62,14 +62,6 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
           setShowNextButton(true);
         }}
       >
-        {tags.map(({ name, id }) => (
-          <SwiperSlide key={id} className="w-fit cursor-pointer text-center text-text-primary">
-            <button onClick={onClick}>
-              <TagBadge content={name} className={`bg-primary px-2 py-1 text-${textSize}`} />
-            </button>
-          </SwiperSlide>
-        ))}
-
         <button
           className={cn(arrowButtonClasses, "bg-gradient-to-r pr-7pxr", {
             hidden: !showPrevButton,
@@ -79,6 +71,14 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
         >
           <ChevronLeft strokeWidth={1.5} />
         </button>
+
+        {tags.map(({ name, id }) => (
+          <SwiperSlide key={id} className="w-fit cursor-pointer text-center text-text-primary">
+            <button onClick={onClick}>
+              <TagBadge content={name} className={`bg-primary px-2 py-1 text-${textSize}`} />
+            </button>
+          </SwiperSlide>
+        ))}
 
         <button
           className={cn(arrowButtonClasses, "right-0 bg-gradient-to-l pl-7pxr", {
