@@ -13,7 +13,7 @@ const LayoutWithChat = () => {
     <div className="relative flex h-full w-full overflow-hidden">
       <div
         className={cn(
-          "mt-60pxr h-[calc(100%-3.75rem)] overflow-auto transition-[width] duration-500 ease-in-out",
+          "mt-60pxr h-[calc(100%-3.75rem)] overflow-auto border-r border-border transition-[width] duration-500 ease-in-out",
           isChatOpen ? "w-[67%]" : "w-full",
         )}
       >
