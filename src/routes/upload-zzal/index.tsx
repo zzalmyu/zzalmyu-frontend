@@ -4,20 +4,20 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
-// import RecommendTag from "@/components/common/RecommendTag";
+import RecommendTag from "@/components/common/RecommendTag";
+import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
-// import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
+import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
 import { $previewUrl } from "@/store/zzal";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [, setPreviewUrl] = useAtom($previewUrl);
 
-  // const { popularTags } = useGetPopularTags();
-  // const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
+  const { popularTags } = useGetPopularTags();
+  const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
 
   const { uploadZzal } = usePostUploadZzal();
 
@@ -77,10 +77,10 @@ const UploadZzal = () => {
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
             <div className="float-right">
-              {/* <RecommendTag
+              <RecommendTag
                 title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
                 recommendTags={popularTagsName}
-              /> */}
+              />
               <TagSearchForm />
             </div>
           </div>
