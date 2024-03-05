@@ -1,15 +1,17 @@
 import { ButtonHTMLAttributes } from "react";
+import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: LucideIcon;
-  children: string;
+  label: string;
+  children: ReactNode;
   onClick: () => void;
   isDisabled?: boolean;
 }
 
-const ButtonWithIcon = ({ Icon, children, onClick, isDisabled = false }: Props) => {
+const ButtonWithIcon = ({ Icon, label, children, onClick, isDisabled = false }: Props) => {
   return (
     <button
       onClick={onClick}
@@ -19,7 +21,7 @@ const ButtonWithIcon = ({ Icon, children, onClick, isDisabled = false }: Props) 
         "cursor-pointer": !isDisabled,
       })}
     >
-      <Icon aria-label={children} />
+      <Icon aria-label={label} />
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
     </button>
   );
