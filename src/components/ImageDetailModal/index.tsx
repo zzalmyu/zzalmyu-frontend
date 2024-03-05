@@ -79,10 +79,10 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
       <div className="relative flex w-full justify-center">
         <div className="z-30 flex h-90pxr w-full justify-center bg-background">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
-            <ButtonWithIcon Icon={FolderDown} text="다운로드" onClick={handleDownloadZzal} />
+            <ButtonWithIcon Icon={FolderDown} children="다운로드" onClick={handleDownloadZzal} />
             <ButtonWithIcon
               Icon={SendHorizontal}
-              text="채팅에 전송하기"
+              children="채팅에 전송하기"
               onClick={handleSendToChat}
             />
             <button
@@ -101,10 +101,10 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
                 aria-label={isTagNavigatorOpen ? "태그 숨기기" : "태그 보기"}
               />
             </button>
-            <ButtonWithIcon Icon={Siren} text="신고하기" onClick={handleReportZzal} />
+            <ButtonWithIcon Icon={Siren} children="신고하기" onClick={handleReportZzal} />
             <ButtonWithIcon
               Icon={Trash2}
-              text="삭제하기"
+              children="삭제하기"
               isDisabled={!isUploader}
               onClick={handleDeleteZzal}
             />
