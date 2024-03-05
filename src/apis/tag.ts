@@ -1,5 +1,5 @@
 import http from "@/apis/core";
-import { GetTagsResponse } from "@/types/tag.dto";
+import { GetTagsResponse, GetTopTagsFromLikedResponse } from "@/types/tag.dto";
 
 export const getSearchTag = (tag: string) =>
   http.get<GetTagsResponse>({
@@ -7,4 +7,9 @@ export const getSearchTag = (tag: string) =>
     params: {
       keyword: tag,
     },
+  });
+
+export const getTopTagsFromLiked = () =>
+  http.get<GetTopTagsFromLikedResponse>({
+    url: "/v1/tag/me/like",
   });
