@@ -31,7 +31,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         <div className="my-5 flex justify-center">
           <div className="relative flex">
             <ZzalCard src={ZZALCARD_SRC} alt={ZZALCARD_ALT} />
-            <ImageMenuBar onClose={onClose} />
+            <ImageMenuBar />
           </div>
         </div>
       </Modal.Body>
