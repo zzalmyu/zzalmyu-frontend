@@ -16,10 +16,10 @@ import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutWithChatImport } from "./routes/_layout-with-chat"
 import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as LayoutWithChatIndexImport } from "./routes/_layout-with-chat/index"
+import { Route as LayoutWithChatMyUploadedZzalsRouteImport } from "./routes/_layout-with-chat/my-uploaded-zzals/route"
+import { Route as LayoutWithChatMyLikedZzalsRouteImport } from "./routes/_layout-with-chat/my-liked-zzals/route"
 import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
 import { Route as AdminReportsImageIdIndexImport } from "./routes/admin/reports/$imageId/index"
-import { Route as LayoutWithChatMyUploadedZzalIndexImport } from "./routes/_layout-with-chat/my-uploaded-zzal/index"
-import { Route as LayoutWithChatMyLikedZzalIndexImport } from "./routes/_layout-with-chat/my-liked-zzal/index"
 
 // Create Virtual Routes
 
@@ -44,6 +44,26 @@ const LayoutWithChatIndexRoute = LayoutWithChatIndexImport.update({
   getParentRoute: () => LayoutWithChatRoute,
 } as any)
 
+const LayoutWithChatMyUploadedZzalsRouteRoute =
+  LayoutWithChatMyUploadedZzalsRouteImport.update({
+    path: "/my-uploaded-zzals",
+    getParentRoute: () => LayoutWithChatRoute,
+  } as any).lazy(() =>
+    import("./routes/_layout-with-chat/my-uploaded-zzals/route.lazy").then(
+      (d) => d.Route,
+    ),
+  )
+
+const LayoutWithChatMyLikedZzalsRouteRoute =
+  LayoutWithChatMyLikedZzalsRouteImport.update({
+    path: "/my-liked-zzals",
+    getParentRoute: () => LayoutWithChatRoute,
+  } as any).lazy(() =>
+    import("./routes/_layout-with-chat/my-liked-zzals/route.lazy").then(
+      (d) => d.Route,
+    ),
+  )
+
 const AdminReportsIndexRoute = AdminReportsIndexImport.update({
   path: "/admin/reports/",
   getParentRoute: () => rootRoute,
@@ -65,18 +85,6 @@ const AdminReportsImageIdIndexRoute = AdminReportsImageIdIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutWithChatMyUploadedZzalIndexRoute =
-  LayoutWithChatMyUploadedZzalIndexImport.update({
-    path: "/my-uploaded-zzal/",
-    getParentRoute: () => LayoutWithChatRoute,
-  } as any)
-
-const LayoutWithChatMyLikedZzalIndexRoute =
-  LayoutWithChatMyLikedZzalIndexImport.update({
-    path: "/my-liked-zzal/",
-    getParentRoute: () => LayoutWithChatRoute,
-  } as any)
-
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
@@ -84,6 +92,14 @@ declare module "@tanstack/react-router" {
     "/_layout-with-chat": {
       preLoaderRoute: typeof LayoutWithChatImport
       parentRoute: typeof rootRoute
+    }
+    "/_layout-with-chat/my-liked-zzals": {
+      preLoaderRoute: typeof LayoutWithChatMyLikedZzalsRouteImport
+      parentRoute: typeof LayoutWithChatImport
+    }
+    "/_layout-with-chat/my-uploaded-zzals": {
+      preLoaderRoute: typeof LayoutWithChatMyUploadedZzalsRouteImport
+      parentRoute: typeof LayoutWithChatImport
     }
     "/_layout-with-chat/": {
       preLoaderRoute: typeof LayoutWithChatIndexImport
@@ -96,14 +112,6 @@ declare module "@tanstack/react-router" {
     "/admin/reports/AdminReports": {
       preLoaderRoute: typeof AdminReportsAdminReportsPendingComponentImport
       parentRoute: typeof rootRoute
-    }
-    "/_layout-with-chat/my-liked-zzal/": {
-      preLoaderRoute: typeof LayoutWithChatMyLikedZzalIndexImport
-      parentRoute: typeof LayoutWithChatImport
-    }
-    "/_layout-with-chat/my-uploaded-zzal/": {
-      preLoaderRoute: typeof LayoutWithChatMyUploadedZzalIndexImport
-      parentRoute: typeof LayoutWithChatImport
     }
     "/admin/reports/": {
       preLoaderRoute: typeof AdminReportsIndexImport
@@ -120,9 +128,9 @@ declare module "@tanstack/react-router" {
 
 export const routeTree = rootRoute.addChildren([
   LayoutWithChatRoute.addChildren([
+    LayoutWithChatMyLikedZzalsRouteRoute,
+    LayoutWithChatMyUploadedZzalsRouteRoute,
     LayoutWithChatIndexRoute,
-    LayoutWithChatMyLikedZzalIndexRoute,
-    LayoutWithChatMyUploadedZzalIndexRoute,
   ]),
   UploadZzalIndexRoute,
   AdminReportsAdminReportsPendingComponentRoute,

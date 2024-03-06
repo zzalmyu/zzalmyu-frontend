@@ -18,7 +18,7 @@ const DeleteConfirmModal = ({ isOpen, onClose, onDelete }: Props) => {
     <Modal isOpen={isOpen} onClose={onClose} size="sm">
       <Modal.Body>
         <div className="flex flex-col items-center">
-          <AlertTriangle color="#ED0000" strokeWidth="1.2" size="84" />
+          <AlertTriangle color="#ED0000" strokeWidth="1.2" size="84" aria-label="경고삼각형" />
           <div className="mt-4 flex flex-col items-center gap-1">
             <div className="text-xl font-extrabold sm:text-2xl">
               정말로 이 사진을 제거하시겠습니까?

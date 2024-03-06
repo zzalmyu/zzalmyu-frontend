@@ -5,6 +5,7 @@ import { $previewImage } from "@/store/chat";
 interface Props {
   onClick: () => void;
 }
+
 const ChatSendButton = ({ onClick }: Props) => {
   const previewImage = useAtomValue($previewImage);
 

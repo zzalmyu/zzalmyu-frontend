@@ -1,5 +1,6 @@
 import http from "@/apis/core";
-import { GetZzalsResponse } from "@/types/zzals.dto";
+import { GetMyLikedZzalsResponse, GetZzalsResponse } from "@/types/zzal.dto";
+import { PAGINATION_LIMIT } from "@/constants/api";
 
 export const getAllZzal = () =>
   http.get<GetZzalsResponse[]>({
@@ -16,4 +17,13 @@ export const addImageLike = (imageId: number) =>
     params: {
       imageId,
     },
+  });
+
+export const deleteMyZzal = (imageId: number) => {
+  return http.delete<number>({ url: `/v1/image/${imageId}` });
+};
+
+export const getMyLikedZzals = (offset: number) =>
+  http.get<GetMyLikedZzalsResponse>({
+    url: `/v1/image/like?page=${offset}&size=${PAGINATION_LIMIT}`,
   });

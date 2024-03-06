@@ -1,9 +1,6 @@
-import { ReactNode, createContext, useContext } from "react";
-import { toast } from "react-toastify";
-import { Heart, SendHorizontal, Copy } from "lucide-react";
-import { useSetAtom } from "jotai";
-import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
-import { $previewImage } from "@/store/chat";
+import { ReactNode } from "react";
+import { Heart, SendHorizontal } from "lucide-react";
+import { cn } from "@/utils/tailwind";
 
 interface ZzalCardProps {
   children?: ReactNode;
@@ -11,17 +8,8 @@ interface ZzalCardProps {
   alt: string;
   hasAnimation?: boolean;
   width?: number | string;
-  imageId: number;
+  className?: string;
 }
-
-interface ZzalCardContextType {
-  src: string;
-  imageId: number;
-}
-const ZzalCardContext = createContext<ZzalCardContextType>({
-  src: "",
-  imageId: 0,
-});
 
 const ZzalCard = ({
   children,
@@ -29,21 +17,22 @@ const ZzalCard = ({
   alt,
   width = 72,
   hasAnimation = true,
-  imageId,
+  className,
 }: ZzalCardProps) => {
   return (
-    <ZzalCardContext.Provider value={{ src, imageId }}>
-      <div className={`group relative w-${width} rounded-lg bg-base-100 shadow-xl`}>
-        <figure
-          className={`${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`}
-        >
-          <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
-        </figure>
-        <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
-          {children}
-        </div>
+    <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
+      <div className="button-container absolute right-2 top-1 z-10 w-fit opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+        {children}
       </div>
-    </ZzalCardContext.Provider>
+      <figure
+        className={cn(
+          "h-fit",
+          `${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`,
+        )}
+      >
+        <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
+      </figure>
+    </div>
   );
 };
 
