@@ -58,11 +58,7 @@ const DropdownMenu = ({ user }: Props) => {
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name, onClick }, index) => (
-              <li
-                key={`${index}-${name}`}
-                className="group"
-                onClick={onClick ? onClick : toggleDetails}
-              >
+              <li key={`${index}-${name}`} className="group" onClick={onClick || toggleDetails}>
                 <Link
                   to={path}
                   className="[&.active]:text-white "
