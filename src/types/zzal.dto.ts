@@ -5,6 +5,11 @@ export interface GetMyLikedZzalsResponse {
 }
 
 export interface GetZzalResponse {
+  pageParams: number[];
+  pages: GetZzalPagesResponse[][];
+}
+
+export interface GetZzalPagesResponse {
   imageId: number;
   title: string;
   path: string;
