@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { cn } from "@/utils/tailwind";
+import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
+import { debounce } from "@/utils/debounce";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "./TagSlider";
 import Modal from "@/components/common/modals/Modal";
@@ -23,27 +25,32 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   if (isPending || !zzalDetails) return <>로딩중...</>;
 
   const { imageLikeYn: isLiked, imgUrl: imageUrl, tags, imageTitle, uploadUserId } = zzalDetails;
-
   const isUploader = uploadUserId === 123;
   {
     /*TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기 */
   }
 
-  const handleClickLike = () => {};
-
-  const handleDownloadZzal = () => {};
-
-  const handleSendToChat = () => {};
-
-  const handleReportZzal = () => {};
-
-  const handleDeleteZzal = () => {};
-
-  const handleCopyZzal = async () => {};
-
   {
     /*TODO: [2024.03.05] 해당 handler함수 로직 추가하기*/
   }
+  const handleClickLikeButton = () => {};
+
+  const handleClickSendButton = () => {};
+
+  const handleClickReportButton = () => {};
+
+  const handleClickDeleteButton = () => {};
+
+  const handleDownloadButton = debounce(() => {
+    downloadZzal({
+      imageUrl,
+      imageTitle,
+    });
+  }, 500);
+
+  const handleClickCopyButton = debounce(() => {
+    copyZzal(imageUrl);
+  }, 500);
 
   const toggleTagNavigator = () => {
     setIsTagNavigatorOpen(!isTagNavigatorOpen);
@@ -58,13 +65,13 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
               Icon={FolderDown}
               iconLabel="다운로드"
               children="다운로드"
-              onClick={handleDownloadZzal}
+              onClick={handleDownloadButton}
             />
             <ButtonWithIcon
               Icon={SendHorizontal}
               iconLabel="채팅에 전송하기"
               children="채팅에 전송하기"
-              onClick={handleSendToChat}
+              onClick={handleClickSendButton}
             />
             <button
               onClick={toggleTagNavigator}
@@ -86,14 +93,14 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
               Icon={Siren}
               iconLabel="신고하기"
               children="신고하기"
-              onClick={handleReportZzal}
+              onClick={handleClickReportButton}
             />
             <ButtonWithIcon
               Icon={Trash2}
               iconLabel="삭제하기"
               children="삭제하기"
               isDisabled={!isUploader}
-              onClick={handleDeleteZzal}
+              onClick={handleClickDeleteButton}
             />
           </div>
         </div>
@@ -110,10 +117,10 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         <img src={imageUrl} alt={imageTitle} className="w-full" />
       </div>
       <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr hover:text-gray-300">
-        <button onClick={handleCopyZzal}>
+        <button onClick={handleClickCopyButton}>
           <Copy color="white" size={30} aria-label="복사하기" />
         </button>
-        <button onClick={handleClickLike}>
+        <button onClick={handleClickLikeButton}>
           <Heart
             color="white"
             size={30}
