@@ -15,26 +15,14 @@ interface ZzalCardProps {
   hasAnimation?: boolean;
   width?: number | string;
   className?: string;
-  imageId: number;
-  isLiked: boolean;
-  imageIndex: number;
-  queryKey: string;
 }
 
 interface ZzalCardContextType {
   src: string;
-  imageId: number;
-  isLiked: boolean;
-  imageIndex: number;
-  queryKey: string;
 }
 
 const ZzalCardContext = createContext<ZzalCardContextType>({
   src: "",
-  imageId: 0,
-  isLiked: false,
-  imageIndex: 0,
-  queryKey: "",
 });
 
 const ZzalCard = ({
@@ -43,14 +31,10 @@ const ZzalCard = ({
   alt,
   width = 72,
   hasAnimation = true,
-  imageId,
-  isLiked,
-  imageIndex,
   className,
-  queryKey,
 }: ZzalCardProps) => {
   return (
-    <ZzalCardContext.Provider value={{ src, imageId, isLiked, imageIndex, queryKey }}>
+    <ZzalCardContext.Provider value={{ src }}>
       <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
         <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
           {children}
@@ -68,8 +52,14 @@ const ZzalCard = ({
   );
 };
 
-const LikeButton = () => {
-  const { imageId, isLiked, imageIndex, queryKey } = useContext(ZzalCardContext);
+interface LikeButtonProps {
+  imageId: number;
+  isLiked: boolean;
+  imageIndex: number;
+  queryKey: string;
+}
+
+const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
   const { addImageLike } = useAddImageLike(imageIndex, queryKey);
   const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey);
 
