@@ -43,10 +43,11 @@ const ImageMenuBar = () => {
       <ReportConfirmModal
         isOpen={isOpen}
         onClose={close}
-        onReport={handleClickReportCompeleteButton(imageId)} // TODO: [2024-03-03] 짤 이미지 신고 api 연결 - onReport={handleClickReportConfirm(imageId)}
+        onReport={handleClickReportCompeleteButton(imageId)}
       />
     ));
   };
+
   const handleClickDeleteButton = () => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
