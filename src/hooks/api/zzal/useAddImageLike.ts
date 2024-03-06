@@ -26,7 +26,10 @@ export const useAddImageLike = (imageIndex: number, queryKey: string) => {
 
       return { oldData };
     },
-    onError: (error, _, rollback) => queryClient.setQueryData([queryKey], rollback?.oldData),
+    onError: (error, _, rollback) => {
+      console.error(error);
+      queryClient.setQueryData([queryKey], rollback?.oldData);
+    },
   });
 
   return { addImageLike: mutate, ...rest };
