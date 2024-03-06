@@ -8,5 +8,9 @@ export const getReports = (page: number) =>
 export const getReportDetails = (imageId: string) =>
   http.get<GetReportDetailsResponse>({ url: `/v1/report/${imageId}` });
 
-export const deleteReportedImage = (imageId: string) =>
+export const deleteReportedZzal = (imageId: string) =>
   http.delete<number>({ url: `/v1/report/${imageId}` });
+
+export const postReportZzal = (imageId: number) => {
+  return http.post<void>({ url: `/v1/report/${imageId}` });
+};

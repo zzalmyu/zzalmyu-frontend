@@ -3,11 +3,13 @@ import { toast } from "react-toastify";
 import { useOverlay } from "@toss/use-overlay";
 import { FolderDown, SendHorizontal, Siren, Heart, Trash2 } from "lucide-react";
 import ReportConfirmModal from "../ReportConfirmModal";
+import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 const ImageMenuBar = () => {
+  const { reportZzal } = usePostReportZzal();
   const { deleteMyZzal } = useDeleteMyZzal();
-  const imageId = 166; // TODO: [2024-03-01] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
+  const imageId = 152; // TODO: [2024-02-28] 이미지 상세보기 api 연결 후, 실제 imageId를 가져와야합니다.
   const [isLiked, setIsLiked] = useState(false);
   const reportConfirmOverlay = useOverlay();
 
@@ -15,15 +17,27 @@ const ImageMenuBar = () => {
     setIsLiked((prevLiked) => !prevLiked);
   };
 
+  const handleClickReportCompeleteButton = (imageId: number) => () => {
+    reportZzal(imageId, {
+      onSuccess: () => {
+        toast.success("신고가 완료되었습니다.");
+      },
+      onError: () => {
+        // TODO: [2024-03-06] http error code 별 메세지(ex. 이미 신고가 완료되었습니다) 추가
+      },
+    });
+  };
+
   const handleClickReportButton = () => {
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
         isOpen={isOpen}
         onClose={close}
-        onReport={() => {}} // TODO: [2024-03-03] 짤 이미지 신고 api 연결 - onReport={handleClickReportConfirm(imageId)}
+        onReport={handleClickReportCompeleteButton(imageId)}
       />
     ));
   };
+
   const handleClickDeleteButton = () => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
