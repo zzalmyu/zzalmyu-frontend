@@ -1,4 +1,4 @@
-import { TagDetail } from "./tag";
+import { Tag } from "./tag";
 
 export interface GetMyLikedZzalsResponse {
   imageId: number;
@@ -12,5 +12,5 @@ export interface GetZzalDetailsResponse {
   uploadUserId: number;
   imgUrl: string;
   imageLikeYn: boolean;
-  tags: TagDetail[];
+  tags: Tag[];
 }
