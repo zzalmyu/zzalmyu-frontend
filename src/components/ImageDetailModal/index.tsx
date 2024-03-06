@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -22,7 +22,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const { zzalDetails, isPending } = useGetZzalDetails(IMAGEID);
 
-  if (isPending || !zzalDetails) return <>로딩중...</>;
+  if (isPending || !zzalDetails) return <Fragment>로딩중...</Fragment>;
 
   const { imageLikeYn: isLiked, imgUrl: imageUrl, tags, imageTitle, uploadUserId } = zzalDetails;
   const isUploader = uploadUserId === 123;
