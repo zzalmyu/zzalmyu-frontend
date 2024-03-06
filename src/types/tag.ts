@@ -6,6 +6,4 @@ export interface Tag {
 export interface TagDetail {
   id: number;
   name: string;
-  splitName: string;
-  createdAt: string;
 }
