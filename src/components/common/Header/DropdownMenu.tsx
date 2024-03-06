@@ -1,6 +1,8 @@
 import { useRef } from "react";
-import { Home, Heart, FolderUp, LogOut } from "lucide-react";
+import { Home, Heart, FolderUp, LogIn, LogOut } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useOverlay } from "@toss/use-overlay";
+import LoginModal from "@/components/LoginModal";
 
 interface Props {
   user: {
@@ -9,6 +11,12 @@ interface Props {
 }
 
 const DropdownMenu = ({ user }: Props) => {
+  const loginModalOverlay = useOverlay();
+
+  const handleClickLogin = () => {
+    loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
+  };
+
   const menuItems = [
     {
       path: "/my-uploaded-zzal/",
@@ -25,6 +33,7 @@ const DropdownMenu = ({ user }: Props) => {
       Icon: Home,
       name: "홈",
     },
+    { path: "/", Icon: LogIn, name: "로그인", onClick: handleClickLogin },
     {
       path: "/",
       Icon: LogOut,
@@ -48,8 +57,12 @@ const DropdownMenu = ({ user }: Props) => {
             {user.name}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
-            {menuItems.map(({ path, Icon, name }, index) => (
-              <li key={`${index}-${name}`} className="group" onClick={toggleDetails}>
+            {menuItems.map(({ path, Icon, name, onClick }, index) => (
+              <li
+                key={`${index}-${name}`}
+                className="group"
+                onClick={onClick ? onClick : toggleDetails}
+              >
                 <Link
                   to={path}
                   className="[&.active]:text-white "
