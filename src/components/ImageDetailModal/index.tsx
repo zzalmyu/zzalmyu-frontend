@@ -4,61 +4,32 @@ import { cn } from "@/utils/tailwind";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "./TagSlider";
 import Modal from "@/components/common/modals/Modal";
+import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const imageDetails = {
-  imageId: 1,
-  uploadUserId: 123,
-  imgUrl:
-    "https://zzalmyu-bucket.s3.ap-northeast-2.amazonaws.com/upload/keroro9073%40gmail.comtemp_image1626418983561547350.jpg",
-  imageLikeYn: true,
-  tags: [
-    {
-      id: 0,
-      name: "일이삼사오육칠팔구십",
-      splitName: "o",
-      createdAt: "2024-03-01T05:59:48.528Z",
-    },
-    {
-      id: 1,
-      name: "일이삼사오육칠팔구십",
-      splitName: "o",
-      createdAt: "2024-03-01T05:59:48.528Z",
-    },
-    {
-      id: 2,
-      name: "일이삼사오육칠팔구십",
-      splitName: "o",
-      createdAt: "2024-03-01T05:59:48.528Z",
-    },
-    { id: 3, name: "음식", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 4, name: "여행", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 5, name: "무한도전", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-    { id: 6, name: "운동", splitName: "o", createdAt: "2024-03-01T05:59:48.528Z" },
-  ],
-  imageTitle: "안유진",
-};
+const IMAGEID = 70;
+{
+  /*TODO: [2024.03.06] 실제 IMAGEID 받기 */
+}
 
 const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
-  const { imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetails;
-  const [isLiked, setIsLiked] = useState(imageLikeYn);
+  const { zzalDetails, isPending } = useGetZzalDetails(IMAGEID);
+
+  if (isPending || !zzalDetails) return <>로딩중...</>;
+
+  const { imageLikeYn: isLiked, imgUrl: imageUrl, tags, imageTitle, uploadUserId } = zzalDetails;
+
   const isUploader = uploadUserId === 123;
   {
     /*TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기 */
   }
 
-  const toggleTagNavigator = () => {
-    setIsTagNavigatorOpen(!isTagNavigatorOpen);
-  };
-
-  const handleClickLike = () => {
-    setIsLiked((prevLiked) => !prevLiked);
-  };
+  const handleClickLike = () => {};
 
   const handleDownloadZzal = () => {};
 
@@ -73,6 +44,10 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   {
     /*TODO: [2024.03.05] 해당 handler함수 로직 추가하기*/
   }
+
+  const toggleTagNavigator = () => {
+    setIsTagNavigatorOpen(!isTagNavigatorOpen);
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="sm">
@@ -132,7 +107,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
         </div>
       </div>
       <div className=" max-h-500pxr overflow-auto">
-        <img src={imgUrl} alt={imageTitle} className="w-full" />
+        <img src={imageUrl} alt={imageTitle} className="w-full" />
       </div>
       <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr hover:text-gray-300">
         <button onClick={handleCopyZzal}>
