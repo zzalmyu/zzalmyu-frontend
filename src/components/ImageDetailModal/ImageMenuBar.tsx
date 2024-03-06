@@ -6,12 +6,6 @@ import ReportConfirmModal from "../ReportConfirmModal";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
-interface ApiError extends Error {
-  response: {
-    status: number;
-  };
-}
-
 const ImageMenuBar = () => {
   const { reportZzal } = usePostReportZzal();
   const { deleteMyZzal } = useDeleteMyZzal();
@@ -28,16 +22,12 @@ const ImageMenuBar = () => {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.");
       },
-      onError: (error: Error) => {
-        const apiError = error as ApiError;
-        if (apiError.response.status === 400) {
-          toast.error("이미 신고가 완료되었습니다.");
-        } else if (apiError.response.status === 500) {
-          toast.error("신고가 올바르게 되지 않았습니다.");
-        }
+      onError: () => {
+        // TODO: [2024-03-06] http error code 별 메세지(ex. 이미 신고가 완료되었습니다) 추가
       },
     });
   };
+
   const handleClickReportButton = () => {
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
