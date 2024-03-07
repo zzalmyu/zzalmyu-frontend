@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { removeImageLike } from "@/apis/zzal";
+import { deleteImageLike } from "@/apis/zzal";
 import { GetZzalResponse } from "@/types/zzal.dto";
 import { PAGINATION_LIMIT } from "@/constants/api";
 
@@ -7,7 +7,7 @@ export const useRemoveImageLike = (imageIndex: number, queryKey: string) => {
   const queryClient = useQueryClient();
 
   const { mutate, ...rest } = useMutation({
-    mutationFn: (imageId: number) => removeImageLike(imageId),
+    mutationFn: (imageId: number) => deleteImageLike(imageId),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [queryKey] });
 
@@ -32,5 +32,5 @@ export const useRemoveImageLike = (imageIndex: number, queryKey: string) => {
     },
   });
 
-  return { removeImageLike: mutate, ...rest };
+  return { deleteImageLike: mutate, ...rest };
 };

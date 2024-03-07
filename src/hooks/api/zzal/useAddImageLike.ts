@@ -1,5 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { addImageLike } from "@/apis/zzal";
+import { postImageLike } from "@/apis/zzal";
 import { GetZzalResponse } from "@/types/zzal.dto";
 import { PAGINATION_LIMIT } from "@/constants/api";
 
@@ -7,7 +7,7 @@ export const useAddImageLike = (imageIndex: number, queryKey: string) => {
   const queryClient = useQueryClient();
 
   const { mutate, ...rest } = useMutation({
-    mutationFn: (imageId: number) => addImageLike(imageId),
+    mutationFn: (imageId: number) => postImageLike(imageId),
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [queryKey] });
 
@@ -32,5 +32,5 @@ export const useAddImageLike = (imageIndex: number, queryKey: string) => {
     },
   });
 
-  return { addImageLike: mutate, ...rest };
+  return { postImageLike: mutate, ...rest };
 };
