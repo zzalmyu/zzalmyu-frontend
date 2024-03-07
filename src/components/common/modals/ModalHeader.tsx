@@ -3,7 +3,7 @@ import useModalContext from "@/hooks/modals/useModalContext";
 
 interface Props {
   hasCloseButton?: boolean;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const ModalHeader = ({ hasCloseButton = false, children }: Props) => {

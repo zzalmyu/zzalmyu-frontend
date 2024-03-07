@@ -1,16 +1,25 @@
 import { Fragment } from "react";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { ChevronsDown, ChevronsUp } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import ChatSendButton from "./ChatSendButton";
 import MessagePreview from "./MessagePreview";
-import { $isMessagePeekOpen } from "@/store/chat";
+import { $deleteMessagePreview, $isMessagePeekOpen } from "@/store/chat";
 
-const MessagePeek = () => {
+interface Props {
+  onClickSend: () => void;
+}
+
+const MessagePeek = ({ onClickSend }: Props) => {
   const [isPeekOpen, setIsPeekOpen] = useAtom($isMessagePeekOpen);
+  const deleteMessagePreview = useSetAtom($deleteMessagePreview);
 
   const handleClickPeekTip = () => {
     setIsPeekOpen((prev) => !prev);
+  };
+  const handleClickSend = () => {
+    onClickSend();
+    deleteMessagePreview();
   };
 
   return (
@@ -22,7 +31,7 @@ const MessagePeek = () => {
     >
       <div
         onClick={handleClickPeekTip}
-        className="z-10 flex w-full cursor-pointer items-center justify-center gap-10pxr px-15pxr py-5pxr text-center text-xs font-bold text-white transition-colors hover:bg-gray-300/20 sm:text-sm"
+        className="z-10 flex h-30pxr w-full cursor-pointer items-center justify-center gap-10pxr px-15pxr py-5pxr text-center text-xs font-bold text-white transition-colors hover:bg-gray-300/20 sm:text-sm"
       >
         {isPeekOpen && (
           <Fragment>
@@ -42,8 +51,7 @@ const MessagePeek = () => {
       <div className="flex min-h-200pxr w-full items-center justify-center">
         <MessagePreview />
         <div className="absolute bottom-5 right-5">
-          {/* TODO: [2024.02.23] WS 이미지 전송 연결 */}
-          <ChatSendButton onClick={() => {}} />
+          <ChatSendButton onClick={handleClickSend} />
         </div>
       </div>
     </div>
