@@ -25,27 +25,14 @@ const Chat = () => {
     setIsChatOpen(false);
   };
 
-  const handleClickChatToggleButton = () => {
-    setIsChatOpen((prev) => !prev);
-  };
-
   return (
     <Fragment>
       <div
         className={cn(
-          "absolute top-0 z-10 flex h-60pxr items-center justify-between border border-border bg-background px-4 transition-[width] duration-500 ease-in-out",
+          "absolute top-0 flex h-60pxr items-center justify-between border border-border bg-background px-4 transition-[width] duration-500 ease-in-out",
           isChatOpen ? "w-[67%]" : "w-full",
         )}
-      >
-        <div className="text-xl font-bold text-text-primary">TITLE</div>
-        <button
-          className="btn btn-ghost btn-sm rounded-full outline outline-1 outline-border"
-          onClick={handleClickChatToggleButton}
-        >
-          {isChatOpen && "채팅방 숨기기"}
-          {!isChatOpen && "채팅방 보기"}
-        </button>
-      </div>
+      />
       <div
         className={cn(
           "absolute right-0 h-full w-[33%] transition-[opacity_transform] duration-500 ease-in-out",
@@ -58,7 +45,7 @@ const Chat = () => {
             <X aria-label="채팅방 숨기기" />
           </button>
         </div>
-        <div className="relative h-[calc(100%-3.75rem)] w-full rounded-16pxr">
+        <div className="relative h-[calc(100%-5rem)] w-full rounded-16pxr">
           <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
             {messages.map((message, index) => (
               <Fragment key={`${index}-${message.nickname}`}>
