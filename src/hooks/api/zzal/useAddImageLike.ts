@@ -1,36 +1,29 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { postImageLike } from "@/apis/zzal";
+import { findZzal } from "@/utils/findZzal";
 import { GetZzalResponse } from "@/types/zzal.dto";
-import { PAGINATION_LIMIT } from "@/constants/api";
+import { ZzalType } from "@/types/queryKey";
 
-export const useAddImageLike = (imageIndex: number, queryKey: string) => {
+export const useAddImageLike = (imageIndex: number, zzalKey: ZzalType) => {
   const queryClient = useQueryClient();
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (imageId: number) => postImageLike(imageId),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: [queryKey] });
+      await queryClient.cancelQueries({ queryKey: [zzalKey] });
 
-      const masonryRowIndex = Math.floor(imageIndex / PAGINATION_LIMIT);
-      const masonryColumnIndex = imageIndex % PAGINATION_LIMIT;
-      const oldData = queryClient.getQueryData<GetZzalResponse>([queryKey]) as GetZzalResponse;
+      const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]) as GetZzalResponse;
+      const updatedData = findZzal(imageIndex, oldData);
 
-      const updatedData = { ...oldData };
-
-      updatedData.pages[masonryRowIndex][masonryColumnIndex] = {
-        ...updatedData.pages[masonryRowIndex][masonryColumnIndex],
-        imageLikeYn: true,
-      };
-
-      queryClient.setQueryData([queryKey], updatedData);
+      queryClient.setQueryData([zzalKey], updatedData);
 
       return { oldData };
     },
     onError: (error, _, rollback) => {
       console.error(error);
-      queryClient.setQueryData([queryKey], rollback?.oldData);
+      queryClient.setQueryData([zzalKey], rollback?.oldData);
     },
   });
 
-  return { postImageLike: mutate, ...rest };
+  return { addImageLike: mutate, ...rest };
 };
