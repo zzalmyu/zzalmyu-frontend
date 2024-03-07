@@ -6,7 +6,6 @@ import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import ZzalCard from "@/components/common/ZzalCard";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import TagBadge from "@/components/common/TagBadge";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const MyLikedZzals = () => {
   const fetchMoreRef = useRef(null);
@@ -26,7 +25,6 @@ const MyLikedZzals = () => {
           <TagBadge key={`${index}-${tagName}`} content={tagName} isClickable className="mr-5pxr" />
         ))}
       </div>
-      <TagSearchForm />
       <MasonryLayout className="mt-15pxr">
         {zzals.map(({ imageId, path, title }) => (
           <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
