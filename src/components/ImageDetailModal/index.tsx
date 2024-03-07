@@ -20,6 +20,7 @@ const IMAGEID = 70;
 
 const ImageDetailModalContent = () => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
+  const [isDownloading, setIsDownloading] = useState(false);
   const { zzalDetails } = useGetZzalDetails(IMAGEID);
   const { imageLikeYn: isLiked, imgUrl: imageUrl, tags, imageTitle, uploadUserId } = zzalDetails;
   const isUploader = uploadUserId === 123;
@@ -38,11 +39,15 @@ const ImageDetailModalContent = () => {
 
   const handleClickDeleteButton = () => {};
 
-  const handleClickDownloadButton = debounce(() => {
-    downloadZzal({
+  const handleClickDownloadButton = debounce(async () => {
+    setIsDownloading(true);
+
+    await downloadZzal({
       imageUrl,
       imageTitle,
     });
+
+    setIsDownloading(false);
   }, 500);
 
   const handleClickCopyButton = debounce(() => {
@@ -63,6 +68,7 @@ const ImageDetailModalContent = () => {
               iconLabel="다운로드"
               children="다운로드"
               onClick={handleClickDownloadButton}
+              isLoading={isDownloading}
             />
             <ButtonWithIcon
               Icon={SendHorizontal}
