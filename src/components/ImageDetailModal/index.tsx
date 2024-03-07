@@ -41,7 +41,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
 
   const handleClickDeleteButton = () => {};
 
-  const handleDownloadButton = debounce(() => {
+  const handleClickDownloadButton = debounce(() => {
     downloadZzal({
       imageUrl,
       imageTitle,
@@ -65,7 +65,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
               Icon={FolderDown}
               iconLabel="다운로드"
               children="다운로드"
-              onClick={handleDownloadButton}
+              onClick={handleClickDownloadButton}
             />
             <ButtonWithIcon
               Icon={SendHorizontal}
