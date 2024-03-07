@@ -1,9 +1,14 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
+import { useOverlay } from "@toss/use-overlay";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { cn } from "@/utils/tailwind";
+import ReportConfirmModal from "../ReportConfirmModal";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "./TagSlider";
 import Modal from "@/components/common/modals/Modal";
+import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
+import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 interface Props {
   isOpen: boolean;
@@ -44,9 +49,12 @@ const imageDetails = {
 };
 
 const ImageDetailModal = ({ isOpen, onClose }: Props) => {
+  const { reportZzal } = usePostReportZzal();
+  const { deleteMyZzal } = useDeleteMyZzal();
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
-  const { imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetails;
+  const { imageId, imageLikeYn, imgUrl, tags, imageTitle, uploadUserId } = imageDetails;
   const [isLiked, setIsLiked] = useState(imageLikeYn);
+  const reportConfirmOverlay = useOverlay();
   const isUploader = uploadUserId === 123;
   {
     /*TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기 */
@@ -64,9 +72,37 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
 
   const handleSendToChat = () => {};
 
-  const handleReportZzal = () => {};
+  const handleClickReportCompeleteButton = (imageId: number) => () => {
+    reportZzal(imageId, {
+      onSuccess: () => {
+        toast.success("신고가 완료되었습니다.");
+      },
+      onError: () => {
+        // TODO: [2024-03-06] http error code 별 메세지(ex. 이미 신고가 완료되었습니다) 추가
+      },
+    });
+  };
 
-  const handleDeleteZzal = () => {};
+  const handleClickReportButton = () => {
+    reportConfirmOverlay.open(({ isOpen, close }) => (
+      <ReportConfirmModal
+        isOpen={isOpen}
+        onClose={close}
+        onReport={handleClickReportCompeleteButton(imageId)}
+      />
+    ));
+  };
+
+  const handleClickDeleteButton = () => {
+    deleteMyZzal(imageId, {
+      onSuccess: () => {
+        toast.success("사진이 삭제되었습니다.");
+      },
+      onError: () => {
+        toast.error("사진 삭제에 실패했습니다.");
+      },
+    }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
+  };
 
   const handleCopyZzal = async () => {};
 
@@ -111,14 +147,14 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
               Icon={Siren}
               iconLabel="신고하기"
               children="신고하기"
-              onClick={handleReportZzal}
+              onClick={handleClickReportButton}
             />
             <ButtonWithIcon
               Icon={Trash2}
               iconLabel="삭제하기"
               children="삭제하기"
               isDisabled={!isUploader}
-              onClick={handleDeleteZzal}
+              onClick={handleClickDeleteButton}
             />
           </div>
         </div>
