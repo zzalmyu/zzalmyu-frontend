@@ -13,7 +13,7 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: ZzalType) => {
       await queryClient.cancelQueries({ queryKey: [zzalKey] });
 
       const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]) as GetZzalResponse;
-      const updatedData = findZzal(imageIndex, oldData);
+      const updatedData = findZzal(imageIndex, oldData, false);
 
       queryClient.setQueryData([zzalKey], updatedData);
 
