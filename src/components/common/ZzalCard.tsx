@@ -4,6 +4,7 @@ import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/copyZzal";
+import { ZzalType } from "@/types/queryKey";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
 import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
@@ -56,7 +57,7 @@ interface LikeButtonProps {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: string;
+  queryKey: ZzalType;
 }
 
 const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
