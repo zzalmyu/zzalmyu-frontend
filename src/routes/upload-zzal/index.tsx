@@ -18,8 +18,6 @@ const UploadZzal = () => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [, setPreviewUrl] = useAtom($previewUrl);
 
-  const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
-
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);
   };
@@ -78,7 +76,7 @@ const UploadZzal = () => {
             <div className="float-right">
               <RecommendTag
                 title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
-                recommendTags={popularTagsName}
+                recommendTags={popularTags}
               />
               <TagSearchForm />
             </div>
