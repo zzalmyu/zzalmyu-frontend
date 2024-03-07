@@ -25,11 +25,15 @@ const UploadZzal = () => {
   const handleClickUploadButton = () => {
     if (!file) {
       toast.error("사진을 등록해주세요!");
-    } else if (!selectedTags.length) {
-      toast.error("1개 이상의 태그를 등록해주세요!");
-    } else {
-      handleUploadZzal();
+      return;
     }
+
+    if (!selectedTags.length) {
+      toast.error("1개 이상의 태그를 등록해주세요!");
+      return;
+    }
+
+    handleUploadZzal();
   };
 
   const handleUploadZzal = () => {
