@@ -12,14 +12,13 @@ import { $selectedTags } from "@/store/tag";
 import { $previewUrl } from "@/store/zzal";
 
 const UploadZzal = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const { popularTags } = useGetPopularTags();
+  const { uploadZzal } = usePostUploadZzal();
+  const [file, setFile] = useState<File | null>();
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [, setPreviewUrl] = useAtom($previewUrl);
 
-  const { popularTags } = useGetPopularTags();
   const popularTagsName = popularTags.map((popularTag) => popularTag.tagName);
-
-  const { uploadZzal } = usePostUploadZzal();
 
   const handleChangeUpload = (changedFile: File | null) => {
     setFile(changedFile);

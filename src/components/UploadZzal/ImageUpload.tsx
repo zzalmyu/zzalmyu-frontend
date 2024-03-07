@@ -4,6 +4,7 @@ import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import ZzalCard from "@/components/common/ZzalCard";
 import { $previewUrl } from "@/store/zzal";
+
 interface Props {
   onChange: (file: File | null) => void;
 }
