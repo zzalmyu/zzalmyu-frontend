@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, Suspense } from "react";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -18,12 +18,9 @@ const IMAGEID = 70;
   /*TODO: [2024.03.06] 실제 IMAGEID 받기 */
 }
 
-const ImageDetailModal = ({ isOpen, onClose }: Props) => {
+const ImageDetailModalContent = () => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
-  const { zzalDetails, isPending } = useGetZzalDetails(IMAGEID);
-
-  if (isPending || !zzalDetails) return <Fragment>로딩중...</Fragment>;
-
+  const { zzalDetails } = useGetZzalDetails(IMAGEID);
   const { imageLikeYn: isLiked, imgUrl: imageUrl, tags, imageTitle, uploadUserId } = zzalDetails;
   const isUploader = uploadUserId === 123;
   {
@@ -57,7 +54,7 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="sm">
+    <Fragment>
       <div className="relative flex w-full justify-center">
         <div className="z-30 flex h-90pxr w-full justify-center bg-background">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
@@ -129,7 +126,17 @@ const ImageDetailModal = ({ isOpen, onClose }: Props) => {
           />
         </button>
       </div>
-    </Modal>
+    </Fragment>
+  );
+};
+
+const ImageDetailModal = ({ isOpen, onClose }: Props) => {
+  return (
+    <Suspense fallback={"...pending"}>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ImageDetailModalContent />
+      </Modal>
+    </Suspense>
   );
 };
 
