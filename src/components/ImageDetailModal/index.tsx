@@ -19,9 +19,7 @@ interface Props {
 }
 
 const IMAGEID = 70;
-{
-  /*TODO: [2024.03.06] 실제 IMAGEID 받기 */
-}
+//TODO: [2024.03.06] 실제 IMAGEID 받기
 
 const ImageDetailModalContent = () => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
@@ -40,9 +38,7 @@ const ImageDetailModalContent = () => {
   } = zzalDetails;
 
   const isUploader = uploadUserId === 123;
-  {
-    /*TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기 */
-  }
+  //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
 
   const handleClickReportCompeleteButton = (imageId: number) => () => {
     reportZzal(imageId, {
@@ -65,7 +61,7 @@ const ImageDetailModalContent = () => {
     ));
   };
 
-  const handleClickDeleteButton = () => {
+  const handleClickDeleteButton = debounce(() => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
         toast.success("사진이 삭제되었습니다.");
@@ -74,7 +70,7 @@ const ImageDetailModalContent = () => {
         toast.error("사진 삭제에 실패했습니다.");
       },
     }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
-  };
+  }, 500);
 
   const handleClickDownloadButton = debounce(async () => {
     setIsDownloading(true);
@@ -95,9 +91,7 @@ const ImageDetailModalContent = () => {
 
   const handleClickSendButton = () => {};
 
-  {
-    /*TODO: [2024.03.05] 해당 handler함수 로직 추가하기*/
-  }
+  //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
 
   const toggleTagNavigator = () => {
     setIsTagNavigatorOpen(!isTagNavigatorOpen);
