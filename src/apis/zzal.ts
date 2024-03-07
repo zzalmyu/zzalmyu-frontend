@@ -12,7 +12,7 @@ export const getMyLikedZzals = (offset: number) =>
     url: `/v1/image/like?page=${offset}&size=${PAGINATION_LIMIT}`,
   });
 
-export const addImageLike = (imageId: number) =>
+export const postImageLike = (imageId: number) =>
   http.post<GetZzalResponse>({
     url: `/v1/image/${imageId}/like`,
     params: {
@@ -20,7 +20,7 @@ export const addImageLike = (imageId: number) =>
     },
   });
 
-export const removeImageLike = (imageId: number) =>
+export const deleteImageLike = (imageId: number) =>
   http.post<GetZzalResponse>({
     url: `/v1/image/${imageId}/like/cancel`,
     params: {
