@@ -184,7 +184,7 @@ const ImageDetailModalContent = () => {
 const ImageDetailModal = ({ isOpen, onClose }: Props) => {
   return (
     <Suspense fallback={"...pending"}>
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} onClose={onClose} size="sm">
         <ImageDetailModalContent />
       </Modal>
     </Suspense>
