@@ -24,6 +24,7 @@ const IMAGEID = 70;
 const ImageDetailModalContent = () => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
   const { zzalDetails } = useGetZzalDetails(IMAGEID);
   const { reportZzal } = usePostReportZzal();
   const { deleteMyZzal } = useDeleteMyZzal();
@@ -37,7 +38,7 @@ const ImageDetailModalContent = () => {
     imageId,
   } = zzalDetails;
 
-  const isUploader = uploadUserId === 123;
+  const isUploader = uploadUserId === 19;
   //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
 
   const handleClickReportCompeleteButton = (imageId: number) => () => {
@@ -62,11 +63,15 @@ const ImageDetailModalContent = () => {
   };
 
   const handleClickDeleteButton = debounce(() => {
+    setIsDeleting(true);
+
     deleteMyZzal(imageId, {
       onSuccess: () => {
+        setIsDeleting(false);
         toast.success("사진이 삭제되었습니다.");
       },
       onError: () => {
+        setIsDeleting(false);
         toast.error("사진 삭제에 실패했습니다.");
       },
     }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
@@ -108,6 +113,7 @@ const ImageDetailModalContent = () => {
               children="다운로드"
               onClick={handleClickDownloadButton}
               isLoading={isDownloading}
+              isDisabled={isDownloading}
             />
             <ButtonWithIcon
               Icon={SendHorizontal}
@@ -141,7 +147,8 @@ const ImageDetailModalContent = () => {
               Icon={Trash2}
               iconLabel="삭제하기"
               children="삭제하기"
-              isDisabled={!isUploader}
+              isDisabled={!isUploader || isDeleting}
+              isLoading={isDeleting}
               onClick={handleClickDeleteButton}
             />
           </div>
