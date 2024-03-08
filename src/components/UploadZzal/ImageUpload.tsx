@@ -6,12 +6,11 @@ import ZzalCard from "@/components/common/ZzalCard";
 interface Props {
   onChange: (file: File | null) => void;
   resetPreviewUrl: () => void;
-  previewUrl: string | null;
   changeFile: (file: File) => void;
+  previewUrl: string | null;
 }
 
-const ImageUpload = ({ onChange, resetPreviewUrl, previewUrl, changeFile }: Props) => {
-  // const [previewUrl, setPreviewUrl] = useAtom($previewUrl);
+const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Props) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -26,8 +25,6 @@ const ImageUpload = ({ onChange, resetPreviewUrl, previewUrl, changeFile }: Prop
       const [changedFile] = files;
       if (changedFile) {
         changeFile(changedFile);
-        // onChange(changedFile);
-        // setPreviewUrl(URL.createObjectURL(changedFile));
       }
     }
   };

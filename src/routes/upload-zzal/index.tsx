@@ -14,17 +14,16 @@ const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const { uploadZzal } = usePostUploadZzal();
   const [file, setFile] = useState<File | null>();
-  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
-  // const [, setPreviewUrl] = useAtom($previewUrl);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-
-  const handleResetPreviewUrl = () => {
-    setPreviewUrl(null);
-  };
+  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
 
   const changeFile = (file: File) => {
     setFile(file);
     setPreviewUrl(URL.createObjectURL(file));
+  };
+
+  const handleResetPreviewUrl = () => {
+    setPreviewUrl(null);
   };
 
   const handleChangeUpload = (changedFile: File | null) => {
@@ -88,8 +87,8 @@ const UploadZzal = () => {
         <ImageUpload
           onChange={handleChangeUpload}
           resetPreviewUrl={handleResetPreviewUrl}
-          previewUrl={previewUrl}
           changeFile={changeFile}
+          previewUrl={previewUrl}
         />
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
