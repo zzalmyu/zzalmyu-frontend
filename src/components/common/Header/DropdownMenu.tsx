@@ -11,12 +11,12 @@ interface Props {
 const DropdownMenu = ({ user }: Props) => {
   const menuItems = [
     {
-      path: "/my-uploaded-zzal/",
+      path: "/my-uploaded-zzals",
       Icon: FolderUp,
       name: "업로드한 짤",
     },
     {
-      path: "/my-liked-zzal/",
+      path: "/my-liked-zzals",
       Icon: Heart,
       name: "좋아요한 짤",
     },
@@ -62,6 +62,13 @@ const DropdownMenu = ({ user }: Props) => {
                 </Link>
               </li>
             ))}
+            <Link
+              to="/delete-account"
+              className="mt-2pxr block text-center text-[10px] text-gray-700 underline"
+              onClick={toggleDetails}
+            >
+              계정 탈퇴하기
+            </Link>
           </ul>
         </details>
       </li>
