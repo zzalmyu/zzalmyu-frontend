@@ -45,10 +45,10 @@ const DeleteAccount = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col items-center p-42pxr">
-      <div className="flex w-4/6 flex-col">
-        <p className="mb-10pxr text-2xl font-bold">계정 삭제</p>
-        <div className="breadcrumbs pb-20pxr text-base font-bold sm:text-lg">
+    <div className="flex h-full flex-col items-center p-42pxr">
+      <div className="flex w-4/6 flex-col font-bold">
+        <p className="mb-10pxr text-2xl">계정 삭제</p>
+        <div className="breadcrumbs pb-20pxr text-base sm:text-lg">
           <ul>
             <li>
               <h1 className={cn({ "text-primary": step === 1 })}>1. 확인</h1>
@@ -58,21 +58,21 @@ const DeleteAccount = () => {
             </li>
           </ul>
         </div>
-        <div className="flex w-full flex-col items-center">
+        <div className="flex flex-col items-center">
           {step === 1 && (
             <Fragment>
-              <div className="h-full w-full max-w-570pxr pb-11 pt-8 sm:h-380pxr">
-                <div className="mb-30pxr ">
+              <div className="max-w-570pxr pb-11 pt-8 sm:h-380pxr">
+                <div className="mb-25pxr">
                   <span className="text-xl font-bold">계정을 삭제하시겠어요?</span>
                 </div>
                 <AccountDeletionNotice />
               </div>
-              <div className="flex w-full max-w-950pxr flex-row-reverse justify-between">
+              <div className="flex w-full max-w-950pxr flex-row-reverse">
                 <button
                   onClick={handleDelete}
                   className="btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40"
                 >
-                  <span>삭제하기</span>
+                  삭제하기
                 </button>
               </div>
             </Fragment>
@@ -80,7 +80,7 @@ const DeleteAccount = () => {
           {step === 2 && (
             <Fragment>
               <div className="h-full w-full max-w-570pxr pb-11 sm:h-380pxr">
-                <div className="mb-30pxr flex flex-col justify-center gap-4">
+                <div className="mb-25pxr flex flex-col justify-center gap-3">
                   <CheckCircle2
                     size={50}
                     fill="mediumSeaGreen"
@@ -92,10 +92,10 @@ const DeleteAccount = () => {
                 </div>
                 <AccountDeletionNotice />
               </div>
-              <div className="flex w-full max-w-950pxr flex-row-reverse justify-between">
+              <div className="flex w-full max-w-950pxr flex-row-reverse">
                 <Link to="/">
                   <button className="btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40">
-                    <span>닫기</span>
+                    닫기
                   </button>
                 </Link>
               </div>
