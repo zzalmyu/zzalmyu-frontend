@@ -12,8 +12,8 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: ZzalType) => {
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: [zzalKey] });
 
-      const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]) as GetZzalResponse;
-      const updatedData = findZzal(imageIndex, oldData, false);
+      const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]);
+      const updatedData = oldData && findZzal(imageIndex, oldData, false);
 
       queryClient.setQueryData([zzalKey], updatedData);
 
