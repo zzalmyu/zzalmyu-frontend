@@ -25,7 +25,7 @@ const MyLikedZzals = () => {
           <TagBadge key={`${index}-${tagName}`} content={tagName} isClickable className="mr-5pxr" />
         ))}
       </div>
-      <MasonryLayout className="mt-15pxr">
+      <MasonryLayout className="mt-15pxr w-full">
         {zzals.map(({ imageId, path, title }) => (
           <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
         ))}
