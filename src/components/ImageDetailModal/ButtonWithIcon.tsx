@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/utils/tailwind";
+import Spinner from "../common/Spinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: LucideIcon;
@@ -30,11 +31,7 @@ const ButtonWithIcon = ({
       })}
     >
       {!isLoading && <Icon aria-label={iconLabel} />}
-      {isLoading && (
-        <div className="h-6 w-6">
-          <span className="loading loading-spinner loading-xs" />
-        </div>
-      )}
+      {isLoading && <Spinner />}
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
     </button>
   );
