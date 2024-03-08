@@ -50,12 +50,17 @@ const TagSearchForm = ({ className }: Props) => {
   };
 
   return (
-    <div className={cn(`relative flex min-w-500pxr flex-col flex-wrap p-0`, className)}>
+    <div
+      className={cn(
+        `relative flex max-h-70pxr min-w-340pxr max-w-650pxr flex-col flex-wrap sm:min-w-400pxr`,
+        className,
+      )}
+    >
       <form onSubmit={handleSubmitForm} className="h-full w-full">
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
         </label>
-        <div className="flex h-full w-full flex-wrap items-center gap-4 rounded-full border border-gray-300 px-6 shadow-xl">
+        <div className="flex h-full w-full flex-wrap items-center gap-4 rounded-full border border-gray-300 px-4 shadow-xl">
           <input
             id="tagInput"
             name="tag"
