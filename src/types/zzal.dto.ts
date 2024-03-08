@@ -6,6 +6,6 @@ export interface GetMyLikedZzalsResponse {
 
 export interface GetMyUploadedZzalsResponse {
   imageId: number;
-  title: "string";
-  path: "string";
+  title: string;
+  path: string;
 }
