@@ -29,14 +29,7 @@ const ImageDetailModalContent = () => {
   const { reportZzal } = usePostReportZzal();
   const { deleteMyZzal } = useDeleteMyZzal();
   const reportConfirmOverlay = useOverlay();
-  const {
-    imageLikeYn: isLiked,
-    imgUrl: imageUrl,
-    tags,
-    imageTitle,
-    uploadUserId,
-    imageId,
-  } = zzalDetails;
+  const { isLiked, imageUrl, tags, imageTitle, uploadUserId, imageId } = zzalDetails;
 
   const isUploader = uploadUserId === 19;
   //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
@@ -67,12 +60,13 @@ const ImageDetailModalContent = () => {
 
     deleteMyZzal(imageId, {
       onSuccess: () => {
-        setIsDeleting(false);
         toast.success("사진이 삭제되었습니다.");
       },
       onError: () => {
-        setIsDeleting(false);
         toast.error("사진 삭제에 실패했습니다.");
+      },
+      onSettled: () => {
+        setIsDeleting(false);
       },
     }); // TODO: [2024-03-05] 모달 클릭 시 URL이 변경되도록 구현 후, 이미지 삭제 성공 시 이전 페이지로 이동하는 navigate 추가 필요
   }, 500);

@@ -32,7 +32,7 @@ const ButtonWithIcon = ({
       {!isLoading && <Icon aria-label={iconLabel} />}
       {isLoading && (
         <div className="h-6 w-6">
-          <span className="loading loading-spinner loading-xs"></span>
+          <span className="loading loading-spinner loading-xs" />
         </div>
       )}
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
