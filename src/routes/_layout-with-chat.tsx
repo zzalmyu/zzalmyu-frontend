@@ -16,7 +16,7 @@ const LayoutWithChat = () => {
         <div className="hidden w-115pxr self-start text-xl font-bold text-text-primary sm:block">
           취향 저격 짤
         </div>
-        <TagSearchForm className="z-10 h-16 sm:h-70pxr sm:w-470pxr md:w-full " />
+        <TagSearchForm className="z-10 sm:w-470pxr md:w-full" />
         <button
           className="btn btn-ghost btn-sm hidden w-115pxr rounded-full outline outline-1 outline-border sm:block"
           onClick={handleClickChatToggleButton}
