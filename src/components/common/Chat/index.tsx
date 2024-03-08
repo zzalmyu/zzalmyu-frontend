@@ -32,7 +32,7 @@ const Chat = () => {
           "absolute top-0 flex h-60pxr items-center justify-between border border-border bg-background px-4 transition-[width] duration-500 ease-in-out",
           isChatOpen ? "w-[67%]" : "w-full",
         )}
-      />
+      ></div>
       <div
         className={cn(
           "absolute right-0 h-full w-[33%] transition-[opacity_transform] duration-500 ease-in-out",
@@ -45,7 +45,7 @@ const Chat = () => {
             <X aria-label="채팅방 숨기기" />
           </button>
         </div>
-        <div className="relative h-[calc(100%-5rem)] w-full rounded-16pxr">
+        <div className="relative h-[calc(100%-3.75rem)] w-full rounded-16pxr">
           <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
             {messages.map((message, index) => (
               <Fragment key={`${index}-${message.nickname}`}>
