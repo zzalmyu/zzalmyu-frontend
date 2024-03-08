@@ -1,22 +1,23 @@
 import { Fragment, useRef, useState, DragEvent, ChangeEvent } from "react";
 import { Upload } from "lucide-react";
-import { useAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
 import ZzalCard from "@/components/common/ZzalCard";
-import { $previewUrl } from "@/store/zzal";
 
 interface Props {
   onChange: (file: File | null) => void;
+  resetPreviewUrl: () => void;
+  previewUrl: string | null;
+  changeFile: (file: File) => void;
 }
 
-const ImageUpload = ({ onChange }: Props) => {
-  const [previewUrl, setPreviewUrl] = useAtom($previewUrl);
+const ImageUpload = ({ onChange, resetPreviewUrl, previewUrl, changeFile }: Props) => {
+  // const [previewUrl, setPreviewUrl] = useAtom($previewUrl);
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickDeleteButton = () => {
     onChange(null);
-    setPreviewUrl(null);
+    resetPreviewUrl();
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,8 +25,9 @@ const ImageUpload = ({ onChange }: Props) => {
     if (files) {
       const [changedFile] = files;
       if (changedFile) {
-        onChange(changedFile);
-        setPreviewUrl(URL.createObjectURL(changedFile));
+        changeFile(changedFile);
+        // onChange(changedFile);
+        // setPreviewUrl(URL.createObjectURL(changedFile));
       }
     }
   };
@@ -63,8 +65,7 @@ const ImageUpload = ({ onChange }: Props) => {
     if (dataTransfer) {
       const [changedFile] = dataTransfer.files;
       if (changedFile) {
-        onChange(changedFile);
-        setPreviewUrl(URL.createObjectURL(changedFile));
+        changeFile(changedFile);
       }
     }
     setDragging(false);
