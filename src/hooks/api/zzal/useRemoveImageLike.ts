@@ -1,6 +1,5 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteImageLike } from "@/apis/zzal";
-import { findZzal } from "@/utils/findZzal";
 import { GetZzalResponse } from "@/types/zzal.dto";
 import { ZzalType } from "@/types/queryKey";
 
@@ -13,7 +12,15 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: ZzalType) => {
       await queryClient.cancelQueries({ queryKey: [zzalKey] });
 
       const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]);
-      const updatedData = oldData && findZzal(imageIndex, oldData, false);
+
+      if (!oldData) return;
+
+      const updatedData = {
+        pageParams: [...oldData.pageParams],
+        pages: [...oldData.pages.flatMap((page) => page)],
+      };
+
+      updatedData.pages[imageIndex].imageLikeYn = false;
 
       queryClient.setQueryData([zzalKey], updatedData);
 
