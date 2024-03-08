@@ -19,9 +19,9 @@ export const useAddImageLike = (imageIndex: number, zzalKey: ZzalType) => {
 
       return { oldData };
     },
-    onError: (error, _, rollback) => {
+    onError: (error, _zzalId, context) => {
       console.error(error);
-      queryClient.setQueryData([zzalKey], rollback?.oldData);
+      queryClient.setQueryData([zzalKey], context?.oldData);
     },
   });
 
