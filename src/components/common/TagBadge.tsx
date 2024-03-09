@@ -1,4 +1,5 @@
 import { useAtom } from "jotai";
+import { XCircle } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
@@ -27,15 +28,29 @@ const TagBadge = ({ content, isClickable = false, className }: Props) => {
     }
   };
 
-  const badgeClasses = cn("rounded-2xl px-4 py-2 text-white font-bold bg-tag", {
-    "cursor-pointer": isClickable,
-    "bg-gray-400": isClickable && !isSelectedTag,
-    "bg-tag": isSelectedTag,
-  });
+  const handleMouseDownDeleteTag = (tag: string) => () => {
+    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
+  };
+
+  const badgeClasses = cn(
+    "flex flex-column w-fit rounded-3xl px-4 py-2 text-white font-bold bg-black",
+    {
+      "cursor-pointer": isClickable,
+      "bg-gray-400": isClickable && !isSelectedTag,
+      "bg-black": isSelectedTag,
+    },
+  );
 
   return (
     <span onClick={handleClickTag} className={cn(badgeClasses, className)}>
       {content}
+      {isClickable && (
+        <XCircle
+          onMouseDown={handleMouseDownDeleteTag(content)}
+          aria-label="태그 삭제"
+          className="ml-1 w-5 cursor-pointer"
+        />
+      )}
     </span>
   );
 };
