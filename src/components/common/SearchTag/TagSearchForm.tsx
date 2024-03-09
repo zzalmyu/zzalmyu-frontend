@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState, useRef, Suspense } from "react";
+import { FormEvent, ChangeEvent, useState, Suspense } from "react";
 import { useAtom } from "jotai";
 import { XCircle, Search, RotateCw } from "lucide-react";
 import { debounce } from "@/utils/debounce";
@@ -14,7 +14,7 @@ interface Props {
 const TagSearchForm = ({ className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [tagKeyword, setTagKeyword] = useState("");
-  const inputRef = useRef<HTMLInputElement>(null);
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
 
   const debouncedRefetch = debounce((keyword: string) => {
     setTagKeyword(keyword);
@@ -41,12 +41,16 @@ const TagSearchForm = ({ className }: Props) => {
     setSelectedTags([]);
   };
 
-  const handleChangeInputText = (event: ChangeEvent<HTMLInputElement>) => {
-    debouncedRefetch(event.target.value);
+  const handleFocusTagInput = () => {
+    setShowAutoComplete(true);
   };
 
-  const handleCloseAutoComplete = () => {
-    if (inputRef && inputRef.current) inputRef.current.value = "";
+  const handleBlurTagInput = () => {
+    setShowAutoComplete(false);
+  };
+
+  const handleChangeInputText = (event: ChangeEvent<HTMLInputElement>) => {
+    debouncedRefetch(event.target.value);
   };
 
   return (
@@ -64,8 +68,10 @@ const TagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
-            ref={inputRef}
+            onFocus={handleFocusTagInput}
+            onBlur={handleBlurTagInput}
             onChange={handleChangeInputText}
+            autoComplete="off"
             className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
           <button type="submit" className="z-20 rounded-full bg-primary p-6pxr text-white sm:p-2">
@@ -74,9 +80,11 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-25pxr flex w-full justify-center sm:top-35pxr">
-        <Suspense fallback={null}>
-          <TagAutoComplete keyword={tagKeyword} onCloseAutoComplete={handleCloseAutoComplete} />
-        </Suspense>
+        {showAutoComplete && (
+          <Suspense fallback={null}>
+            <TagAutoComplete keyword={tagKeyword} />
+          </Suspense>
+        )}
       </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (
