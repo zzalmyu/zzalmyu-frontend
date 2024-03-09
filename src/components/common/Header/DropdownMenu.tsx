@@ -64,7 +64,7 @@ const DropdownMenu = ({ user }: Props) => {
             ))}
             <Link
               to="/delete-account"
-              className="mt-2pxr block text-center text-[10px] text-gray-700 underline"
+              className="mt-2pxr block text-center text-[9px] text-gray-700 underline"
               onClick={toggleDetails}
             >
               계정 탈퇴하기
