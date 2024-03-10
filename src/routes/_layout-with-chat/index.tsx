@@ -16,6 +16,7 @@ const Home = () => {
       navigate({ to: "/" });
     }
   });
+    
   return <div></div>;
 };
 
