@@ -23,8 +23,8 @@ const AccountDeletionNotice = () => {
   return (
     <div>
       {deletionNotices.map(({ icon, text }, index) => (
-        <div>
-          <div key={index} className="flex flex-row gap-4">
+        <div key={index}>
+          <div className="flex flex-row gap-4">
             {icon}
             <span className="font-bold">{text}</span>
           </div>
