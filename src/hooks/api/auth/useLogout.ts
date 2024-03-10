@@ -16,7 +16,7 @@ const useLogout = () => {
       navigate({ to: "/" });
     },
     onError: (error) => {
-      console.log(error);
+      console.error(error);
       toast.error("로그아웃에 실패하였습니다 다시 시도해주세요.");
     },
   });
