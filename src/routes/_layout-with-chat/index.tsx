@@ -6,7 +6,10 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 const route = getRouteApi("/_layout-with-chat/");
 
 const Home = () => {
-  const { accessToken, refreshToken } = route.useSearch();
+  const { accessToken, refreshToken } = route.useSearch<{
+    accessToken: string;
+    refreshToken: string;
+  }>();
   const navigate = useNavigate();
 
   useEffect(() => {
