@@ -14,6 +14,7 @@ interface Props {
 }
 
 const DropdownMenu = ({ user }: Props) => {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
   const loginModalOverlay = useOverlay();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
@@ -52,8 +53,6 @@ const DropdownMenu = ({ user }: Props) => {
       onClick: refreshToken ? handleClickLogout : handleClickLogin,
     },
   ];
-
-  const detailsRef = useRef<HTMLDetailsElement>(null);
 
   const toggleDetails = () => {
     if (detailsRef.current) {
