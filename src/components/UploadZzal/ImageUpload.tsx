@@ -4,17 +4,15 @@ import { cn } from "@/utils/tailwind";
 import ZzalCard from "@/components/common/ZzalCard";
 
 interface Props {
-  onChange: (file: File | null) => void;
   changeFile: (file: File | null) => void;
   file: File | null;
 }
 
-const ImageUpload = ({ onChange, changeFile, file }: Props) => {
+const ImageUpload = ({ changeFile, file }: Props) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickDeleteButton = () => {
-    onChange(null);
     changeFile(null);
   };
 

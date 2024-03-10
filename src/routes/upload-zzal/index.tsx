@@ -20,10 +20,6 @@ const UploadZzal = () => {
     setFile(file);
   };
 
-  const handleChangeUpload = (changedFile: File | null) => {
-    setFile(changedFile);
-  };
-
   const handleClickUploadButton = () => {
     if (!file) {
       toast.error("사진을 등록해주세요!");
@@ -77,7 +73,7 @@ const UploadZzal = () => {
       <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
       <UploadGuide />
       <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start">
-        <ImageUpload onChange={handleChangeUpload} changeFile={changeFile} file={file} />
+        <ImageUpload changeFile={changeFile} file={file} />
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
             <div className="float-right">
