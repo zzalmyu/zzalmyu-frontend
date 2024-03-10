@@ -50,17 +50,23 @@ const TagSearchForm = ({ className }: Props) => {
 
   const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
     setTagKeyword(event.target.value);
+
+    if (event.target.value.length > 0) setCursorIndex(-2);
+    else setCursorIndex(0);
   }, 200);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         setShowAutoComplete(false);
+        setCursorIndex(-1);
+        return;
       }
 
       if (event.key === "ArrowDown") {
         event.preventDefault();
 
+        setShowAutoComplete(true);
         setCursorIndex((previousIndex) =>
           Math.min(previousIndex + 1, autoCompletedTags.length + recommendedTags.length - 1),
         );
@@ -70,6 +76,7 @@ const TagSearchForm = ({ className }: Props) => {
       if (event.key === "ArrowUp") {
         event.preventDefault();
 
+        setShowAutoComplete(true);
         setCursorIndex((previousIndex) => Math.max(previousIndex - 1, 0));
         return;
       }
