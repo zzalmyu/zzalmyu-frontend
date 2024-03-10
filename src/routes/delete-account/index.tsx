@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { cn } from "@/utils/tailwind";
 import { useFunnel } from "@/hooks/common/useFunnel";
-import DeletionConfirm from "@/components/DeleteAccount/DeletionConfirm";
-import DeletionCompleted from "@/components/DeleteAccount/DeletionCompleted";
+import DeleteConfirm from "@/components/DeleteAccount/DeleteConfirm";
+import DeleteCompleted from "@/components/DeleteAccount/DeleteCompleted";
 
 const DeleteAccount = () => {
-  const { Funnel, Step, setStep, currentStep } = useFunnel("DeletionConfirm");
+  const { Funnel, Step, setStep, currentStep } = useFunnel("DeleteConfirm");
 
   const handleNextStep = (step: string) => () => {
     setStep(step);
@@ -27,16 +27,14 @@ const DeleteAccount = () => {
             </li>
           </ul>
         </div>
-        <div className="flex flex-col items-center">
-          <Funnel>
-            <Step name="DeletionConfirm">
-              <DeletionConfirm onNext={handleNextStep("DeletionCompleted")} />
-            </Step>
-            <Step name="DeletionCompleted">
-              <DeletionCompleted />
-            </Step>
-          </Funnel>
-        </div>
+        <Funnel>
+          <Step name="DeleteConfirm">
+            <DeleteConfirm onNext={handleNextStep("DeleteCompleted")} />
+          </Step>
+          <Step name="DeleteCompleted">
+            <DeleteCompleted />
+          </Step>
+        </Funnel>
       </div>
     </div>
   );

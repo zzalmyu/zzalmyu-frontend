@@ -6,7 +6,7 @@ interface Props {
   onNext: () => void;
 }
 
-const DeletionConfirm = ({ onNext }: Props) => {
+const DeleteConfirm = ({ onNext }: Props) => {
   const handleDeleteAccount = () => {
     toast.success("계정이 삭제되었습니다.");
     onNext();
@@ -14,7 +14,7 @@ const DeletionConfirm = ({ onNext }: Props) => {
   };
 
   return (
-    <div>
+    <div className="flex w-full flex-col items-center">
       <div className={cn("pt-8", "max-w-570pxr pb-5 sm:h-385pxr")}>
         <div className="mb-25pxr">
           <span className="text-xl font-bold">계정을 삭제하시겠어요?</span>
@@ -33,4 +33,4 @@ const DeletionConfirm = ({ onNext }: Props) => {
   );
 };
 
-export default DeletionConfirm;
+export default DeleteConfirm;

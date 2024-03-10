@@ -4,7 +4,7 @@ import AccountDeletionNotice from "./AccountDeletionNotice";
 
 const DeleteCompleted = () => {
   return (
-    <div>
+    <div className="flex w-full flex-col items-center">
       <div className={"max-w-570pxr pb-5 sm:h-385pxr"}>
         <div className="mb-25pxr flex flex-col justify-center gap-3">
           <CheckCircle2
@@ -20,7 +20,7 @@ const DeleteCompleted = () => {
       </div>
       <div className={"my-10pxr flex w-full max-w-950pxr flex-row-reverse sm:my-0"}>
         <Link to="/">
-          <button className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40"}>
+          <button className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:my-10  sm:w-40"}>
             닫기
           </button>
         </Link>
