@@ -72,7 +72,7 @@ const ImageUpload = ({ onChange }: Props) => {
       className={cn(
         !previewUrl && "cursor-pointer",
         dragging ? "border-primary text-primary" : "border-text-secondary text-text-secondary",
-        "relative flex h-400pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-[32px] border-4 border-dashed text-2xl font-bold  transition-colors hover:text-primary",
+        "relative flex h-320pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-8pxr border-4 border-dashed text-2xl font-bold transition-colors  hover:text-primary sm:h-400pxr",
       )}
       onClick={handleChooseFile}
       onDrop={handleFileDrop}

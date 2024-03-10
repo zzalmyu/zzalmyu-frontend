@@ -1,6 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
-
 import { getLocalStorage } from "@/utils/localStorage";
+import { ACCESS_TOKEN } from "@/constants/auth";
 
 const HTTP_METHODS = {
   GET: "get",
@@ -17,7 +17,7 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
-  const token = getLocalStorage("token");
+  const token = getLocalStorage(ACCESS_TOKEN);
 
   if (token && config.headers) {
     config.headers.Authorization = `Bearer ${token}`;
