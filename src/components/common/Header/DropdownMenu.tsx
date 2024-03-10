@@ -46,7 +46,6 @@ const DropdownMenu = ({ user }: Props) => {
       Icon: Home,
       name: "홈",
     },
-    { path: "/", Icon: LogIn, name: "로그인", onClick: handleClickLogin },
     {
       path: "/",
       Icon: refreshToken ? LogOut : LogIn,
