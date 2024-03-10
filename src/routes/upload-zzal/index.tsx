@@ -25,6 +25,6 @@ const UploadZzal = () => {
   );
 };
 
-export const Route = createFileRoute("/_layout-without-chat/upload-zzal/")({
+export const Route = createFileRoute("/upload-zzal/")({
   component: UploadZzal,
 });
