@@ -9,7 +9,7 @@ const useLogout = () => {
   const navigate = useNavigate();
 
   const { mutate, ...rest } = useMutation({
-    mutationFn: () => patchLogOut(),
+    mutationFn: patchLogOut,
     onSuccess: () => {
       removeLocalStorage(ACCESS_TOKEN);
       removeLocalStorage(REFRESH_TOKEN);
