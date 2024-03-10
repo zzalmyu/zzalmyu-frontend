@@ -51,14 +51,14 @@ const copyImageToClipboard = (imageBlob: Blob) => {
     canvas.width = image.naturalWidth;
     canvas.height = image.naturalHeight;
 
-    const ctx = canvas.getContext("2d");
+    const canvasContext = canvas.getContext("2d");
 
-    if (!ctx) {
+    if (!canvasContext) {
       console.error("Canvas context를 생성할 수 없습니다.");
       return;
     }
 
-    ctx.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
+    canvasContext.drawImage(image, 0, 0, image.naturalWidth, image.naturalHeight);
     canvas.toBlob((blob) => {
       if (blob) {
         copyToClipboard(blob);
