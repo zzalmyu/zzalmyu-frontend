@@ -15,10 +15,6 @@ const DeleteAccount = () => {
     setStep(2);
   };
 
-  const buttonWrappingClasses = "flex w-full max-w-950pxr flex-row-reverse my-10pxr sm:my-0";
-  const buttonClasses = "btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40";
-  const noticeContainerClasses = "max-w-570pxr pb-5 sm:h-385pxr";
-
   return (
     <div className="flex h-full flex-col items-center p-20pxr sm:p-42pxr">
       <div className="flex w-4/6 flex-col font-bold">
@@ -36,14 +32,17 @@ const DeleteAccount = () => {
         <div className="flex flex-col items-center">
           {step === 1 && (
             <Fragment>
-              <div className={cn("pt-8", noticeContainerClasses)}>
+              <div className={cn("pt-8", "max-w-570pxr pb-5 sm:h-385pxr")}>
                 <div className="mb-25pxr">
                   <span className="text-xl font-bold">계정을 삭제하시겠어요?</span>
                 </div>
                 <AccountDeletionNotice />
               </div>
-              <div className={buttonWrappingClasses}>
-                <button onClick={handleDeleteAccount} className={buttonClasses}>
+              <div className={"my-10pxr flex w-full max-w-950pxr flex-row-reverse sm:my-0"}>
+                <button
+                  onClick={handleDeleteAccount}
+                  className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40"}
+                >
                   삭제하기
                 </button>
               </div>
@@ -51,7 +50,7 @@ const DeleteAccount = () => {
           )}
           {step === 2 && (
             <Fragment>
-              <div className={noticeContainerClasses}>
+              <div className={"max-w-570pxr pb-5 sm:h-385pxr"}>
                 <div className="mb-25pxr flex flex-col justify-center gap-3">
                   <CheckCircle2
                     size={50}
@@ -64,9 +63,13 @@ const DeleteAccount = () => {
                 </div>
                 <AccountDeletionNotice />
               </div>
-              <div className={buttonWrappingClasses}>
+              <div className={"my-10pxr flex w-full max-w-950pxr flex-row-reverse sm:my-0"}>
                 <Link to="/">
-                  <button className={buttonClasses}>닫기</button>
+                  <button
+                    className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40"}
+                  >
+                    닫기
+                  </button>
                 </Link>
               </div>
             </Fragment>
