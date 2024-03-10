@@ -1,5 +1,4 @@
 import { createLazyFileRoute } from "@tanstack/react-router";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import TagBadge from "@/components/common/TagBadge";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 
@@ -14,7 +13,6 @@ const MyUploadedZzals = () => {
           <TagBadge key={tagId} content={tagName} isClickable className="mr-5pxr" />
         ))}
       </div>
-      <TagSearchForm />
     </div>
   );
 };

@@ -49,7 +49,10 @@ const copyImageToClipboard = (imageBlob: Blob) => {
 
 export const copyZzal = async (imageUrl: string) => {
   try {
-    const { data: imageBlob } = await axios.get<Blob>(imageUrl, { responseType: "blob" });
+    const { data: imageBlob } = await axios.get<Blob>(imageUrl, {
+      headers: { "Cache-Control": "no-cache" },
+      responseType: "blob",
+    });
 
     copyImageToClipboard(imageBlob);
   } catch (error) {
