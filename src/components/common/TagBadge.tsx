@@ -33,7 +33,7 @@ const TagBadge = ({ content, isClickable = false, className }: Props) => {
   };
 
   const badgeClasses = cn(
-    "flex flex-column w-fit rounded-3xl px-4 py-2 text-white font-bold bg-black",
+    "flex flex-column w-fit rounded-3xl p-2 text-white font-bold bg-black text-[14pxr]",
     {
       "cursor-pointer": isClickable,
       "bg-gray-400": isClickable && !isSelectedTag,
