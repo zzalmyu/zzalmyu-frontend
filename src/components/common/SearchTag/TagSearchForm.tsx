@@ -54,6 +54,10 @@ const TagSearchForm = ({ className }: Props) => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setShowAutoComplete(false);
+      }
+
       if (event.key === "ArrowDown") {
         event.preventDefault();
 
