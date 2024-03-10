@@ -70,7 +70,7 @@ const UploadZzal = () => {
 
   return (
     <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
-      <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
+      <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>{" "}
       <UploadGuide />
       <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start">
         <ImageUpload changeFile={changeFile} file={file} />
@@ -88,7 +88,7 @@ const UploadZzal = () => {
             className="h-40pxr w-100pxr self-center rounded-[100px] bg-primary font-bold text-white outline outline-2 outline-offset-2 outline-transparent hover:outline-yellow-500 sm:self-end"
             onClick={handleClickUploadButton}
           >
-            업로드
+            업로드하기
           </button>
         </div>
       </div>

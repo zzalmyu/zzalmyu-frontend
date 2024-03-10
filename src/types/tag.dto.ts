@@ -7,3 +7,5 @@ export type GetPopularTagsResponse = Tag[];
 export type GetTopTagsFromUploadedResponse = Tag[];
 
 export type GetTopTagsFromLikedResponse = Tag[];
+
+export type PostTagResponse = Tag;

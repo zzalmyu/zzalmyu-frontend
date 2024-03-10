@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useAtom } from "jotai";
+import { Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
@@ -65,22 +66,26 @@ const TagAutoComplete = ({ keyword, onCloseAutoComplete }: Props) => {
     <Fragment>
       {isOpen && autoCompletedTags.length > 0 && (
         <ul
-          className="box-border w-[95%] rounded-box border-2 bg-white p-2 shadow-xl outline-none"
+          className="relative z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr"
           onBlur={() => setCursorIndex(-1)}
           tabIndex={0}
           ref={ulRef}
         >
+          <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
           {autoCompletedTags.map(({ tagId, tagName }, index) => (
             <li
               key={tagId}
               className={cn(
-                "px-1.5 py-2",
-                index === cursorIndex && "box-border rounded-md bg-gray-200 px-1.5 py-2 font-bold",
+                "px-4 py-2",
+                index === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
               )}
               onMouseOver={handleMouseOverTag(index)}
               onClick={handleClickTagName(index)}
             >
-              <div>{tagName}</div>
+              <div className="flex items-center gap-2">
+                <Search size={16} color="#807F7F" />
+                {tagName}
+              </div>
             </li>
           ))}
         </ul>
