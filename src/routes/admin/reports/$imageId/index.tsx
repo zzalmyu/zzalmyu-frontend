@@ -7,18 +7,18 @@ import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
 import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
-import useDeleteReportedImage from "@/hooks/api/report/useDeleteReportedImage";
+import useDeleteReportedZzal from "@/hooks/api/report/useDeleteReportedZzal";
 import Pending from "@/routes/admin/reports/AdminReports.pendingComponent";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
-  const { deleteReportedImage } = useDeleteReportedImage();
+  const { deleteReportedZzal } = useDeleteReportedZzal();
   const deleteConfirmOverlay = useOverlay();
   const { reportDetails } = useGetReportsDetails(imageId);
   const { imageUrl, imageTitle, reports } = reportDetails;
 
   const handleClickDeleteConfirm = (imageId: string) => () => {
-    deleteReportedImage(imageId);
+    deleteReportedZzal(imageId);
   };
 
   const handleClickDeleteButton = () => {
@@ -37,7 +37,7 @@ const AdminImageDetail = () => {
         <div className="breadcrumbs pb-20pxr text-lg font-bold">
           <ul>
             <li>
-              <Link to="/admin/reports/">
+              <Link to="/admin/reports">
                 <h1>신고 내역</h1>
               </Link>
             </li>

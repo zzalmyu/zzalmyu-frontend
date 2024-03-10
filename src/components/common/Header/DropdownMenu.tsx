@@ -1,8 +1,11 @@
 import { useRef } from "react";
-import { Home, Heart, FolderUp, LogIn, LogOut } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Home, Heart, FolderUp, LogOut, LogIn } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
+import { getLocalStorage } from "@/utils/localStorage";
+import { REFRESH_TOKEN } from "@/constants/auth";
+import useLogout from "@/hooks/api/auth/useLogout";
 
 interface Props {
   user: {
@@ -11,10 +14,20 @@ interface Props {
 }
 
 const DropdownMenu = ({ user }: Props) => {
+  const detailsRef = useRef<HTMLDetailsElement>(null);
   const loginModalOverlay = useOverlay();
+  const refreshToken = getLocalStorage(REFRESH_TOKEN);
+  const navigate = useNavigate();
+  const { logout } = useLogout();
 
   const handleClickLogin = () => {
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
+  };
+
+  const handleClickLogout = () => {
+    logout(undefined, {
+      onSuccess: () => navigate({ to: "/" }),
+    });
   };
 
   const menuItems = [
@@ -36,12 +49,11 @@ const DropdownMenu = ({ user }: Props) => {
     { path: "/", Icon: LogIn, name: "로그인", onClick: handleClickLogin },
     {
       path: "/",
-      Icon: LogOut,
-      name: "로그아웃",
+      Icon: refreshToken ? LogOut : LogIn,
+      name: refreshToken ? "로그아웃" : "로그인",
+      onClick: refreshToken ? handleClickLogout : handleClickLogin,
     },
   ];
-
-  const detailsRef = useRef<HTMLDetailsElement>(null);
 
   const toggleDetails = () => {
     if (detailsRef.current) {

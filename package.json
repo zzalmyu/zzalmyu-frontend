@@ -18,6 +18,7 @@
     "*.{css,json,html}": "prettier --check"
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.18.1",
     "@tanstack/react-router": "^1.15.22",
     "@tanstack/router-vite-plugin": "^1.15.22",
@@ -28,15 +29,21 @@
     "lucide-react": "^0.330.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-masonry-css": "^1.0.16",
     "react-error-boundary": "^4.0.12",
     "react-toastify": "^10.0.4",
+    "sockjs-client": "^1.6.1",
+    "swiper": "^11.0.7",
     "tailwind-merge": "^2.2.1"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.6.0",
     "@commitlint/config-conventional": "^18.6.0",
+    "@tanstack/react-query-devtools": "^5.24.7",
+    "@tanstack/router-devtools": "^1.18.3",
     "@types/react": "^18.2.43",
     "@types/react-dom": "^18.2.17",
+    "@types/sockjs-client": "^1.5.4",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "@vitejs/plugin-react": "^4.2.1",
