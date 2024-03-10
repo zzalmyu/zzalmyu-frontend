@@ -24,7 +24,7 @@ export const getTopTagsFromLiked = () =>
     url: "/v1/tag/me/like",
   });
 
-export const postTagCreate = (tagName: string) =>
+export const postTag = (tagName: string) =>
   http.post<PostTagResponse>({
     url: "/v1/tag",
     data: {
