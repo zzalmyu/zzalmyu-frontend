@@ -1,4 +1,4 @@
-import { FormEvent, ChangeEvent, useState } from "react";
+import { FormEvent, ChangeEvent, useState, useEffect } from "react";
 import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
@@ -19,7 +19,7 @@ const TagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [cursorIndex, setCursorIndex] = useState(0);
+  const [cursorIndex, setCursorIndex] = useState(-2);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -31,6 +31,7 @@ const TagSearchForm = ({ className }: Props) => {
       setSelectedTags((previousState) => [...previousState, selectedTag]);
     }
 
+    setCursorIndex(0);
     setTagKeyword("");
   };
 
@@ -50,6 +51,30 @@ const TagSearchForm = ({ className }: Props) => {
   const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
     setTagKeyword(event.target.value);
   }, 200);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowDown") {
+        event.preventDefault();
+
+        setCursorIndex((previousIndex) =>
+          Math.min(previousIndex + 1, autoCompletedTags.length + recommendedTags.length - 1),
+        );
+        return;
+      }
+
+      if (event.key === "ArrowUp") {
+        event.preventDefault();
+
+        setCursorIndex((previousIndex) => Math.max(previousIndex - 1, 0));
+        return;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [autoCompletedTags.length, recommendedTags.length]);
 
   return (
     <div
