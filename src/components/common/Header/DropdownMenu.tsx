@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Home, Heart, FolderUp, LogOut, LogIn } from "lucide-react";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
 import { getLocalStorage } from "@/utils/localStorage";
@@ -16,6 +16,7 @@ interface Props {
 const DropdownMenu = ({ user }: Props) => {
   const loginModalOverlay = useOverlay();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
+  const navigate = useNavigate();
   const { logout } = useLogout();
 
   const handleClickLogin = () => {
@@ -23,7 +24,9 @@ const DropdownMenu = ({ user }: Props) => {
   };
 
   const handleClickLogout = () => {
-    logout();
+    logout(undefined, {
+      onSuccess: () => navigate({ to: "/" }),
+    });
   };
 
   const menuItems = [
