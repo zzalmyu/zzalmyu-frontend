@@ -1,9 +1,10 @@
 import { useState, Fragment } from "react";
 import { toast } from "react-toastify";
 import { createFileRoute } from "@tanstack/react-router";
-import { Folder, Heart, MessageCircle, Wand, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { cn } from "@/utils/tailwind";
+import AccountDeletionNotice from "@/components/DeleteAccount/AccountDeletionNotice";
 
 const DeleteAccount = () => {
   const [step, setStep] = useState(1);
@@ -17,43 +18,6 @@ const DeleteAccount = () => {
   const buttonWrappingClasses = "flex w-full max-w-950pxr flex-row-reverse my-10pxr sm:my-0";
   const buttonClasses = "btn m-0 w-auto rounded-full hover:opacity-75 sm:m-10  sm:w-40";
   const noticeContainerClasses = "max-w-570pxr pb-5 sm:h-385pxr";
-
-  const AccountDeletionNotice = () => {
-    const deletionNotices = [
-      {
-        icon: <Folder aria-label="폴더 아이콘" />,
-        text: "짤을 업로드하지 못하고, 업로드할 짤들을 조회하지 못하게 됩니다",
-      },
-      {
-        icon: <Heart aria-label="좋아요 아이콘" />,
-        text: "짤에 좋아요를 추가하지 못하고, 좋아요한 짤들을 조회하지 못하게 됩니다",
-      },
-      {
-        icon: <MessageCircle aria-label="메세지 아이콘" />,
-        text: "다른 사용자들에게 짤 메세지를 전송하지 못하게 됩니다",
-      },
-      {
-        icon: <Wand aria-label="지팡이 아이콘" />,
-        text: "회원님만을 위한 추천 짤 목록을 받지 못하게 됩니다",
-      },
-    ];
-
-    return (
-      <div>
-        {deletionNotices.map(({ icon, text }, index) => (
-          <div>
-            <div key={index} className="flex flex-row gap-4">
-              {icon}
-              <span className="font-bold">{text}</span>
-            </div>
-            {index !== deletionNotices.length - 1 && (
-              <div className="divider divider-neutral"></div>
-            )}
-          </div>
-        ))}
-      </div>
-    );
-  };
 
   return (
     <div className="flex h-full flex-col items-center p-20pxr sm:p-42pxr">
