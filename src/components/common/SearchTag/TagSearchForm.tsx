@@ -1,40 +1,37 @@
-import { FormEvent, ChangeEvent, useState, Suspense } from "react";
+import { FormEvent, ChangeEvent, useState } from "react";
 import { useAtom } from "jotai";
-import { XCircle, Search, RotateCw } from "lucide-react";
+import { Search, RotateCw } from "lucide-react";
 import { debounce } from "@/utils/debounce";
 import { cn } from "@/utils/tailwind";
-import { $selectedTags } from "@/store/tag";
-import { MAX_SEARCH_TAG } from "@/constants/tag";
+import { useGetTags } from "@/hooks/api/tag/useGetTags";
+import { $recommendedTags, $selectedTags } from "@/store/tag";
+import TagBadge from "@/components/common/TagBadge";
 import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
+import { MAX_SEARCH_TAG } from "@/constants/tag";
 
 interface Props {
   className?: string;
 }
 
 const TagSearchForm = ({ className }: Props) => {
+  const [recommendedTags] = useAtom($recommendedTags);
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [tagKeyword, setTagKeyword] = useState("");
+  const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-
-  const debouncedRefetch = debounce((keyword: string) => {
-    setTagKeyword(keyword);
-  }, 200);
+  const [cursorIndex, setCursorIndex] = useState(0);
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const tag = formData.get("tag") as string;
+    const allTags = [...autoCompletedTags, ...recommendedTags];
+    const selectedTag = allTags[cursorIndex].tagName;
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tag)) {
-      setSelectedTags((previousState) => [...previousState, tag]);
+    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(selectedTag)) {
+      setSelectedTags((previousState) => [...previousState, selectedTag]);
     }
 
     setTagKeyword("");
-  };
-
-  const handleClickDeleteTag = (tag: string) => () => {
-    setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
   };
 
   const handleClickResetTagButton = () => {
@@ -47,11 +44,12 @@ const TagSearchForm = ({ className }: Props) => {
 
   const handleBlurTagInput = () => {
     setShowAutoComplete(false);
+    setCursorIndex(0);
   };
 
-  const handleChangeInputText = (event: ChangeEvent<HTMLInputElement>) => {
-    debouncedRefetch(event.target.value);
-  };
+  const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
+    setTagKeyword(event.target.value);
+  }, 200);
 
   return (
     <div
@@ -70,7 +68,7 @@ const TagSearchForm = ({ className }: Props) => {
             name="tag"
             onFocus={handleFocusTagInput}
             onBlur={handleBlurTagInput}
-            onChange={handleChangeInputText}
+            onChange={handleChangeTagInput}
             autoComplete="off"
             className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
           />
@@ -81,31 +79,23 @@ const TagSearchForm = ({ className }: Props) => {
       </form>
       <div className="absolute top-25pxr flex w-full justify-center sm:top-35pxr">
         {showAutoComplete && (
-          <Suspense fallback={null}>
-            <TagAutoComplete keyword={tagKeyword} />
-          </Suspense>
+          <TagAutoComplete
+            autoCompletedTags={autoCompletedTags}
+            cursorIndex={cursorIndex}
+            setCursorIndex={setCursorIndex}
+          />
         )}
       </div>
       <div className="flex items-center">
         {selectedTags.length > 0 && (
-          <button onClick={handleClickResetTagButton} className=" mr-4 mt-4 pl-4" type="button">
+          <button onClick={handleClickResetTagButton} className="mr-4 mt-4 pl-4" type="button">
             <RotateCw aria-label="태그 초기화" />
           </button>
         )}
 
         <ul className="flex-column mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
           {selectedTags.map((selectedTag, index) => (
-            <li
-              key={`${index}-${selectedTag}`}
-              className="mr-2 flex items-center rounded-3xl bg-tag px-2 py-1 text-white"
-            >
-              {selectedTag}
-              <XCircle
-                onClick={handleClickDeleteTag(selectedTag)}
-                aria-label="태그 삭제"
-                className="ml-1 w-5 cursor-pointer"
-              />
-            </li>
+            <TagBadge content={selectedTag} isClickable key={`${index}-${selectedTag}`} />
           ))}
         </ul>
       </div>
