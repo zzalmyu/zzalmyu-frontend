@@ -5,18 +5,17 @@ import ZzalCard from "@/components/common/ZzalCard";
 
 interface Props {
   onChange: (file: File | null) => void;
-  resetPreviewUrl: () => void;
-  changeFile: (file: File) => void;
-  previewUrl: string | null;
+  changeFile: (file: File | null) => void;
+  file: File | null;
 }
 
-const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Props) => {
+const ImageUpload = ({ onChange, changeFile, file }: Props) => {
   const [dragging, setDragging] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleClickDeleteButton = () => {
     onChange(null);
-    resetPreviewUrl();
+    changeFile(null);
   };
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -71,7 +70,7 @@ const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Prop
   return (
     <div
       className={cn(
-        !previewUrl && "cursor-pointer",
+        !file && "cursor-pointer",
         dragging ? "border-primary text-primary" : "border-text-secondary text-text-secondary",
         "relative flex h-400pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-[32px] border-4 border-dashed text-2xl font-bold  transition-colors hover:text-primary",
       )}
@@ -81,7 +80,7 @@ const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Prop
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
     >
-      {previewUrl && (
+      {file && (
         <button
           className="absolute right-7pxr top-7pxr z-10 h-30pxr w-30pxr rounded-full bg-neutral pb-1pxr pl-1pxr text-base text-text-primary outline outline-transparent transition-[outline] hover:outline-delete"
           onClick={handleClickDeleteButton}
@@ -90,7 +89,7 @@ const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Prop
           ✕
         </button>
       )}
-      {!previewUrl && (
+      {!file && (
         <Fragment>
           <Upload aria-label="업로드하기" size={72} />
           <div className={`hidden text-center sm:block`}>
@@ -106,7 +105,7 @@ const ImageUpload = ({ onChange, resetPreviewUrl, changeFile, previewUrl }: Prop
           />
         </Fragment>
       )}
-      {previewUrl && <ZzalCard src={previewUrl} alt="업로드 사진" width={320} />}
+      <ZzalCard src={file ? URL.createObjectURL(file) : ""} alt="업로드 사진" width={320} />
     </div>
   );
 };

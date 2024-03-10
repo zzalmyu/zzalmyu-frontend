@@ -13,17 +13,11 @@ import { $selectedTags } from "@/store/tag";
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const { uploadZzal } = usePostUploadZzal();
-  const [file, setFile] = useState<File | null>();
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+  const [file, setFile] = useState<File | null>(null);
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
 
-  const changeFile = (file: File) => {
+  const changeFile = (file: File | null) => {
     setFile(file);
-    setPreviewUrl(URL.createObjectURL(file));
-  };
-
-  const handleResetPreviewUrl = () => {
-    setPreviewUrl(null);
   };
 
   const handleChangeUpload = (changedFile: File | null) => {
@@ -41,10 +35,10 @@ const UploadZzal = () => {
       return;
     }
 
-    handleUploadZzal();
+    handleUploadZzal(file);
   };
 
-  const handleUploadZzal = () => {
+  const handleUploadZzal = (file: File) => {
     if (!file) {
       return;
     }
@@ -68,8 +62,7 @@ const UploadZzal = () => {
               </Link>
             </div>,
           ),
-            setFile(null),
-            setPreviewUrl(null),
+            changeFile(null),
             setSelectedTags([]);
         },
         onError: () => {
@@ -84,12 +77,7 @@ const UploadZzal = () => {
       <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
       <UploadGuide />
       <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start">
-        <ImageUpload
-          onChange={handleChangeUpload}
-          resetPreviewUrl={handleResetPreviewUrl}
-          changeFile={changeFile}
-          previewUrl={previewUrl}
-        />
+        <ImageUpload onChange={handleChangeUpload} changeFile={changeFile} file={file} />
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
             <div className="float-right">
