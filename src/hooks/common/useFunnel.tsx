@@ -1,22 +1,24 @@
 import { ReactElement, ReactNode, useState, Fragment } from "react";
 
-export interface StepProps {
-  name: string;
+export interface StepProps<StepNames> {
+  name: StepNames;
   children: ReactNode;
 }
 
-export interface FunnelProps {
-  children: Array<ReactElement<StepProps>>;
+export interface FunnelProps<StepNames> {
+  children: Array<ReactElement<StepProps<StepNames>>>;
 }
 
-export const useFunnel = (defaultStep: string) => {
-  const [step, setStep] = useState(defaultStep);
+export const useFunnel = <Steps extends string[]>(steps: Steps, initialStep = steps[0]) => {
+  type StepsType = Steps[number];
 
-  const Step = (props: StepProps): ReactElement => {
+  const [step, setStep] = useState<StepsType>(initialStep);
+
+  const Step = (props: StepProps<StepsType>): ReactElement => {
     return <Fragment>{props.children}</Fragment>;
   };
 
-  const Funnel = ({ children }: FunnelProps) => {
+  const Funnel = ({ children }: FunnelProps<StepsType>) => {
     const targetStep = children.find((childStep) => childStep.props.name === step);
 
     return <Fragment>{targetStep}</Fragment>;
