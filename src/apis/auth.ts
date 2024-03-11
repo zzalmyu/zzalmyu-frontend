@@ -9,3 +9,5 @@ export const patchLogOut = () =>
     },
     url: "/v1/user/logout",
   });
+
+export const deleteUserWithdraw = () => http.delete<void>({ url: "/v1/user" });
