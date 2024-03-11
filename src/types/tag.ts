@@ -3,10 +3,3 @@ export interface Tag {
   tagName: string;
   count: number;
 }
-
-export interface TagDetail {
-  id: number;
-  name: string;
-  splitName: string;
-  createdAt: string;
-}

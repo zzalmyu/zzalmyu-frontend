@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { cn } from "@/utils/tailwind";
-import { copyZzal } from "@/utils/copyZzal";
+import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
