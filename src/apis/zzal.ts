@@ -1,4 +1,9 @@
-import { PostUploadZzalRequest, GetMyLikedZzalsResponse, GetZzalDetailsResponse, GetZzalResponse } from "@/types/zzal.dto";
+import {
+  PostUploadZzalRequest,
+  GetMyLikedZzalsResponse,
+  GetZzalDetailsResponse,
+  GetZzalResponse,
+} from "@/types/zzal.dto";
 import http from "./core";
 import { PAGINATION_LIMIT } from "@/constants/api";
 

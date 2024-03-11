@@ -78,32 +78,30 @@ const UploadZzal = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
-      <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>{" "}
+    <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr md:px-100pxr">
+      <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
       <UploadGuide />
-      <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start">
-        <ImageUpload changeFile={changeFile} file={file} />
-        <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
-          <div className="w-full">
-            <div className="float-right">
-              <span className="mb-4 text-sm font-bold">짤 제목</span>
-              <div className="flex h-full w-full flex-wrap items-center gap-2 rounded-full border border-gray-300 pl-4 pr-2 shadow-xl sm:gap-4 sm:px-4">
-                <input
-                  id="imageTitleInput"
-                  name="imageTitle"
-                  onChange={handleChangeImageTitle}
-                  className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
-                />
-              </div>
-              <RecommendTag
-                title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
-                recommendTags={popularTags}
-              />
-              <TagSearchForm />
-            </div>
+      <div className="mt-20pxr flex w-full flex-col justify-self-center sm:flex-row sm:items-start md:items-start">
+        <div className="mx-auto flex w-320pxr flex-col">
+          <ImageUpload changeFile={changeFile} file={file} />
+        </div>
+        <div className="mx-auto flex h-400pxr w-320pxr flex-1 flex-col pl-0 sm:w-10pxr sm:pl-10 md:w-10pxr md:pl-10">
+          <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">짤 제목</span>
+          <div className="mb-10 flex flex-wrap rounded-full border border-gray-300 pl-4 pr-2 shadow-xl">
+            <input
+              id="imageTitleInput"
+              name="imageTitle"
+              onChange={handleChangeImageTitle}
+              className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
+            />
           </div>
+          <RecommendTag
+            title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
+            recommendTags={popularTags}
+          />
+          <TagSearchForm />
           <button
-            className="h-40pxr w-100pxr self-center rounded-[100px] bg-primary font-bold text-white outline outline-2 outline-offset-2 outline-transparent hover:outline-yellow-500 sm:self-end"
+            className="mt-10 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white"
             onClick={handleClickUploadButton}
           >
             업로드하기
