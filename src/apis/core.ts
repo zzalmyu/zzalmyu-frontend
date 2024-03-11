@@ -1,6 +1,9 @@
+import { toast } from "react-toastify";
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
-import { getLocalStorage } from "@/utils/localStorage";
-import { ACCESS_TOKEN } from "@/constants/auth";
+import { getLocalStorage, removeLocalStorage } from "@/utils/localStorage";
+import { checkTokenToRefresh } from "@/utils/tokenManagement";
+import { patchLogOut } from "./auth";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 const HTTP_METHODS = {
   GET: "get",
@@ -16,19 +19,45 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-axiosInstance.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use(async (config) => {
+  const requestUrl = config.url;
   const token = getLocalStorage(ACCESS_TOKEN);
 
+  if (requestUrl === "/v1/user/reissue" || requestUrl === "/v1/user/logout") return config;
+
   if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
+    const header = await checkTokenToRefresh(token);
+    config.headers.Authorization = header;
   }
 
   return config;
 });
 
 axiosInstance.interceptors.response.use(
-  (response) => response.data,
-  (error) => Promise.reject(error),
+  (response) => {
+    const accessToken = response.headers.authorization;
+    const refreshToken = response.headers["authorization-refresh"];
+
+    if (accessToken && refreshToken) return { accessToken, refreshToken };
+
+    return response.data;
+  },
+  async (error) => {
+    const status = error.response.status;
+    const message = error.response.data.message;
+
+    if (status === 401 && message === "refresh token이 유효하지 않습니다.") {
+      toast.error("재로그인이 필요합니다", { autoClose: 1000 });
+
+      await patchLogOut();
+      removeLocalStorage(ACCESS_TOKEN);
+      removeLocalStorage(REFRESH_TOKEN);
+
+      window.location.href = "/";
+    }
+
+    Promise.reject(error);
+  },
 );
 
 const createApiMethod =
