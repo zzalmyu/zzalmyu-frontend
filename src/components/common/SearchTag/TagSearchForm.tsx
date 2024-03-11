@@ -24,11 +24,17 @@ const TagSearchForm = ({ className }: Props) => {
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const allTags = [...autoCompletedTags, ...recommendedTags];
-    const selectedTag = allTags[cursorIndex].tagName;
+    const formData = new FormData(event.currentTarget);
+    const userInputTag = formData.get("tag") as string;
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(selectedTag)) {
-      setSelectedTags((previousState) => [...previousState, selectedTag]);
+    const allTags = [...autoCompletedTags, ...recommendedTags];
+
+    if (
+      selectedTags.length < MAX_SEARCH_TAG &&
+      !selectedTags.includes(userInputTag) &&
+      allTags.find(({ tagName }) => tagName === userInputTag)
+    ) {
+      setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
     setCursorIndex(0);
