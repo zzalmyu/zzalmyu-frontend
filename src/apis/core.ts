@@ -3,7 +3,7 @@ import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
 import { getLocalStorage, removeLocalStorage } from "@/utils/localStorage";
 import { checkTokenToRefresh } from "@/utils/tokenManagement";
 import { patchLogOut } from "./auth";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
+import { ACCESS_TOKEN, REFRESH_TOKEN, REFRESH_TOKEN_EXPIRED_MESSAGE } from "@/constants/auth";
 
 const HTTP_METHODS = {
   GET: "get",
@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(
     const status = error.response.status;
     const message = error.response.data.message;
 
-    if (status === 401 && message === "refresh token이 유효하지 않습니다.") {
+    if (status === 401 && message === REFRESH_TOKEN_EXPIRED_MESSAGE) {
       toast.error("재로그인이 필요합니다", { autoClose: 1000 });
 
       await patchLogOut();
