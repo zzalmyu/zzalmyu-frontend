@@ -1,28 +1,42 @@
+import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
-import { postReissueToken } from "@/apis/auth";
 
-export const getTokenExpiryTime = (accessToken: string) => {
-  if (accessToken) {
-    const decodeToken: { exp: number } = jwtDecode(accessToken);
+export const getaccessTokenExpiryTime = (token: string) => {
+  if (token) {
+    const decodeToken: { exp: number } = jwtDecode(token);
 
     return decodeToken.exp * 1000;
   }
 };
 
-export const checkTokenToRefresh = async (accessToken: string) => {
-  const tokenExpiryTime = getTokenExpiryTime(accessToken);
+export const checkTokenToAccess = (accessToken: string) => {
+  const accessTokenExpiryTime = getaccessTokenExpiryTime(accessToken);
+  const currentTime = Date.now();
 
-  if (tokenExpiryTime) {
-    const currentTime = Date.now();
-    const timeUntilExpiry = tokenExpiryTime - currentTime;
+  if (accessTokenExpiryTime) {
+    const accessTimeUntilExpiry = accessTokenExpiryTime - currentTime;
+    const threshold = 30 * 1000;
+
+    return accessTimeUntilExpiry < threshold;
+  }
+
+  return false;
+};
+
+export const checkTokenToRefresh = (refreshToken: string) => {
+  const refreshTokenExpiryTime = getaccessTokenExpiryTime(refreshToken);
+  const currentTime = Date.now();
+
+  if (refreshTokenExpiryTime) {
+    const refreshTimeUntilExpiry = refreshTokenExpiryTime - currentTime;
     const threshold = 60 * 1000;
 
-    if (timeUntilExpiry < threshold) {
-      const data = await postReissueToken();
+    if (refreshTimeUntilExpiry < threshold) {
+      toast.error("재로그인이 필요합니다", { autoClose: 2000 });
 
-      return data;
+      return true;
     }
   }
 
-  return `Bearer ${accessToken}`;
+  return false;
 };
