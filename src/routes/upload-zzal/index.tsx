@@ -29,6 +29,7 @@ const UploadZzal = () => {
 
     if (!imageTitle) {
       toast.error("제목을 입력해주세요!");
+      return;
     }
 
     if (!selectedTags.length) {
