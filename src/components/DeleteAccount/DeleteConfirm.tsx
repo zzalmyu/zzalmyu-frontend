@@ -1,16 +1,27 @@
 import { toast } from "react-toastify";
 import { cn } from "@/utils/tailwind";
+import { removeLocalStorage } from "@/utils/localStorage";
 import AccountDeletionNotice from "./AccountDeletionNotice";
+import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 interface Props {
   onNext: () => void;
 }
 
 const DeleteConfirm = ({ onNext }: Props) => {
+  const { userWithdraw } = useDeleteUserWithdraw();
+
   const handleDeleteAccount = () => {
-    toast.success("계정이 삭제되었습니다.");
     onNext();
-    // TODO: [2024.03.03] 삭제 로직 추가하기
+
+    userWithdraw(undefined, {
+      onSuccess: () => {
+        toast.success("계정이 삭제되었습니다.");
+        removeLocalStorage(ACCESS_TOKEN);
+        removeLocalStorage(REFRESH_TOKEN);
+      },
+    });
   };
 
   return (
