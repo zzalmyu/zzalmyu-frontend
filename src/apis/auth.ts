@@ -1,7 +1,8 @@
-import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import axios from "axios";
+import { getLocalStorage } from "@/utils/localStorage";
 import { ReissueTokenResponse } from "@/types/auth.dto";
 import http from "./core";
-import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
+import { REFRESH_TOKEN } from "@/constants/auth";
 
 export const patchLogOut = () =>
   http.patch<void>({
@@ -11,16 +12,28 @@ export const patchLogOut = () =>
     url: "/v1/user/logout",
   });
 
-export const postReissueToken = async () => {
-  const { accessToken, refreshToken } = await http.post<ReissueTokenResponse>({
-    url: "/v1/user/reissue",
-    headers: {
-      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
+export const getTokenTest = () => http.get<string>({ url: "/v1/user/jwt-test" });
+
+export const postReissueToken = async (): Promise<{
+  accessTokenResponse: string;
+  refreshTokenResponse: string;
+}> => {
+  const refreshToken = getLocalStorage(REFRESH_TOKEN);
+
+  const { headers } = await axios.post<ReissueTokenResponse>(
+    `${import.meta.env.VITE_BASE_URL}/v1/user/reissue`,
+    {},
+    {
+      headers: {
+        "Authorization-refresh": `Bearer ${refreshToken}`,
+        "Content-Type": "application/json",
+      },
+      timeout: 10000,
     },
-  });
+  );
 
-  setLocalStorage(ACCESS_TOKEN, accessToken.split(" ")[1]);
-  setLocalStorage(REFRESH_TOKEN, refreshToken.split(" ")[1]);
-
-  return accessToken;
+  return {
+    accessTokenResponse: headers.authorization.split(" ")[1],
+    refreshTokenResponse: headers["authorization-refresh"].split(" ")[1],
+  };
 };
