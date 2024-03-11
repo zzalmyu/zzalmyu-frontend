@@ -1,19 +1,20 @@
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
+import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const { uploadZzal } = usePostUploadZzal();
   const [file, setFile] = useState<File | null>(null);
+  const [imageTitle, setImageTitle] = useState<string>("");
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
 
   const changeFile = (file: File | null) => {
@@ -24,6 +25,10 @@ const UploadZzal = () => {
     if (!file) {
       toast.error("사진을 등록해주세요!");
       return;
+    }
+
+    if (!imageTitle) {
+      toast.error("제목을 입력해주세요!");
     }
 
     if (!selectedTags.length) {
@@ -44,7 +49,7 @@ const UploadZzal = () => {
         file: file,
         // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
         tagIdList: [2, 3, 4],
-        title: file.name.substring(0, file.name.indexOf(".")),
+        title: imageTitle,
       },
       {
         onSuccess: () => {
@@ -68,6 +73,10 @@ const UploadZzal = () => {
     );
   };
 
+  const handleChangeImageTitle = (event: ChangeEvent<HTMLInputElement>) => {
+    setImageTitle(event.target.value);
+  };
+
   return (
     <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
       <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>{" "}
@@ -77,6 +86,15 @@ const UploadZzal = () => {
         <div className="flex h-300pxr w-full flex-1 flex-col justify-between">
           <div className="w-full">
             <div className="float-right">
+              <span className="mb-4 text-sm font-bold">짤 제목</span>
+              <div className="flex h-full w-full flex-wrap items-center gap-2 rounded-full border border-gray-300 pl-4 pr-2 shadow-xl sm:gap-4 sm:px-4">
+                <input
+                  id="imageTitleInput"
+                  name="imageTitle"
+                  onChange={handleChangeImageTitle}
+                  className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
+                />
+              </div>
               <RecommendTag
                 title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
                 recommendTags={popularTags}

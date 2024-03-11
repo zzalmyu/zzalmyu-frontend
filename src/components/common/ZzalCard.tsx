@@ -46,17 +46,9 @@ const ZzalCard = ({
             hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none",
           )}
         >
-          <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />
+          {src && <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />}
         </figure>
       </div>
-      <figure
-        className={cn(
-          "h-fit",
-          `${hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none"}`,
-        )}
-      >
-        {src && <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />}
-      </figure>
     </ZzalCardContext.Provider>
   );
 };
