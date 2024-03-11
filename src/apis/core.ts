@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   const requestUrl = config.url;
   const token = getLocalStorage(ACCESS_TOKEN);
 
-  if (requestUrl === "/v1/user/reissue" || requestUrl === "/v1/user/logout") return config;
+  if (requestUrl === "/v1/user/reissue") return config;
 
   if (token && config.headers) {
     const header = await checkTokenToRefresh(token);

@@ -1,5 +1,5 @@
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
-import { GetHeaderResponse } from "@/types/auth.dto";
+import { ReissueTokenResponse } from "@/types/auth.dto";
 import http from "./core";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
@@ -12,7 +12,7 @@ export const patchLogOut = () =>
   });
 
 export const postReissueToken = async () => {
-  const { accessToken, refreshToken } = await http.post<GetHeaderResponse>({
+  const { accessToken, refreshToken } = await http.post<ReissueTokenResponse>({
     url: "/v1/user/reissue",
     headers: {
       "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
