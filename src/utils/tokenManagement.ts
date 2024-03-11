@@ -1,42 +1,15 @@
-import { toast } from "react-toastify";
 import { jwtDecode } from "jwt-decode";
 
-export const getaccessTokenExpiryTime = (token: string) => {
-  if (token) {
-    const decodeToken: { exp: number } = jwtDecode(token);
+export const isExpiredToken = (token: string) => {
+  if (!token) return false;
 
-    return decodeToken.exp * 1000;
-  }
-};
+  const { exp: tokenExpirationTime } = jwtDecode(token);
+  const currentTime = Date.now() / 1000;
+  const threshold = 30;
 
-export const checkTokenToAccess = (accessToken: string) => {
-  const accessTokenExpiryTime = getaccessTokenExpiryTime(accessToken);
-  const currentTime = Date.now();
+  if (!tokenExpirationTime) return false;
 
-  if (accessTokenExpiryTime) {
-    const accessTimeUntilExpiry = accessTokenExpiryTime - currentTime;
-    const threshold = 30 * 1000;
+  const tokenTimeUntilExpiry = tokenExpirationTime - currentTime;
 
-    return accessTimeUntilExpiry < threshold;
-  }
-
-  return false;
-};
-
-export const checkTokenToRefresh = (refreshToken: string) => {
-  const refreshTokenExpiryTime = getaccessTokenExpiryTime(refreshToken);
-  const currentTime = Date.now();
-
-  if (refreshTokenExpiryTime) {
-    const refreshTimeUntilExpiry = refreshTokenExpiryTime - currentTime;
-    const threshold = 60 * 1000;
-
-    if (refreshTimeUntilExpiry < threshold) {
-      toast.error("재로그인이 필요합니다", { autoClose: 2000 });
-
-      return true;
-    }
-  }
-
-  return false;
+  return tokenTimeUntilExpiry < threshold;
 };
