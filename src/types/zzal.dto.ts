@@ -1,3 +1,5 @@
+import { Tag } from "./tag";
+
 export interface PostUploadZzalRequest {
   file: File;
   tagIdList: Array<number>;
@@ -20,4 +22,12 @@ export interface GetZzalPagesResponse {
   title: string;
   path: string;
   imageLikeYn: boolean;
+}
+export interface GetZzalDetailsResponse {
+  imageId: number;
+  imageTitle: string;
+  uploadUserId: number;
+  imgUrl: string;
+  imageLikeYn: boolean;
+  tags: Tag[];
 }
