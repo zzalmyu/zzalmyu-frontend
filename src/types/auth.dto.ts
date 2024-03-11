@@ -1,4 +1,4 @@
-export interface GetHeaderResponse {
+export interface ReissueTokenResponse {
   accessToken: string;
   refreshToken: string;
 }
