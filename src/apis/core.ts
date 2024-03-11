@@ -1,9 +1,8 @@
-import { toast } from "react-toastify";
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
 import { getLocalStorage, removeLocalStorage } from "@/utils/localStorage";
-import { checkTokenToRefresh } from "@/utils/tokenManagement";
-import { patchLogOut } from "./auth";
-import { ACCESS_TOKEN, REFRESH_TOKEN, REFRESH_TOKEN_EXPIRED_MESSAGE } from "@/constants/auth";
+import { checkTokenToAccess, checkTokenToRefresh } from "@/utils/tokenManagement";
+import { patchLogOut, postReissueToken } from "./auth";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 const HTTP_METHODS = {
   GET: "get",
@@ -21,13 +20,24 @@ const axiosInstance: AxiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use(async (config) => {
   const requestUrl = config.url;
-  const token = getLocalStorage(ACCESS_TOKEN);
+  const accessToken = getLocalStorage(ACCESS_TOKEN);
+  const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
   if (requestUrl === "/v1/user/reissue") return config;
 
-  if (token && config.headers) {
-    const header = await checkTokenToRefresh(token);
-    config.headers.Authorization = header;
+  config.headers.Authorization = `Bearer ${accessToken}`;
+
+  if (refreshToken && checkTokenToRefresh(refreshToken)) {
+    removeLocalStorage(ACCESS_TOKEN);
+    removeLocalStorage(REFRESH_TOKEN);
+    await patchLogOut();
+    window.location.href = "/";
+
+    return config;
+  }
+
+  if (accessToken && checkTokenToAccess(accessToken)) {
+    config.headers.Authorization = await postReissueToken();
   }
 
   return config;
@@ -42,22 +52,7 @@ axiosInstance.interceptors.response.use(
 
     return response.data;
   },
-  async (error) => {
-    const status = error.response.status;
-    const message = error.response.data.message;
-
-    if (status === 401 && message === REFRESH_TOKEN_EXPIRED_MESSAGE) {
-      toast.error("재로그인이 필요합니다", { autoClose: 1000 });
-
-      await patchLogOut();
-      removeLocalStorage(ACCESS_TOKEN);
-      removeLocalStorage(REFRESH_TOKEN);
-
-      window.location.href = "/";
-    }
-
-    Promise.reject(error);
-  },
+  async (error) => Promise.reject(error),
 );
 
 const createApiMethod =
