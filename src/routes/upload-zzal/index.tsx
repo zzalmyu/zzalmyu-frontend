@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { createFileRoute } from "@tanstack/react-router";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
@@ -8,20 +9,30 @@ const UploadZzal = () => {
   const handleChangeUpload = (changedFile: File | null) => setFile(changedFile);
 
   return (
-    <div className="flex h-full flex-col items-center gap-20pxr px-50pxr sm:px-100pxr">
-      <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start sm:gap-200pxr">
-        <ImageUpload onChange={handleChangeUpload} />
-        <div className="flex h-400pxr w-full min-w-400pxr max-w-500pxr flex-1 flex-col items-center justify-between">
-          <TagSearchForm className="" />
-          <button
-            className="h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white"
-            onClick={() => {}}
-          >
-            업로드하기
-          </button>
+    <>
+      <Helmet>
+        <title>짤뮤니티 | 짤 업로드</title>
+        <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
+        <meta property="og:title" content="짤뮤니티 | 짤 업로드" />
+        <meta property="og:image" content="/thumbnail.jpg" />
+        <meta property="og:url" content="https://www.zzalmyu.site/upload-zzal" />
+        <meta property="og:description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
+      </Helmet>
+      <div className="flex h-full flex-col items-center gap-20pxr px-50pxr sm:px-100pxr">
+        <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start sm:gap-200pxr">
+          <ImageUpload onChange={handleChangeUpload} />
+          <div className="flex h-400pxr w-full min-w-400pxr max-w-500pxr flex-1 flex-col items-center justify-between">
+            <TagSearchForm className="" />
+            <button
+              className="h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white"
+              onClick={() => {}}
+            >
+              업로드하기
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
