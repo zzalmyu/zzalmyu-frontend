@@ -54,9 +54,7 @@ const UploadZzal = () => {
             <div>
               <span>성공적으로 업로드가 되었습니다.</span>
               <Link to="/my-uploaded-zzals">
-                <button className="m-1 rounded bg-primary p-1 text-sm text-white">
-                  업로드한 짤 페이지로 이동
-                </button>
+                <button className="m-1 rounded bg-primary p-1 text-sm text-white">확인하기</button>
               </Link>
             </div>,
           ),
