@@ -18,11 +18,13 @@ const ImageUpload = ({ changeFile, file }: Props) => {
 
   const handleFileChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { files } = event.target;
-    if (files) {
-      const [changedFile] = files;
-      if (changedFile) {
-        changeFile(changedFile);
-      }
+
+    if (!files) return;
+
+    const [changedFile] = files;
+
+    if (changedFile) {
+      changeFile(changedFile);
     }
   };
 
