@@ -8,9 +8,16 @@ import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const LayoutWithChat = () => {
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
+
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
+    if (!isChatOpen) {
+      gtag("event", "채팅창_열림");
+    } else {
+      gtag("event", "채팅창_닫힘");
+    }
   };
+
   return (
     <div className="h-full w-full overflow-hidden">
       <div className="relative flex h-120pxr w-full flex-col items-center gap-4 border-b border-border px-10pxr pt-10pxr sm:h-150pxr sm:px-6">

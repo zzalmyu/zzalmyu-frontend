@@ -17,10 +17,12 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use((config) => {
+  config.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxMDc2NjQwMywiZW1haWwiOiJrZXJvcm85MDczQGdtYWlsLmNvbSJ9.GzyrggGmv9R6rHvJg1CElvS8Xk0rEb3o_W88XNgP7Cs2fvSSElNVdD73XL8ECY0KsLSCr-LYnfBbY1wMhc4_lg`;
+
   const token = getLocalStorage(ACCESS_TOKEN);
 
   if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
+    config.headers.Authorization = `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJBY2Nlc3NUb2tlbiIsImV4cCI6MTcxMDc2NjQwMywiZW1haWwiOiJrZXJvcm85MDczQGdtYWlsLmNvbSJ9.GzyrggGmv9R6rHvJg1CElvS8Xk0rEb3o_W88XNgP7Cs2fvSSElNVdD73XL8ECY0KsLSCr-LYnfBbY1wMhc4_lg`;
   }
 
   return config;

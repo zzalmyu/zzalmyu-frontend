@@ -38,6 +38,7 @@ const ImageDetailModalContent = () => {
     reportZzal(imageId, {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.");
+        gtag("event", "짤_신고");
       },
       onError: () => {
         // TODO: [2024-03-06] http error code 별 메세지(ex. 이미 신고가 완료되었습니다) 추가
@@ -46,6 +47,7 @@ const ImageDetailModalContent = () => {
   };
 
   const handleClickReportButton = () => {
+    gtag("event", "신고_확인_모달_띄우기");
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
         isOpen={isOpen}
@@ -61,6 +63,7 @@ const ImageDetailModalContent = () => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
         toast.success("사진이 삭제되었습니다.");
+        gtag("event", "짤_삭제");
       },
       onError: () => {
         toast.error("사진 삭제에 실패했습니다.");

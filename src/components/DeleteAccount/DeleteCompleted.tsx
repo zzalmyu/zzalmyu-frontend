@@ -3,6 +3,10 @@ import { Link } from "@tanstack/react-router";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 
 const DeleteCompleted = () => {
+  const handleGtagEvent = (eventName: string) => () => {
+    gtag("event", eventName);
+  };
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className={"max-w-570pxr pb-5 sm:h-385pxr"}>
@@ -19,7 +23,7 @@ const DeleteCompleted = () => {
         <AccountDeletionNotice />
       </div>
       <div className={"my-10pxr flex w-full max-w-950pxr flex-row-reverse sm:my-0"}>
-        <Link to="/">
+        <Link to="/" onClick={handleGtagEvent("계정삭제_후_홈_페이지로_이동하기")}>
           <button className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:my-10  sm:w-40"}>
             닫기
           </button>
