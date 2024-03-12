@@ -5,10 +5,10 @@ import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
+import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
@@ -41,10 +41,6 @@ const UploadZzal = () => {
   };
 
   const handleUploadZzal = (file: File) => {
-    if (!file) {
-      return;
-    }
-
     uploadZzal(
       {
         file: file,
