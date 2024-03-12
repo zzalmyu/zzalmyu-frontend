@@ -63,7 +63,6 @@
     "lint-staged": "^15.2.2",
     "postcss": "^8.4.35",
     "prettier-plugin-tailwindcss": "^0.5.11",
-    "react-snap": "^1.23.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.2.2",
     "vite": "^5.0.8",
