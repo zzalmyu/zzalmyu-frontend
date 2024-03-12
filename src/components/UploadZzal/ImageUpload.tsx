@@ -38,6 +38,7 @@ const ImageUpload = ({ changeFile, file }: Props) => {
     event.preventDefault();
 
     const { items } = event.dataTransfer;
+
     if (items?.length > 0) {
       setDragging(true);
     }
@@ -57,13 +58,14 @@ const ImageUpload = ({ changeFile, file }: Props) => {
     event.preventDefault();
     event.stopPropagation();
 
-    const { dataTransfer } = event;
-    if (dataTransfer) {
-      const [changedFile] = dataTransfer.files;
-      if (changedFile) {
-        changeFile(changedFile);
-      }
+    const { files } = event.dataTransfer;
+
+    const [changedFile] = files;
+
+    if (changedFile) {
+      changeFile(changedFile);
     }
+
     setDragging(false);
   };
 
