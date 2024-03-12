@@ -11,9 +11,9 @@ const UploadZzal = () => {
   return (
     <>
       <Helmet>
-        <title>짤뮤니티 | 짤 업로드</title>
+        <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
-        <meta property="og:title" content="짤뮤니티 | 짤 업로드" />
+        <meta property="og:title" content="짤 업로드 - 짤뮤니티" />
         <meta property="og:image" content="/thumbnail.jpg" />
         <meta property="og:url" content="https://www.zzalmyu.site/upload-zzal" />
         <meta property="og:description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />

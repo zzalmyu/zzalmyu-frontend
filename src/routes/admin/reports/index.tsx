@@ -19,7 +19,8 @@ const Admin = () => {
   return (
     <>
       <Helmet>
-        <title>짤뮤니티 | 관리자</title>
+        <title>관리자 - 짤뮤니티</title>
+        <meta name="description" content="짤뮤니티 관리자 페이지입니다" />
       </Helmet>
       <div className="flex h-full w-full flex-col items-center p-45pxr">
         <div className="flex w-5/6 flex-col">
