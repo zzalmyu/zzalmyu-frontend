@@ -1,7 +1,26 @@
-import { GetMyLikedZzalsResponse, GetZzalDetailsResponse, GetZzalResponse } from "@/types/zzal.dto";
+import {
+  PostUploadZzalRequest,
+  GetMyLikedZzalsResponse,
+  GetZzalDetailsResponse,
+  GetZzalResponse,
+} from "@/types/zzal.dto";
 import http from "./core";
-
 import { PAGINATION_LIMIT } from "@/constants/api";
+
+export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("tagIdList", tagIdList.join(","));
+  formData.append("title", title);
+
+  return http.post<PostUploadZzalRequest>({
+    url: `/v1/image`,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
 export const deleteMyZzal = (imageId: number) => {
   return http.delete<number>({ url: `/v1/image/${imageId}` });
