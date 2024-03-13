@@ -1,6 +1,7 @@
 import {
   PostUploadZzalRequest,
   GetMyLikedZzalsResponse,
+  GetMyUploadedZzalsResponse,
   GetZzalDetailsResponse,
   GetZzalResponse,
 } from "@/types/zzal.dto";
@@ -26,9 +27,14 @@ export const deleteMyZzal = (imageId: number) => {
   return http.delete<number>({ url: `/v1/image/${imageId}` });
 };
 
-export const getMyLikedZzals = (offset: number) =>
+export const getMyLikedZzals = (page: number) =>
   http.get<GetMyLikedZzalsResponse>({
-    url: `/v1/image/like?page=${offset}&size=${PAGINATION_LIMIT}`,
+    url: `/v1/image/like?page=${page}&size=${PAGINATION_LIMIT}`,
+  });
+
+export const getMyUploadedZzals = (page: number) =>
+  http.get<GetMyUploadedZzalsResponse>({
+    url: `/v1/image/upload?page=${page}&size=${PAGINATION_LIMIT}`,
   });
 
 export const getZzalDetails = (imageId: number) =>

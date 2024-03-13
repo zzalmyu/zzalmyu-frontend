@@ -12,6 +12,12 @@ export interface GetMyLikedZzalsResponse {
   title: string;
 }
 
+export interface GetMyUploadedZzalsResponse {
+  imageId: number;
+  title: string;
+  path: string;
+}
+
 export interface GetZzalResponse {
   pageParams: number[];
   pages: GetZzalPagesResponse[][];
@@ -23,6 +29,7 @@ export interface GetZzalPagesResponse {
   path: string;
   imageLikeYn: boolean;
 }
+
 export interface GetZzalDetailsResponse {
   imageId: number;
   imageTitle: string;
