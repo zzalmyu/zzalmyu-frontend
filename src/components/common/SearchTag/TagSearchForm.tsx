@@ -27,13 +27,7 @@ const TagSearchForm = ({ className }: Props) => {
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
-    const allTags = [...autoCompletedTags, ...recommendedTags];
-
-    if (
-      selectedTags.length < MAX_SEARCH_TAG &&
-      !selectedTags.includes(userInputTag) &&
-      allTags.find(({ tagName }) => tagName === userInputTag)
-    ) {
+    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(userInputTag)) {
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
