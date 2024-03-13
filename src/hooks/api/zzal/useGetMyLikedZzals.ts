@@ -8,8 +8,8 @@ const useGetMyLikedZzals = () => {
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
     useSuspenseInfiniteQuery({
-      queryKey: ["likedZzals"],
-      queryFn: ({ pageParam = 0 }) => getMyLikedZzals(pageParam, selectedTags),
+      queryKey: ["likedZzals", selectedTags],
+      queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
 

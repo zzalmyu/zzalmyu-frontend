@@ -4,6 +4,7 @@ import {
   GetMyUploadedZzalsResponse,
   GetZzalDetailsResponse,
   GetZzalResponse,
+  GetMyLikedZzalsRequest,
 } from "@/types/zzal.dto";
 import http from "./core";
 import { PAGINATION_LIMIT } from "@/constants/api";
@@ -27,7 +28,7 @@ export const deleteMyZzal = (imageId: number) => {
   return http.delete<number>({ url: `/v1/image/${imageId}` });
 };
 
-export const getMyLikedZzals = (page: number, selectedTags: string[]) =>
+export const getMyLikedZzals = ({ page, selectedTags }: GetMyLikedZzalsRequest) =>
   http.get<GetMyLikedZzalsResponse>({
     url: `/v1/image/like?page=${page}&size=${PAGINATION_LIMIT}`,
     params: {
