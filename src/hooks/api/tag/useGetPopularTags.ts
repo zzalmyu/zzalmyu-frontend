@@ -4,7 +4,7 @@ import { getPopularTags } from "@/apis/tag";
 const useGetPopularTags = () => {
   const { data, ...rest } = useQuery({
     queryKey: ["popularTags"],
-    queryFn: getPopularTags,
+    queryFn: () => getPopularTags(),
   });
 
   return {
