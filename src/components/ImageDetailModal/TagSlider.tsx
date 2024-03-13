@@ -5,11 +5,11 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import { TagDetail } from "@/types/tag";
+import { Tag } from "@/types/tag";
 import TagBadge from "../common/TagBadge";
 
 interface Props {
-  tags: TagDetail[];
+  tags: Tag[];
   textSize?: string;
   className?: string;
   onClick?: () => void;
@@ -71,15 +71,13 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
         >
           <ChevronLeft strokeWidth={1.5} />
         </button>
-
-        {tags.map(({ name, id }) => (
-          <SwiperSlide key={id} className="w-fit cursor-pointer text-center text-text-primary">
+        {tags.map(({ tagName, tagId }) => (
+          <SwiperSlide key={tagId} className="w-fit cursor-pointer text-center text-text-primary">
             <button onClick={onClick}>
-              <TagBadge content={name} className={`bg-primary px-2 py-1 text-${textSize}`} />
+              <TagBadge content={tagName} className={`bg-primary px-2 py-1 text-${textSize}`} />
             </button>
           </SwiperSlide>
         ))}
-
         <button
           className={cn(arrowButtonClasses, "right-0 bg-gradient-to-l pl-7pxr", {
             hidden: !showNextButton,

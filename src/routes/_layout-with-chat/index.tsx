@@ -1,22 +1,26 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useOverlay } from "@toss/use-overlay";
-import ImageDetailModal from "@/components/ImageDetailModal";
+import { useEffect } from "react";
+import { createFileRoute, getRouteApi, useNavigate } from "@tanstack/react-router";
+import { setLocalStorage } from "@/utils/localStorage";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
+
+const route = getRouteApi("/_layout-with-chat/");
 
 const Home = () => {
-  // TODO: [2024-03-03] 이미지 상세 모달 구현 코드에 따라 변경될 수 있습니다. (이미지 삭제 성공 시, 모달이 닫히는 동작을 구현하기 위해 코드 구현)
-  const zzalModalOverlay = useOverlay();
+  const { accessToken, refreshToken } = route.useSearch<{
+    accessToken: string;
+    refreshToken: string;
+  }>();
+  const navigate = useNavigate();
 
-  const handleClickZzal = () => {
-    zzalModalOverlay.open(({ isOpen, close }) => (
-      <ImageDetailModal isOpen={isOpen} onClose={close} />
-    ));
-  };
+  useEffect(() => {
+    if (accessToken && refreshToken) {
+      setLocalStorage(ACCESS_TOKEN, accessToken);
+      setLocalStorage(REFRESH_TOKEN, refreshToken);
+      navigate({ to: "/" });
+    }
+  });
 
-  return (
-    <div>
-      <button onClick={handleClickZzal}>Zzal 클릭 시 상세 모달 열기</button>
-    </div>
-  );
+  return <div></div>;
 };
 
 export const Route = createFileRoute("/_layout-with-chat/")({
