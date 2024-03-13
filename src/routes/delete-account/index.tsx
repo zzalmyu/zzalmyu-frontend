@@ -20,10 +20,6 @@ const DeleteAccount = () => {
       <Helmet>
         <title>계정 삭제 - 짤뮤니티</title>
         <meta name="description" content="계정을 삭제하시겠습니까?" />
-        <meta property="og:title" content="계정 삭제 - 짤뮤니티" />
-        <meta property="og:image" content="/thumbnail.jpg" />
-        <meta property="og:url" content="https://www.zzalmyu.site/delete-account" />
-        <meta property="og:description" content="계정을 삭제하시겠습니까?" />
       </Helmet>
       <div className="flex h-full flex-col items-center p-20pxr sm:p-42pxr">
         <div className="flex w-4/6 flex-col font-bold">

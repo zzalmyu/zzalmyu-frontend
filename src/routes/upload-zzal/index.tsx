@@ -13,10 +13,6 @@ const UploadZzal = () => {
       <Helmet>
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
-        <meta property="og:title" content="짤 업로드 - 짤뮤니티" />
-        <meta property="og:image" content="/thumbnail.jpg" />
-        <meta property="og:url" content="https://www.zzalmyu.site/upload-zzal" />
-        <meta property="og:description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
       <div className="flex h-full flex-col items-center gap-20pxr px-50pxr sm:px-100pxr">
         <div className="mt-20pxr flex w-full flex-col items-center justify-center gap-50pxr sm:flex-row sm:items-start sm:gap-200pxr">

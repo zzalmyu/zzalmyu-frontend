@@ -29,13 +29,6 @@ const Home = () => {
           name="description"
           content="본인의 취향과 선호도에 따라 선별된 짤 컬렉션을 추천 받아 보세요!"
         />
-        <meta property="og:title" content="짤뮤니티 | 나만을 위한 취향 저격 짤 추천" />
-        <meta property="og:image" content="/thumbnail.jpg" />
-        <meta property="og:url" content="https://www.zzalmyu.site/" />
-        <meta
-          property="og:description"
-          content="본인의 취향과 선호도에 따라 선별된 짤 컬렉션을 추천 받아 보세요!"
-        />
       </Helmet>
       <div></div>
     </>
