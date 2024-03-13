@@ -11,7 +11,7 @@ const LayoutWithChat = () => {
 
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
-    !isChatOpen ? gtag("event", "채팅창_열림") : gtag("event", "채팅창_닫힘");
+    gtag("event", "user_action", { event_category: isChatOpen ? "채팅창_닫힘" : "채팅창_열림" });
   };
 
   return (

@@ -17,17 +17,17 @@ const AdminImageDetail = () => {
   const { reportDetails } = useGetReportsDetails(imageId);
   const { imageUrl, imageTitle, reports } = reportDetails;
 
-  const handleGtagEvent = (eventName: string) => () => {
-    gtag("event", eventName);
+  const handleClickAdminButton = () => {
+    gtag("event", "page_view", { event_category: "관리자_페이지로_이동" });
   };
 
   const handleClickDeleteConfirm = (imageId: string) => () => {
     deleteReportedZzal(imageId);
-    handleGtagEvent("짤_영구_삭제");
+    gtag("event", "user_action", { event_category: "짤_영구_삭제" });
   };
 
   const handleClickDeleteButton = () => {
-    handleGtagEvent("짤_영구_삭제_확인_모달_띄우기");
+    gtag("event", "modal_open", { event_category: "짤_영구_삭제_확인_모달_띄우기" });
     deleteConfirmOverlay.open(({ isOpen, close }) => (
       <DeleteConfirmModal
         isOpen={isOpen}
@@ -43,7 +43,7 @@ const AdminImageDetail = () => {
         <div className="breadcrumbs pb-20pxr text-lg font-bold">
           <ul>
             <li>
-              <Link to="/admin/reports" onClick={handleGtagEvent("관리자_페이지로_이동")}>
+              <Link to="/admin/reports" onClick={handleClickAdminButton}>
                 <h1>신고 내역</h1>
               </Link>
             </li>

@@ -10,8 +10,16 @@ const Header = () => {
     isAdmin: false,
   };
 
-  const handleGtagEvent = (eventName: string) => () => {
-    gtag("event", eventName);
+  const handleClickLogo = () => {
+    gtag("event", "page_view", { event_category: "홈_페이지로_이동" });
+  };
+
+  const handleClickUploadButton = () => {
+    gtag("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
+  };
+
+  const handleClickAdminButton = () => {
+    gtag("event", "page_view", { event_category: "관리자_페이지로_이동" });
   };
 
   return (
@@ -19,7 +27,7 @@ const Header = () => {
       <Link
         to="/"
         className="btn btn-ghost flex items-center hover:bg-transparent"
-        onClick={handleGtagEvent("홈_페이지로_이동")}
+        onClick={handleClickLogo}
       >
         <Logo aria-label="짤뮤니티 로고" />
       </Link>
@@ -27,7 +35,7 @@ const Header = () => {
       <div className="flex flex-1 items-center justify-end space-x-1 px-2 sm:space-x-3">
         <ThemeToggle />
         {user && !user.isAdmin && (
-          <Link to="/upload-zzal" onClick={handleGtagEvent("짤_업로드_페이지로_이동")}>
+          <Link to="/upload-zzal" onClick={handleClickUploadButton}>
             <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
               업로드
             </button>
@@ -39,7 +47,7 @@ const Header = () => {
           <Link
             to="/admin/reports"
             className="btn btn-ghost h-6 min-h-9 text-text-primary"
-            onClick={handleGtagEvent("관리자_페이지로_이동")}
+            onClick={handleClickAdminButton}
           >
             Admin
           </Link>

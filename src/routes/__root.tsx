@@ -36,8 +36,8 @@ const menuItems = [
   },
 ];
 
-const handleGtagEvent = (eventName: string) => () => {
-  gtag("event", eventName);
+const handleClickButton = (eventName: string) => () => {
+  gtag("event", "page_view", { event_category: eventName });
 };
 
 const NavigationFooter = () => {
@@ -52,7 +52,7 @@ const NavigationFooter = () => {
           to={path}
           className="flex w-65pxr flex-col items-center gap-1"
           key={name}
-          onClick={handleGtagEvent(event)}
+          onClick={handleClickButton(event)}
         >
           <Icon size={24} strokeWidth={1.5} aria-label={name} />
           <span className="text-xs font-bold group-hover:text-blue-500">{name}</span>

@@ -11,7 +11,7 @@ const DeleteConfirm = ({ onNext }: Props) => {
     toast.success("계정이 삭제되었습니다.");
     onNext();
     // TODO: [2024.03.03] 삭제 로직 추가하기
-    gtag("event", "계정_삭제");
+    gtag("event", "user_action", { event_category: "계정_삭제" });
   };
 
   return (

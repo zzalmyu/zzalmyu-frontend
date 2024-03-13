@@ -9,9 +9,9 @@ const ThemeToggle = () => {
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setTheme("dark");
-      gtag("event", "테마_변경_Dark");
+      gtag("event", "user_action", { event_category: "테마_변경_Dark" });
     } else {
-      gtag("event", "테마_변경_Light");
+      gtag("event", "user_action", { event_category: "테마_변경_Light" });
     }
   };
 
