@@ -11,6 +11,7 @@ const ThemeToggle = () => {
       setTheme("dark");
       gtag("event", "user_action", { event_category: "테마_변경_Dark" });
     } else {
+      setTheme("light");
       gtag("event", "user_action", { event_category: "테마_변경_Light" });
     }
   };
