@@ -20,7 +20,7 @@ const TagBadge = ({ content, isClickable = false, className }: Props) => {
   return (
     <span
       className={cn(
-        "flex-column text-14px flex w-fit rounded-3xl bg-black p-2 font-bold text-white",
+        "flex-column text-14px flex w-fit rounded-3xl bg-black p-1 font-bold text-white",
         className,
       )}
     >
