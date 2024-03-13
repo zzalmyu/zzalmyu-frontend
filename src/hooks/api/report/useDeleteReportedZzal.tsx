@@ -1,14 +1,14 @@
 import { toast } from "react-toastify";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
-import { deleteReportedImage } from "@/apis/report";
+import { deleteReportedZzal } from "@/apis/report";
 
-const useDeleteReportedImage = () => {
+const useDeleteReportedZzal = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate({ from: "/admin/reports/$imageId" });
 
   const { mutate, ...rest } = useMutation({
-    mutationFn: deleteReportedImage,
+    mutationFn: deleteReportedZzal,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reports"] });
       toast.success("사진이 삭제되었습니다");
@@ -19,7 +19,7 @@ const useDeleteReportedImage = () => {
     },
   });
 
-  return { deleteReportedImage: mutate, ...rest };
+  return { deleteReportedZzal: mutate, ...rest };
 };
 
-export default useDeleteReportedImage;
+export default useDeleteReportedZzal;

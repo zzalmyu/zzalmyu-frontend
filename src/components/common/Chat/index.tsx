@@ -1,37 +1,46 @@
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { useAtomValue } from "jotai";
-import { getSessionStorage, setSessionStorage } from "@/utils/sessionStorage";
 import { cn } from "@/utils/tailwind";
-import ChatSection from "./ChatSection";
-import ChatPeek from "./ChatPeek";
+import MessagePeek from "./MessagePeek";
+import ZzalMessage from "./ZzalMessage";
+import GreetMessage from "./GreetMessage";
 import { $isChatOpen } from "@/store/chat";
+import useChat from "@/hooks/chat/useChat";
 
 const Chat = () => {
-  const isChatOpen = useAtomValue($isChatOpen);
   const chatRoomRef = useRef<HTMLDivElement>(null);
+  const isChatOpen = useAtomValue($isChatOpen);
 
-  const handleScroll = () => {
+  const setScrollToBottom = () => {
     if (!chatRoomRef.current) return;
-    setSessionStorage("sidebar-scroll", chatRoomRef.current?.scrollTop);
+    chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight);
   };
-  const setScrollPosition = () => {
-    if (!chatRoomRef.current) return;
-    const top = getSessionStorage("sidebar-scroll");
-    if (top !== null) {
-      chatRoomRef.current.scrollTop = parseInt(top, 10);
-    }
-  };
+
+  const { handleSendMessage, messages } = useChat(setScrollToBottom);
+
+  const handleClickSend = () => handleSendMessage("zzal");
 
   return (
-    <div
-      className={cn(
-        "absolute bottom-0 left-0 flex h-3/5 w-full flex-col transition-transform sm:static sm:h-full sm:w-auto sm:translate-y-0 sm:flex-row",
-        isChatOpen ? "-translate-y-40pxr" : "translate-y-[calc(100%-40px)]",
-      )}
-    >
-      <ChatPeek handleScroll={handleScroll} />
-      {isChatOpen && <ChatSection ref={chatRoomRef} setScrollPosition={setScrollPosition} />}
-    </div>
+    <Fragment>
+      <div
+        className={cn(
+          "absolute right-0 h-full w-[33%] px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out",
+          isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
+        )}
+      >
+        <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
+          {messages.map((message, index) => (
+            <Fragment key={`${index}-${message.nickname}`}>
+              {"image" in message && (
+                <ZzalMessage src={message.image} isMyMessage={false} nickname={message.nickname} />
+              )}
+              {"message" in message && <GreetMessage nickname={message.nickname} />}
+            </Fragment>
+          ))}
+        </div>
+        <MessagePeek onClickSend={handleClickSend} />
+      </div>
+    </Fragment>
   );
 };
 
