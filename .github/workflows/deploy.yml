@@ -3,8 +3,6 @@ name: zzalmyu frontend continuous developments
 on:
   push:
     branches: main
-  pull_request:
-    branches: main
 
 jobs:
   build-and-deploy:
@@ -45,7 +43,6 @@ jobs:
           aws-region: ap-northeast-2
 
       - name: Deploy to AWS S3
-        if: github.ref == 'refs/heads/main'
         env:
           BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
         run: |
@@ -53,7 +50,6 @@ jobs:
           aws s3 sync ./dist s3://$BUCKET_NAME
 
       - name: CloudFront Invalidation
-        if: github.ref == 'refs/heads/main'
         env:
           CLOUD_FRONT_ID: ${{ secrets.AWS_CLOUDFRONT_ID }}
         run: aws cloudfront create-invalidation --distribution-id $CLOUD_FRONT_ID --paths /*
