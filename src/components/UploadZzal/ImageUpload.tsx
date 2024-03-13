@@ -1,7 +1,6 @@
 import { Fragment, useRef, useState, DragEvent, ChangeEvent } from "react";
 import { Upload } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import ZzalCard from "@/components/common/ZzalCard";
 
 interface Props {
   changeFile: (file: File | null) => void;
@@ -74,7 +73,7 @@ const ImageUpload = ({ changeFile, file }: Props) => {
       className={cn(
         !file && "cursor-pointer",
         dragging ? "border-primary text-primary" : "border-text-secondary text-text-secondary",
-        "relative flex h-320pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-8pxr border-4 border-dashed text-2xl font-bold transition-colors  hover:text-primary sm:h-400pxr",
+        "relative flex min-h-320pxr w-320pxr flex-col items-center justify-center gap-50pxr overflow-clip rounded-8pxr border-4 border-dashed text-2xl font-bold transition-colors hover:text-primary sm:min-h-400pxr",
       )}
       onClick={handleChooseFile}
       onDrop={handleFileDrop}
@@ -83,13 +82,20 @@ const ImageUpload = ({ changeFile, file }: Props) => {
       onDragOver={handleDragOver}
     >
       {file && (
-        <button
-          className="absolute right-7pxr top-7pxr z-10 h-30pxr w-30pxr rounded-full bg-neutral pb-1pxr pl-1pxr text-base text-text-primary outline outline-transparent transition-[outline] hover:outline-delete"
-          onClick={handleClickDeleteButton}
-          aria-label="사진 제거하기"
-        >
-          ✕
-        </button>
+        <Fragment>
+          <img
+            src={file ? URL.createObjectURL(file) : ""}
+            alt="업로드 사진"
+            className="w-320pxr rounded-lg object-contain"
+          />
+          <button
+            className="absolute right-7pxr top-7pxr z-10 h-30pxr w-30pxr rounded-full bg-neutral pb-1pxr pl-1pxr text-base text-text-primary outline outline-transparent transition-[outline] hover:outline-delete"
+            onClick={handleClickDeleteButton}
+            aria-label="사진 제거하기"
+          >
+            ✕
+          </button>
+        </Fragment>
       )}
       {!file && (
         <Fragment>
@@ -107,7 +113,6 @@ const ImageUpload = ({ changeFile, file }: Props) => {
           />
         </Fragment>
       )}
-      <ZzalCard src={file ? URL.createObjectURL(file) : ""} alt="업로드 사진" width={320} />
     </div>
   );
 };
