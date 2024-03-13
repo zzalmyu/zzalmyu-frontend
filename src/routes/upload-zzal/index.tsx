@@ -59,6 +59,7 @@ const UploadZzal = () => {
             </div>,
           ),
             changeFile(null),
+            setImageTitle(""),
             setSelectedTags([]);
         },
         onError: () => {
@@ -87,6 +88,7 @@ const UploadZzal = () => {
               id="imageTitleInput"
               name="imageTitle"
               onChange={handleChangeImageTitle}
+              value={imageTitle}
               className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
             />
           </div>
