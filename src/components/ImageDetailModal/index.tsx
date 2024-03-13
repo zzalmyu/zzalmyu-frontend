@@ -2,6 +2,7 @@ import { useState, Fragment, Suspense } from "react";
 import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
+import axios, { AxiosError } from "axios";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
 import { debounce } from "@/utils/debounce";
@@ -34,13 +35,27 @@ const ImageDetailModalContent = () => {
   const isUploader = uploadUserId === 19;
   //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
 
+  const errorMessage = {
+    REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
+    DEFAULT: "신고가 올바르게 되지 않았습니다.",
+  };
+
   const handleClickReportCompeleteButton = (imageId: number) => () => {
     reportZzal(imageId, {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.");
       },
-      onError: () => {
-        // TODO: [2024-03-06] http error code 별 메세지(ex. 이미 신고가 완료되었습니다) 추가
+      onError: (error: Error | AxiosError) => {
+        if (!axios.isAxiosError(error)) {
+          return;
+        }
+
+        const errorResponse = error.response?.data;
+        const status = errorResponse.statusCode;
+
+        status == "400"
+          ? toast.error(errorMessage["REPORT_ALREADY_EXIST_ERROR"])
+          : toast.error(errorMessage["DEFAULT"]);
       },
     });
   };
