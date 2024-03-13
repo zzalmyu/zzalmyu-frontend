@@ -3,7 +3,7 @@ import { postUsedTag } from "@/apis/tag";
 
 const usePostUsedTag = () => {
   const { mutate, ...rest } = useMutation({
-    mutationFn: postUsedTag,
+    mutationFn: (tagName: string) => postUsedTag(tagName),
   });
 
   return {
