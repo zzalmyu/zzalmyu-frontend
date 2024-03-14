@@ -19,6 +19,11 @@ interface Props {
   onClose: () => void;
 }
 
+interface CustomErrorResponse {
+  statusCode: number;
+  code: string;
+}
+
 const IMAGEID = 70;
 //TODO: [2024.03.06] 실제 IMAGEID 받기
 
@@ -50,12 +55,15 @@ const ImageDetailModalContent = () => {
           return;
         }
 
-        const errorResponse = error.response?.data;
+        const errorResponse = error.response?.data as CustomErrorResponse;
         const status = errorResponse.statusCode;
+        const code = errorResponse.code;
 
-        status == "400"
-          ? toast.error(errorMessage["REPORT_ALREADY_EXIST_ERROR"])
-          : toast.error(errorMessage["DEFAULT"]);
+        if (status === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
+          toast.error(errorMessage[code]);
+        } else {
+          toast.error(errorMessage["DEFAULT"]);
+        }
       },
     });
   };
