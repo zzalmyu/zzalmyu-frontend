@@ -1,14 +1,13 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
-import RecommendTag from "@/components/common/RecommendTag";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
-import { $selectedTags } from "@/store/tag";
+import { $recommendedTags, $selectedTags } from "@/store/tag";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
@@ -16,6 +15,7 @@ const UploadZzal = () => {
   const [file, setFile] = useState<File | null>(null);
   const [imageTitle, setImageTitle] = useState<string>("");
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const setRecommendedTags = useSetAtom($recommendedTags);
 
   const changeFile = (file: File | null) => {
     setFile(file);
@@ -73,6 +73,10 @@ const UploadZzal = () => {
     setImageTitle(event.target.value);
   };
 
+  useEffect(() => {
+    setRecommendedTags(popularTags);
+  }, [popularTags, setRecommendedTags]);
+
   return (
     <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
       <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
@@ -92,10 +96,7 @@ const UploadZzal = () => {
               className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
             />
           </div>
-          <RecommendTag
-            title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
-            recommendTags={popularTags}
-          />
+          <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">태그 검색 및 추가</span>
           <UploadTagSearchForm />
           <button
             className="mt-10 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
