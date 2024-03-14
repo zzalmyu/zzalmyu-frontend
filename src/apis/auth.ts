@@ -12,8 +12,6 @@ export const patchLogOut = () =>
     url: "/v1/user/logout",
   });
 
-export const getTokenTest = () => http.get<string>({ url: "/v1/user/jwt-test" });
-
 export const postReissueToken = async (): Promise<{
   accessTokenResponse: string;
   refreshTokenResponse: string;
