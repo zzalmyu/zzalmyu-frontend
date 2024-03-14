@@ -12,6 +12,7 @@ const DeleteCompleted = () => {
     userWithdraw(undefined, {
       onSuccess: () => {
         toast.success("계정이 삭제되었습니다.", { autoClose: 1500 });
+        gtag("event", "user_action", { event_category: "계정_삭제" });
       },
     });
   }, []);

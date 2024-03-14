@@ -8,7 +8,6 @@ interface Props {
 const DeleteConfirm = ({ onNext }: Props) => {
   const handleDeleteAccount = () => {
     onNext();
-    gtag("event", "user_action", { event_category: "계정_삭제" });
   };
 
   return (
