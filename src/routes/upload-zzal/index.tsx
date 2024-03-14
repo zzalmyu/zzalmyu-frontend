@@ -5,7 +5,7 @@ import { useAtom } from "jotai";
 import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import RecommendTag from "@/components/common/RecommendTag";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
+import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $selectedTags } from "@/store/tag";
@@ -96,7 +96,7 @@ const UploadZzal = () => {
             title="전체 사용자들이 가장 많이 사용한 태그 TOP 5"
             recommendTags={popularTags}
           />
-          <TagSearchForm />
+          <UploadTagSearchForm />
           <button
             className="mt-10 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
             onClick={handleClickUploadButton}
