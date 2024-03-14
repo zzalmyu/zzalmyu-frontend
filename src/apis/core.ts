@@ -20,11 +20,8 @@ const axiosInstance: AxiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async (config) => {
-  const requestUrl = config.url;
   const accessToken = getLocalStorage(ACCESS_TOKEN);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
-
-  if (requestUrl === "/v1/user/reissue") return config;
 
   config.headers.Authorization = `Bearer ${accessToken}`;
 
