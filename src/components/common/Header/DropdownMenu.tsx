@@ -100,13 +100,15 @@ const DropdownMenu = ({ user }: Props) => {
                 </Link>
               </li>
             ))}
-            <Link
-              to="/delete-account"
-              className="mt-2pxr block text-center text-[9px] text-gray-700 underline"
-              onClick={toggleDetails}
-            >
-              계정 탈퇴하기
-            </Link>
+            {refreshToken && (
+              <Link
+                to="/delete-account"
+                className="mt-2pxr block text-center text-[9px] text-gray-700 underline"
+                onClick={toggleDetails}
+              >
+                계정 탈퇴하기
+              </Link>
+            )}
           </ul>
         </details>
       </li>
