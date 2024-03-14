@@ -5,7 +5,7 @@ import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
 import TagBadge from "../common/TagBadge";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
-import { MAX_SEARCH_TAG } from "@/constants/tag";
+import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
   autoCompletedTags: Tag[];
@@ -18,7 +18,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagName: string) => () => {
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
+    if (selectedTags.length < MAX_SEARCH_TAG_UPLOAD && !selectedTags.includes(tagName)) {
       setSelectedTags((previousState) => [...previousState, tagName]);
     }
   };
@@ -35,7 +35,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
           <div className="text-10pxr mb-20pxr font-semibold text-neutral">
             선택된 태그
             <span className="ml-5pxr">
-              {selectedTags.length}/{MAX_SEARCH_TAG}
+              {selectedTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
           <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">

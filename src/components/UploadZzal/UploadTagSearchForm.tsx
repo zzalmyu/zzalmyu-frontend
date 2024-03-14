@@ -4,10 +4,10 @@ import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
 import TagBadge from "../common/TagBadge";
+import UploadTagAutoComplete from "./UploadTagAutoComplete";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
-import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
-import { MAX_SEARCH_TAG } from "@/constants/tag";
+import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
   className?: string;
@@ -27,7 +27,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(userInputTag)) {
+    if (selectedTags.length < MAX_SEARCH_TAG_UPLOAD && !selectedTags.includes(userInputTag)) {
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
@@ -119,7 +119,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
       </form>
       <div className="absolute flex w-full justify-center sm:top-35pxr">
         {showAutoComplete && (
-          <TagAutoComplete
+          <UploadTagAutoComplete
             autoCompletedTags={autoCompletedTags}
             cursorIndex={cursorIndex}
             setCursorIndex={setCursorIndex}
