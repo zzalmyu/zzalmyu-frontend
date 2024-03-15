@@ -12,6 +12,7 @@ const useGetChat = () => {
         return lastPageParam + 1;
       },
       initialPageParam: 0,
+      refetchOnWindowFocus: false,
     });
 
   const handleFetchNextPage = () => {
