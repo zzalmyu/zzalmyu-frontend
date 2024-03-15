@@ -7,13 +7,7 @@ import { getLocalStorage } from "@/utils/localStorage";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
 
-interface Props {
-  user: {
-    name: string;
-  };
-}
-
-const DropdownMenu = ({ user }: Props) => {
+const DropdownMenu = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const loginModalOverlay = useOverlay();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
@@ -65,7 +59,7 @@ const DropdownMenu = ({ user }: Props) => {
       <li>
         <details ref={detailsRef}>
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
-            {user.name}
+            Heejin
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name, onClick }, index) => (

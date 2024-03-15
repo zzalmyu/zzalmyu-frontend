@@ -1,13 +1,27 @@
+import { Fragment } from "react";
 import { Link } from "@tanstack/react-router";
+import { useOverlay } from "@toss/use-overlay";
+import { useAtom } from "jotai";
+import LoginModal from "@/components/LoginModal";
 import ThemeToggle from "./ThemeToggle.tsx";
 import DropdownMenu from "./DropdownMenu.tsx";
 import Logo from "@/assets/svg/logo.svg";
+import { $userInfo } from "@/store/user";
+import useGetUserInfo from "@/hooks/api/auth/useGetUserInfo.ts";
 
 const Header = () => {
-  const user = {
-    id: 123,
-    name: "Heejin",
-    isAdmin: false,
+  const loginModalOverlay = useOverlay();
+  const [, setUserInfo] = useAtom($userInfo);
+  const { userInfo } = useGetUserInfo();
+
+  if (userInfo) {
+    setUserInfo(userInfo);
+  }
+
+  const role = userInfo?.role || "GUEST";
+
+  const handleClickLogin = () => {
+    loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
   };
 
   return (
@@ -18,22 +32,33 @@ const Header = () => {
 
       <div className="flex flex-1 items-center justify-end space-x-1 px-2 sm:space-x-3">
         <ThemeToggle />
-        {user && !user.isAdmin && (
-          <Link to="/upload-zzal">
-            <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
-              업로드
+        {role === "USER" && (
+          <Fragment>
+            <Link to="/upload-zzal">
+              <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
+                업로드
+              </button>
+            </Link>
+            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
+            <DropdownMenu />
+          </Fragment>
+        )}
+        {role === "GUEST" && (
+          <Fragment>
+            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
+            <button className="btn btn-ghost h-6 min-h-9" onClick={handleClickLogin}>
+              로그인
             </button>
-          </Link>
+          </Fragment>
         )}
-        <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
-        {!user && <button className="btn btn-ghost h-6 min-h-9">로그인</button>}
-        {user && user.isAdmin && (
-          <Link to="/admin/reports" className="btn btn-ghost h-6 min-h-9 text-text-primary">
-            Admin
-          </Link>
+        {role === "ADMIN" && (
+          <Fragment>
+            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
+            <Link to="/admin/reports" className="btn btn-ghost h-6 min-h-9 text-text-primary">
+              Admin
+            </Link>
+          </Fragment>
         )}
-
-        {user && !user.isAdmin && <DropdownMenu user={user} />}
       </div>
     </div>
   );
