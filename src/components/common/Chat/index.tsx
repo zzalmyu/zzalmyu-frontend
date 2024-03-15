@@ -22,11 +22,11 @@ const ChatRoom = () => {
   useIntersectionObserver({
     target: scrollTargetRef,
     handleIntersect: () => {
-      handleFetchNextPage();
-      chatRoomRef.current?.firstElementChild?.scrollIntoView({
+      chatRoomRef.current?.lastElementChild?.scrollIntoView({
         block: "end",
         behavior: "smooth",
       });
+      handleFetchNextPage();
     },
   });
 
