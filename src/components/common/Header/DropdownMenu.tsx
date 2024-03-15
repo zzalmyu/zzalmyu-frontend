@@ -1,27 +1,30 @@
 import { useRef } from "react";
-import { Home, Heart, FolderUp, LogOut, LogIn } from "lucide-react";
+import { Home, Heart, FolderUp, LogOut } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useOverlay } from "@toss/use-overlay";
-import LoginModal from "@/components/LoginModal";
+import { useAtom } from "jotai";
 import { getLocalStorage } from "@/utils/localStorage";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
+import { $userInfo } from "@/store/user";
 
 const DropdownMenu = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
-  const loginModalOverlay = useOverlay();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
   const { logout } = useLogout();
-
-  const handleClickLogin = () => {
-    loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
-  };
+  const [userInfo] = useAtom($userInfo);
+  const { userId } = userInfo;
 
   const handleClickLogout = () => {
     logout(undefined, {
       onSuccess: () => navigate({ to: "/" }),
     });
+  };
+
+  const toggleDetails = () => {
+    if (detailsRef.current) {
+      detailsRef.current.open = !detailsRef.current.open;
+    }
   };
 
   const menuItems = [
@@ -42,24 +45,18 @@ const DropdownMenu = () => {
     },
     {
       path: "/",
-      Icon: refreshToken ? LogOut : LogIn,
-      name: refreshToken ? "로그아웃" : "로그인",
-      onClick: refreshToken ? handleClickLogout : handleClickLogin,
+      Icon: LogOut,
+      name: "로그아웃",
+      onClick: handleClickLogout,
     },
   ];
-
-  const toggleDetails = () => {
-    if (detailsRef.current) {
-      detailsRef.current.open = !detailsRef.current.open;
-    }
-  };
 
   return (
     <ul className="menu menu-horizontal z-20 hidden px-0 sm:block">
       <li>
         <details ref={detailsRef}>
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
-            Heejin
+            {userId}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name, onClick }, index) => (
