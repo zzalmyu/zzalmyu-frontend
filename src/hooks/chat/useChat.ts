@@ -5,14 +5,14 @@ import SockJS from "sockjs-client/dist/sockjs";
 import { useAtomValue } from "jotai";
 import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { GetChatResponse, GreetMessageRequest, ZzalMessageRequest } from "@/types/chat.dto";
-import { $previewImage } from "@/store/chat";
+import { $isChatOpen, $previewImage } from "@/store/chat";
 import { CHANNEL_ID, PUBLISH_DESTINATION, SUBSCRIPTION_DESTINATION } from "@/constants/chat";
 
 const useChat = (targetRef: RefObject<HTMLDivElement>) => {
   const queryClient = useQueryClient();
   const stompRef = useRef<CompatClient | null>(null);
-  // const [messages, setMessages] = useState<(GreetMessageResponse | ZzalMessageResponse)[]>([]);
   const imageSrc = useAtomValue($previewImage);
+  const isChatOpen = useAtomValue($isChatOpen);
 
   // TODO: [2024.03.06] 채팅 에러 핸들링 로직 구현
   const handleConnectToChat = () => {
@@ -21,6 +21,9 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
     stompRef.current = Stomp.over(() => {
       return new SockJS(import.meta.env.VITE_CHAT_URL);
     });
+    stompRef.current.beforeConnect = () => {
+      // TODO: [2024.03.15] 사용자 정보 조회 API 호출하여 email 정보 수집
+    };
     stompRef.current.onConnect = () => {
       stompRef.current?.subscribe(SUBSCRIPTION_DESTINATION, (frame) => {
         try {
@@ -30,7 +33,6 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
               return undefined;
             }
             const oldMessages = oldData.pages.flatMap((page) => page);
-            // const updatedFirstPage = [...oldData.pages[0], parsedMessages];
             const updatedPages = oldData.pages.map((page, idx) => {
               if (idx === 0) {
                 return [parsedMessages, ...page];
@@ -50,7 +52,8 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
         }
       });
 
-      handleSendMessage("greet");
+      // TODO: [2024.03.15] 로그인한 사용자만 greet 메세지 전송
+      // handleSendMessage("greet");
     };
     stompRef.current.activate();
   };
@@ -74,17 +77,10 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
   };
 
   useEffect(() => {
-    handleConnectToChat();
-    return () => {
-      if (stompRef.current?.connected) {
-        stompRef.current.deactivate();
-      }
-    };
-  }, []);
-
-  // useEffect(() => {
-  //   handleScrollPosition();
-  // }, [messages]);
+    if (isChatOpen && !stompRef.current?.connected) {
+      handleConnectToChat();
+    }
+  }, [isChatOpen]);
 
   return { handleSendMessage };
 };
