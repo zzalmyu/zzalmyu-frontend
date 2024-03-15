@@ -3,4 +3,5 @@ export interface ChatMessage {
   email: string;
   message: string;
   createdAt: string;
+  type: "IMAGE" | "HELLO";
 }
