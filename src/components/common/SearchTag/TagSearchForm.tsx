@@ -3,12 +3,12 @@ import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
+import { sleep } from "@/utils/sleep";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
 import TagSlider from "@/components/common/TagSlider";
-
 interface Props {
   className?: string;
 }
@@ -43,11 +43,10 @@ const TagSearchForm = ({ className }: Props) => {
     setShowAutoComplete(true);
   };
 
-  const handleBlurTagInput = () => {
-    setTimeout(() => {
-      setShowAutoComplete(false);
-      setCursorIndex(-1);
-    }, 0.1);
+  const handleBlurTagInput = async () => {
+    await sleep(1);
+    setShowAutoComplete(false);
+    setCursorIndex(-1);
   };
 
   const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
