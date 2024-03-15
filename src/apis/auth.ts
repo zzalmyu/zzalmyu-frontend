@@ -1,4 +1,5 @@
 import { getLocalStorage } from "@/utils/localStorage";
+import { GetUserInfoResponse } from "@/types/user.dto";
 import http from "./core";
 import { REFRESH_TOKEN } from "@/constants/auth";
 
@@ -16,4 +17,12 @@ export const deleteUserWithdraw = () =>
       "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
     },
     url: "/v1/user",
+  });
+
+export const getUserInfo = () =>
+  http.get<GetUserInfoResponse>({
+    headers: {
+      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
+    },
+    url: "/v1/user/info",
   });
