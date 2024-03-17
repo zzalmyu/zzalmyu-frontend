@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import TagBadge from "../TagBadge";
+import TagBadge from "@/components/common/TagBadge";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
 
@@ -28,7 +28,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
   };
 
   return (
-    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
