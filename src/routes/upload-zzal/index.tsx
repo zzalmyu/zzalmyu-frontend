@@ -1,4 +1,5 @@
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, Fragment, useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
@@ -77,35 +78,41 @@ const UploadZzal = () => {
   }, [popularTags, setRecommendedTags]);
 
   return (
-    <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
-      <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
-      <UploadGuide />
-      <div className="mt-20pxr flex w-full flex-col sm:flex-row sm:items-start">
-        <div className="mx-auto flex w-320pxr flex-col">
-          <ImageUpload changeFile={changeFile} file={file} />
-        </div>
-        <div className="mx-auto flex h-400pxr w-320pxr flex-1 flex-col pl-0 sm:w-450pxr sm:pl-10">
-          <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">짤 제목</span>
-          <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
-            <input
-              id="imageTitleInput"
-              name="imageTitle"
-              onChange={handleChangeImageTitle}
-              value={imageTitle}
-              className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
-            />
+    <Fragment>
+      <Helmet>
+        <title>짤 업로드 - 짤뮤니티</title>
+        <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
+      </Helmet>
+      <div className="flex flex-col items-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
+        <div className="self-start text-2xl font-extrabold text-text-primary">짤 업로드</div>
+        <UploadGuide />
+        <div className="mt-20pxr flex w-full flex-col sm:flex-row sm:items-start">
+          <div className="mx-auto flex w-320pxr flex-col">
+            <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">태그 검색 및 추가</span>
-          <UploadTagSearchForm />
-          <button
-            className="mt-28 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
-            onClick={handleClickUploadButton}
-          >
-            업로드하기
-          </button>
+          <div className="mx-auto flex h-400pxr w-320pxr flex-1 flex-col pl-0 sm:w-450pxr sm:pl-10">
+            <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">짤 제목</span>
+            <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
+              <input
+                id="imageTitleInput"
+                name="imageTitle"
+                onChange={handleChangeImageTitle}
+                value={imageTitle}
+                className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
+              />
+            </div>
+            <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">태그 검색 및 추가</span>
+            <UploadTagSearchForm />
+            <button
+              className="mt-28 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
+              onClick={handleClickUploadButton}
+            >
+              업로드하기
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Fragment>
   );
 };
 
