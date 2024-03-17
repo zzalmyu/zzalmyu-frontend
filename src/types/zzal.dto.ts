@@ -6,11 +6,22 @@ export interface PostUploadZzalRequest {
   title: string;
 }
 
+export interface GetMyLikedZzalsRequest {
+  page: number;
+  selectedTags: string[];
+}
+
 export interface GetMyLikedZzalsResponse {
   imageId: number;
   path: string;
   title: string;
   imageLikeYn: boolean;
+}
+
+export interface GetMyUploadedZzalsRequest {
+  page: number;
+  selectedTags: string[];
+
 }
 
 export interface GetMyUploadedZzalsResponse {
