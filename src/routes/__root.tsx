@@ -4,7 +4,7 @@ import { Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FolderUp, Heart, Home, PlusSquare } from "lucide-react";
-import { AuthContexType } from "@/components/Auth";
+import { AuthContextType } from "@/components/Auth";
 import { cn } from "@/utils/tailwind";
 import NotFound from "./-NotFound";
 import Header from "@/components/common/Header";
@@ -51,7 +51,7 @@ const NavigationFooter = () => {
 };
 
 interface RouterContext {
-  authorize: AuthContexType;
+  authorize: AuthContextType;
 }
 
 const RootComponent = () => {
