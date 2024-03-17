@@ -23,7 +23,6 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
       !selectedTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
     ) {
       setSelectedTags((previousState) => [...previousState, { tagId, tagName }]);
-      console.log(selectedTags);
     }
   };
 
@@ -43,8 +42,8 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
             </span>
           </div>
           <ul className="mb-10pxr flex flex-wrap gap-6pxr">
-            {selectedTags.map(({ tagId, tagName }, index) => (
-              <li key={`${index}-${tagId}`}>
+            {selectedTags.map(({ tagId, tagName }) => (
+              <li key={`${tagId}`}>
                 <UploadTagBadge tagId={tagId} tagName={tagName} isClickable />
               </li>
             ))}

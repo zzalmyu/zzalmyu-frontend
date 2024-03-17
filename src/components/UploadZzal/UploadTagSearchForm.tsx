@@ -18,8 +18,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
   const { createTag } = usePostTag();
   const [recommendedTags] = useAtom($recommendedTags);
   const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
-  const isMounted = useRef(false);
-  const isChangeState = useRef(false); // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
+  const isMountedRef = useRef(false);
+  const isChangeStateRef = useRef(false); // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
@@ -50,14 +50,14 @@ const UploadTagSearchForm = ({ className }: Props) => {
   };
 
   useEffect(() => {
-    if (!isMounted.current) {
-      isMounted.current = true;
+    if (!isMountedRef.current) {
+      isMountedRef.current = true;
       return;
     }
 
     // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
-    if (!isChangeState.current) {
-      isChangeState.current = true;
+    if (!isChangeStateRef.current) {
+      isChangeStateRef.current = true;
       return;
     }
 
