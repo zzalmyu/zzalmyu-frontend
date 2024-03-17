@@ -2,6 +2,7 @@ import { ButtonHTMLAttributes } from "react";
 import { ReactNode } from "react";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/utils/tailwind";
+import Spinner from "../common/Spinner";
 
 interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   Icon: LucideIcon;
@@ -9,9 +10,17 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   onClick: () => void;
   isDisabled?: boolean;
+  isLoading?: boolean;
 }
 
-const ButtonWithIcon = ({ Icon, iconLabel, children, onClick, isDisabled = false }: Props) => {
+const ButtonWithIcon = ({
+  Icon,
+  iconLabel,
+  children,
+  onClick,
+  isDisabled = false,
+  isLoading = false,
+}: Props) => {
   return (
     <button
       onClick={onClick}
@@ -21,7 +30,8 @@ const ButtonWithIcon = ({ Icon, iconLabel, children, onClick, isDisabled = false
         "cursor-pointer": !isDisabled,
       })}
     >
-      <Icon aria-label={iconLabel} />
+      {!isLoading && <Icon aria-label={iconLabel} />}
+      {isLoading && <Spinner />}
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
     </button>
   );

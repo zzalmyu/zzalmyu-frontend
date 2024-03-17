@@ -32,12 +32,12 @@ const DropdownMenu = ({ user }: Props) => {
 
   const menuItems = [
     {
-      path: "/my-uploaded-zzal/",
+      path: "/my-uploaded-zzals/",
       Icon: FolderUp,
       name: "업로드한 짤",
     },
     {
-      path: "/my-liked-zzal/",
+      path: "/my-liked-zzals/",
       Icon: Heart,
       name: "좋아요한 짤",
     },
@@ -61,7 +61,7 @@ const DropdownMenu = ({ user }: Props) => {
   };
 
   return (
-    <ul className="menu menu-horizontal px-0">
+    <ul className="menu menu-horizontal z-20 hidden px-0 sm:block">
       <li>
         <details ref={detailsRef}>
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
@@ -82,6 +82,15 @@ const DropdownMenu = ({ user }: Props) => {
                 </Link>
               </li>
             ))}
+            {refreshToken && (
+              <Link
+                to="/delete-account"
+                className="mt-2pxr block text-center text-[9px] text-gray-700 underline"
+                onClick={toggleDetails}
+              >
+                계정 탈퇴하기
+              </Link>
+            )}
           </ul>
         </details>
       </li>

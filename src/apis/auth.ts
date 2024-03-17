@@ -12,6 +12,7 @@ export const patchLogOut = () =>
     url: "/v1/user/logout",
   });
 
+
 export const postReissueToken = async (): Promise<{
   accessTokenResponse: string;
   refreshTokenResponse: string;
@@ -35,3 +36,11 @@ export const postReissueToken = async (): Promise<{
     refreshTokenResponse: headers["authorization-refresh"].split(" ")[1],
   };
 };
+
+export const deleteUserWithdraw = () =>
+  http.delete<void>({
+    headers: {
+      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
+    },
+    url: "/v1/user",
+  });

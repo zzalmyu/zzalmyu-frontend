@@ -1,16 +1,44 @@
-import http from "@/apis/core";
-import { GetMyLikedZzalsResponse } from "@/types/zzal.dto";
-import { GetZzalResponse } from "@/types/zzal.dto";
+import {
+  PostUploadZzalRequest,
+  GetMyLikedZzalsResponse,
+  GetMyUploadedZzalsResponse,
+  GetZzalDetailsResponse,
+  GetZzalResponse,
+} from "@/types/zzal.dto";
+import http from "./core";
 import { PAGINATION_LIMIT } from "@/constants/api";
+
+export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("tagIdList", tagIdList.join(","));
+  formData.append("title", title);
+
+  return http.post<PostUploadZzalRequest>({
+    url: `/v1/image`,
+    data: formData,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};
 
 export const deleteMyZzal = (imageId: number) => {
   return http.delete<number>({ url: `/v1/image/${imageId}` });
 };
 
-export const getMyLikedZzals = (offset: number) =>
+export const getMyLikedZzals = (page: number) =>
   http.get<GetMyLikedZzalsResponse>({
-    url: `/v1/image/like?page=${offset}&size=${PAGINATION_LIMIT}`,
+    url: `/v1/image/like?page=${page}&size=${PAGINATION_LIMIT}`,
   });
+
+export const getMyUploadedZzals = (page: number) =>
+  http.get<GetMyUploadedZzalsResponse>({
+    url: `/v1/image/upload?page=${page}&size=${PAGINATION_LIMIT}`,
+  });
+
+export const getZzalDetails = (imageId: number) =>
+  http.get<GetZzalDetailsResponse>({ url: `/v1/image/${imageId}` });
 
 export const postImageLike = (imageId: number) =>
   http.post<GetZzalResponse>({
