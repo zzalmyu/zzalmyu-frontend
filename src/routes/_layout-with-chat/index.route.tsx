@@ -5,12 +5,12 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 const route = getRouteApi("/_layout-with-chat/");
 
-const Home = () => {
+const PendingComponent = () => {
+  const navigate = useNavigate();
   const { accessToken, refreshToken } = route.useSearch<{
     accessToken: string;
     refreshToken: string;
   }>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (accessToken && refreshToken) {
@@ -19,10 +19,9 @@ const Home = () => {
       navigate({ to: "/" });
     }
   });
-
-  return <div></div>;
+  return <div>pending Home Zzlas</div>;
 };
 
 export const Route = createFileRoute("/_layout-with-chat/")({
-  component: Home,
+  pendingComponent: PendingComponent,
 });

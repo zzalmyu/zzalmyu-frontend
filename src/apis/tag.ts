@@ -4,6 +4,7 @@ import {
   GetTopTagsFromUploadedResponse,
   GetTopTagsFromLikedResponse,
   PostUsedTagResponse,
+  GetTopTagsFromHomeResponse,
   PostTagResponse,
 } from "@/types/tag.dto";
 import http from "./core";
@@ -20,6 +21,8 @@ export const getSearchTag = (tag: string) =>
       keyword: tag,
     },
   });
+
+export const getTopTagsFromHome = () => http.get<GetTopTagsFromHomeResponse>({ url: "/v1/tag" });
 
 export const getTopTagsFromUploaded = () =>
   http.get<GetTopTagsFromUploadedResponse>({

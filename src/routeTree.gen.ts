@@ -16,7 +16,7 @@ import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutWithChatImport } from "./routes/_layout-with-chat"
 import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
 import { Route as DeleteAccountIndexImport } from "./routes/delete-account/index"
-import { Route as LayoutWithChatIndexImport } from "./routes/_layout-with-chat/index"
+import { Route as LayoutWithChatIndexRouteImport } from "./routes/_layout-with-chat/index.route"
 import { Route as LayoutWithChatMyUploadedZzalsRouteImport } from "./routes/_layout-with-chat/my-uploaded-zzals/route"
 import { Route as LayoutWithChatMyLikedZzalsRouteImport } from "./routes/_layout-with-chat/my-liked-zzals/route"
 import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
@@ -45,10 +45,12 @@ const DeleteAccountIndexRoute = DeleteAccountIndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const LayoutWithChatIndexRoute = LayoutWithChatIndexImport.update({
+const LayoutWithChatIndexRouteRoute = LayoutWithChatIndexRouteImport.update({
   path: "/",
   getParentRoute: () => LayoutWithChatRoute,
-} as any)
+} as any).lazy(() =>
+  import("./routes/_layout-with-chat/index.route.lazy").then((d) => d.Route),
+)
 
 const LayoutWithChatMyUploadedZzalsRouteRoute =
   LayoutWithChatMyUploadedZzalsRouteImport.update({
@@ -108,7 +110,7 @@ declare module "@tanstack/react-router" {
       parentRoute: typeof LayoutWithChatImport
     }
     "/_layout-with-chat/": {
-      preLoaderRoute: typeof LayoutWithChatIndexImport
+      preLoaderRoute: typeof LayoutWithChatIndexRouteImport
       parentRoute: typeof LayoutWithChatImport
     }
     "/delete-account/": {
@@ -140,7 +142,7 @@ export const routeTree = rootRoute.addChildren([
   LayoutWithChatRoute.addChildren([
     LayoutWithChatMyLikedZzalsRouteRoute,
     LayoutWithChatMyUploadedZzalsRouteRoute,
-    LayoutWithChatIndexRoute,
+    LayoutWithChatIndexRouteRoute,
   ]),
   DeleteAccountIndexRoute,
   UploadZzalIndexRoute,
