@@ -1,16 +1,20 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { XCircle } from "lucide-react";
+import { useSetAtom } from "jotai";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
-import TagBadge from "@/components/common/TagBadge";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
+import { $recommendedTags } from "@/store/tag";
+import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 const MyUploadedZzals = () => {
   const { topTags } = useGetTopTagsFromUploaded();
   const { zzals, handleFetchNextPage } = useGetMyUploadedZzals();
+  const { deleteMyZzal } = useDeleteMyZzal();
+  const setRecommendedTags = useSetAtom($recommendedTags);
   const fetchMoreRef = useRef(null);
 
   useIntersectionObserver({
@@ -18,27 +22,35 @@ const MyUploadedZzals = () => {
     handleIntersect: handleFetchNextPage,
   });
 
+  useEffect(() => {
+    setRecommendedTags(topTags);
+  }, [topTags, setRecommendedTags]);
+
+  const handleClickDeleteButton = (imageId: number) => () => {
+    deleteMyZzal(imageId);
+  };
+
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="mb-10pxr min-w-650pxr pl-10pxr">
-        <div className="mb-8pxr font-semibold">내가 가장 많이 사용한 태그</div>
-        {topTags.map(({ tagId, tagName }) => (
-          <TagBadge key={tagId} content={tagName} isClickable className="mr-5pxr" />
-        ))}
-      </div>
-      <TagSearchForm />
       <MasonryLayout className="mt-15pxr">
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
-          <ZzalCard
-            className="mb-10pxr"
-            key={imageId}
-            src={path}
-            alt={title}
-            imageId={imageId}
-            isLiked={imageLikeYn}
-            imageIndex={index}
-            queryKey="likedZzals"
-          />
+          <div className="relative" key={imageId}>
+            <ZzalCard
+              className="mb-10pxr"
+              src={path}
+              alt={title}
+              imageId={imageId}
+              imageIndex={index}
+              isLiked={imageLikeYn}
+              queryKey="uploadedZzals"
+            />
+            <XCircle
+              onClick={handleClickDeleteButton(imageId)}
+              className="absolute right-2 top-2 z-0"
+              fill="white"
+              aria-label="짤 삭제"
+            />
+          </div>
         ))}
       </MasonryLayout>
       <div ref={fetchMoreRef} />
