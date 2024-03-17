@@ -20,7 +20,7 @@ export default {
     { pattern: /w-/ },
     {
       pattern:
-        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag)/,
+        /bg-(primary|secondary|background|surface1|surface2|card|tooltip|toolbar|delete|tag|black)/,
     },
     { pattern: /text-(text-primary|text-secondary|white|black|neutral)/ },
   ],
