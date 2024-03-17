@@ -3,9 +3,11 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
+
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
 import TagSlider from "@/components/common/TagSlider";
+import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
 
 interface Props {
   autoCompletedTags: Tag[];
@@ -14,11 +16,13 @@ interface Props {
 }
 
 const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+  const { increaseTagUsage } = usePostUsedTag();
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagName: string) => () => {
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
+      increaseTagUsage(tagName);
       setSelectedTags((previousState) => [...previousState, tagName]);
     }
   };

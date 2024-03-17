@@ -9,11 +9,14 @@ import { $recommendedTags, $selectedTags } from "@/store/tag";
 import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
 import TagSlider from "@/components/common/TagSlider";
+import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
+
 interface Props {
   className?: string;
 }
 
 const TagSearchForm = ({ className }: Props) => {
+  const { increaseTagUsage } = usePostUsedTag();
   const [recommendedTags] = useAtom($recommendedTags);
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [tagKeyword, setTagKeyword] = useState("");
@@ -28,6 +31,7 @@ const TagSearchForm = ({ className }: Props) => {
     const userInputTag = formData.get("tag") as string;
 
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(userInputTag)) {
+      increaseTagUsage(userInputTag);
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
