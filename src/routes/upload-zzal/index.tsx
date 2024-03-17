@@ -98,7 +98,7 @@ const UploadZzal = () => {
           <span className="mb-4 pt-10 text-sm font-bold sm:pt-0">태그 검색 및 추가</span>
           <UploadTagSearchForm />
           <button
-            className="mt-10 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
+            className="mt-28 h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
             onClick={handleClickUploadButton}
           >
             업로드하기
