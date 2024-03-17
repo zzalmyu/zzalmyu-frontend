@@ -41,6 +41,6 @@ const DeleteAccount = () => {
   );
 };
 
-export const Route = createFileRoute("/delete-account/")({
+export const Route = createFileRoute("/_authentication/delete-account/")({
   component: DeleteAccount,
 });

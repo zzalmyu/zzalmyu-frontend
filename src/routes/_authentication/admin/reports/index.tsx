@@ -43,7 +43,7 @@ const Admin = () => {
   );
 };
 
-export const Route = createFileRoute("/admin/reports/")({
+export const Route = createFileRoute("/_authentication/admin/reports/")({
   component: Admin,
   pendingComponent: Pending,
 });
