@@ -33,7 +33,6 @@ const TagSearchForm = ({ className }: Props) => {
 
     setCursorIndex(0);
     setTagKeyword("");
-    setShowAutoComplete(false);
   };
 
   const handleClickResetTagButton = () => {
