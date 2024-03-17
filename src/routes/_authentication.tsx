@@ -4,7 +4,7 @@ import axios from "axios";
 export const Route = createFileRoute("/_authentication")({
   beforeLoad: async ({ context, location, navigate }) => {
     try {
-      const userInfomation = await context.auth.isAuthenticated();
+      const userInfomation = await context.authorize.isAuthenticated();
 
       if (location.pathname === "/admin/reports" && userInfomation.role === "USER") {
         navigate({ to: "/" });

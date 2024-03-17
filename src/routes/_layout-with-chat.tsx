@@ -53,7 +53,7 @@ export const Route = createFileRoute("/_layout-with-chat")({
     if (location.pathname === "/") return;
 
     try {
-      await context.auth.isAuthenticated();
+      await context.authorize.isAuthenticated();
     } catch (error) {
       if (!axios.isAxiosError(error)) return;
       if (error.response?.status === 401) {
