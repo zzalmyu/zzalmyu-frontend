@@ -5,20 +5,20 @@ import { useAtom } from "jotai";
 import { getLocalStorage } from "@/utils/localStorage";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
-import { $userInfo } from "@/store/user";
+import { $userInformation } from "@/store/user";
 
 const DropdownMenu = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
   const { logout } = useLogout();
-  const [userInfo, setUserInfo] = useAtom($userInfo);
-  const { userId } = userInfo;
+  const [userInformation, setUserInformation] = useAtom($userInformation);
+  const { userId } = userInformation;
 
   const handleClickLogout = () => {
     logout(undefined, {
       onSuccess: () => {
-        setUserInfo({
+        setUserInformation({
           userId: 0,
           email: "",
           role: "GUEST",

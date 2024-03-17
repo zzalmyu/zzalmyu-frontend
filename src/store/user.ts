@@ -1,7 +1,7 @@
 import { atom } from "jotai";
-import { UserInfo } from "@/types/user";
+import { UserInformation } from "@/types/user";
 
-export const $userInfo = atom<UserInfo>({
+export const $userInformation = atom<UserInformation>({
   userId: 0,
   email: "",
   role: "GUEST",

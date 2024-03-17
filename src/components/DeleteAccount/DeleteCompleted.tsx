@@ -5,16 +5,16 @@ import { Link } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
-import { $userInfo } from "@/store/user";
+import { $userInformation } from "@/store/user";
 
 const DeleteCompleted = () => {
   const { userWithdraw } = useDeleteUserWithdraw();
-  const [, setUserInfo] = useAtom($userInfo);
+  const [, setUserInformation] = useAtom($userInformation);
 
   useEffect(() => {
     userWithdraw(undefined, {
       onSuccess: () => {
-        setUserInfo({
+        setUserInformation({
           userId: 0,
           email: "",
           role: "GUEST",

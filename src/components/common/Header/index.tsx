@@ -7,23 +7,23 @@ import { getLocalStorage } from "@/utils/localStorage";
 import ThemeToggle from "./ThemeToggle.tsx";
 import DropdownMenu from "./DropdownMenu.tsx";
 import Logo from "@/assets/svg/logo.svg";
-import { $userInfo } from "@/store/user";
-import useGetUserInfo from "@/hooks/api/auth/useGetUserInfo.ts";
+import { $userInformation } from "@/store/user";
+import useGetUserInformation from "@/hooks/api/auth/useGetUserInformation.ts";
 import { REFRESH_TOKEN } from "@/constants/auth";
 
 const Header = () => {
   const loginModalOverlay = useOverlay();
-  const [, setUserInfo] = useAtom($userInfo);
-  const { userInfo } = useGetUserInfo();
+  const [, setUserInformation] = useAtom($userInformation);
+  const { userInformation } = useGetUserInformation();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
   useEffect(() => {
-    if (refreshToken && userInfo) {
-      setUserInfo(userInfo);
+    if (refreshToken && userInformation) {
+      setUserInformation(userInformation);
     }
-  }, [refreshToken, userInfo, setUserInfo]);
+  }, [refreshToken, userInformation, setUserInformation]);
 
-  const role = refreshToken && userInfo ? userInfo.role : "GUEST";
+  const role = refreshToken && userInformation ? userInformation.role : "GUEST";
 
   const handleClickLogin = () => {
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);

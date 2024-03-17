@@ -1,3 +1,3 @@
-import { UserInfo } from "./user";
+import { UserInformation } from "./user";
 
-export type GetUserInfoResponse = UserInfo;
+export type GetUserInformationResponse = UserInformation;
