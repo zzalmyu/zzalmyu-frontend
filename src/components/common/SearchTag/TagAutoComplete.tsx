@@ -6,6 +6,7 @@ import { Tag } from "@/types/tag";
 import TagBadge from "@/components/common/TagBadge";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
+import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
 
 interface Props {
   autoCompletedTags: Tag[];
@@ -14,11 +15,13 @@ interface Props {
 }
 
 const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+  const { increaseTagUsage } = usePostUsedTag();
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagName: string) => () => {
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
+      increaseTagUsage(tagName);
       setSelectedTags((previousState) => [...previousState, tagName]);
     }
   };
