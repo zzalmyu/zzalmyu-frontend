@@ -3,8 +3,8 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import TagBadge from "../common/TagBadge";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
+import UploadTagBadge from "./UploadTagBadge";
+import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
 import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
@@ -14,12 +14,16 @@ interface Props {
 }
 
 const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
-  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
   const [recommendedTags] = useAtom($recommendedTags);
 
-  const handleMouseDownTagName = (tagName: string) => () => {
-    if (selectedTags.length < MAX_SEARCH_TAG_UPLOAD && !selectedTags.includes(tagName)) {
-      setSelectedTags((previousState) => [...previousState, tagName]);
+  const handleMouseDownTagName = (tagId: number, tagName: string) => () => {
+    if (
+      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
+    ) {
+      setSelectedTags((previousState) => [...previousState, { tagId, tagName }]);
+      console.log(selectedTags);
     }
   };
 
@@ -39,9 +43,9 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
             </span>
           </div>
           <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
-            {selectedTags.map((selectedTag, index) => (
-              <li key={`${index}-${selectedTag}`}>
-                <TagBadge content={selectedTag} isClickable />
+            {selectedTags.map(({ tagId, tagName }, index) => (
+              <li key={`${index}-${tagId}`}>
+                <UploadTagBadge tagId={tagId} tagName={tagName} isClickable />
               </li>
             ))}
           </ul>
@@ -53,7 +57,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
       >
         {autoCompletedTags.map(({ tagId, tagName }, index) => (
           <li
-            onMouseDown={handleMouseDownTagName(tagName)}
+            onMouseDown={handleMouseDownTagName(tagId, tagName)}
             onMouseOver={handleMouseOverTag(index)}
             key={tagId}
             className={cn(
@@ -81,7 +85,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
                 "px-2 py-2",
                 recommendedIndex === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
               )}
-              onMouseDown={handleMouseDownTagName(tagName)}
+              onMouseDown={handleMouseDownTagName(tagId, tagName)}
             >
               <div className="flex items-center gap-2">
                 <Bookmark size={16} color="#807F7F" />

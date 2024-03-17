@@ -3,3 +3,8 @@ export interface Tag {
   tagName: string;
   count: number;
 }
+
+export interface TagUpload {
+  tagId: number;
+  tagName: string;
+}

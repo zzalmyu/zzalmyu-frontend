@@ -1,12 +1,13 @@
-import { FormEvent, ChangeEvent, useState, useEffect } from "react";
+import { FormEvent, ChangeEvent, useState, useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
-import TagBadge from "../common/TagBadge";
 import UploadTagAutoComplete from "./UploadTagAutoComplete";
+import UploadTagBadge from "./UploadTagBadge";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
+import { usePostTag } from "@/hooks/api/tag/usePostTag";
+import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
 import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
@@ -14,12 +15,17 @@ interface Props {
 }
 
 const UploadTagSearchForm = ({ className }: Props) => {
+  const { createTag } = usePostTag();
   const [recommendedTags] = useAtom($recommendedTags);
-  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+  const isMounted = useRef(false);
+  const isChangeState = useRef(false); // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const [cursorIndex, setCursorIndex] = useState(-2);
+  const [newTagId, setNewTagId] = useState<number>(-1);
+  const [newTagName, setNewTagName] = useState<string>("");
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,13 +33,44 @@ const UploadTagSearchForm = ({ className }: Props) => {
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
-    if (selectedTags.length < MAX_SEARCH_TAG_UPLOAD && !selectedTags.includes(userInputTag)) {
-      setSelectedTags((previousState) => [...previousState, userInputTag]);
+    if (autoCompletedTags.length === 0 || userInputTag !== autoCompletedTags[0]?.tagName) {
+      createTag(userInputTag, {
+        onSuccess: (response) => {
+          setNewTagName(userInputTag);
+          setNewTagId(response.tagId);
+        },
+      });
+    } else {
+      setNewTagName(userInputTag);
+      setNewTagId(autoCompletedTags[0].tagId);
     }
 
     setCursorIndex(0);
     setTagKeyword("");
   };
+
+  useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
+
+    // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
+    if (!isChangeState.current) {
+      isChangeState.current = true;
+      return;
+    }
+
+    if (
+      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedTags.find((tag) => tag.tagId === newTagId && tag.tagName === newTagName)
+    ) {
+      setSelectedTags((previousState) => [
+        ...previousState,
+        { tagId: newTagId, tagName: newTagName },
+      ]);
+    }
+  }, [newTagId, newTagName]);
 
   const handleClickResetTagButton = () => {
     setSelectedTags([]);
@@ -139,8 +176,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
         )}
 
         <ul className="flex-column mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
-          {selectedTags.map((selectedTag, index) => (
-            <TagBadge content={selectedTag} isClickable key={`${index}-${selectedTag}`} />
+          {selectedTags.map(({ tagId, tagName }) => (
+            <UploadTagBadge tagId={tagId} tagName={tagName} isClickable key={`${tagId}`} />
           ))}
         </ul>
       </div>

@@ -7,14 +7,14 @@ import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
+import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const { uploadZzal } = usePostUploadZzal();
   const [file, setFile] = useState<File | null>(null);
   const [imageTitle, setImageTitle] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
   const setRecommendedTags = useSetAtom($recommendedTags);
 
   const changeFile = (file: File | null) => {
@@ -44,8 +44,7 @@ const UploadZzal = () => {
     uploadZzal(
       {
         file: file,
-        // TODO: [2024.02.27] 선택한 태그의 Id를 전달하는 코드 구현 후, 실제 selectedTags Id 넘겨주기
-        tagIdList: [2, 3, 4],
+        tagIdList: selectedTags.map((selectedTag) => selectedTag.tagId),
         title: imageTitle,
       },
       {
