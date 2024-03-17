@@ -1,5 +1,6 @@
 import axios from "axios";
 import { getLocalStorage } from "@/utils/localStorage";
+import { GetUserInformationResponse } from "@/types/user.dto";
 import { ReissueTokenResponse } from "@/types/auth.dto";
 import http from "./core";
 import { REFRESH_TOKEN } from "@/constants/auth";
@@ -11,7 +12,6 @@ export const patchLogOut = () =>
     },
     url: "/v1/user/logout",
   });
-
 
 export const postReissueToken = async (): Promise<{
   accessTokenResponse: string;
@@ -43,4 +43,12 @@ export const deleteUserWithdraw = () =>
       "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
     },
     url: "/v1/user",
+  });
+
+export const getUserInformation = () =>
+  http.get<GetUserInformationResponse>({
+    headers: {
+      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
+    },
+    url: "/v1/user/info",
   });
