@@ -3,7 +3,7 @@ import {
   GetTagsResponse,
   GetTopTagsFromUploadedResponse,
   GetTopTagsFromLikedResponse,
-  PostTagResponse,
+  PostUsedTagResponse,
 } from "@/types/tag.dto";
 import http from "./core";
 
@@ -30,9 +30,9 @@ export const getTopTagsFromLiked = () =>
     url: "/v1/tag/me/like",
   });
 
-export const postTag = (tagName: string) =>
-  http.post<PostTagResponse>({
-    url: "/v1/tag",
+export const postUsedTag = (tagName: string) =>
+  http.post<PostUsedTagResponse>({
+    url: "/v1/tag/use",
     data: {
       name: tagName,
     },

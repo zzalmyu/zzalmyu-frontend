@@ -1,8 +1,21 @@
+import { useEffect } from "react";
+import { toast } from "react-toastify";
 import { CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import AccountDeletionNotice from "./AccountDeletionNotice";
+import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
 
 const DeleteCompleted = () => {
+  const { userWithdraw } = useDeleteUserWithdraw();
+
+  useEffect(() => {
+    userWithdraw(undefined, {
+      onSuccess: () => {
+        toast.success("계정이 삭제되었습니다.", { autoClose: 1500 });
+      },
+    });
+  }, []);
+
   return (
     <div className="flex w-full flex-col items-center">
       <div className={"max-w-570pxr pb-5 sm:h-385pxr"}>
