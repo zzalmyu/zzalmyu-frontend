@@ -55,11 +55,9 @@ const ImageDetailModalContent = () => {
           return;
         }
 
-        const errorResponse = error.response?.data as CustomErrorResponse;
-        const status = errorResponse.statusCode;
-        const code = errorResponse.code;
+        const { statusCode, code } = error.response?.data as CustomErrorResponse;
 
-        if (status === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
+        if (statusCode === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
           toast.error(errorMessage[code]);
         } else {
           toast.error(errorMessage["DEFAULT"]);
