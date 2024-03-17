@@ -6,6 +6,8 @@ import {
   GetZzalResponse,
   GetMyLikedZzalsRequest,
   GetMyUploadedZzalsRequest,
+  GetMyHomeZzalsRequest,
+  GetMyHomeZzalsResponse,
 } from "@/types/zzal.dto";
 import http from "./core";
 import { PAGINATION_LIMIT } from "@/constants/api";
@@ -28,6 +30,14 @@ export const postUploadZzal = ({ file, tagIdList, title }: PostUploadZzalRequest
 export const deleteMyZzal = (imageId: number) => {
   return http.delete<number>({ url: `/v1/image/${imageId}` });
 };
+
+export const getHomeZzals = ({ page, selectedTags }: GetMyHomeZzalsRequest) =>
+  http.get<GetMyHomeZzalsResponse>({
+    url: `/v1/image?page=${page}&size=${PAGINATION_LIMIT}`,
+    params: {
+      tagName: selectedTags.join(","),
+    },
+  });
 
 export const getMyLikedZzals = ({ page, selectedTags }: GetMyLikedZzalsRequest) =>
   http.get<GetMyLikedZzalsResponse>({
