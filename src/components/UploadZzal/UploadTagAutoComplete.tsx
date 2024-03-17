@@ -3,10 +3,9 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
-import { MAX_SEARCH_TAG } from "@/constants/tag";
-import TagSlider from "@/components/common/TagSlider";
-import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
+import UploadTagBadge from "./UploadTagBadge";
+import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
+import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
   autoCompletedTags: Tag[];
@@ -14,15 +13,16 @@ interface Props {
   setCursorIndex: Dispatch<SetStateAction<number>>;
 }
 
-const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
-  const { increaseTagUsage } = usePostUsedTag();
-  const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
   const [recommendedTags] = useAtom($recommendedTags);
 
-  const handleMouseDownTagName = (tagName: string) => () => {
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
-      increaseTagUsage(tagName);
-      setSelectedTags((previousState) => [...previousState, tagName]);
+  const handleMouseDownTagName = (tagId: number, tagName: string) => () => {
+    if (
+      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
+    ) {
+      setSelectedTags((previousState) => [...previousState, { tagId, tagName }]);
     }
   };
 
@@ -31,20 +31,22 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
   };
 
   return (
-    <div className="absolute top-[-5px] z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
           <div className="text-10pxr mb-20pxr font-semibold text-neutral">
             선택된 태그
             <span className="ml-5pxr">
-              {selectedTags.length}/{MAX_SEARCH_TAG}
+              {selectedTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
-          <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
-            <div className="w-full">
-              <TagSlider tags={selectedTags} />
-            </div>
+          <ul className="mb-10pxr flex flex-wrap gap-6pxr">
+            {selectedTags.map(({ tagId, tagName }) => (
+              <li key={`${tagId}`}>
+                <UploadTagBadge tagId={tagId} tagName={tagName} isClickable />
+              </li>
+            ))}
           </ul>
         </div>
       )}
@@ -54,7 +56,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
       >
         {autoCompletedTags.map(({ tagId, tagName }, index) => (
           <li
-            onMouseDown={handleMouseDownTagName(tagName)}
+            onMouseDown={handleMouseDownTagName(tagId, tagName)}
             onMouseOver={handleMouseOverTag(index)}
             key={tagId}
             className={cn(
@@ -82,7 +84,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
                 "px-2 py-2",
                 recommendedIndex === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
               )}
-              onMouseDown={handleMouseDownTagName(tagName)}
+              onMouseDown={handleMouseDownTagName(tagId, tagName)}
             >
               <div className="flex items-center gap-2">
                 <Bookmark size={16} color="#807F7F" />
@@ -96,4 +98,4 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
   );
 };
 
-export default TagAutoComplete;
+export default UploadTagAutoComplete;

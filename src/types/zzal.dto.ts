@@ -21,7 +21,6 @@ export interface GetMyLikedZzalsResponse {
 export interface GetMyUploadedZzalsRequest {
   page: number;
   selectedTags: string[];
-
 }
 
 export interface GetMyUploadedZzalsResponse {
