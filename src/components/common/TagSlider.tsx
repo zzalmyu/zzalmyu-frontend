@@ -41,6 +41,7 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
         slidesPerView={"auto"}
         spaceBetween={15}
         allowTouchMove={false}
+        slideToClickedSlide={true}
         pagination={{
           type: "fraction",
         }}
@@ -77,7 +78,8 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
           <SwiperSlide
             key={`${index}-${tagName}`}
             className={cn("w-fit cursor-pointer px-5pxr text-center text-text-primary", {
-              "pr-20pxr": index === tags.length - 1,
+              "pr-50pxr": index === tags.length - 1,
+              "pl-30pxr": index === 0 && showPrevButton,
             })}
           >
             <button onClick={onClick}>
