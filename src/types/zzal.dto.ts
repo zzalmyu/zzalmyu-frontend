@@ -10,12 +10,14 @@ export interface GetMyLikedZzalsResponse {
   imageId: number;
   path: string;
   title: string;
+  imageLikeYn: boolean;
 }
 
 export interface GetMyUploadedZzalsResponse {
   imageId: number;
   title: string;
   path: string;
+  imageLikeYn: boolean;
 }
 
 export interface GetZzalResponse {
