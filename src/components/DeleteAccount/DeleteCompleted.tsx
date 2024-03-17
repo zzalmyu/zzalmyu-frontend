@@ -2,14 +2,14 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useSetAtom } from "jotai";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
 import { $userInformation } from "@/store/user";
 
 const DeleteCompleted = () => {
   const { userWithdraw } = useDeleteUserWithdraw();
-  const [, setUserInformation] = useAtom($userInformation);
+  const setUserInformation = useSetAtom($userInformation);
 
   useEffect(() => {
     userWithdraw(undefined, {
