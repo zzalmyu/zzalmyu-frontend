@@ -28,8 +28,17 @@ const MyUploadedZzals = () => {
       </div>
       <TagSearchForm />
       <MasonryLayout className="mt-15pxr">
-        {zzals.map(({ imageId, path, title }) => (
-          <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
+        {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
+          <ZzalCard
+            className="mb-10pxr"
+            key={imageId}
+            src={path}
+            alt={title}
+            imageId={imageId}
+            isLiked={imageLikeYn}
+            imageIndex={index}
+            queryKey="likedZzals"
+          />
         ))}
       </MasonryLayout>
       <div ref={fetchMoreRef} />

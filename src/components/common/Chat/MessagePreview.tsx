@@ -1,5 +1,4 @@
 import { useAtomValue, useSetAtom } from "jotai";
-import ZzalCard from "@/components/common/ZzalCard";
 import { $deleteMessagePreview, $previewImage } from "@/store/chat";
 
 const MessagePreview = () => {
@@ -8,7 +7,7 @@ const MessagePreview = () => {
 
   return (
     <div className="relative w-1/3 rounded-lg border-4 border-dashed border-yellow-400">
-      {previewImage && <ZzalCard src={previewImage} alt="메세지 미리보기" width={"full"} />}
+      {previewImage && <img src={previewImage} alt="메세지 미리보기" width="full" />}
       {!previewImage && <div className="h-150pxr w-full"></div>}
 
       {previewImage && (
