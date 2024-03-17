@@ -3,11 +3,12 @@ import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
-import TagBadge from "../TagBadge";
+import { sleep } from "@/utils/sleep";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import TagAutoComplete from "@/components/common/SearchTag/TagAutoComplete";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
+import TagSlider from "@/components/common/TagSlider";
 import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
 
 interface Props {
@@ -46,7 +47,8 @@ const TagSearchForm = ({ className }: Props) => {
     setShowAutoComplete(true);
   };
 
-  const handleBlurTagInput = () => {
+  const handleBlurTagInput = async () => {
+    await sleep(1);
     setShowAutoComplete(false);
     setCursorIndex(-1);
   };
@@ -129,23 +131,18 @@ const TagSearchForm = ({ className }: Props) => {
           />
         )}
       </div>
-      <div className="flex items-center">
+      <div className="mt-3 flex items-center justify-around">
         {selectedTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
-            className="flex-column mr-4 mt-4 flex items-center rounded-full bg-card p-2"
+            className="flex-column mr-4 flex items-center whitespace-nowrap rounded-full bg-card p-2"
             type="button"
           >
             <RotateCw size={12} aria-label="태그 초기화" />
             초기화
           </button>
         )}
-
-        <ul className="flex-column mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
-          {selectedTags.map((selectedTag, index) => (
-            <TagBadge content={selectedTag} isClickable key={`${index}-${selectedTag}`} />
-          ))}
-        </ul>
+        <div className="w-full">{!showAutoComplete && <TagSlider tags={selectedTags} />}</div>
       </div>
     </div>
   );
