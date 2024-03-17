@@ -8,6 +8,7 @@ const useGetZzalDetails = (imageId: number) => {
     select: (data) => ({
       isLiked: data.imageLikeYn,
       imageUrl: data.imgUrl,
+      tagNames: data.tags.map((tag) => tag.tagName),
       ...data,
     }),
   });

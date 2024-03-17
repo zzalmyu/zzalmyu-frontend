@@ -5,25 +5,21 @@ import { Navigation } from "swiper/modules";
 import SwiperCore from "swiper";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import { Tag } from "@/types/tag";
-import TagBadge from "../common/TagBadge";
+import TagBadge from "./TagBadge";
 
 interface Props {
-  tags: Tag[];
-  textSize?: string;
-  className?: string;
+  tags: string[];
+  tagClassName?: string;
   onClick?: () => void;
+  isClickable?: boolean;
 }
 
-const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
+const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) => {
   const [showPrevButton, setShowPrevButton] = useState(false);
   const [showNextButton, setShowNextButton] = useState(true);
   const [mainImageIndex, setMainImageIndex] = useState(0);
-
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
-
-  const arrowButtonClasses = "absolute top-0 z-10 h-full from-background from-70%";
 
   useEffect(() => {
     SwiperCore.use([Navigation]);
@@ -40,10 +36,12 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
   };
 
   return (
-    <div className={cn("relative flex w-full bg-background px-20pxr py-10pxr", className)}>
+    <div className={"relative flex bg-none "}>
       <Swiper
         slidesPerView={"auto"}
-        spaceBetween={27}
+        spaceBetween={15}
+        allowTouchMove={false}
+        slideToClickedSlide={true}
         pagination={{
           type: "fraction",
         }}
@@ -63,25 +61,44 @@ const TagSlider = ({ tags, textSize = "xs", className, onClick }: Props) => {
         }}
       >
         <button
-          className={cn(arrowButtonClasses, "bg-gradient-to-r pr-7pxr", {
-            hidden: !showPrevButton,
-          })}
+          className={cn(
+            "absolute top-0 z-10 h-full bg-gradient-to-r from-background from-70% pr-7pxr",
+            {
+              hidden: !showPrevButton,
+            },
+          )}
+          onMouseDown={(event) => event.preventDefault()}
           ref={navigationPrevRef}
           aria-label="이전으로 이동"
         >
           <ChevronLeft strokeWidth={1.5} />
         </button>
-        {tags.map(({ tagName, tagId }) => (
-          <SwiperSlide key={tagId} className="w-fit cursor-pointer text-center text-text-primary">
+
+        {tags.map((tagName, index) => (
+          <SwiperSlide
+            key={`${index}-${tagName}`}
+            className={cn("w-fit cursor-pointer px-5pxr text-center text-text-primary", {
+              "pr-50pxr": index === tags.length - 1,
+              "pl-30pxr": index === 0 && showPrevButton,
+            })}
+          >
             <button onClick={onClick}>
-              <TagBadge content={tagName} className={`bg-primary px-2 py-1 text-${textSize}`} />
+              <TagBadge
+                content={tagName}
+                className={cn("px-2 py-1 text-xs", tagClassName)}
+                isClickable={isClickable}
+              />
             </button>
           </SwiperSlide>
         ))}
         <button
-          className={cn(arrowButtonClasses, "right-0 bg-gradient-to-l pl-7pxr", {
-            hidden: !showNextButton,
-          })}
+          className={cn(
+            "absolute right-0 top-0 z-10 h-full bg-gradient-to-l from-background from-70% pl-7pxr",
+            {
+              hidden: !showNextButton,
+            },
+          )}
+          onMouseDown={(event) => event.preventDefault()}
           ref={navigationNextRef}
           aria-label="다음으로 이동"
         >

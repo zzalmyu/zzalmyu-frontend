@@ -1,4 +1,3 @@
-import { ReactNode, createContext, useContext } from "react";
 import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
@@ -9,47 +8,43 @@ import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
 import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
 
-interface ZzalCardProps {
-  children?: ReactNode;
+interface Props {
   src: string;
   alt: string;
-  hasAnimation?: boolean;
+  imageId: number;
+  isLiked: boolean;
+  imageIndex: number;
+  queryKey: ZzalType;
   width?: number | string;
   className?: string;
 }
 
-interface ZzalCardContextType {
-  src: string;
-}
-
-const ZzalCardContext = createContext<ZzalCardContextType>({
-  src: "",
-});
-
 const ZzalCard = ({
-  children,
   src,
   alt,
+  imageId,
+  isLiked,
+  imageIndex,
+  queryKey,
   width = 72,
-  hasAnimation = true,
   className,
-}: ZzalCardProps) => {
+}: Props) => {
   return (
-    <ZzalCardContext.Provider value={{ src }}>
-      <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
-        <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
-          {children}
-        </div>
-        <figure
-          className={cn(
-            "h-fit",
-            hasAnimation ? "transition duration-300 ease-in-out hover:brightness-75" : "none",
-          )}
-        >
-          {src && <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />}
-        </figure>
+    <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
+      <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+        <CopyButton src={src} />
+        <SendButton src={src} />
+        <LikeButton
+          imageId={imageId}
+          isLiked={isLiked}
+          imageIndex={imageIndex}
+          queryKey={queryKey}
+        />
       </div>
-    </ZzalCardContext.Provider>
+      <figure className="h-fit transition duration-300 ease-in-out hover:brightness-75">
+        {src && <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />}
+      </figure>
+    </div>
   );
 };
 
@@ -59,7 +54,6 @@ interface LikeButtonProps {
   imageIndex: number;
   queryKey: ZzalType;
 }
-
 const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
   const { addImageLike } = useAddImageLike(imageIndex, queryKey);
   const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey);
@@ -95,8 +89,10 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
   );
 };
 
-const SendButton = () => {
-  const { src } = useContext(ZzalCardContext);
+interface SendButtonProps {
+  src: string;
+}
+const SendButton = ({ src }: SendButtonProps) => {
   const setPreviewImage = useSetAtom($setMessagePreview);
 
   const handleClickSendImageSrc = () => {
@@ -113,9 +109,10 @@ const SendButton = () => {
   );
 };
 
-const CopyButton = () => {
-  const { src } = useContext(ZzalCardContext);
-
+interface CopyButtonProps {
+  src: string;
+}
+const CopyButton = ({ src }: CopyButtonProps) => {
   const handleClickCopytoClipboard = () => {
     copyZzal(src);
   };
@@ -129,9 +126,5 @@ const CopyButton = () => {
     </button>
   );
 };
-
-ZzalCard.SendButton = SendButton;
-ZzalCard.LikeButton = LikeButton;
-ZzalCard.CopyButton = CopyButton;
 
 export default ZzalCard;

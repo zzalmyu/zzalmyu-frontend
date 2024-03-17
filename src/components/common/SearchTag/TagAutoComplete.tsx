@@ -3,9 +3,10 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import TagBadge from "../TagBadge";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import { MAX_SEARCH_TAG } from "@/constants/tag";
+import TagSlider from "@/components/common/TagSlider";
+import usePostUsedTag from "@/hooks/api/tag/usePostUsedTag";
 
 interface Props {
   autoCompletedTags: Tag[];
@@ -14,11 +15,13 @@ interface Props {
 }
 
 const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+  const { increaseTagUsage } = usePostUsedTag();
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagName: string) => () => {
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
+      increaseTagUsage(tagName);
       setSelectedTags((previousState) => [...previousState, tagName]);
     }
   };
@@ -28,7 +31,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
   };
 
   return (
-    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
@@ -39,11 +42,9 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
             </span>
           </div>
           <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
-            {selectedTags.map((selectedTag, index) => (
-              <li key={`${index}-${selectedTag}`}>
-                <TagBadge content={selectedTag} isClickable />
-              </li>
-            ))}
+            <div className="w-full">
+              <TagSlider tags={selectedTags} />
+            </div>
           </ul>
         </div>
       )}
