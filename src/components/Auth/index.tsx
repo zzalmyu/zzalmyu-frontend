@@ -1,5 +1,5 @@
 import { ReactNode, createContext } from "react";
-import { getUserInfomation } from "@/apis/auth";
+import { getUserInformation } from "@/apis/auth";
 import { GetUserInfomationResponse } from "@/types/auth.dto";
 
 export interface AuthContexType {
@@ -9,7 +9,7 @@ export interface AuthContexType {
 export const AuthContext = createContext<AuthContexType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const isAuthenticated = getUserInfomation;
+  const isAuthenticated = getUserInformation;
 
   return <AuthContext.Provider value={{ isAuthenticated }}>{children}</AuthContext.Provider>;
 };

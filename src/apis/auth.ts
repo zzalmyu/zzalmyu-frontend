@@ -19,5 +19,5 @@ export const deleteUserWithdraw = () =>
     url: "/v1/user",
   });
 
-export const getUserInfomation = () =>
+export const getUserInformation = () =>
   http.get<GetUserInfomationResponse>({ url: "/v1/user/info" });
