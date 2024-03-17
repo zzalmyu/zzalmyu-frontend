@@ -25,7 +25,7 @@ const UploadTagBadge = ({ tagId, tagName, isClickable = false, className }: Prop
   return (
     <span
       className={cn(
-        "flex-column flex w-fit items-center rounded-3xl bg-black p-1 text-[14px] font-bold text-white",
+        "flex w-fit items-center rounded-3xl bg-black p-1 text-[14px] font-bold text-white",
         className,
       )}
     >

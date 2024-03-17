@@ -167,7 +167,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
         {selectedTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
-            className="flex-column mr-4 mt-4 flex items-center rounded-full bg-card p-2"
+            className="mr-4 mt-4 flex items-center rounded-full bg-card p-2"
             type="button"
           >
             <RotateCw size={12} aria-label="태그 초기화" />
@@ -175,7 +175,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
           </button>
         )}
 
-        <ul className="flex-column mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
+        <ul className="mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
           {selectedTags.map(({ tagId, tagName }) => (
             <UploadTagBadge tagId={tagId} tagName={tagName} isClickable key={`${tagId}`} />
           ))}

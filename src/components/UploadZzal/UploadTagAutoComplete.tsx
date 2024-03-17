@@ -42,7 +42,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
               {selectedTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
-          <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
+          <ul className="mb-10pxr flex flex-wrap gap-6pxr">
             {selectedTags.map(({ tagId, tagName }, index) => (
               <li key={`${index}-${tagId}`}>
                 <UploadTagBadge tagId={tagId} tagName={tagName} isClickable />
