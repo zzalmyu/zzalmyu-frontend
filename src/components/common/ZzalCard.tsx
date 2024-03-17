@@ -1,9 +1,11 @@
 import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
+import { useOverlay } from "@toss/use-overlay";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
+import ImageDetailModal from "../ImageDetailModal";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
 import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
@@ -29,6 +31,14 @@ const ZzalCard = ({
   width = 72,
   className,
 }: Props) => {
+  const zzalModalOverlay = useOverlay();
+
+  const handleClickZzal = () => {
+    zzalModalOverlay.open(({ isOpen, close }) => (
+      <ImageDetailModal isOpen={isOpen} onClose={close} imageId={imageId} />
+    ));
+  };
+
   return (
     <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
       <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
@@ -42,7 +52,14 @@ const ZzalCard = ({
         />
       </div>
       <figure className="h-fit transition duration-300 ease-in-out hover:brightness-75">
-        {src && <img src={src} alt={alt} className="h-full w-full rounded-lg object-cover" />}
+        {src && (
+          <img
+            src={src}
+            alt={alt}
+            className="h-full w-full rounded-lg object-cover"
+            onClick={handleClickZzal}
+          />
+        )}
       </figure>
     </div>
   );
