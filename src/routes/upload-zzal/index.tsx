@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Fragment, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
@@ -75,7 +75,7 @@ const UploadZzal = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <Helmet>
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
@@ -112,7 +112,7 @@ const UploadZzal = () => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 import { Helmet } from "react-helmet-async";
 import { createFileRoute, getRouteApi, useNavigate } from "@tanstack/react-router";
 import { setLocalStorage } from "@/utils/localStorage";
@@ -22,7 +22,7 @@ const Home = () => {
   });
 
   return (
-    <>
+    <Fragment>
       <Helmet>
         <title>짤뮤니티 | 나만을 위한 취향 저격 짤 추천</title>
         <meta
@@ -31,7 +31,7 @@ const Home = () => {
         />
       </Helmet>
       <div></div>
-    </>
+    </Fragment>
   );
 };
 

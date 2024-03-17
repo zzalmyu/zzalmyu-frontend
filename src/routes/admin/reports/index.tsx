@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { createFileRoute } from "@tanstack/react-router";
 import Pending from "./AdminReports.pendingComponent";
@@ -17,7 +17,7 @@ const Admin = () => {
   });
 
   return (
-    <>
+    <Fragment>
       <Helmet>
         <title>관리자 - 짤뮤니티</title>
         <meta name="description" content="짤뮤니티 관리자 페이지입니다" />
@@ -46,7 +46,7 @@ const Admin = () => {
           </div>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

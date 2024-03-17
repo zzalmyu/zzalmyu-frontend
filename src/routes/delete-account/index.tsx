@@ -1,4 +1,5 @@
 import { Helmet } from "react-helmet-async";
+import { Fragment } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { cn } from "@/utils/tailwind";
 import useFunnel from "@/hooks/common/useFunnel";
@@ -16,7 +17,7 @@ const DeleteAccount = () => {
   };
 
   return (
-    <>
+    <Fragment>
       <Helmet>
         <title>계정 삭제 - 짤뮤니티</title>
         <meta name="description" content="계정을 삭제하시겠습니까?" />
@@ -46,7 +47,7 @@ const DeleteAccount = () => {
           </Funnel>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 
