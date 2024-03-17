@@ -9,7 +9,7 @@ const router = createRouter({
   routeTree,
   defaultPreload: "intent",
   context: {
-    auth: undefined!,
+    authorize: undefined!,
   },
 });
 
@@ -20,8 +20,8 @@ declare module "@tanstack/react-router" {
 }
 
 const InnerApp = () => {
-  const auth = useAuthContext();
-  return <RouterProvider router={router} context={{ auth }} />;
+  const authorize = useAuthContext();
+  return <RouterProvider router={router} context={{ authorize }} />;
 };
 
 const queryClient = new QueryClient();

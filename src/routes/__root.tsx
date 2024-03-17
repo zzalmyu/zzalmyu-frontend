@@ -51,7 +51,7 @@ const NavigationFooter = () => {
 };
 
 interface RouterContext {
-  auth: AuthContexType;
+  authorize: AuthContexType;
 }
 
 const RootComponent = () => {
