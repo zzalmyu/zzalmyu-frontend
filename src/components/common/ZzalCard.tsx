@@ -56,7 +56,7 @@ const ZzalCard = ({
           <img
             src={src}
             alt={alt}
-            className="h-full w-full rounded-lg object-cover"
+            className="h-full w-full cursor-zoom-in rounded-lg object-cover"
             onClick={handleClickZzal}
           />
         )}
