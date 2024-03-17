@@ -18,6 +18,11 @@ export interface GetMyLikedZzalsResponse {
   imageLikeYn: boolean;
 }
 
+export interface GetMyUploadedZzalsRequest {
+  page: number;
+  selectedTags: string[];
+}
+
 export interface GetMyUploadedZzalsResponse {
   imageId: number;
   title: string;
