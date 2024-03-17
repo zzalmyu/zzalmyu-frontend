@@ -32,28 +32,23 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
             if (!oldData) {
               return undefined;
             }
-            const oldMessages = oldData.pages.flatMap((page) => page);
             const updatedPages = oldData.pages.map((page, idx) => {
               if (idx === 0) {
                 return [parsedMessages, ...page];
               }
               return page;
             });
-            console.log(oldData, oldMessages, updatedPages);
             return { ...oldData, pages: updatedPages } as InfiniteData<GetChatResponse>;
           });
           // handleScrollPosition();
-          targetRef.current?.scrollTo(0, targetRef.current.scrollHeight);
         } catch (error) {
           console.error(error);
           toast.error("채팅 연결 중 예상치 못한 오류가 발생했습니다!");
-        } finally {
-          console.log(JSON.parse(frame.body));
         }
       });
 
       // TODO: [2024.03.15] 로그인한 사용자만 greet 메세지 전송
-      // handleSendMessage("greet");
+      handleSendMessage("greet");
     };
     stompRef.current.activate();
   };
@@ -61,6 +56,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
   const handleSendMessage = (type: "zzal" | "greet") => {
     if (stompRef.current?.connected) {
       const messageContent: GreetMessageRequest | ZzalMessageRequest = {
+        // TODO: [2024.03.17] 사용자 조회 API 연결하여 email 정보 수집
         email: "cjy@test.com",
         channelId: CHANNEL_ID,
       };
@@ -73,6 +69,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
         destination: PUBLISH_DESTINATION[type],
         body: JSON.stringify(messageContent),
       });
+      targetRef.current?.scrollTo(0, targetRef.current.scrollHeight);
     }
   };
 

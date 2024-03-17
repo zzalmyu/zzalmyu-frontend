@@ -14,20 +14,11 @@ const ChatRoom = () => {
   const chatRoomRef = useRef<HTMLDivElement>(null);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
 
-  // const setScrollToBottom = () => {
-  //   if (!chatRoomRef.current) return;
-  //   chatRoomRef.current.scrollTo(0, chatRoomRef.current.scrollHeight);
-  // };
+  // TODO: [2023.03.17]: chat intersection 시 scroll action 구현
 
   useIntersectionObserver({
     target: scrollTargetRef,
-    handleIntersect: () => {
-      chatRoomRef.current?.lastElementChild?.scrollIntoView({
-        block: "end",
-        behavior: "smooth",
-      });
-      handleFetchNextPage();
-    },
+    handleIntersect: () => handleFetchNextPage(),
   });
 
   const { handleSendMessage } = useChat(chatRoomRef);
@@ -39,12 +30,12 @@ const ChatRoom = () => {
       <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
         <div ref={scrollTargetRef}></div>
         {messageHistory.map((message, index) => (
-          <Fragment key={`${index}-${message.nickname}`}>
+          <div key={`${index}-${message.nickname}`} className={`number${index}`}>
             {message.type === "IMAGE" && (
               <ZzalMessage src={message.message} isMyMessage={false} nickname={message.nickname} />
             )}
             {message.type === "HELLO" && <GreetMessage nickname={message.nickname} />}
-          </Fragment>
+          </div>
         ))}
       </div>
       <MessagePeek onClickSend={handleClickSend} />
