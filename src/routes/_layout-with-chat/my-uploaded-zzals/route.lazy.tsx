@@ -33,9 +33,17 @@ const MyUploadedZzals = () => {
   return (
     <div className="flex w-full flex-col items-center">
       <MasonryLayout className="mt-15pxr">
-        {zzals.map(({ imageId, path, title }) => (
+        {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
           <div className="relative" key={imageId}>
-            <ZzalCard className="mb-10pxr" src={path} alt={title} />
+            <ZzalCard
+              className="mb-10pxr"
+              src={path}
+              alt={title}
+              imageId={imageId}
+              imageIndex={index}
+              isLiked={imageLikeYn}
+              queryKey="uploadedZzals"
+            />
             <XCircle
               onClick={handleClickDeleteButton(imageId)}
               className="absolute right-2 top-2 z-0"
