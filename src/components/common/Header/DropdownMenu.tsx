@@ -13,7 +13,8 @@ const DropdownMenu = () => {
   const navigate = useNavigate();
   const { logout } = useLogout();
   const [userInformation, setUserInformation] = useAtom($userInformation);
-  const { userId } = userInformation;
+  const { email } = userInformation;
+  const userName = email.split("@")[0];
 
   const handleClickLogout = () => {
     logout(undefined, {
@@ -63,7 +64,7 @@ const DropdownMenu = () => {
       <li>
         <details ref={detailsRef}>
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
-            {userId}
+            {userName}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name, onClick }, index) => (
