@@ -17,6 +17,7 @@ import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  imageId: number;
 }
 
 interface CustomErrorResponse {
@@ -24,18 +25,15 @@ interface CustomErrorResponse {
   code: string;
 }
 
-const IMAGEID = 71;
-//TODO: [2024.03.06] 실제 IMAGEID 받기
-
-const ImageDetailModalContent = () => {
+const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const { zzalDetails } = useGetZzalDetails(IMAGEID);
+  const { zzalDetails } = useGetZzalDetails(imageId);
   const { reportZzal } = usePostReportZzal();
   const { deleteMyZzal } = useDeleteMyZzal();
   const reportConfirmOverlay = useOverlay();
-  const { isLiked, imageUrl, tagNames, imageTitle, uploadUserId, imageId } = zzalDetails;
+  const { isLiked, imageUrl, tagNames, imageTitle, uploadUserId } = zzalDetails;
   const isUploader = uploadUserId === 19;
   //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
 
@@ -199,11 +197,11 @@ const ImageDetailModalContent = () => {
   );
 };
 
-const ImageDetailModal = ({ isOpen, onClose }: Props) => {
+const ImageDetailModal = ({ isOpen, onClose, imageId }: Props) => {
   return (
     <Suspense fallback={"...pending"}>
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
-        <ImageDetailModalContent />
+        <ImageDetailModalContent imageId={imageId} />
       </Modal>
     </Suspense>
   );

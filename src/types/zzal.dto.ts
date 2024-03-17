@@ -6,6 +6,18 @@ export interface PostUploadZzalRequest {
   title: string;
 }
 
+export interface GetMyHomeZzalsRequest {
+  page: number;
+  selectedTags: string[];
+}
+
+export interface GetMyHomeZzalsResponse {
+  imageId: number;
+  path: string;
+  title: string;
+  imageLikeYn: boolean;
+}
+
 export interface GetMyLikedZzalsRequest {
   page: number;
   selectedTags: string[];

@@ -6,12 +6,12 @@ import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 const route = getRouteApi("/_layout-with-chat/");
 
-const Home = () => {
+const PendingComponent = () => {
+  const navigate = useNavigate();
   const { accessToken, refreshToken } = route.useSearch<{
     accessToken: string;
     refreshToken: string;
   }>();
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (accessToken && refreshToken) {
@@ -30,11 +30,11 @@ const Home = () => {
           content="본인의 취향과 선호도에 따라 선별된 짤 컬렉션을 추천 받아 보세요!"
         />
       </Helmet>
-      <div></div>
+      <div>pending Home Zzlas</div>
     </Fragment>
   );
 };
 
 export const Route = createFileRoute("/_layout-with-chat/")({
-  component: Home,
+  pendingComponent: PendingComponent,
 });
