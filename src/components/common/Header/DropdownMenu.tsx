@@ -3,8 +3,8 @@ import { Home, Heart, FolderUp, LogOut, LogIn } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
-import { getLocalStorage } from "@/utils/localStorage";
-import { REFRESH_TOKEN } from "@/constants/auth";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
+import { REDIRECT_PATH, REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
 
 interface Props {
@@ -20,7 +20,12 @@ const DropdownMenu = ({ user }: Props) => {
   const navigate = useNavigate();
   const { logout } = useLogout();
 
+  const handleClickHome = () => {
+    setLocalStorage(REDIRECT_PATH, "/");
+  };
+
   const handleClickLogin = () => {
+    setLocalStorage(REDIRECT_PATH, "/");
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
   };
 
@@ -45,6 +50,7 @@ const DropdownMenu = ({ user }: Props) => {
       path: "/",
       Icon: Home,
       name: "홈",
+      onClick: handleClickHome,
     },
     {
       path: "/",
