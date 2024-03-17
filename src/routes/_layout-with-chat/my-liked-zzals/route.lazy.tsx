@@ -1,30 +1,30 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
+import { useSetAtom } from "jotai";
 import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
 import useGetTopTagsFromLiked from "@/hooks/api/tag/useGetTopTagsFromLiked";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import ZzalCard from "@/components/common/ZzalCard";
 import MasonryLayout from "@/components/common/MasonryLayout";
-import TagBadge from "@/components/common/TagBadge";
+import { $recommendedTags } from "@/store/tag";
 
 const MyLikedZzals = () => {
-  const fetchMoreRef = useRef(null);
-  const { topTags } = useGetTopTagsFromLiked();
   const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
+  const { topTags } = useGetTopTagsFromLiked();
+  const setRecommendedTags = useSetAtom($recommendedTags);
+  const fetchMoreRef = useRef(null);
 
   useIntersectionObserver({
     target: fetchMoreRef,
     handleIntersect: handleFetchNextPage,
   });
 
+  useEffect(() => {
+    setRecommendedTags(topTags);
+  }, [topTags, setRecommendedTags]);
+
   return (
     <div className="flex w-full flex-col items-center">
-      <div className="mb-10pxr min-w-650pxr pl-10pxr">
-        <div className="mb-8pxr font-semibold">내가 가장 많이 사용한 태그</div>
-        {topTags.map(({ tagName }, index) => (
-          <TagBadge key={`${index}-${tagName}`} content={tagName} isClickable className="mr-5pxr" />
-        ))}
-      </div>
       <MasonryLayout className="mt-15pxr w-full">
         {zzals.map(({ imageId, path, title }) => (
           <ZzalCard className="mb-10pxr" key={imageId} src={path} alt={title} />
