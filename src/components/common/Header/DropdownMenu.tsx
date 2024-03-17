@@ -12,12 +12,19 @@ const DropdownMenu = () => {
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
   const { logout } = useLogout();
-  const [userInfo] = useAtom($userInfo);
+  const [userInfo, setUserInfo] = useAtom($userInfo);
   const { userId } = userInfo;
 
   const handleClickLogout = () => {
     logout(undefined, {
-      onSuccess: () => navigate({ to: "/" }),
+      onSuccess: () => {
+        setUserInfo({
+          userId: 0,
+          email: "",
+          role: "GUEST",
+        });
+        navigate({ to: "/" });
+      },
     });
   };
 

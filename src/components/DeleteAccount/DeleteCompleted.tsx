@@ -2,15 +2,23 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
+import { useAtom } from "jotai";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
+import { $userInfo } from "@/store/user";
 
 const DeleteCompleted = () => {
   const { userWithdraw } = useDeleteUserWithdraw();
+  const [, setUserInfo] = useAtom($userInfo);
 
   useEffect(() => {
     userWithdraw(undefined, {
       onSuccess: () => {
+        setUserInfo({
+          userId: 0,
+          email: "",
+          role: "GUEST",
+        });
         toast.success("계정이 삭제되었습니다.", { autoClose: 1500 });
       },
     });
