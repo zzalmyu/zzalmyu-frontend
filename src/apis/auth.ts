@@ -1,4 +1,5 @@
 import { getLocalStorage } from "@/utils/localStorage";
+import { GetUserInfomationResponse } from "@/types/auth.dto";
 import http from "./core";
 import { REFRESH_TOKEN } from "@/constants/auth";
 
@@ -17,3 +18,6 @@ export const deleteUserWithdraw = () =>
     },
     url: "/v1/user",
   });
+
+export const getUserInfomation = () =>
+  http.get<GetUserInfomationResponse>({ url: "/v1/user/info" });
