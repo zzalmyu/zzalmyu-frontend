@@ -1,6 +1,7 @@
-import { Outlet, createFileRoute } from "@tanstack/react-router";
+import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
+import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import Chat from "@/components/common/Chat";
 import { $isChatOpen } from "@/store/chat";
@@ -48,4 +49,21 @@ const LayoutWithChat = () => {
 
 export const Route = createFileRoute("/_layout-with-chat")({
   component: LayoutWithChat,
+  beforeLoad: async ({ context, location }) => {
+    if (location.pathname === "/") return;
+
+    try {
+      await context.auth.isAuthenticated();
+    } catch (error) {
+      if (!axios.isAxiosError(error)) return;
+      if (error.response?.status === 401) {
+        throw redirect({
+          to: "/",
+          search: {
+            redirect: location.pathname,
+          },
+        });
+      }
+    }
+  },
 });
