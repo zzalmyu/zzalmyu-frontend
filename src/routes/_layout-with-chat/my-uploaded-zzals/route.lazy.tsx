@@ -38,7 +38,7 @@ const MyUploadedZzals = () => {
             <ZzalCard className="mb-10pxr" src={path} alt={title} />
             <XCircle
               onClick={handleClickDeleteButton(imageId)}
-              className="absolute right-0 top-0 z-0"
+              className="absolute right-2 top-2 z-0"
               fill="white"
               aria-label="짤 삭제"
             />
