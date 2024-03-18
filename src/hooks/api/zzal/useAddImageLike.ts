@@ -12,7 +12,7 @@ export const useAddImageLike = (imageIndex: number, zzalKey: [ZzalType, string[]
       await queryClient.cancelQueries({ queryKey: [...zzalKey] });
 
       const oldData = queryClient.getQueryData<GetZzalResponse>([...zzalKey]);
-      console.log(zzalKey, oldData);
+
       if (!oldData) return;
 
       const updatedData = {
