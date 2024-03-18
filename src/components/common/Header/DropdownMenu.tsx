@@ -1,29 +1,25 @@
 import { useRef } from "react";
-import { Home, Heart, FolderUp, LogOut, LogIn } from "lucide-react";
+import { Home, Heart, FolderUp, LogOut } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
-import { useOverlay } from "@toss/use-overlay";
-import LoginModal from "@/components/LoginModal";
+import { useAtom } from "jotai";
 import { getLocalStorage } from "@/utils/localStorage";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
-
-interface Props {
-  user: {
-    name: string;
-  };
-}
+import { $userInformation } from "@/store/user";
 
 interface eventProps {
   eventName: string;
   category: string;
 }
 
-const DropdownMenu = ({ user }: Props) => {
+const DropdownMenu = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
-  const loginModalOverlay = useOverlay();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
   const { logout } = useLogout();
+  const [userInformation, setUserInformation] = useAtom($userInformation);
+  const { email } = userInformation;
+  const userName = email.split("@")[0];
 
   const handleClickButton =
     ({ category, eventName }: eventProps) =>
@@ -31,14 +27,23 @@ const DropdownMenu = ({ user }: Props) => {
       gtag("event", category, { event_category: eventName });
     };
 
-  const handleClickLogin = () => {
-    loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
-  };
-
   const handleClickLogout = () => {
     logout(undefined, {
-      onSuccess: () => navigate({ to: "/" }),
+      onSuccess: () => {
+        setUserInformation({
+          userId: 0,
+          email: "",
+          role: "GUEST",
+        });
+        navigate({ to: "/" });
+      },
     });
+  };
+
+  const toggleDetails = () => {
+    if (detailsRef.current) {
+      detailsRef.current.open = !detailsRef.current.open;
+    }
   };
 
   const menuItems = [
@@ -62,27 +67,19 @@ const DropdownMenu = ({ user }: Props) => {
     },
     {
       path: "/",
-      Icon: refreshToken ? LogOut : LogIn,
-      name: refreshToken ? "로그아웃" : "로그인",
-      onClick: refreshToken ? handleClickLogout : handleClickLogin,
-      event: refreshToken
-        ? { category: "user_action", eventName: "로그아웃" }
-        : { category: "modal_open", eventName: "로그인_모달_띄우기" },
+      Icon: LogOut,
+      name: "로그아웃",
+      onClick: handleClickLogout,
+      event: { category: "user_action", eventName: "로그아웃" },
     },
   ];
-
-  const toggleDetails = () => {
-    if (detailsRef.current) {
-      detailsRef.current.open = !detailsRef.current.open;
-    }
-  };
 
   return (
     <ul className="menu menu-horizontal z-20 hidden px-0 sm:block">
       <li>
         <details ref={detailsRef}>
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
-            {user.name}
+            {userName}
           </summary>
           <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary ">
             {menuItems.map(({ path, Icon, name, onClick, event }, index) => (

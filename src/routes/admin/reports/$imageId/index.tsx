@@ -2,7 +2,6 @@ import { Trash2 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
-import ZzalCard from "@/components/common/ZzalCard";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
@@ -52,7 +51,7 @@ const AdminImageDetail = () => {
         </div>
         <div className="flex justify-center">
           <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
-            <ZzalCard src={imageUrl} alt={imageTitle} width="2/6" hasAnimation={false} />
+            <img src={imageUrl} alt={imageTitle} width="2/6" />
             <div className="mb-50pxr mt-3 flex max-h-420pxr flex-col  sm:ml-5 sm:mt-0 sm:w-4/6 ">
               <div className="w-full overflow-auto rounded-xl">
                 <table className="table bg-card">

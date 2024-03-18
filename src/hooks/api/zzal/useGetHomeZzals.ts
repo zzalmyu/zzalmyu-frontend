@@ -1,15 +1,15 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { useAtom } from "jotai";
-import { getMyLikedZzals } from "@/apis/zzal";
+import { getHomeZzals } from "@/apis/zzal";
 import { $selectedTags } from "@/store/tag";
 
-const useGetMyLikedZzals = () => {
+const useGetHomeZzlas = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
     useSuspenseInfiniteQuery({
-      queryKey: ["likedZzals", selectedTags],
-      queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags }),
+      queryKey: ["homeZzals", selectedTags],
+      queryFn: ({ pageParam = 0 }) => getHomeZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
 
@@ -34,4 +34,4 @@ const useGetMyLikedZzals = () => {
   };
 };
 
-export default useGetMyLikedZzals;
+export default useGetHomeZzlas;

@@ -29,6 +29,9 @@ dependencies:
   jotai:
     specifier: ^2.6.4
     version: 2.6.4(@types/react@18.2.55)(react@18.2.0)
+  jwt-decode:
+    specifier: ^4.0.0
+    version: 4.0.0
   lucide-react:
     specifier: ^0.330.0
     version: 0.330.0(react@18.2.0)
@@ -41,6 +44,9 @@ dependencies:
   react-error-boundary:
     specifier: ^4.0.12
     version: 4.0.12(react@18.2.0)
+  react-helmet-async:
+    specifier: ^2.0.4
+    version: 2.0.4(react-dom@18.2.0)(react@18.2.0)
   react-masonry-css:
     specifier: ^1.0.16
     version: 1.0.16(react@18.2.0)
@@ -3061,6 +3067,15 @@ packages:
       side-channel: 1.0.5
     dev: true
 
+  /invariant@2.2.4:
+    resolution:
+      {
+        integrity: sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==,
+      }
+    dependencies:
+      loose-envify: 1.4.0
+    dev: false
+
   /is-array-buffer@3.0.4:
     resolution: {integrity: sha512-wcjaerHw0ydZwfhiKbXJWLDY8A7yV7KhjQOpb83hGgGfId/aQa4TOvwyzn2PuswW2gPCYEL/nEAiSVpdOj1lXw==}
     engines: {node: '>= 0.4'}
@@ -3381,6 +3396,14 @@ packages:
       object.assign: 4.1.5
       object.values: 1.1.7
     dev: true
+
+  /jwt-decode@4.0.0:
+    resolution:
+      {
+        integrity: sha512-+KJGIyHgkGuIq3IEBNftfhW/LfWhXUIY6OmyVWjliu5KH1y0fw7VQ8YndE2O4qZdMSd9SqbnC8GOcZEy0Om7sA==,
+      }
+    engines: { node: ">=18" }
+    dev: false
 
   /keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -4139,6 +4162,29 @@ packages:
       react: 18.2.0
     dev: false
 
+  /react-fast-compare@3.2.2:
+    resolution:
+      {
+        integrity: sha512-nsO+KSNgo1SbJqJEYRE9ERzo7YtYbou/OqjSQKxV7jcKox7+usiUVZOAC+XnDOABXggQTno0Y1CpVnuWEc1boQ==,
+      }
+    dev: false
+
+  /react-helmet-async@2.0.4(react-dom@18.2.0)(react@18.2.0):
+    resolution:
+      {
+        integrity: sha512-yxjQMWposw+akRfvpl5+8xejl4JtUlHnEBcji6u8/e6oc7ozT+P9PNTWMhCbz2y9tc5zPegw2BvKjQA+NwdEjQ==,
+      }
+    peerDependencies:
+      react: ^16.6.0 || ^17.0.0 || ^18.0.0
+      react-dom: ^16.6.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      invariant: 2.2.4
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      react-fast-compare: 3.2.2
+      shallowequal: 1.1.0
+    dev: false
+
   /react-is@16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: true
@@ -4422,6 +4468,13 @@ packages:
       functions-have-names: 1.2.3
       has-property-descriptors: 1.0.1
     dev: true
+
+  /shallowequal@1.1.0:
+    resolution:
+      {
+        integrity: sha512-y0m1JoUZSlPAjXVtPPW70aZWfIL/dSP7AFkRnniLCrK/8MDKog3TySTBmckD+RObVxH0v4Tox67+F14PdED2oQ==,
+      }
+    dev: false
 
   /shebang-command@2.0.0:
     resolution: {integrity: sha512-kHxr2zZpYtdmrN1qDjrrX/Z1rR1kG8Dx+gkpK1G4eXmvXswmcE1hTWBWYUzlraYw1/yZp6YuDY77YtvbN0dmDA==}
