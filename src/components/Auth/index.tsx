@@ -1,9 +1,9 @@
 import { ReactNode, createContext } from "react";
 import { getUserInformation } from "@/apis/auth";
-import { GetUserInfomationResponse } from "@/types/auth.dto";
+import { GetUserInformationResponse } from "@/types/user.dto";
 
 export interface AuthContextType {
-  isAuthenticated: () => Promise<GetUserInfomationResponse>;
+  isAuthenticated: () => Promise<GetUserInformationResponse>;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);
