@@ -22,6 +22,7 @@ export const downloadZzal = async ({ imageUrl, imageTitle }: DownloadZzalParamet
     downloadLink.click();
     document.body.removeChild(downloadLink);
     toast.success("성공적으로 다운로드 되었습니다");
+    gtag("event", "user_action", { event_category: "짤_다운로드" });
   } catch (error) {
     toast.error("다운로드에 실패했습니다.");
     console.error("파일 다운로드 중 오류가 발생했습니다:", error);
@@ -36,6 +37,7 @@ const copyToClipboard = (pngBlob: Blob) => {
       }),
     ]);
     toast.success("성공적으로 복사되었습니다.");
+    gtag("event", "user_action", { event_category: "짤_복사" });
   } catch (error) {
     toast.error("복사에 실패했습니다.");
     console.error(error);

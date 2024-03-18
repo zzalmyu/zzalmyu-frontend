@@ -78,6 +78,9 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
   const handleClickImageLike = () => {
     if (!isLiked) {
       addImageLike(imageId, {
+        onSuccess: () => {
+          gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
+        },
         onError: () =>
           toast.error("좋아요 요청이 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
       });
@@ -86,6 +89,9 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
     }
 
     removeImageLike(imageId, {
+      onSuccess: () => {
+        gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
+      },
       onError: () =>
         toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
     });

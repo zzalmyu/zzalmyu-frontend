@@ -46,6 +46,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     reportZzal(imageId, {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.");
+        gtag("event", "user_action", { event_category: "짤_신고" });
       },
       onError: (error: Error | AxiosError) => {
         if (!axios.isAxiosError(error)) {
@@ -64,6 +65,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   };
 
   const handleClickReportButton = () => {
+    gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
         isOpen={isOpen}
@@ -79,6 +81,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
         toast.success("사진이 삭제되었습니다.");
+        gtag("event", "user_action", { event_category: "짤_삭제" });
       },
       onError: () => {
         toast.error("사진 삭제에 실패했습니다.");
