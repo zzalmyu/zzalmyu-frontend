@@ -9,17 +9,20 @@ import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 
 const LayoutWithChat = () => {
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
+
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
+    gtag("event", "user_action", { event_category: isChatOpen ? "채팅창_닫힘" : "채팅창_열림" });
   };
+
   return (
     <div className="h-full w-full overflow-hidden">
       <div className="relative flex h-120pxr w-full flex-col items-center gap-4 border-b border-border px-10pxr pt-10pxr sm:h-150pxr sm:px-6">
-        <TagSearchForm className="z-10 mx-auto sm:w-400pxr md:w-550pxr lg:w-full" />
-        <div className="relative flex w-full flex-1 items-center">
+        <div className="relative flex w-full flex-1">
+          <TagSearchForm className="z-10 mx-auto sm:w-400pxr md:w-550pxr lg:w-full" />
           <button
             className={cn(
-              "btn btn-ghost btn-sm absolute right-0 hidden h-45pxr w-45pxr items-center justify-center rounded-full border border-border sm:flex md:w-120pxr md:bg-background md:text-text-primary",
+              "btn btn-ghost btn-sm absolute bottom-20pxr right-0 hidden h-45pxr w-45pxr items-center justify-center rounded-full border border-border sm:flex md:w-120pxr md:bg-background md:text-text-primary",
               isChatOpen ? "bg-primary text-white" : "",
             )}
             onClick={handleClickChatToggleButton}
@@ -32,7 +35,7 @@ const LayoutWithChat = () => {
           </button>
         </div>
       </div>
-      <div className="relative flex h-[calc(100%-80px)] w-full overflow-hidden">
+      <div className="relative flex h-[calc(100%-135px)] w-full overflow-hidden">
         <div
           className={cn(
             "h-full overflow-auto border-r border-border px-6 py-4 transition-[width] duration-500 ease-in-out",

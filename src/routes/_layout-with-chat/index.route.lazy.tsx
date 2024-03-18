@@ -1,16 +1,16 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
-import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
-import useGetTopTagsFromLiked from "@/hooks/api/tag/useGetTopTagsFromLiked";
+import useGetHomeZzlas from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
-import ZzalCard from "@/components/common/ZzalCard";
 import MasonryLayout from "@/components/common/MasonryLayout";
+import ZzalCard from "@/components/common/ZzalCard";
+import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
 import { $recommendedTags } from "@/store/tag";
 
-const MyLikedZzals = () => {
-  const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
-  const { topTags } = useGetTopTagsFromLiked();
+const HomeZzals = () => {
+  const { zzals, handleFetchNextPage } = useGetHomeZzlas();
+  const { topTags } = useGetTopTagsFromHome();
   const setRecommendedTags = useSetAtom($recommendedTags);
   const fetchMoreRef = useRef(null);
 
@@ -29,7 +29,7 @@ const MyLikedZzals = () => {
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
           <ZzalCard
             className="mb-10pxr"
-            key={imageId}
+            key={`${imageId}-${index}`}
             src={path}
             alt={title}
             imageId={imageId}
@@ -44,6 +44,6 @@ const MyLikedZzals = () => {
   );
 };
 
-export const Route = createLazyFileRoute("/_layout-with-chat/my-liked-zzals")({
-  component: MyLikedZzals,
+export const Route = createLazyFileRoute("/_layout-with-chat/")({
+  component: HomeZzals,
 });

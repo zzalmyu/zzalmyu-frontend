@@ -1,5 +1,4 @@
-export interface GetUserInfomationResponse {
-  userId: number;
-  email: string;
-  role: "USER" | "ADMIN";
+export interface ReissueTokenResponse {
+  accessToken: string;
+  refreshToken: string;
 }

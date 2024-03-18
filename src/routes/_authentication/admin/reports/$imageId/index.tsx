@@ -2,7 +2,6 @@ import { Trash2 } from "lucide-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
-import ZzalCard from "@/components/common/ZzalCard";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
@@ -17,11 +16,17 @@ const AdminImageDetail = () => {
   const { reportDetails } = useGetReportsDetails(imageId);
   const { imageUrl, imageTitle, reports } = reportDetails;
 
+  const handleClickAdminButton = () => {
+    gtag("event", "page_view", { event_category: "관리자_페이지로_이동" });
+  };
+
   const handleClickDeleteConfirm = (imageId: string) => () => {
     deleteReportedZzal(imageId);
+    gtag("event", "user_action", { event_category: "짤_영구_삭제" });
   };
 
   const handleClickDeleteButton = () => {
+    gtag("event", "modal_open", { event_category: "짤_영구_삭제_확인_모달_띄우기" });
     deleteConfirmOverlay.open(({ isOpen, close }) => (
       <DeleteConfirmModal
         isOpen={isOpen}
@@ -37,7 +42,7 @@ const AdminImageDetail = () => {
         <div className="breadcrumbs pb-20pxr text-lg font-bold">
           <ul>
             <li>
-              <Link to="/admin/reports">
+              <Link to="/admin/reports" onClick={handleClickAdminButton}>
                 <h1>신고 내역</h1>
               </Link>
             </li>
@@ -46,7 +51,7 @@ const AdminImageDetail = () => {
         </div>
         <div className="flex justify-center">
           <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
-            <ZzalCard src={imageUrl} alt={imageTitle} width="2/6" hasAnimation={false} />
+            <img src={imageUrl} alt={imageTitle} width="2/6" />
             <div className="mb-50pxr mt-3 flex max-h-420pxr flex-col  sm:ml-5 sm:mt-0 sm:w-4/6 ">
               <div className="w-full overflow-auto rounded-xl">
                 <table className="table bg-card">
