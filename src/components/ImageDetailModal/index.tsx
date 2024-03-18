@@ -12,6 +12,8 @@ import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
+import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
+import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
 
 interface Props {
   isOpen: boolean;
@@ -31,6 +33,8 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const { reportZzal } = usePostReportZzal();
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
+  const { addImageLike } = useAddImageDetailLike(imageId);
+  const { removeImageLike } = useRemoveImageDetailLike(imageId);
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -85,10 +89,29 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     copyZzal(imageUrl);
   }, 500);
 
-  const handleClickLikeButton = () => {};
+  const handleClickLikeButton = () => {
+    if (!isLiked) {
+      addImageLike(imageId, {
+        onSuccess: () => {
+          gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
+        },
+        onError: () =>
+          toast.error("좋아요 요청이 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+      });
+
+      return;
+    }
+
+    removeImageLike(imageId, {
+      onSuccess: () => {
+        gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
+      },
+      onError: () =>
+        toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+    });
+  };
 
   const handleClickSendButton = () => {};
-
   //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
 
   const toggleTagNavigator = () => {
