@@ -14,19 +14,19 @@ import { createFileRoute, lazyRouteComponent } from "@tanstack/react-router"
 
 import { Route as rootRoute } from "./routes/__root"
 import { Route as LayoutWithChatImport } from "./routes/_layout-with-chat"
-import { Route as UploadZzalIndexImport } from "./routes/upload-zzal/index"
-import { Route as DeleteAccountIndexImport } from "./routes/delete-account/index"
-import { Route as LayoutWithChatIndexImport } from "./routes/_layout-with-chat/index"
+import { Route as AuthenticationImport } from "./routes/_authentication"
+import { Route as LayoutWithChatIndexRouteImport } from "./routes/_layout-with-chat/index.route"
 import { Route as LayoutWithChatMyUploadedZzalsRouteImport } from "./routes/_layout-with-chat/my-uploaded-zzals/route"
 import { Route as LayoutWithChatMyLikedZzalsRouteImport } from "./routes/_layout-with-chat/my-liked-zzals/route"
-import { Route as AdminReportsIndexImport } from "./routes/admin/reports/index"
-import { Route as AdminReportsImageIdIndexImport } from "./routes/admin/reports/$imageId/index"
+import { Route as AuthenticationUploadZzalIndexImport } from "./routes/_authentication/upload-zzal/index"
+import { Route as AuthenticationDeleteAccountIndexImport } from "./routes/_authentication/delete-account/index"
+import { Route as AuthenticationAdminReportsIndexImport } from "./routes/_authentication/admin/reports/index"
+import { Route as AuthenticationAdminReportsImageIdIndexImport } from "./routes/_authentication/admin/reports/$imageId/index"
 
 // Create Virtual Routes
 
-const AdminReportsAdminReportsPendingComponentImport = createFileRoute(
-  "/admin/reports/AdminReports",
-)()
+const AuthenticationAdminReportsAdminReportsPendingComponentImport =
+  createFileRoute("/_authentication/admin/reports/AdminReports")()
 
 // Create/Update Routes
 
@@ -35,20 +35,17 @@ const LayoutWithChatRoute = LayoutWithChatImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const UploadZzalIndexRoute = UploadZzalIndexImport.update({
-  path: "/upload-zzal/",
+const AuthenticationRoute = AuthenticationImport.update({
+  id: "/_authentication",
   getParentRoute: () => rootRoute,
 } as any)
 
-const DeleteAccountIndexRoute = DeleteAccountIndexImport.update({
-  path: "/delete-account/",
-  getParentRoute: () => rootRoute,
-} as any)
-
-const LayoutWithChatIndexRoute = LayoutWithChatIndexImport.update({
+const LayoutWithChatIndexRouteRoute = LayoutWithChatIndexRouteImport.update({
   path: "/",
   getParentRoute: () => LayoutWithChatRoute,
-} as any)
+} as any).lazy(() =>
+  import("./routes/_layout-with-chat/index.route.lazy").then((d) => d.Route),
+)
 
 const LayoutWithChatMyUploadedZzalsRouteRoute =
   LayoutWithChatMyUploadedZzalsRouteImport.update({
@@ -70,31 +67,52 @@ const LayoutWithChatMyLikedZzalsRouteRoute =
     ),
   )
 
-const AdminReportsIndexRoute = AdminReportsIndexImport.update({
-  path: "/admin/reports/",
-  getParentRoute: () => rootRoute,
-} as any)
+const AuthenticationUploadZzalIndexRoute =
+  AuthenticationUploadZzalIndexImport.update({
+    path: "/upload-zzal/",
+    getParentRoute: () => AuthenticationRoute,
+  } as any)
 
-const AdminReportsAdminReportsPendingComponentRoute =
-  AdminReportsAdminReportsPendingComponentImport.update({
+const AuthenticationDeleteAccountIndexRoute =
+  AuthenticationDeleteAccountIndexImport.update({
+    path: "/delete-account/",
+    getParentRoute: () => AuthenticationRoute,
+  } as any)
+
+const AuthenticationAdminReportsIndexRoute =
+  AuthenticationAdminReportsIndexImport.update({
+    path: "/admin/reports/",
+    getParentRoute: () => AuthenticationRoute,
+  } as any)
+
+const AuthenticationAdminReportsAdminReportsPendingComponentRoute =
+  AuthenticationAdminReportsAdminReportsPendingComponentImport.update({
     path: "/admin/reports/AdminReports",
-    getParentRoute: () => rootRoute,
+    getParentRoute: () => AuthenticationRoute,
   } as any).update({
     pendingComponent: lazyRouteComponent(
-      () => import("./routes/admin/reports/AdminReports.pendingComponent"),
+      () =>
+        import(
+          "./routes/_authentication/admin/reports/AdminReports.pendingComponent"
+        ),
       "pendingComponent",
     ),
   })
 
-const AdminReportsImageIdIndexRoute = AdminReportsImageIdIndexImport.update({
-  path: "/admin/reports/$imageId/",
-  getParentRoute: () => rootRoute,
-} as any)
+const AuthenticationAdminReportsImageIdIndexRoute =
+  AuthenticationAdminReportsImageIdIndexImport.update({
+    path: "/admin/reports/$imageId/",
+    getParentRoute: () => AuthenticationRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/_authentication": {
+      preLoaderRoute: typeof AuthenticationImport
+      parentRoute: typeof rootRoute
+    }
     "/_layout-with-chat": {
       preLoaderRoute: typeof LayoutWithChatImport
       parentRoute: typeof rootRoute
@@ -108,28 +126,28 @@ declare module "@tanstack/react-router" {
       parentRoute: typeof LayoutWithChatImport
     }
     "/_layout-with-chat/": {
-      preLoaderRoute: typeof LayoutWithChatIndexImport
+      preLoaderRoute: typeof LayoutWithChatIndexRouteImport
       parentRoute: typeof LayoutWithChatImport
     }
-    "/delete-account/": {
-      preLoaderRoute: typeof DeleteAccountIndexImport
-      parentRoute: typeof rootRoute
+    "/_authentication/delete-account/": {
+      preLoaderRoute: typeof AuthenticationDeleteAccountIndexImport
+      parentRoute: typeof AuthenticationImport
     }
-    "/upload-zzal/": {
-      preLoaderRoute: typeof UploadZzalIndexImport
-      parentRoute: typeof rootRoute
+    "/_authentication/upload-zzal/": {
+      preLoaderRoute: typeof AuthenticationUploadZzalIndexImport
+      parentRoute: typeof AuthenticationImport
     }
-    "/admin/reports/AdminReports": {
-      preLoaderRoute: typeof AdminReportsAdminReportsPendingComponentImport
-      parentRoute: typeof rootRoute
+    "/_authentication/admin/reports/AdminReports": {
+      preLoaderRoute: typeof AuthenticationAdminReportsAdminReportsPendingComponentImport
+      parentRoute: typeof AuthenticationImport
     }
-    "/admin/reports/": {
-      preLoaderRoute: typeof AdminReportsIndexImport
-      parentRoute: typeof rootRoute
+    "/_authentication/admin/reports/": {
+      preLoaderRoute: typeof AuthenticationAdminReportsIndexImport
+      parentRoute: typeof AuthenticationImport
     }
-    "/admin/reports/$imageId/": {
-      preLoaderRoute: typeof AdminReportsImageIdIndexImport
-      parentRoute: typeof rootRoute
+    "/_authentication/admin/reports/$imageId/": {
+      preLoaderRoute: typeof AuthenticationAdminReportsImageIdIndexImport
+      parentRoute: typeof AuthenticationImport
     }
   }
 }
@@ -137,16 +155,18 @@ declare module "@tanstack/react-router" {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren([
+  AuthenticationRoute.addChildren([
+    AuthenticationDeleteAccountIndexRoute,
+    AuthenticationUploadZzalIndexRoute,
+    AuthenticationAdminReportsAdminReportsPendingComponentRoute,
+    AuthenticationAdminReportsIndexRoute,
+    AuthenticationAdminReportsImageIdIndexRoute,
+  ]),
   LayoutWithChatRoute.addChildren([
     LayoutWithChatMyLikedZzalsRouteRoute,
     LayoutWithChatMyUploadedZzalsRouteRoute,
-    LayoutWithChatIndexRoute,
+    LayoutWithChatIndexRouteRoute,
   ]),
-  DeleteAccountIndexRoute,
-  UploadZzalIndexRoute,
-  AdminReportsAdminReportsPendingComponentRoute,
-  AdminReportsIndexRoute,
-  AdminReportsImageIdIndexRoute,
 ])
 
 /* prettier-ignore-end */

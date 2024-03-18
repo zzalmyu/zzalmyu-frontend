@@ -3,6 +3,8 @@ import {
   GetTagsResponse,
   GetTopTagsFromUploadedResponse,
   GetTopTagsFromLikedResponse,
+  PostUsedTagResponse,
+  GetTopTagsFromHomeResponse,
   PostTagResponse,
 } from "@/types/tag.dto";
 import http from "./core";
@@ -20,6 +22,8 @@ export const getSearchTag = (tag: string) =>
     },
   });
 
+export const getTopTagsFromHome = () => http.get<GetTopTagsFromHomeResponse>({ url: "/v1/tag" });
+
 export const getTopTagsFromUploaded = () =>
   http.get<GetTopTagsFromUploadedResponse>({
     url: "/v1/tag/me/upload",
@@ -33,6 +37,14 @@ export const getTopTagsFromLiked = () =>
 export const postTag = (tagName: string) =>
   http.post<PostTagResponse>({
     url: "/v1/tag",
+    data: {
+      name: tagName,
+    },
+  });
+
+export const postUsedTag = (tagName: string) =>
+  http.post<PostUsedTagResponse>({
+    url: "/v1/tag/use",
     data: {
       name: tagName,
     },

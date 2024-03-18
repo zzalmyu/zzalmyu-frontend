@@ -7,6 +7,10 @@ interface Props {
 }
 
 const ReportsTableBody = ({ reports }: Props) => {
+  const handleClickReportDetail = () => {
+    gtag("event", "page_view", { event_category: "신고_상세보기_페이지로_이동" });
+  };
+
   return (
     <tbody>
       {reports.map(({ imageId, imageTitle, lastReportAt, reportCount }) => {
@@ -17,7 +21,12 @@ const ReportsTableBody = ({ reports }: Props) => {
             <td className="text-center text-text-primary">{reportCount}</td>
             <td className="text-center text-text-primary">
               <Link to="/admin/reports/$imageId" params={{ imageId: String(imageId) }}>
-                <button className="btn btn-neutral btn-sm text-xs">상세보기</button>
+                <button
+                  className="btn btn-neutral btn-sm text-xs"
+                  onClick={handleClickReportDetail}
+                >
+                  상세보기
+                </button>
               </Link>
             </td>
           </tr>
