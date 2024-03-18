@@ -4,7 +4,7 @@ import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
 import UploadTagAutoComplete from "./UploadTagAutoComplete";
-import UploadTagBadge from "./UploadTagBadge";
+import UploadTagSlider from "./UploadTagSlider";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { usePostTag } from "@/hooks/api/tag/usePostTag";
 import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
@@ -163,11 +163,11 @@ const UploadTagSearchForm = ({ className }: Props) => {
           />
         )}
       </div>
-      <div className="flex items-center">
+      <div className="mt-3 flex items-center justify-between">
         {selectedTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
-            className="mr-4 mt-4 flex items-center rounded-full bg-card p-2"
+            className="mr-4 flex items-center whitespace-nowrap rounded-full bg-card p-2"
             type="button"
           >
             <RotateCw size={12} aria-label="태그 초기화" />
@@ -175,11 +175,9 @@ const UploadTagSearchForm = ({ className }: Props) => {
           </button>
         )}
 
-        <ul className="mt-4 flex min-h-8 flex-wrap items-center justify-center gap-2 pl-1">
-          {selectedTags.map(({ tagId, tagName }) => (
-            <UploadTagBadge tagId={tagId} tagName={tagName} isClickable key={`${tagId}`} />
-          ))}
-        </ul>
+        <div className="w-400pxr">
+          {!showAutoComplete && <UploadTagSlider tags={selectedTags} />}
+        </div>
       </div>
     </div>
   );
