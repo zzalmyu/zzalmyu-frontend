@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { XCircle } from "lucide-react";
 import { useSetAtom } from "jotai";
+import { useOverlay } from "@toss/use-overlay";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -10,6 +11,7 @@ import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import { $recommendedTags } from "@/store/tag";
 import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
+import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 
 const MyUploadedZzals = () => {
   const { topTags } = useGetTopTagsFromUploaded();
@@ -17,6 +19,7 @@ const MyUploadedZzals = () => {
   const { deleteMyZzal } = useDeleteMyZzal();
   const setRecommendedTags = useSetAtom($recommendedTags);
   const fetchMoreRef = useRef(null);
+  const deleteConfirmOverlay = useOverlay();
 
   useIntersectionObserver({
     target: fetchMoreRef,
@@ -27,7 +30,7 @@ const MyUploadedZzals = () => {
     setRecommendedTags(topTags);
   }, [topTags, setRecommendedTags]);
 
-  const handleClickDeleteButton = (imageId: number) => () => {
+  const handleClickDeleteConfirm = (imageId: number) => () => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
         toast.success("사진이 삭제되었습니다.");
@@ -37,6 +40,17 @@ const MyUploadedZzals = () => {
         toast.error("사진 삭제에 실패했습니다.");
       },
     });
+    gtag("event", "user_action", { event_category: "짤_삭제" });
+  };
+
+  const handleClickDeleteButton = (imageId: number) => () => {
+    deleteConfirmOverlay.open(({ isOpen, close }) => (
+      <DeleteConfirmModal
+        isOpen={isOpen}
+        onClose={close}
+        onDelete={handleClickDeleteConfirm(imageId)}
+      />
+    ));
   };
 
   return (
