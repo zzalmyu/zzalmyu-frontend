@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { toast } from "react-toastify";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { XCircle } from "lucide-react";
 import { useSetAtom } from "jotai";
@@ -27,7 +28,15 @@ const MyUploadedZzals = () => {
   }, [topTags, setRecommendedTags]);
 
   const handleClickDeleteButton = (imageId: number) => () => {
-    deleteMyZzal(imageId);
+    deleteMyZzal(imageId, {
+      onSuccess: () => {
+        toast.success("사진이 삭제되었습니다.");
+        gtag("event", "user_action", { event_category: "짤_삭제" });
+      },
+      onError: () => {
+        toast.error("사진 삭제에 실패했습니다.");
+      },
+    });
   };
 
   return (
