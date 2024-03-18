@@ -40,7 +40,9 @@ const ZzalCard = ({
   };
 
   return (
-    <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
+    <div
+      className={cn(`group relative w-${width} m-1.5 rounded-lg bg-base-100 shadow-xl`, className)}
+    >
       <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
         <CopyButton src={src} />
         <SendButton src={src} />
