@@ -8,11 +8,13 @@ import { $isChatOpen } from "@/store/chat";
 import useChat from "@/hooks/chat/useChat";
 import useGetChat from "@/hooks/api/chat/useGetChat";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
+import { $userInformation } from "@/store/user";
 
 const ChatRoom = () => {
   const { messageHistory, handleFetchNextPage } = useGetChat();
   const chatRoomRef = useRef<HTMLDivElement>(null);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
+  const { email } = useAtomValue($userInformation);
 
   // TODO: [2023.03.17]: chat intersection 시 scroll action 구현
 
@@ -29,14 +31,20 @@ const ChatRoom = () => {
     <Fragment>
       <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
         <div ref={scrollTargetRef}></div>
-        {messageHistory.map((message, index) => (
-          <div key={`${index}-${message.nickname}`} className={`number${index}`}>
-            {message.type === "IMAGE" && (
-              <ZzalMessage src={message.message} isMyMessage={false} nickname={message.nickname} />
-            )}
-            {message.type === "HELLO" && <GreetMessage nickname={message.nickname} />}
-          </div>
-        ))}
+        {messageHistory.map((message, index) => {
+          return (
+            <Fragment key={`${index}-${message.nickname}`}>
+              {message.type === "IMAGE" && (
+                <ZzalMessage
+                  src={message.message}
+                  isMyMessage={message.email === email}
+                  nickname={message.nickname}
+                />
+              )}
+              {message.type === "HELLO" && <GreetMessage nickname={message.nickname} />}
+            </Fragment>
+          );
+        })}
       </div>
       <MessagePeek onClickSend={handleClickSend} />
     </Fragment>

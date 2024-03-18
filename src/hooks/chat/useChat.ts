@@ -7,12 +7,14 @@ import { InfiniteData, useQueryClient } from "@tanstack/react-query";
 import { GetChatResponse, GreetMessageRequest, ZzalMessageRequest } from "@/types/chat.dto";
 import { $isChatOpen, $previewImage } from "@/store/chat";
 import { CHANNEL_ID, PUBLISH_DESTINATION, SUBSCRIPTION_DESTINATION } from "@/constants/chat";
+import { $userInformation } from "@/store/user";
 
 const useChat = (targetRef: RefObject<HTMLDivElement>) => {
   const queryClient = useQueryClient();
   const stompRef = useRef<CompatClient | null>(null);
   const imageSrc = useAtomValue($previewImage);
   const isChatOpen = useAtomValue($isChatOpen);
+  const { role, email } = useAtomValue($userInformation);
 
   // TODO: [2024.03.06] 채팅 에러 핸들링 로직 구현
   const handleConnectToChat = () => {
@@ -21,9 +23,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
     stompRef.current = Stomp.over(() => {
       return new SockJS(import.meta.env.VITE_CHAT_URL);
     });
-    stompRef.current.beforeConnect = () => {
-      // TODO: [2024.03.15] 사용자 정보 조회 API 호출하여 email 정보 수집
-    };
+
     stompRef.current.onConnect = () => {
       stompRef.current?.subscribe(SUBSCRIPTION_DESTINATION, (frame) => {
         try {
@@ -47,17 +47,23 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
         }
       });
 
-      // TODO: [2024.03.15] 로그인한 사용자만 greet 메세지 전송
+      if (role === "GUEST") {
+        return;
+      }
       handleSendMessage("greet");
     };
     stompRef.current.activate();
   };
 
   const handleSendMessage = (type: "zzal" | "greet") => {
-    if (stompRef.current?.connected) {
+    if (role === "GUEST") {
+      toast.info("메세지를 전송하려면 로그인을 진행해주세요!");
+      return;
+    }
+
+    if (stompRef.current?.connected && email) {
       const messageContent: GreetMessageRequest | ZzalMessageRequest = {
-        // TODO: [2024.03.17] 사용자 조회 API 연결하여 email 정보 수집
-        email: "cjy@test.com",
+        email,
         channelId: CHANNEL_ID,
       };
 
@@ -69,6 +75,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
         destination: PUBLISH_DESTINATION[type],
         body: JSON.stringify(messageContent),
       });
+
       targetRef.current?.scrollTo(0, targetRef.current.scrollHeight);
     }
   };
