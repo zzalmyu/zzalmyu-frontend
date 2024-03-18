@@ -10,7 +10,7 @@ const ModalHeader = ({ hasCloseButton = false, children }: Props) => {
   const onClose = useModalContext();
 
   return (
-    <div className="relative mb-8 text-xl font-extrabold">
+    <div className="relative my-10 text-xl font-extrabold">
       <div className="flex justify-center">{children}</div>
       {hasCloseButton && (
         <button

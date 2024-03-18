@@ -46,9 +46,4 @@ export const deleteUserWithdraw = () =>
   });
 
 export const getUserInformation = () =>
-  http.get<GetUserInformationResponse>({
-    headers: {
-      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
-    },
-    url: "/v1/user/info",
-  });
+  http.get<GetUserInformationResponse>({ url: "/v1/user/info" });

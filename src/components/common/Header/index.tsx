@@ -3,13 +3,13 @@ import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom } from "jotai";
 import LoginModal from "@/components/LoginModal";
-import { getLocalStorage } from "@/utils/localStorage";
+import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import ThemeToggle from "./ThemeToggle.tsx";
 import DropdownMenu from "./DropdownMenu.tsx";
 import Logo from "@/assets/svg/logo.svg";
 import { $userInformation } from "@/store/user";
 import useGetUserInformation from "@/hooks/api/auth/useGetUserInformation.ts";
-import { REFRESH_TOKEN } from "@/constants/auth";
+import { REDIRECT_PATH, REFRESH_TOKEN } from "@/constants/auth";
 
 const Header = () => {
   const loginModalOverlay = useOverlay();
@@ -26,11 +26,13 @@ const Header = () => {
   const role = refreshToken && userInformation ? userInformation.role : "GUEST";
 
   const handleClickLogin = () => {
+    setLocalStorage(REDIRECT_PATH, "/");
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
     gtag("event", "modal_open", { event_category: "로그인_모달_띄우기" });
   };
 
   const handleClickLogo = () => {
+    setLocalStorage(REDIRECT_PATH, "/");
     gtag("event", "page_view", { event_category: "홈_페이지로_이동" });
   };
 

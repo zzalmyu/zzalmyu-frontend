@@ -1,9 +1,10 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link, Outlet, createRootRoute } from "@tanstack/react-router";
+import { Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { FolderUp, Heart, Home, PlusSquare } from "lucide-react";
+import { AuthContextType } from "@/components/Auth";
 import { cn } from "@/utils/tailwind";
 import NotFound from "./-NotFound";
 import Header from "@/components/common/Header";
@@ -62,6 +63,10 @@ const NavigationFooter = () => {
   );
 };
 
+interface RouterContext {
+  authorize: AuthContextType;
+}
+
 const RootComponent = () => {
   return (
     <div className="relative h-screen w-screen">
@@ -77,7 +82,7 @@ const RootComponent = () => {
   );
 };
 
-export const Route = createRootRoute({
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: RootComponent,
   notFoundComponent: NotFound,
 });

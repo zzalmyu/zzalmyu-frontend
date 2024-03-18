@@ -116,6 +116,6 @@ const UploadZzal = () => {
   );
 };
 
-export const Route = createFileRoute("/upload-zzal/")({
+export const Route = createFileRoute("/_authentication/upload-zzal/")({
   component: UploadZzal,
 });
