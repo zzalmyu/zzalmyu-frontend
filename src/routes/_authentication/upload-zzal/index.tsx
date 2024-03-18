@@ -3,6 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
+import { Asterisk } from "lucide-react";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
@@ -83,16 +84,32 @@ const UploadZzal = () => {
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
       <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
-        <span className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</span>
+        <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex flex-col sm:flex-row">
           <div className="mx-auto w-440pxr">
-            <div className="mb-4 text-sm font-bold">업로드할 파일</div>
+            <div className="mb-4 text-sm font-bold">
+              업로드할 파일
+              <Asterisk
+                aria-label="필수 입력 항목 표시"
+                className="inline-block"
+                color="#ED0000"
+                size={16}
+              />
+            </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
           <div className="mt-10 flex h-536pxr w-500pxr flex-col sm:ml-36 sm:mt-0 sm:justify-between">
             <div>
               <div>
-                <div className="mb-4 text-sm font-bold">짤 제목</div>
+                <div className="mb-4 text-sm font-bold">
+                  짤 제목
+                  <Asterisk
+                    aria-label="필수 입력 항목 표시"
+                    className="inline-block"
+                    color="#ED0000"
+                    size={16}
+                  />
+                </div>
                 <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
                   <input
                     id="imageTitleInput"
@@ -104,7 +121,15 @@ const UploadZzal = () => {
                 </div>
               </div>
               <div>
-                <div className="mb-4 text-sm font-bold">태그 검색 및 추가</div>
+                <div className="mb-4 text-sm font-bold">
+                  태그 검색 및 추가{" "}
+                  <Asterisk
+                    aria-label="필수 입력 항목 표시"
+                    className="inline-block"
+                    color="#ED0000"
+                    size={16}
+                  />
+                </div>
                 <UploadTagSearchForm />
               </div>
             </div>
