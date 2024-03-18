@@ -13,6 +13,7 @@ const useGetChat = () => {
       },
       initialPageParam: 0,
       refetchOnWindowFocus: false,
+      refetchOnMount: false,
     });
 
   const handleFetchNextPage = () => {
