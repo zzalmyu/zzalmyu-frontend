@@ -23,7 +23,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   const accessToken = getLocalStorage(ACCESS_TOKEN);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
-  config.headers.Authorization = `Bearer ${accessToken}`;
+  config.headers.Authorization = accessToken && `Bearer ${accessToken}`;
 
   if (refreshToken && isExpiredToken(refreshToken)) {
     toast.error("재로그인이 필요합니다", { autoClose: 2000 });
