@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
+import * as Sentry from "@sentry/react";
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { isExpiredToken } from "@/utils/tokenManagement";
 import { patchLogOut, postReissueToken } from "./auth";
@@ -58,7 +59,11 @@ axiosInstance.interceptors.response.use(
 
     return response.data;
   },
-  async (error) => Promise.reject(error),
+  (error) => {
+    Sentry.captureException(error);
+
+    return Promise.reject(error);
+  },
 );
 
 const createApiMethod =
