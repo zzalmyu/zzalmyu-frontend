@@ -1,6 +1,6 @@
 import { useState, Fragment, Suspense } from "react";
 import { toast } from "react-toastify";
-import { Heart, Copy, FolderDown, SendHorizontal, Siren, Trash2, Hash } from "lucide-react";
+import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
@@ -12,7 +12,6 @@ import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
-import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 interface Props {
   isOpen: boolean;
@@ -28,14 +27,10 @@ interface CustomErrorResponse {
 const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
   const { zzalDetails } = useGetZzalDetails(imageId);
   const { reportZzal } = usePostReportZzal();
-  const { deleteMyZzal } = useDeleteMyZzal();
   const reportConfirmOverlay = useOverlay();
-  const { isLiked, imageUrl, tagNames, imageTitle, uploadUserId } = zzalDetails;
-  const isUploader = uploadUserId === 19;
-  //TODO: [2024.03.01] 추후 실제 사용자 아이디와 비교하기
+  const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -74,23 +69,6 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
       />
     ));
   };
-
-  const handleClickDeleteButton = debounce(() => {
-    setIsDeleting(true);
-
-    deleteMyZzal(imageId, {
-      onSuccess: () => {
-        toast.success("사진이 삭제되었습니다.");
-        gtag("event", "user_action", { event_category: "짤_삭제" });
-      },
-      onError: () => {
-        toast.error("사진 삭제에 실패했습니다.");
-      },
-      onSettled: () => {
-        setIsDeleting(false);
-      },
-    }); // TODO: [2024-03-15] 사진 삭제 로직 짤카드 호버 삭제버튼에 추가 후 옮기기
-  }, 500);
 
   const handleClickDownloadButton = debounce(async () => {
     setIsDownloading(true);
@@ -159,12 +137,11 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
               onClick={handleClickReportButton}
             />
             <ButtonWithIcon
-              Icon={Trash2}
-              iconLabel="삭제하기"
-              children="삭제하기"
-              isDisabled={!isUploader || isDeleting}
-              isLoading={isDeleting}
-              onClick={handleClickDeleteButton}
+              Icon={Heart}
+              iconLabel="좋아요"
+              children="좋아요"
+              onClick={handleClickLikeButton}
+              className={cn({ "fill-primary": isLiked })}
             />
           </div>
         </div>
@@ -183,17 +160,9 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
       <div className=" max-h-500pxr overflow-auto">
         <img src={imageUrl} alt={imageTitle} className="w-full" />
       </div>
-      <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr hover:text-gray-300">
+      <div className="fixed bottom-0 right-0 flex flex-col space-y-4 p-25pxr text-gray-300 hover:text-gray-200">
         <button onClick={handleClickCopyButton}>
-          <Copy color="white" size={30} aria-label="복사하기" />
-        </button>
-        <button onClick={handleClickLikeButton}>
-          <Heart
-            color="white"
-            size={30}
-            aria-label="좋아요"
-            className={cn({ "fill-primary": isLiked })}
-          />
+          <Copy size={33} aria-label="복사하기" />
         </button>
       </div>
     </Fragment>
