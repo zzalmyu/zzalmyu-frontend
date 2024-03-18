@@ -9,6 +9,7 @@ import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import { $recommendedTags } from "@/store/tag";
 import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
+import NoSearchResults from "@/components/common/NoSearchResults";
 
 const MyUploadedZzals = () => {
   const { topTags } = useGetTopTagsFromUploaded();
@@ -31,7 +32,8 @@ const MyUploadedZzals = () => {
   };
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex h-full w-full flex-col items-center">
+      {zzals.length === 0 && <NoSearchResults />}
       <MasonryLayout className="mt-15pxr">
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
           <div className="relative" key={imageId}>
