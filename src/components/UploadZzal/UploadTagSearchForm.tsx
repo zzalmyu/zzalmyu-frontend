@@ -3,6 +3,7 @@ import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
+import { sleep } from "@/utils/sleep";
 import UploadTagAutoComplete from "./UploadTagAutoComplete";
 import UploadTagSlider from "./UploadTagSlider";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
@@ -47,6 +48,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
 
     setCursorIndex(0);
     setTagKeyword("");
+    event.currentTarget.reset();
   };
 
   useEffect(() => {
@@ -80,7 +82,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
     setShowAutoComplete(true);
   };
 
-  const handleBlurTagInput = () => {
+  const handleBlurTagInput = async () => {
+    await sleep(1);
     setShowAutoComplete(false);
     setCursorIndex(-1);
   };
