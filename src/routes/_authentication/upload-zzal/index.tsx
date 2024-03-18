@@ -122,7 +122,7 @@ const UploadZzal = () => {
               </div>
               <div>
                 <div className="mb-4 text-sm font-bold">
-                  태그 검색 및 추가{" "}
+                  태그 검색 및 추가
                   <Asterisk
                     aria-label="필수 입력 항목 표시"
                     className="inline-block"
