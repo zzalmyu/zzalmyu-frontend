@@ -16,7 +16,7 @@ interface Props {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: ZzalType;
+  queryKey: [ZzalType, string[]];
   width?: number | string;
   className?: string;
 }
@@ -69,7 +69,7 @@ interface LikeButtonProps {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: ZzalType;
+  queryKey: [ZzalType, string[]];
 }
 const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
   const { addImageLike } = useAddImageLike(imageIndex, queryKey);
