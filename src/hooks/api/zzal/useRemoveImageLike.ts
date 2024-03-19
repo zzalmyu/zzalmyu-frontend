@@ -15,10 +15,12 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: [ZzalType, strin
 
       if (!oldData) return;
 
-      const updatedData = {
-        pageParams: [...oldData.pageParams],
-        pages: [...oldData.pages.flatMap((page) => page)],
-      };
+      const updatedData = JSON.parse(
+        JSON.stringify({
+          pageParams: [...oldData.pageParams],
+          pages: [...oldData.pages.flatMap((page) => page)],
+        }),
+      );
 
       updatedData.pages[imageIndex].imageLikeYn = false;
 
@@ -27,8 +29,7 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: [ZzalType, strin
       return { oldData };
     },
     onError: (error, _zzalId, context) => {
-      console.error(error);
-      queryClient.setQueryData([zzalKey], context?.oldData);
+      queryClient.setQueryData([...zzalKey], context?.oldData);
     },
   });
 
