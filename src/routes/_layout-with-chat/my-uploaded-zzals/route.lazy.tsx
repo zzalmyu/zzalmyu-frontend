@@ -2,14 +2,14 @@ import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { XCircle } from "lucide-react";
-import { useSetAtom } from "jotai";
+import { useAtom, useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
-import { $recommendedTags } from "@/store/tag";
+import { $recommendedTags, $selectedTags } from "@/store/tag";
 import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 import NoSearchResults from "@/components/common/NoSearchResults";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
@@ -17,6 +17,7 @@ import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 const MyUploadedZzals = () => {
   const { topTags } = useGetTopTagsFromUploaded();
   const { zzals, handleFetchNextPage } = useGetMyUploadedZzals();
+  const [selectedTags] = useAtom($selectedTags);
   const { deleteMyZzal } = useDeleteMyZzal();
   const setRecommendedTags = useSetAtom($recommendedTags);
   const fetchMoreRef = useRef(null);
@@ -67,7 +68,7 @@ const MyUploadedZzals = () => {
               imageId={imageId}
               imageIndex={index}
               isLiked={imageLikeYn}
-              queryKey="uploadedZzals"
+              queryKey={["uploadedZzals", selectedTags]}
             />
             <XCircle
               onClick={handleClickDeleteButton(imageId)}

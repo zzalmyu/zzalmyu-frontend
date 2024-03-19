@@ -3,31 +3,33 @@ import { deleteImageLike } from "@/apis/zzal";
 import { GetZzalResponse } from "@/types/zzal.dto";
 import { ZzalType } from "@/types/queryKey";
 
-export const useRemoveImageLike = (imageIndex: number, zzalKey: ZzalType) => {
+export const useRemoveImageLike = (imageIndex: number, zzalKey: [ZzalType, string[]]) => {
   const queryClient = useQueryClient();
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (imageId: number) => deleteImageLike(imageId),
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: [zzalKey] });
+      await queryClient.cancelQueries({ queryKey: [...zzalKey] });
 
-      const oldData = queryClient.getQueryData<GetZzalResponse>([zzalKey]);
+      const oldData = queryClient.getQueryData<GetZzalResponse>([...zzalKey]);
 
       if (!oldData) return;
 
-      const updatedData = {
-        pageParams: [...oldData.pageParams],
-        pages: [...oldData.pages.flatMap((page) => page)],
-      };
+      const updatedData = JSON.parse(
+        JSON.stringify({
+          pageParams: [...oldData.pageParams],
+          pages: [...oldData.pages.flatMap((page) => page)],
+        }),
+      );
 
       updatedData.pages[imageIndex].imageLikeYn = false;
 
-      queryClient.setQueryData([zzalKey], updatedData);
+      queryClient.setQueryData([...zzalKey], updatedData);
 
       return { oldData };
     },
     onError: (_error, _zzalId, context) => {
-      queryClient.setQueryData([zzalKey], context?.oldData);
+      queryClient.setQueryData([...zzalKey], context?.oldData);
     },
   });
 
