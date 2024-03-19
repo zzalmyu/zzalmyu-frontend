@@ -154,7 +154,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
             },
           )}
         >
-          <TagSlider tags={tagNames} tagClassName="bg-primary" isClickable={false} />
+          <TagSlider tags={tagNames} tagClassName="bg-primary text-white" isClickable={false} />
         </div>
       </div>
       <div className=" max-h-500pxr overflow-auto">
