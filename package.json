@@ -18,6 +18,8 @@
     "*.{css,json,html}": "prettier --check"
   },
   "dependencies": {
+    "@sentry/react": "^7.107.0",
+    "@sentry/tracing": "^7.107.0",
     "@stomp/stompjs": "^7.0.0",
     "@tanstack/react-query": "^5.18.1",
     "@tanstack/react-router": "^1.15.22",
