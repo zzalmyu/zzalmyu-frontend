@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
-import useGetHomeZzlas from "@/hooks/api/zzal/useGetHomeZzals";
+import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
@@ -9,7 +9,7 @@ import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 
 const HomeZzals = () => {
-  const { zzals, handleFetchNextPage } = useGetHomeZzlas();
+  const { zzals, handleFetchNextPage } = useGetHomeZzals();
   const { topTags } = useGetTopTagsFromHome();
   const [selectedTags] = useAtom($selectedTags);
   const setRecommendedTags = useSetAtom($recommendedTags);
