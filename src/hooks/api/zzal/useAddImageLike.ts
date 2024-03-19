@@ -28,7 +28,7 @@ export const useAddImageLike = (imageIndex: number, zzalKey: [ZzalType, string[]
 
       return { oldData };
     },
-    onError: (error, _zzalId, context) => {
+    onError: (_error, _zzalId, context) => {
       queryClient.setQueryData([...zzalKey], context?.oldData);
     },
   });

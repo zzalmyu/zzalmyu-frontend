@@ -28,7 +28,7 @@ export const useRemoveImageLike = (imageIndex: number, zzalKey: [ZzalType, strin
 
       return { oldData };
     },
-    onError: (error, _zzalId, context) => {
+    onError: (_error, _zzalId, context) => {
       queryClient.setQueryData([...zzalKey], context?.oldData);
     },
   });
