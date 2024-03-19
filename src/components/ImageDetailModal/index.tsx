@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
-import { useAtom } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -15,7 +14,6 @@ import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
 import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
-import { $userInformation } from "@/store/user";
 
 interface Props {
   isOpen: boolean;
@@ -37,16 +35,6 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
   const { addImageLike } = useAddImageDetailLike(imageId);
   const { removeImageLike } = useRemoveImageDetailLike(imageId);
-  const [userInformation] = useAtom($userInformation);
-  const { role } = userInformation;
-
-  const handleLoginRequiredAction = (onAction: () => void) => () => {
-    if (role !== "USER") {
-      toast.info("로그인이 필요한 서비스입니다.");
-      return;
-    }
-    onAction();
-  };
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -75,7 +63,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     });
   };
 
-  const handleClickReportButton = handleLoginRequiredAction(() => {
+  const handleClickReportButton = () => {
     gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
@@ -84,7 +72,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
         onReport={handleClickReportCompeleteButton(imageId)}
       />
     ));
-  });
+  };
 
   const handleClickDownloadButton = debounce(async () => {
     setIsDownloading(true);
@@ -101,14 +89,21 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     copyZzal(imageUrl);
   }, 500);
 
-  const handleClickLikeButton = handleLoginRequiredAction(() => {
+  const handleClickLikeButton = () => {
     if (!isLiked) {
       addImageLike(imageId, {
         onSuccess: () => {
           gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
         },
-        onError: () =>
-          toast.error("좋아요 요청이 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+        onError: (error) => {
+          if (!axios.isAxiosError(error)) return;
+          if (error.response?.status === 400) {
+            toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
+          }
+          if (error.response?.status === 401) {
+            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          }
+        },
       });
 
       return;
@@ -118,12 +113,19 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
       onSuccess: () => {
         gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
       },
-      onError: () =>
-        toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+      onError: (error) => {
+        if (!axios.isAxiosError(error)) return;
+        if (error.response?.status === 400) {
+          toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
+        }
+        if (error.response?.status === 401) {
+          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+        }
+      },
     });
-  });
+  };
 
-  const handleClickSendButton = handleLoginRequiredAction(() => {});
+  const handleClickSendButton = () => {};
   //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
 
   const toggleTagNavigator = () => setIsTagNavigatorOpen(!isTagNavigatorOpen);
