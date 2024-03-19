@@ -16,7 +16,7 @@ const ZzalMessage = ({ src, isMyMessage, nickname = "짤용이" }: Props) => {
     >
       <div className="text-sm font-semibold text-text-primary">{nickname}</div>
       <div className="rounded-xl bg-surface1 p-5pxr">
-        <img src={src} alt="짤 메세지" width="full" />
+        <img src={src} alt="짤 메세지" width="full" className="rounded-xl" />
       </div>
     </div>
   );

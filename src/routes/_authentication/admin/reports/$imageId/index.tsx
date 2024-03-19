@@ -22,7 +22,7 @@ const AdminImageDetail = () => {
 
   const handleClickDeleteConfirm = (imageId: string) => () => {
     deleteReportedZzal(imageId);
-    gtag("event", "user_action", { event_category: "짤_영구_삭제" });
+    gtag("event", "admin_action", { event_category: "짤_영구_삭제" });
   };
 
   const handleClickDeleteButton = () => {

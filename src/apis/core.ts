@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
+import * as Sentry from "@sentry/react";
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { isExpiredToken } from "@/utils/tokenManagement";
 import { patchLogOut, postReissueToken } from "./auth";
@@ -23,7 +24,7 @@ axiosInstance.interceptors.request.use(async (config) => {
   const accessToken = getLocalStorage(ACCESS_TOKEN);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
-  config.headers.Authorization = `Bearer ${accessToken}`;
+  config.headers.Authorization = accessToken && `Bearer ${accessToken}`;
 
   if (refreshToken && isExpiredToken(refreshToken)) {
     toast.error("재로그인이 필요합니다", { autoClose: 2000 });
@@ -58,7 +59,11 @@ axiosInstance.interceptors.response.use(
 
     return response.data;
   },
-  async (error) => Promise.reject(error),
+  (error) => {
+    Sentry.captureException(error);
+
+    return Promise.reject(error);
+  },
 );
 
 const createApiMethod =

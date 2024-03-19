@@ -9,9 +9,7 @@ const useLogout = () => {
     onSuccess: () => {
       removeLocalStorage(ACCESS_TOKEN);
       removeLocalStorage(REFRESH_TOKEN);
-    },
-    onError: (error) => {
-      console.error(error);
+      location.reload();
     },
   });
 
