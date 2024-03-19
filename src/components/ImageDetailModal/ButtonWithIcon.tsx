@@ -11,6 +11,7 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
   onClick: () => void;
   isDisabled?: boolean;
   isLoading?: boolean;
+  className?: string;
 }
 
 const ButtonWithIcon = ({
@@ -20,6 +21,7 @@ const ButtonWithIcon = ({
   onClick,
   isDisabled = false,
   isLoading = false,
+  className,
 }: Props) => {
   return (
     <button
@@ -30,7 +32,7 @@ const ButtonWithIcon = ({
         "cursor-pointer": !isDisabled,
       })}
     >
-      {!isLoading && <Icon aria-label={iconLabel} />}
+      {!isLoading && <Icon aria-label={iconLabel} className={className} />}
       {isLoading && <Spinner />}
       <span className="mt-1 hidden text-xs sm:flex">{children}</span>
     </button>

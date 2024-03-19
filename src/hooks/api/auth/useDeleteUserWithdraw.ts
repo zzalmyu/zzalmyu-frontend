@@ -10,7 +10,6 @@ const useDeleteUserWithdraw = () => {
       removeLocalStorage(ACCESS_TOKEN);
       removeLocalStorage(REFRESH_TOKEN);
     },
-    onError: (error) => console.error("유저 탈퇴 실패", error),
   });
 
   return { userWithdraw: mutate, ...rest };
