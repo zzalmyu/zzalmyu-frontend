@@ -3,7 +3,7 @@ import { useAtom } from "jotai";
 import { getHomeZzals } from "@/apis/zzal";
 import { $selectedTags } from "@/store/tag";
 
-const useGetHomeZzlas = () => {
+const useGetHomeZzals = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
@@ -35,4 +35,4 @@ const useGetHomeZzlas = () => {
   };
 };
 
-export default useGetHomeZzlas;
+export default useGetHomeZzals;
