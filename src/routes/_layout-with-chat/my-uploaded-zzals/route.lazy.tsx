@@ -55,7 +55,7 @@ const MyUploadedZzals = () => {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <MasonryLayout className="mt-15pxr">
+      <MasonryLayout className="mt-15pxr w-full">
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
           <div className="relative" key={imageId}>
             <ZzalCard
