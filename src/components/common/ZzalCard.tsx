@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
+import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
@@ -83,8 +84,15 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
         onSuccess: () => {
           gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
         },
-        onError: () =>
-          toast.error("좋아요 요청이 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+        onError: (error) => {
+          if (!axios.isAxiosError(error)) return;
+          if (error.response?.status === 400) {
+            toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
+          }
+          if (error.response?.status === 401) {
+            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          }
+        },
       });
 
       return;
@@ -94,8 +102,15 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
       onSuccess: () => {
         gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
       },
-      onError: () =>
-        toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+      onError: (error) => {
+        if (!axios.isAxiosError(error)) return;
+        if (error.response?.status === 400) {
+          toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
+        }
+        if (error.response?.status === 401) {
+          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+        }
+      },
     });
   };
 
