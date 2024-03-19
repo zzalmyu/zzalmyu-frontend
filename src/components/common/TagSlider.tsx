@@ -15,8 +15,6 @@ interface Props {
 }
 
 const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) => {
-  const [showPrevButton, setShowPrevButton] = useState(false);
-  const [showNextButton, setShowNextButton] = useState(true);
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
@@ -36,10 +34,10 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
   };
 
   return (
-    <div className={"relative flex bg-none "}>
+    <div className={"relative flex bg-none"}>
       <Swiper
         slidesPerView={"auto"}
-        spaceBetween={15}
+        spaceBetween={10}
         allowTouchMove={false}
         slideToClickedSlide={true}
         pagination={{
@@ -49,40 +47,23 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
         onBeforeInit={handleBeforeInit}
         className="h-auto w-full"
         onSlideChange={(event) => setMainImageIndex(event.activeIndex)}
-        onReachBeginning={() => {
-          setShowPrevButton(false);
-        }}
-        onReachEnd={() => {
-          setShowNextButton(false);
-        }}
-        onFromEdge={() => {
-          setShowPrevButton(true);
-          setShowNextButton(true);
-        }}
       >
         <button
-          className={cn(
-            "absolute top-0 z-10 h-full bg-gradient-to-r from-background from-70% pr-7pxr",
-            {
-              hidden: !showPrevButton,
-            },
-          )}
+          className="absolute top-0 z-10 h-full bg-gradient-to-r from-background from-70% pr-7pxr disabled:hidden"
           onMouseDown={(event) => event.preventDefault()}
           ref={navigationPrevRef}
           aria-label="이전으로 이동"
         >
           <ChevronLeft strokeWidth={1.5} />
         </button>
-
         {tags.map((tagName, index) => (
           <SwiperSlide
             key={`${index}-${tagName}`}
-            className={cn("w-fit cursor-pointer px-5pxr text-center text-text-primary", {
-              "pr-50pxr": index === tags.length - 1,
-              "pl-30pxr": index === 0 && showPrevButton,
+            className={cn("w-fit cursor-pointer px-2 text-center text-text-primary", {
+              "pr-20pxr": index === tags.length - 1,
             })}
           >
-            <button onClick={onClick}>
+            <button onClick={onClick} className={cn({ "cursor-default": !onClick })}>
               <TagBadge
                 content={tagName}
                 className={cn("px-2 py-1 text-xs", tagClassName)}
@@ -92,12 +73,7 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
           </SwiperSlide>
         ))}
         <button
-          className={cn(
-            "absolute right-0 top-0 z-10 h-full bg-gradient-to-l from-background from-70% pl-7pxr",
-            {
-              hidden: !showNextButton,
-            },
-          )}
+          className="absolute right-0 top-0 z-10 h-full bg-gradient-to-l from-background from-70% pl-7pxr disabled:hidden"
           onMouseDown={(event) => event.preventDefault()}
           ref={navigationNextRef}
           aria-label="다음으로 이동"
