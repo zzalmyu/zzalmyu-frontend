@@ -14,7 +14,7 @@ export const useRemoveImageDetailLike = (imageId: number) => {
 
       if (!oldData) return;
 
-      const updatedData = oldData;
+      const updatedData = JSON.parse(JSON.stringify(oldData));
 
       updatedData.imageLikeYn = false;
 
@@ -22,8 +22,7 @@ export const useRemoveImageDetailLike = (imageId: number) => {
 
       return { oldData };
     },
-    onError: (error, _zzalId, context) => {
-      console.error(error);
+    onError: (_error, _zzalId, context) => {
       queryClient.setQueryData(["zzalDetails", imageId], context?.oldData);
     },
   });
