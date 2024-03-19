@@ -40,6 +40,14 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const [userInformation] = useAtom($userInformation);
   const { role } = userInformation;
 
+  const handleLoginRequiredAction = (onAction: () => void) => () => {
+    if (role !== "USER") {
+      toast.info("로그인이 필요한 서비스입니다.");
+      return;
+    }
+    onAction();
+  };
+
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
     DEFAULT: "신고가 올바르게 되지 않았습니다.",
@@ -67,11 +75,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     });
   };
 
-  const handleClickReportButton = () => {
-    if (role !== "USER") {
-      toast.info("로그인이 필요한 서비스입니다.");
-      return;
-    }
+  const handleClickReportButton = handleLoginRequiredAction(() => {
     gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
@@ -80,7 +84,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
         onReport={handleClickReportCompeleteButton(imageId)}
       />
     ));
-  };
+  });
 
   const handleClickDownloadButton = debounce(async () => {
     setIsDownloading(true);
@@ -97,11 +101,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     copyZzal(imageUrl);
   }, 500);
 
-  const handleClickLikeButton = () => {
-    if (role !== "USER") {
-      toast.info("로그인이 필요한 서비스입니다.");
-      return;
-    }
+  const handleClickLikeButton = handleLoginRequiredAction(() => {
     if (!isLiked) {
       addImageLike(imageId, {
         onSuccess: () => {
@@ -121,19 +121,12 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
       onError: () =>
         toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
     });
-  };
+  });
 
-  const handleClickSendButton = () => {
-    if (role !== "USER") {
-      toast.info("로그인이 필요한 서비스입니다.");
-      return;
-    }
-  };
+  const handleClickSendButton = handleLoginRequiredAction(() => {});
   //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
 
-  const toggleTagNavigator = () => {
-    setIsTagNavigatorOpen(!isTagNavigatorOpen);
-  };
+  const toggleTagNavigator = () => setIsTagNavigatorOpen(!isTagNavigatorOpen);
 
   return (
     <Fragment>
