@@ -16,6 +16,7 @@ const useGetHomeZzlas = () => {
         return lastPageParam + 1;
       },
       initialPageParam: 0,
+      refetchOnMount: false,
     });
 
   const handleFetchNextPage = () => {
@@ -26,10 +27,10 @@ const useGetHomeZzlas = () => {
 
   return {
     zzals: data?.pages.flatMap((page) => page),
-    handleFetchNextPage,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage,
+    handleFetchNextPage,
     ...rest,
   };
 };
