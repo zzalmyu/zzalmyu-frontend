@@ -146,6 +146,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
             onBlur={handleBlurTagInput}
             onChange={handleChangeTagInput}
             autoComplete="off"
+            minLength={1}
+            maxLength={10}
             className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent py-6pxr outline-none"
           />
           <button
