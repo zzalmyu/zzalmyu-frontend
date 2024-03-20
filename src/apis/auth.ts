@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import axios from "axios";
 import { getLocalStorage } from "@/utils/localStorage";
 import { GetUserInformationResponse } from "@/types/user.dto";
@@ -5,13 +6,24 @@ import { ReissueTokenResponse } from "@/types/auth.dto";
 import http from "./core";
 import { REFRESH_TOKEN } from "@/constants/auth";
 
-export const patchLogOut = () =>
-  http.patch<void>({
-    headers: {
-      "Authorization-refresh": `Bearer ${getLocalStorage(REFRESH_TOKEN)}`,
-    },
-    url: "/v1/user/logout",
-  });
+export const patchLogOut = async () => {
+  const refreshToken = getLocalStorage(REFRESH_TOKEN);
+
+  try {
+    await axios.patch<void>(
+      `${import.meta.env.VITE_BASE_URL}/v1/user/logout`,
+      {},
+      {
+        headers: {
+          "Authorization-refresh": `Bearer ${refreshToken}`,
+          "Content-Type": "application/json",
+        },
+      },
+    );
+  } catch (error) {
+    toast.error("로그아웃에 실패하였습니다 다시 시도해 주십시오.");
+  }
+};
 
 export const postReissueToken = async (): Promise<{
   accessTokenResponse: string;
