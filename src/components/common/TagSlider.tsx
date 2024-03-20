@@ -85,7 +85,7 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
             <button onClick={onClick}>
               <TagBadge
                 content={tagName}
-                className={cn("px-2 py-1 text-xs", tagClassName)}
+                className={cn("px-2 py-0.5 text-sm", tagClassName)}
                 isClickable={isClickable}
               />
             </button>
