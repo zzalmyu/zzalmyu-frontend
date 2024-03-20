@@ -58,7 +58,7 @@ const Chat = () => {
     <Fragment>
       <div
         className={cn(
-          "absolute right-0 h-full w-[33%] px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out",
+          "absolute right-0 h-full w-full px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out sm:w-[33%]",
           isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
         )}
       >
