@@ -85,8 +85,8 @@ const UploadZzal = () => {
       </Helmet>
       <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
         <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
-        <div className="m-auto flex flex-col sm:flex-row">
-          <div className="mx-auto w-440pxr">
+        <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
+          <div className="mx-auto pb-50pxr">
             <div className="mb-4 text-sm font-bold">
               업로드할 파일
               <Asterisk
@@ -98,44 +98,42 @@ const UploadZzal = () => {
             </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <div className="mt-10 flex h-536pxr w-500pxr flex-col sm:ml-36 sm:mt-0 sm:justify-between">
+          <div className="mx-auto mt-10 flex min-w-400pxr flex-col sm:mt-0 sm:w-640pxr sm:px-10pxr">
             <div>
-              <div>
-                <div className="mb-4 text-sm font-bold">
-                  짤 제목
-                  <Asterisk
-                    aria-label="필수 입력 항목 표시"
-                    className="inline-block"
-                    color="#ED0000"
-                    size={16}
-                  />
-                </div>
-                <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
-                  <input
-                    id="imageTitleInput"
-                    name="imageTitle"
-                    onChange={handleChangeImageTitle}
-                    value={imageTitle}
-                    className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
-                  />
-                </div>
+              <div className="mb-4 text-sm font-bold">
+                짤 제목
+                <Asterisk
+                  aria-label="필수 입력 항목 표시"
+                  className="inline-block"
+                  color="#ED0000"
+                  size={16}
+                />
               </div>
-              <div>
-                <div className="mb-4 text-sm font-bold">
-                  태그 검색 및 추가
-                  <Asterisk
-                    aria-label="필수 입력 항목 표시"
-                    className="inline-block"
-                    color="#ED0000"
-                    size={16}
-                  />
-                </div>
-                <UploadTagSearchForm />
+              <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
+                <input
+                  id="imageTitleInput"
+                  name="imageTitle"
+                  onChange={handleChangeImageTitle}
+                  value={imageTitle}
+                  className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
+                />
               </div>
             </div>
-            <div className="pt-10">
+            <div>
+              <div className="mb-4 text-sm font-bold">
+                태그 검색 및 추가
+                <Asterisk
+                  aria-label="필수 입력 항목 표시"
+                  className="inline-block"
+                  color="#ED0000"
+                  size={16}
+                />
+              </div>
+              <UploadTagSearchForm />
+            </div>
+            <div className="pb-60pxr pt-60pxr sm:pt-30pxr">
               <button
-                className="h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:max-w-650pxr"
+                className="mt-20pxr h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:mt-100pxr sm:max-w-650pxr"
                 onClick={handleClickUploadButton}
               >
                 업로드하기
