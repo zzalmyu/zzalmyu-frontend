@@ -131,7 +131,7 @@ const UploadZzal = () => {
               </div>
               <UploadTagSearchForm />
             </div>
-            <div className="pb-60pxr pt-60pxr sm:pt-30pxr">
+            <div className="pb-60pxr pt-120pxr sm:pt-30pxr">
               <button
                 className="mt-20pxr h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:mt-100pxr sm:max-w-650pxr"
                 onClick={handleClickUploadButton}

@@ -166,7 +166,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
           />
         )}
       </div>
-      <div className="mt-3 flex items-center justify-between">
+      <div className="mt-3 flex items-center">
         {selectedTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
@@ -177,7 +177,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
             초기화
           </button>
         )}
-        <div className="w-400pxr">
+        <div className="min-w-10pxr">
           {!showAutoComplete && <TagSlider tags={selectedTags.map(({ tagName }) => tagName)} />}
         </div>
       </div>
