@@ -6,7 +6,7 @@ import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
-import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
+import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 
@@ -15,7 +15,7 @@ const UploadZzal = () => {
   const { uploadZzal } = usePostUploadZzal();
   const [file, setFile] = useState<File | null>(null);
   const [imageTitle, setImageTitle] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
   const setRecommendedTags = useSetAtom($recommendedTags);
 
   const changeFile = (file: File | null) => {

@@ -4,11 +4,11 @@ import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
 import { sleep } from "@/utils/sleep";
+import TagSlider from "../common/TagSlider";
 import UploadTagAutoComplete from "./UploadTagAutoComplete";
-import UploadTagSlider from "./UploadTagSlider";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { usePostTag } from "@/hooks/api/tag/usePostTag";
-import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
+import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
 import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
@@ -18,7 +18,7 @@ interface Props {
 const UploadTagSearchForm = ({ className }: Props) => {
   const { createTag } = usePostTag();
   const [recommendedTags] = useAtom($recommendedTags);
-  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
   const isMountedRef = useRef(false);
   const isChangeStateRef = useRef(false); // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
   const [tagKeyword, setTagKeyword] = useState("");
@@ -177,9 +177,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
             초기화
           </button>
         )}
-
         <div className="w-400pxr">
-          {!showAutoComplete && <UploadTagSlider tags={selectedTags} />}
+          {!showAutoComplete && <TagSlider tags={selectedTags.map(({ tagName }) => tagName)} />}
         </div>
       </div>
     </div>

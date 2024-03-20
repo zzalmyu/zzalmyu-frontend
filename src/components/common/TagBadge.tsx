@@ -1,7 +1,7 @@
 import { useAtom } from "jotai";
 import { XCircle } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import { $selectedTags } from "@/store/tag";
+import { $selectedTags, $selectedUploadTags } from "@/store/tag";
 
 interface Props {
   content: string;
@@ -12,9 +12,11 @@ interface Props {
 
 const TagBadge = ({ content, isClickable = false, className }: Props) => {
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
+  const [selectedUploadTags, setSelectedUploadTags] = useAtom($selectedUploadTags);
 
   const handleMouseDownDeleteTag = (tag: string) => () => {
     setSelectedTags(selectedTags.filter((selectedTag) => selectedTag !== tag));
+    setSelectedUploadTags(selectedUploadTags.filter((selectedTag) => selectedTag.tagName !== tag));
   };
 
   return (

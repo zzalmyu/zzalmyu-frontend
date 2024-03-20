@@ -3,8 +3,8 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import UploadTagSlider from "./UploadTagSlider";
-import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
+import TagSlider from "../common/TagSlider";
+import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
 import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
@@ -14,7 +14,7 @@ interface Props {
 }
 
 const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
-  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagId: number, tagName: string) => () => {
@@ -42,7 +42,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
             </span>
           </div>
           <div className="mb-10pxr flex flex-wrap gap-6pxr">
-            <UploadTagSlider tags={selectedTags} />
+            <TagSlider tags={selectedTags.map(({ tagName }) => tagName)} />
           </div>
         </div>
       )}
