@@ -18,7 +18,7 @@ interface Props {
 const UploadTagSearchForm = ({ className }: Props) => {
   const { createTag } = usePostTag();
   const [recommendedTags] = useAtom($recommendedTags);
-  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
+  const [selectedUploadTags, setSelectedUploadTags] = useAtom($selectedUploadTags);
   const isMountedRef = useRef(false);
   const isChangeStateRef = useRef(false); // TODO: [2024-03-17] Strict 모드는 개발 모드에서만 활성화되므로, 추후 삭제해야합니다. (React.StrictMode로 인해, 개발자 모드에서 useEffect가 두번 실행되므로 작성해주었습니다.)
   const [tagKeyword, setTagKeyword] = useState("");
@@ -64,10 +64,10 @@ const UploadTagSearchForm = ({ className }: Props) => {
     }
 
     if (
-      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
-      !selectedTags.find((tag) => tag.tagId === newTagId && tag.tagName === newTagName)
+      selectedUploadTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedUploadTags.find((tag) => tag.tagId === newTagId && tag.tagName === newTagName)
     ) {
-      setSelectedTags((previousState) => [
+      setSelectedUploadTags((previousState) => [
         ...previousState,
         { tagId: newTagId, tagName: newTagName },
       ]);
@@ -75,7 +75,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
   }, [newTagId, newTagName]);
 
   const handleClickResetTagButton = () => {
-    setSelectedTags([]);
+    setSelectedUploadTags([]);
   };
 
   const handleFocusTagInput = () => {
@@ -167,7 +167,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
         )}
       </div>
       <div className="mt-3 flex items-center">
-        {selectedTags.length > 0 && (
+        {selectedUploadTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
             className="mr-4 flex items-center whitespace-nowrap rounded-full bg-card p-2"
@@ -178,7 +178,9 @@ const UploadTagSearchForm = ({ className }: Props) => {
           </button>
         )}
         <div className="min-w-10pxr">
-          {!showAutoComplete && <TagSlider tags={selectedTags.map(({ tagName }) => tagName)} />}
+          {!showAutoComplete && (
+            <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
+          )}
         </div>
       </div>
     </div>

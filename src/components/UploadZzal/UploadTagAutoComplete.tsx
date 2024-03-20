@@ -14,15 +14,15 @@ interface Props {
 }
 
 const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
-  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
+  const [selectedUploadTags, setSelectedUploadTags] = useAtom($selectedUploadTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagId: number, tagName: string) => () => {
     if (
-      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
-      !selectedTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
+      selectedUploadTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedUploadTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
     ) {
-      setSelectedTags((previousState) => [...previousState, { tagId, tagName }]);
+      setSelectedUploadTags((previousState) => [...previousState, { tagId, tagName }]);
     }
   };
 
@@ -33,16 +33,16 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
   return (
     <div className="absolute top-[-5px] z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
-      {selectedTags.length > 0 && (
+      {selectedUploadTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
           <div className="text-10pxr mb-20pxr font-semibold text-neutral">
             선택된 태그
             <span className="ml-5pxr">
-              {selectedTags.length}/{MAX_SEARCH_TAG_UPLOAD}
+              {selectedUploadTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
           <div className="mb-10pxr flex flex-wrap gap-6pxr">
-            <TagSlider tags={selectedTags.map(({ tagName }) => tagName)} />
+            <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
           </div>
         </div>
       )}
