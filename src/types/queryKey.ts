@@ -1,1 +1,1 @@
-export type ZzalType = "likedZzals" | "uploadedZzals" | "mainZzals";
+export type ZzalType = "likedZzals" | "uploadedZzals" | "homeZzals";
