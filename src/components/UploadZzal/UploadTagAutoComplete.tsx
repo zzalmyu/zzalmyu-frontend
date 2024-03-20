@@ -11,9 +11,15 @@ interface Props {
   autoCompletedTags: Tag[];
   cursorIndex: number;
   setCursorIndex: Dispatch<SetStateAction<number>>;
+  handleResetTagInput: () => void;
 }
 
-const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+const UploadTagAutoComplete = ({
+  autoCompletedTags,
+  cursorIndex,
+  setCursorIndex,
+  handleResetTagInput,
+}: Props) => {
   const [selectedUploadTags, setSelectedUploadTags] = useAtom($selectedUploadTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
@@ -23,6 +29,7 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
       !selectedUploadTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
     ) {
       setSelectedUploadTags((previousState) => [...previousState, { tagId, tagName }]);
+      handleResetTagInput();
     }
   };
 

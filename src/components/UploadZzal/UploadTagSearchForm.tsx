@@ -2,7 +2,6 @@ import { FormEvent, ChangeEvent, useState, useEffect, useRef } from "react";
 import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import { debounce } from "@/utils/debounce";
 import { sleep } from "@/utils/sleep";
 import TagSlider from "../common/TagSlider";
 import UploadTagAutoComplete from "./UploadTagAutoComplete";
@@ -29,8 +28,6 @@ const UploadTagSearchForm = ({ className }: Props) => {
   const [newTagName, setNewTagName] = useState<string>("");
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
@@ -48,7 +45,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
 
     setCursorIndex(0);
     setTagKeyword("");
-    event.currentTarget.reset();
+    setShowAutoComplete(false);
   };
 
   useEffect(() => {
@@ -88,12 +85,17 @@ const UploadTagSearchForm = ({ className }: Props) => {
     setCursorIndex(-1);
   };
 
-  const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
+  const handleResetTagInput = () => {
+    setTagKeyword("");
+  };
+
+  const handleChangeTagInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setShowAutoComplete(true);
     setTagKeyword(event.target.value);
 
     if (event.target.value.length > 0) setCursorIndex(-2);
     else setCursorIndex(0);
-  }, 200);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -142,6 +144,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
+            value={tagKeyword}
             onFocus={handleFocusTagInput}
             onBlur={handleBlurTagInput}
             onChange={handleChangeTagInput}
@@ -165,6 +168,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
             autoCompletedTags={autoCompletedTags}
             cursorIndex={cursorIndex}
             setCursorIndex={setCursorIndex}
+            handleResetTagInput={handleResetTagInput}
           />
         )}
       </div>
