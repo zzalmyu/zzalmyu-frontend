@@ -1,9 +1,9 @@
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Link, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
+import { FolderUp, Heart, Home, PlusSquare } from "lucide-react";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { FolderUp, Heart, Home, PlusSquare } from "lucide-react";
 import { AuthContextType } from "@/components/Auth";
 import { cn } from "@/utils/tailwind";
 import NotFound from "./-NotFound";
@@ -53,10 +53,11 @@ const NavigationFooter = () => {
           to={path}
           className="flex w-65pxr flex-col items-center gap-1"
           key={name}
+          activeProps={{ className: "text-primary" }}
           onClick={handleClickButton(event)}
         >
           <Icon size={24} strokeWidth={1.5} aria-label={name} />
-          <span className="text-xs font-bold group-hover:text-blue-500">{name}</span>
+          <span className="text-xs font-bold">{name}</span>
         </Link>
       ))}
     </div>
