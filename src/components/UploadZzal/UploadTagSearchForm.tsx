@@ -24,8 +24,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
   const [cursorIndex, setCursorIndex] = useState(-2);
-  const [newTagId, setNewTagId] = useState<number>(-1);
-  const [newTagName, setNewTagName] = useState<string>("");
+  const [uploadTagId, setUploadTagId] = useState<number>(-1);
+  const [uploadTagName, setUploadTagName] = useState<string>("");
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     const formData = new FormData(event.currentTarget);
@@ -34,13 +34,13 @@ const UploadTagSearchForm = ({ className }: Props) => {
     if (autoCompletedTags.length === 0 || userInputTag !== autoCompletedTags[0]?.tagName) {
       createTag(userInputTag, {
         onSuccess: (response) => {
-          setNewTagName(userInputTag);
-          setNewTagId(response.tagId);
+          setUploadTagName(userInputTag);
+          setUploadTagId(response.tagId);
         },
       });
     } else {
-      setNewTagName(userInputTag);
-      setNewTagId(autoCompletedTags[0].tagId);
+      setUploadTagName(userInputTag);
+      setUploadTagId(autoCompletedTags[0].tagId);
     }
 
     setCursorIndex(0);
@@ -62,14 +62,14 @@ const UploadTagSearchForm = ({ className }: Props) => {
 
     if (
       selectedUploadTags.length < MAX_SEARCH_TAG_UPLOAD &&
-      !selectedUploadTags.find((tag) => tag.tagId === newTagId && tag.tagName === newTagName)
+      !selectedUploadTags.find((tag) => tag.tagId === uploadTagId && tag.tagName === uploadTagName)
     ) {
       setSelectedUploadTags((previousState) => [
         ...previousState,
-        { tagId: newTagId, tagName: newTagName },
+        { tagId: uploadTagId, tagName: uploadTagName },
       ]);
     }
-  }, [newTagId, newTagName]);
+  }, [uploadTagId, uploadTagName]);
 
   const handleClickResetTagButton = () => {
     setSelectedUploadTags([]);
