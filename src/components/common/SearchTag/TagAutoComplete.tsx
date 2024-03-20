@@ -35,7 +35,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
-          <div className="text-10pxr mb-20pxr font-semibold text-neutral">
+          <div className="mb-10pxr text-sm font-semibold text-neutral">
             선택된 태그
             <span className="ml-5pxr">
               {selectedTags.length}/{MAX_SEARCH_TAG}
