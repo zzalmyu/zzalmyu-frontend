@@ -29,7 +29,11 @@ const TagSearchForm = ({ className }: Props) => {
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(userInputTag)) {
+    if (
+      selectedTags.length < MAX_SEARCH_TAG &&
+      !selectedTags.includes(userInputTag) &&
+      userInputTag.length
+    ) {
       increaseTagUsage(userInputTag);
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
