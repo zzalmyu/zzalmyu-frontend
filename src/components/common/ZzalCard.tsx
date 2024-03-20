@@ -99,14 +99,13 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-white"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-white"
       onClick={handleClickImageLike}
     >
       <Heart
         aria-label="좋아요"
         size={18}
-        strokeWidth={isLiked ? 0 : 2}
-        fill={isLiked ? "#ED0000" : "none"}
+        className={cn({ "fill-primary text-primary": isLiked, "text-black": !isLiked })}
       />
     </button>
   );
@@ -124,10 +123,10 @@ const SendButton = ({ src }: SendButtonProps) => {
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
       onClick={handleClickSendImageSrc}
     >
-      <SendHorizontal aria-label="채팅창 보내기" size={20} fill="white" />
+      <SendHorizontal aria-label="채팅창 보내기" size={18} color="white" />
     </button>
   );
 };
@@ -142,10 +141,10 @@ const CopyButton = ({ src }: CopyButtonProps) => {
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
       onClick={handleClickCopytoClipboard}
     >
-      <Copy aria-label="이미지 복사" size={20} stroke="white" />
+      <Copy aria-label="이미지 복사" size={18} color="white" />
     </button>
   );
 };
