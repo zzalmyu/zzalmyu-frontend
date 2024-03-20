@@ -1,5 +1,6 @@
 import { toast } from "react-toastify";
 import axios from "axios";
+import * as Sentry from "@sentry/react";
 
 interface DownloadZzalParameters {
   imageUrl: string;
@@ -25,7 +26,7 @@ export const downloadZzal = async ({ imageUrl, imageTitle }: DownloadZzalParamet
     gtag("event", "user_action", { event_category: "짤_다운로드" });
   } catch (error) {
     toast.error("다운로드에 실패했습니다.");
-    console.error("파일 다운로드 중 오류가 발생했습니다:", error);
+    Sentry.captureException(error);
   }
 };
 
@@ -40,7 +41,7 @@ const copyToClipboard = (pngBlob: Blob) => {
     gtag("event", "user_action", { event_category: "짤_복사" });
   } catch (error) {
     toast.error("복사에 실패했습니다.");
-    console.error(error);
+    Sentry.captureException(error);
   }
 };
 
@@ -86,6 +87,6 @@ export const copyZzal = async (imageUrl: string) => {
     copyImageToClipboard(imageBlob);
   } catch (error) {
     toast.error("복사에 실패했습니다.");
-    console.error(error);
+    Sentry.captureException(error);
   }
 };

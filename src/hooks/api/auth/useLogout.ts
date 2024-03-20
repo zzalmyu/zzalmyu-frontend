@@ -11,9 +11,6 @@ const useLogout = () => {
       removeLocalStorage(REFRESH_TOKEN);
       location.reload();
     },
-    onError: (error) => {
-      console.error(error);
-    },
   });
 
   return { logout: mutate, ...rest };
