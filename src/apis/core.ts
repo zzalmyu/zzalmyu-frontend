@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import axios, { AxiosInstance, AxiosRequestConfig, Method } from "axios";
 import * as Sentry from "@sentry/react";
 import { getLocalStorage, removeLocalStorage, setLocalStorage } from "@/utils/localStorage";
@@ -27,11 +26,10 @@ axiosInstance.interceptors.request.use(async (config) => {
   config.headers.Authorization = accessToken && `Bearer ${accessToken}`;
 
   if (refreshToken && isExpiredToken(refreshToken)) {
-    toast.error("재로그인이 필요합니다", { autoClose: 2000 });
+    await patchLogOut();
+
     removeLocalStorage(ACCESS_TOKEN);
     removeLocalStorage(REFRESH_TOKEN);
-
-    await patchLogOut();
 
     window.location.href = "/";
 
