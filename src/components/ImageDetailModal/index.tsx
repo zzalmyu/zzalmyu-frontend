@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
+import { useSetAtom } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -12,6 +13,10 @@ import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
+import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
+import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
+import { $setMessagePreview } from "@/store/chat";
+import useModalContext from "@/hooks/modals/useModalContext";
 
 interface Props {
   isOpen: boolean;
@@ -31,6 +36,10 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const { reportZzal } = usePostReportZzal();
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
+  const { addImageLike } = useAddImageDetailLike(imageId);
+  const { removeImageLike } = useRemoveImageDetailLike(imageId);
+  const setPreviewImage = useSetAtom($setMessagePreview);
+  const onClose = useModalContext();
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -85,15 +94,48 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     copyZzal(imageUrl);
   }, 500);
 
-  const handleClickLikeButton = () => {};
+  const handleClickLikeButton = () => {
+    if (!isLiked) {
+      addImageLike(imageId, {
+        onSuccess: () => {
+          gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
+        },
+        onError: (error) => {
+          if (!axios.isAxiosError(error)) return;
+          if (error.response?.status === 400) {
+            toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
+          }
+          if (error.response?.status === 401) {
+            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          }
+        },
+      });
 
-  const handleClickSendButton = () => {};
+      return;
+    }
 
-  //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
-
-  const toggleTagNavigator = () => {
-    setIsTagNavigatorOpen(!isTagNavigatorOpen);
+    removeImageLike(imageId, {
+      onSuccess: () => {
+        gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
+      },
+      onError: (error) => {
+        if (!axios.isAxiosError(error)) return;
+        if (error.response?.status === 400) {
+          toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
+        }
+        if (error.response?.status === 401) {
+          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+        }
+      },
+    });
   };
+
+  const handleClickSendButton = () => {
+    setPreviewImage(imageUrl);
+    onClose();
+  };
+
+  const toggleTagNavigator = () => setIsTagNavigatorOpen(!isTagNavigatorOpen);
 
   return (
     <Fragment>
@@ -154,7 +196,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
             },
           )}
         >
-          <TagSlider tags={tagNames} tagClassName="bg-primary" isClickable={false} />
+          <TagSlider tags={tagNames} tagClassName="bg-primary text-white" isClickable={false} />
         </div>
       </div>
       <div className=" max-h-500pxr overflow-auto">

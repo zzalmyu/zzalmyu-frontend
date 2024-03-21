@@ -133,9 +133,9 @@ const TagSearchForm = ({ className }: Props) => {
           />
           <button
             type="submit"
-            className="z-20 flex items-center gap-6pxr rounded-full bg-primary text-white sm:p-2"
+            className="z-20 flex items-center gap-6pxr rounded-full bg-gradient-to-r from-primary from-30% to-[#78C6FF] p-1 text-sm font-bold text-white sm:px-2.5 sm:py-2 sm:text-base"
           >
-            <Search aria-label="검색" size={20} />
+            <Search aria-label="검색" size={17} strokeWidth={3} />
             검색
           </button>
         </div>
@@ -161,7 +161,9 @@ const TagSearchForm = ({ className }: Props) => {
             초기화
           </button>
         )}
-        <div className="w-full">{!showAutoComplete && <TagSlider tags={selectedTags} />}</div>
+        <div className="w-full">
+          <TagSlider tags={selectedTags} />
+        </div>
       </div>
     </div>
   );

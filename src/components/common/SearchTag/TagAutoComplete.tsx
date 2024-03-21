@@ -38,11 +38,11 @@ const TagAutoComplete = ({
   };
 
   return (
-    <div className="absolute top-[-5px] z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
-          <div className="text-10pxr mb-20pxr font-semibold text-neutral">
+          <div className="text-10pxr mb-20pxr font-semibold text-text-primary">
             선택된 태그
             <span className="ml-5pxr">
               {selectedTags.length}/{MAX_SEARCH_TAG}
@@ -76,10 +76,11 @@ const TagAutoComplete = ({
           </li>
         ))}
       </ul>
+
       {recommendedTags.length && (
         <div className="text-10pxr font-semibold text-neutral">추천 태그</div>
       )}
-
+        
       <ul>
         {recommendedTags.map(({ tagId, tagName }, index) => {
           const recommendedIndex = index + autoCompletedTags.length;
@@ -94,8 +95,8 @@ const TagAutoComplete = ({
               )}
               onMouseDown={handleMouseDownTagName(tagName)}
             >
-              <div className="flex items-center gap-2">
-                <Bookmark size={16} color="#807F7F" />
+              <div className="flex items-center gap-2 text-text-primary">
+                <Bookmark size={16} />
                 {tagName}
               </div>
             </li>
