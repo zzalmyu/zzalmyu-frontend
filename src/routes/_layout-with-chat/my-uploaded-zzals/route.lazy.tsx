@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { toast } from "react-toastify";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { XCircle } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useAtom, useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
@@ -60,7 +60,7 @@ const MyUploadedZzals = () => {
       {zzals.length === 0 && <NoSearchResults />}
       <MasonryLayout className="mt-15pxr">
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
-          <div className="relative" key={imageId}>
+          <div className="group relative" key={imageId}>
             <ZzalCard
               className="mb-10pxr"
               src={path}
@@ -70,12 +70,14 @@ const MyUploadedZzals = () => {
               isLiked={imageLikeYn}
               queryKey={["uploadedZzals", selectedTags]}
             />
-            <XCircle
-              onClick={handleClickDeleteButton(imageId)}
-              className="absolute right-2 top-2 z-0"
-              fill="white"
-              aria-label="짤 삭제"
-            />
+            <div className="button-container absolute bottom-5 left-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+              <button
+                className="flex h-9 w-9 items-center justify-center rounded-full  bg-white"
+                onClick={handleClickDeleteButton(imageId)}
+              >
+                <Trash2 aria-label="짤 삭제" size={18} className="text-gray-700" />
+              </button>
+            </div>
           </div>
         ))}
       </MasonryLayout>
