@@ -12,9 +12,15 @@ interface Props {
   autoCompletedTags: Tag[];
   cursorIndex: number;
   setCursorIndex: Dispatch<SetStateAction<number>>;
+  handleResetTagInput: () => void;
 }
 
-const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
+const TagAutoComplete = ({
+  autoCompletedTags,
+  cursorIndex,
+  setCursorIndex,
+  handleResetTagInput,
+}: Props) => {
   const { increaseTagUsage } = usePostUsedTag();
   const [selectedTags, setSelectedTags] = useAtom($selectedTags);
   const [recommendedTags] = useAtom($recommendedTags);
@@ -23,6 +29,7 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
     if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(tagName)) {
       increaseTagUsage(tagName);
       setSelectedTags((previousState) => [...previousState, tagName]);
+      handleResetTagInput();
     }
   };
 
@@ -69,7 +76,11 @@ const TagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Pro
           </li>
         ))}
       </ul>
-      <div className="text-10pxr font-semibold text-text-primary">추천 태그</div>
+
+      {recommendedTags.length && (
+        <div className="text-10pxr font-semibold text-neutral">추천 태그</div>
+      )}
+        
       <ul>
         {recommendedTags.map(({ tagId, tagName }, index) => {
           const recommendedIndex = index + autoCompletedTags.length;
