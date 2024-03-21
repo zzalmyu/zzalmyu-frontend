@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
-import { useSetAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -14,6 +14,7 @@ import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
+import { $userInformation } from "@/store/user";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
 import { $setMessagePreview } from "@/store/chat";
@@ -49,6 +50,7 @@ const ImageDetailModalContent = ({
   const { reportZzal } = usePostReportZzal();
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
+  const { role } = useAtomValue($userInformation);
   const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
   const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
   const setPreviewImage = useSetAtom($setMessagePreview);
@@ -62,7 +64,7 @@ const ImageDetailModalContent = ({
   const handleClickReportCompeleteButton = (imageId: number) => () => {
     reportZzal(imageId, {
       onSuccess: () => {
-        toast.success("신고가 완료되었습니다.");
+        toast.success("신고가 완료되었습니다.", { autoClose: 1500 });
         gtag("event", "user_action", { event_category: "짤_신고" });
       },
       onError: (error: Error | AxiosError) => {
@@ -73,15 +75,20 @@ const ImageDetailModalContent = ({
         const { statusCode, code } = error.response?.data as CustomErrorResponse;
 
         if (statusCode === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
-          toast.error(errorMessage[code]);
+          toast.error(errorMessage[code], { autoClose: 1500 });
         } else {
-          toast.error(errorMessage["DEFAULT"]);
+          toast.error(errorMessage["DEFAULT"], { autoClose: 1500 });
         }
       },
     });
   };
 
   const handleClickReportButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+      return;
+    }
+
     gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
@@ -119,7 +126,7 @@ const ImageDetailModalContent = ({
             toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
           }
           if (error.response?.status === 401) {
-            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+            toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
           }
         },
       });
@@ -137,13 +144,17 @@ const ImageDetailModalContent = ({
           toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
         }
         if (error.response?.status === 401) {
-          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
         }
       },
     });
   };
 
   const handleClickSendButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+      return;
+    }
     setPreviewImage(imageUrl);
     onClose();
   };
@@ -153,7 +164,7 @@ const ImageDetailModalContent = ({
   return (
     <Fragment>
       <div className="relative flex w-full justify-center">
-        <div className="z-30 flex h-90pxr w-full justify-center bg-background">
+        <div className="z-30 flex h-90pxr w-full justify-center bg-background  drop-shadow-[0_0_5px_rgba(0,0,0,0.1)] ">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
             <ButtonWithIcon
               Icon={FolderDown}
