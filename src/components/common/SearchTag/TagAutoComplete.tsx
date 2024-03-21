@@ -66,7 +66,7 @@ const TagAutoComplete = ({
             key={tagId}
             className={cn(
               "py-2",
-              index === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
+              index === cursorIndex && "box-border rounded-md bg-gray-200 font-bold text-black",
             )}
           >
             <div className="flex items-center gap-2">
@@ -91,11 +91,12 @@ const TagAutoComplete = ({
               key={tagId}
               className={cn(
                 "px-2 py-2",
-                recommendedIndex === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
+                recommendedIndex === cursorIndex &&
+                  "box-border rounded-md bg-gray-200 font-bold text-black",
               )}
               onMouseDown={handleMouseDownTagName(tagName)}
             >
-              <div className="flex items-center gap-2 text-text-primary">
+              <div className="flex items-center gap-2">
                 <Bookmark size={16} />
                 {tagName}
               </div>
