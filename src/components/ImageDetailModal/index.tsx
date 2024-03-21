@@ -141,7 +141,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   return (
     <Fragment>
       <div className="relative flex w-full justify-center">
-        <div className="z-30 flex h-90pxr w-full justify-center bg-background">
+        <div className="z-30 flex h-90pxr w-full justify-center bg-background  drop-shadow-[0_0_5px_rgba(0,0,0,0.1)] ">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
             <ButtonWithIcon
               Icon={FolderDown}
