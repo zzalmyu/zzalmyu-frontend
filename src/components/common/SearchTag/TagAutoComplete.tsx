@@ -76,7 +76,10 @@ const TagAutoComplete = ({
           </li>
         ))}
       </ul>
-      <div className="text-10pxr font-semibold text-neutral">추천 태그</div>
+      {recommendedTags.length && (
+        <div className="text-10pxr font-semibold text-neutral">추천 태그</div>
+      )}
+
       <ul>
         {recommendedTags.map(({ tagId, tagName }, index) => {
           const recommendedIndex = index + autoCompletedTags.length;
