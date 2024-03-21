@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
-import { useAtomValue } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -16,6 +16,8 @@ import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
 import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
 import { $userInformation } from "@/store/user";
+import { $setMessagePreview } from "@/store/chat";
+import useModalContext from "@/hooks/modals/useModalContext";
 
 interface Props {
   isOpen: boolean;
@@ -38,6 +40,8 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const { addImageLike } = useAddImageDetailLike(imageId);
   const { removeImageLike } = useRemoveImageDetailLike(imageId);
   const { role } = useAtomValue($userInformation);
+  const setPreviewImage = useSetAtom($setMessagePreview);
+  const onClose = useModalContext();
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -133,8 +137,10 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
     });
   };
 
-  const handleClickSendButton = () => {};
-  //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
+  const handleClickSendButton = () => {
+    setPreviewImage(imageUrl);
+    onClose();
+  };
 
   const toggleTagNavigator = () => setIsTagNavigatorOpen(!isTagNavigatorOpen);
 

@@ -142,7 +142,9 @@ const TagSearchForm = ({ className }: Props) => {
             초기화
           </button>
         )}
-        <div className="w-full">{!showAutoComplete && <TagSlider tags={selectedTags} />}</div>
+        <div className="w-full">
+          <TagSlider tags={selectedTags} />
+        </div>
       </div>
     </div>
   );
