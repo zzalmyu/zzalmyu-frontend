@@ -38,7 +38,7 @@ const TagAutoComplete = ({
   };
 
   return (
-    <div className="absolute z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-40pxr shadow-md outline-none sm:rounded-b-30pxr">
+    <div className="absolute z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-40pxr shadow-md shadow-adaptive-shadow outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
