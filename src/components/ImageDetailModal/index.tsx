@@ -64,7 +64,7 @@ const ImageDetailModalContent = ({
   const handleClickReportCompeleteButton = (imageId: number) => () => {
     reportZzal(imageId, {
       onSuccess: () => {
-        toast.success("신고가 완료되었습니다.");
+        toast.success("신고가 완료되었습니다.", { autoClose: 1500 });
         gtag("event", "user_action", { event_category: "짤_신고" });
       },
       onError: (error: Error | AxiosError) => {
@@ -75,9 +75,9 @@ const ImageDetailModalContent = ({
         const { statusCode, code } = error.response?.data as CustomErrorResponse;
 
         if (statusCode === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
-          toast.error(errorMessage[code]);
+          toast.error(errorMessage[code], { autoClose: 1500 });
         } else {
-          toast.error(errorMessage["DEFAULT"]);
+          toast.error(errorMessage["DEFAULT"], { autoClose: 1500 });
         }
       },
     });
@@ -85,7 +85,7 @@ const ImageDetailModalContent = ({
 
   const handleClickReportButton = () => {
     if (role === "GUEST") {
-      toast.info("로그인이 필요한 기능입니다.");
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
       return;
     }
 
@@ -152,7 +152,7 @@ const ImageDetailModalContent = ({
 
   const handleClickSendButton = () => {
     if (role === "GUEST") {
-      toast.info("로그인이 필요한 기능입니다.");
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
       return;
     }
     setPreviewImage(imageUrl);
