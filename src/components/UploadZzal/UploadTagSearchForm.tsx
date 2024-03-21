@@ -148,7 +148,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
         <label htmlFor="tagInput" className="a11y-hidden">
           태그 입력
         </label>
-        <div className="flex h-full w-full flex-wrap items-center gap-2 rounded-full border border-gray-300 py-6pxr shadow-xl sm:gap-4 sm:px-4">
+        <div className="flex h-full w-full flex-wrap items-center gap-2 rounded-full border border-gray-300 px-2 py-0 shadow-md sm:gap-4 sm:px-4">
           <input
             id="tagInput"
             name="tag"
@@ -159,18 +159,34 @@ const UploadTagSearchForm = ({ className }: Props) => {
             autoComplete="off"
             minLength={1}
             maxLength={10}
-            className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent py-6pxr outline-none"
+            className="z-20 h-50pxr min-h-8 flex-1 rounded-xl border-none bg-transparent outline-none sm:h-60pxr"
           />
           <button
             type="submit"
-            className="z-20 flex items-center gap-6pxr rounded-full bg-primary text-white sm:p-2"
+            className={cn(
+              "relative z-20 flex h-30pxr items-center gap-6pxr overflow-hidden rounded-full bg-primary p-2 text-white transition-[width_height] sm:h-35pxr  sm:p-2",
+              showAutoComplete ? "w-65pxr sm:w-70pxr" : "w-30pxr sm:w-35pxr",
+            )}
           >
-            <Search aria-label="검색" size={20} />
-            검색
+            <Search aria-label="검색" size={20} className="z-10" />
+            <span
+              className={cn(
+                "absolute right-2 z-10 text-sm transition-opacity delay-100 duration-200 sm:text-base",
+                showAutoComplete ? "opacity-100" : "translate-y-50pxr opacity-0",
+              )}
+            >
+              검색
+            </span>
+            <div
+              className={cn(
+                showAutoComplete ? "opacity-100" : "opacity-0",
+                "absolute inset-0 h-full w-full bg-gradient-to-r from-primary to-[#78C6FF] duration-300",
+              )}
+            ></div>
           </button>
         </div>
       </form>
-      <div className="absolute flex w-full justify-center sm:top-35pxr">
+      <div className="absolute top-25pxr flex w-full justify-center sm:top-30pxr">
         {showAutoComplete && (
           <UploadTagAutoComplete
             autoCompletedTags={autoCompletedTags}
@@ -180,14 +196,14 @@ const UploadTagSearchForm = ({ className }: Props) => {
           />
         )}
       </div>
-      <div className="mt-3 flex items-center">
+      <div className="mt-1 flex items-center justify-around sm:mt-0">
         {selectedUploadTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}
-            className="mr-4 flex items-center whitespace-nowrap rounded-full bg-card p-2"
+            className="mr-4 hidden items-center whitespace-nowrap rounded-full bg-card p-1 px-2 text-sm sm:flex sm:text-base"
             type="button"
           >
-            <RotateCw size={12} aria-label="태그 초기화" />
+            <RotateCw size={12} aria-label="태그 초기화" className="mr-1" />
             초기화
           </button>
         )}
