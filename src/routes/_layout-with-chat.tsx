@@ -1,11 +1,17 @@
+import { useEffect, useRef } from "react";
 import { Link, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
 import axios from "axios";
 import { cn } from "@/utils/tailwind";
+import { getLocalStorage } from "@/utils/localStorage";
+import { debounce } from "@/utils/debounce";
 import Chat from "@/components/common/Chat";
 import { $isChatOpen } from "@/store/chat";
 import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
+import { REFRESH_TOKEN } from "@/constants/auth";
+import { $userInformation } from "@/store/user";
+import { $scrollDirection } from "@/store/scroll";
 
 const zzalPaths = [
   {
@@ -23,21 +29,49 @@ const zzalPaths = [
 ];
 const LayoutWithChat = () => {
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
-  window.location;
+  const userInformation = useAtomValue($userInformation);
+  const setScrollDirection = useSetAtom($scrollDirection);
+  const scrollTrackerRef = useRef<HTMLDivElement>(null);
+  const previousScrollTopRef = useRef(0);
+  const refreshToken = getLocalStorage(REFRESH_TOKEN);
+
+  const role = refreshToken && userInformation ? userInformation.role : "GUEST";
+
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
     gtag("event", "user_action", { event_category: isChatOpen ? "채팅창_닫힘" : "채팅창_열림" });
   };
 
+  useEffect(() => {
+    const scrollTracker = scrollTrackerRef.current;
+    if (!scrollTracker) return;
+
+    const handleScroll = debounce(() => {
+      if (scrollTracker.scrollTop > previousScrollTopRef.current) {
+        setScrollDirection("down");
+        console.log("down");
+      } else {
+        setScrollDirection("up");
+        console.log("up");
+      }
+      previousScrollTopRef.current = scrollTracker.scrollTop;
+    }, 200);
+
+    scrollTracker?.addEventListener("scroll", handleScroll);
+
+    return () => scrollTracker?.removeEventListener("scroll", handleScroll);
+  }, [setScrollDirection]);
+
   return (
     <div className="h-full w-full overflow-hidden">
-      <div className="relative flex h-150pxr w-full flex-col items-center gap-4 px-10pxr pt-10pxr shadow-md sm:h-150pxr sm:px-6">
-        <div className="flex items-center justify-center gap-4 text-sm font-bold text-border">
-          {zzalPaths.map(({ title, path }) => (
-            <Link key={title} to={path} activeProps={{ className: "text-primary" }}>
-              <span>{title}</span>
-            </Link>
-          ))}
+      <div className="relative flex h-150pxr w-full flex-col items-center gap-4 px-10pxr pt-50pxr shadow-md sm:h-150pxr sm:px-6 sm:pt-10pxr">
+        <div className="hidden items-center justify-center gap-4 text-sm font-bold text-border sm:flex">
+          {role === "USER" &&
+            zzalPaths.map(({ title, path }) => (
+              <Link key={title} to={path} activeProps={{ className: "text-primary" }}>
+                <span>{title}</span>
+              </Link>
+            ))}
         </div>
         <div className="relative flex w-full flex-1">
           <TagSearchForm className="z-10 mx-auto w-400pxr md:w-550pxr lg:w-full" />
@@ -62,9 +96,12 @@ const LayoutWithChat = () => {
         )}
       >
         <div
+          ref={scrollTrackerRef}
           className={cn(
             "h-full overflow-auto px-6 py-4 shadow-md transition-[width_transform] duration-500 ease-in-out",
-            isChatOpen ? "w-full -translate-x-full sm:w-[67%] sm:translate-x-0" : "sm:w-full",
+            isChatOpen
+              ? "w-full -translate-x-full md:w-[67%] md:translate-x-0"
+              : "w-full md:w-full",
           )}
         >
           <Outlet />
@@ -78,20 +115,20 @@ const LayoutWithChat = () => {
 export const Route = createFileRoute("/_layout-with-chat")({
   component: LayoutWithChat,
   beforeLoad: async ({ context, location }) => {
+    console.log(location.pathname);
     if (location.pathname === "/") return;
-
-    try {
-      await context.authorize.isAuthenticated();
-    } catch (error) {
-      if (!axios.isAxiosError(error)) return;
-      if (error.response?.status === 401) {
-        throw redirect({
-          to: "/",
-          search: {
-            redirect: location.pathname,
-          },
-        });
-      }
+    await context.authorize.isAuthenticated();
+  },
+  onError: (error) => {
+    if (!axios.isAxiosError(error)) return;
+    if (error.response?.status === 401) {
+      throw redirect({
+        to: "/",
+        search: {
+          redirect: location.pathname,
+        },
+      });
     }
   },
+  wrapInSuspense: true,
 });

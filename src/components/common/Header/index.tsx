@@ -70,7 +70,10 @@ const Header = () => {
         {role === "GUEST" && (
           <Fragment>
             <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
-            <button className="btn btn-ghost h-6 min-h-9" onClick={handleClickLogin}>
+            <button
+              className="btn btn-ghost hidden h-6 min-h-9 sm:block"
+              onClick={handleClickLogin}
+            >
               로그인
             </button>
           </Fragment>
@@ -80,7 +83,7 @@ const Header = () => {
             <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
             <Link
               to="/admin/reports"
-              className="btn btn-ghost h-6 min-h-9 text-text-primary"
+              className="btn btn-ghost hidden h-6 min-h-9 text-text-primary sm:block"
               onClick={handleClickAdminButton}
             >
               Admin
