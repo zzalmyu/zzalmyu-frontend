@@ -38,10 +38,8 @@ const ChatRoom = () => {
     const handleScroll = debounce(() => {
       if (scrollTracker.scrollTop > previousScrollTopRef.current) {
         setScrollDirection("down");
-        console.log("down");
       } else {
         setScrollDirection("up");
-        console.log("up");
       }
       previousScrollTopRef.current = scrollTracker.scrollTop;
     }, 200);

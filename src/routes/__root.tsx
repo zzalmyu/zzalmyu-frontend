@@ -25,7 +25,6 @@ const handleClickButton = (eventName: string) => () => {
 const NavigationFooter = () => {
   const loginModalOverlay = useOverlay();
   const [userInformation, setUserInformation] = useAtom($userInformation);
-  // const { userInformation } = useGetUserInformation();
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
   const navigate = useNavigate();
   const { logout } = useLogout();
