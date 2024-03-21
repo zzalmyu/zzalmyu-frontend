@@ -28,6 +28,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
   const [uploadTagName, setUploadTagName] = useState<string>("");
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
