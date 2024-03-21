@@ -9,7 +9,6 @@ import MasonryLayout from "@/components/common/MasonryLayout";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import NoSearchResults from "@/components/common/NoSearchResults";
 
-
 const MyLikedZzals = () => {
   const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
   const { topTags } = useGetTopTagsFromLiked();
