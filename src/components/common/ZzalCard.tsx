@@ -36,7 +36,13 @@ const ZzalCard = ({
 
   const handleClickZzal = () => {
     zzalModalOverlay.open(({ isOpen, close }) => (
-      <ImageDetailModal isOpen={isOpen} onClose={close} imageId={imageId} />
+      <ImageDetailModal
+        isOpen={isOpen}
+        onClose={close}
+        imageId={imageId}
+        queryKey={queryKey}
+        imageIndex={imageIndex}
+      />
     ));
   };
 
@@ -75,8 +81,8 @@ interface LikeButtonProps {
   queryKey: [ZzalType, string[]];
 }
 const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
-  const { addImageLike } = useAddImageLike(imageIndex, queryKey);
-  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey);
+  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
 
   const handleClickImageLike = () => {
     if (!isLiked) {
