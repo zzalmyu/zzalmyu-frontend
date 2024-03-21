@@ -23,7 +23,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [cursorIndex, setCursorIndex] = useState(-2);
+  const [cursorIndex, setCursorIndex] = useState(-1);
   const [uploadTagId, setUploadTagId] = useState<number>(-1);
   const [uploadTagName, setUploadTagName] = useState<string>("");
 
@@ -45,7 +45,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
       setUploadTagId(autoCompletedTags[0].tagId);
     }
 
-    setCursorIndex(0);
+    setCursorIndex(-1);
     setTagKeyword("");
     setShowAutoComplete(false);
   };
@@ -95,8 +95,8 @@ const UploadTagSearchForm = ({ className }: Props) => {
     setShowAutoComplete(true);
     setTagKeyword(event.target.value);
 
-    if (event.target.value.length > 0) setCursorIndex(-2);
-    else setCursorIndex(0);
+    if (event.target.value.length > 0) setCursorIndex(-1);
+    else setCursorIndex(-1);
   };
 
   useEffect(() => {
