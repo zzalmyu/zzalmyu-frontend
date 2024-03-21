@@ -138,6 +138,10 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   };
 
   const handleClickSendButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.");
+      return;
+    }
     setPreviewImage(imageUrl);
     onClose();
   };
