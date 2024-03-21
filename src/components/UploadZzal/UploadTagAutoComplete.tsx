@@ -3,26 +3,33 @@ import { useAtom } from "jotai";
 import { Bookmark, Search } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { Tag } from "@/types/tag";
-import UploadTagBadge from "./UploadTagBadge";
-import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
+import TagSlider from "../common/TagSlider";
+import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
 import { MAX_SEARCH_TAG_UPLOAD } from "@/constants/tag";
 
 interface Props {
   autoCompletedTags: Tag[];
   cursorIndex: number;
   setCursorIndex: Dispatch<SetStateAction<number>>;
+  handleResetTagInput: () => void;
 }
 
-const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex }: Props) => {
-  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+const UploadTagAutoComplete = ({
+  autoCompletedTags,
+  cursorIndex,
+  setCursorIndex,
+  handleResetTagInput,
+}: Props) => {
+  const [selectedUploadTags, setSelectedUploadTags] = useAtom($selectedUploadTags);
   const [recommendedTags] = useAtom($recommendedTags);
 
   const handleMouseDownTagName = (tagId: number, tagName: string) => () => {
     if (
-      selectedTags.length < MAX_SEARCH_TAG_UPLOAD &&
-      !selectedTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
+      selectedUploadTags.length < MAX_SEARCH_TAG_UPLOAD &&
+      !selectedUploadTags.find((tag) => tag.tagId === tagId && tag.tagName === tagName)
     ) {
-      setSelectedTags((previousState) => [...previousState, { tagId, tagName }]);
+      setSelectedUploadTags((previousState) => [...previousState, { tagId, tagName }]);
+      handleResetTagInput();
     }
   };
 
@@ -31,23 +38,19 @@ const UploadTagAutoComplete = ({ autoCompletedTags, cursorIndex, setCursorIndex 
   };
 
   return (
-    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
-      {selectedTags.length > 0 && (
+      {selectedUploadTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
           <div className="text-10pxr mb-20pxr font-semibold text-text-primary">
             선택된 태그
             <span className="ml-5pxr">
-              {selectedTags.length}/{MAX_SEARCH_TAG_UPLOAD}
+              {selectedUploadTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
-          <ul className="mb-10pxr flex flex-wrap gap-6pxr">
-            {selectedTags.map(({ tagId, tagName }) => (
-              <li key={`${tagId}`}>
-                <UploadTagBadge tagId={tagId} tagName={tagName} isClickable />
-              </li>
-            ))}
-          </ul>
+          <div className="mb-10pxr flex flex-wrap gap-6pxr">
+            <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
+          </div>
         </div>
       )}
       <ul
