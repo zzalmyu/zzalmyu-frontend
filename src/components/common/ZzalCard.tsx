@@ -3,6 +3,7 @@ import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 import axios from "axios";
+import { Trash2 } from "lucide-react";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
@@ -10,6 +11,8 @@ import ImageDetailModal from "../ImageDetailModal";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
 import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
+import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
+import useDeleteMyZzal from "@/hooks/api/zzal/useDeleteMyZzal";
 
 interface Props {
   src: string;
@@ -20,6 +23,7 @@ interface Props {
   queryKey: [ZzalType, string[]];
   width?: number | string;
   className?: string;
+  hasDeleteButton?: boolean;
 }
 
 const ZzalCard = ({
@@ -31,6 +35,7 @@ const ZzalCard = ({
   queryKey,
   width = 72,
   className,
+  hasDeleteButton = false,
 }: Props) => {
   const zzalModalOverlay = useOverlay();
 
@@ -51,6 +56,7 @@ const ZzalCard = ({
       className={cn(`group relative w-${width} m-1.5 rounded-lg bg-base-100 shadow-xl`, className)}
     >
       <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
+        {hasDeleteButton && <DeleteButton imageId={imageId} />}
         <CopyButton src={src} />
         <SendButton src={src} />
         <LikeButton
@@ -168,6 +174,46 @@ const CopyButton = ({ src }: CopyButtonProps) => {
       onClick={handleClickCopytoClipboard}
     >
       <Copy aria-label="이미지 복사" size={18} color="white" />
+    </button>
+  );
+};
+
+interface DeleteButtonProps {
+  imageId: number;
+}
+const DeleteButton = ({ imageId }: DeleteButtonProps) => {
+  const { deleteMyZzal } = useDeleteMyZzal();
+  const deleteConfirmOverlay = useOverlay();
+
+  const handleClickDeleteConfirm = (imageId: number) => () => {
+    deleteMyZzal(imageId, {
+      onSuccess: () => {
+        toast.success("사진이 삭제되었습니다.");
+        gtag("event", "user_action", { event_category: "짤_삭제" });
+      },
+      onError: () => {
+        toast.error("사진 삭제에 실패했습니다.");
+      },
+    });
+    gtag("event", "user_action", { event_category: "짤_삭제" });
+  };
+
+  const handleClickDeleteButton = (imageId: number) => () => {
+    deleteConfirmOverlay.open(({ isOpen, close }) => (
+      <DeleteConfirmModal
+        isOpen={isOpen}
+        onClose={close}
+        onDelete={handleClickDeleteConfirm(imageId)}
+      />
+    ));
+  };
+
+  return (
+    <button
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
+      onClick={handleClickDeleteButton(imageId)}
+    >
+      <Trash2 aria-label="짤 삭제" size={18} className="text-white" />
     </button>
   );
 };
