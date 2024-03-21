@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
+import { useAtomValue } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -14,6 +15,7 @@ import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
 import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
 import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
+import { $userInformation } from "@/store/user";
 
 interface Props {
   isOpen: boolean;
@@ -35,6 +37,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
   const { addImageLike } = useAddImageDetailLike(imageId);
   const { removeImageLike } = useRemoveImageDetailLike(imageId);
+  const { role } = useAtomValue($userInformation);
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -64,6 +67,11 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   };
 
   const handleClickReportButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.");
+      return;
+    }
+
     gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
