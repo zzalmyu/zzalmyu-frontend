@@ -18,7 +18,6 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
   const { role, email } = useAtomValue($userInformation);
   const { createNickname } = usePostChatNickname();
 
-  // TODO: [2024.03.06] 채팅 에러 핸들링 로직 구현
   const handleConnectToChat = () => {
     if (stompRef.current) return;
 
@@ -26,11 +25,13 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
       return new SockJS(import.meta.env.VITE_CHAT_URL);
     });
 
+    stompRef.current.debug = () => {};
+
     stompRef.current.beforeConnect = async () => {
       if (!email) return;
-      console.log(email);
       await createNickname(email);
     };
+
     stompRef.current.onConnect = () => {
       stompRef.current?.subscribe(SUBSCRIPTION_DESTINATION, (frame) => {
         try {
@@ -47,7 +48,6 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
             });
             return { ...oldData, pages: updatedPages } as InfiniteData<GetChatResponse>;
           });
-          // handleScrollPosition();
         } catch (error) {
           console.error(error);
           toast.error("채팅 연결 중 예상치 못한 오류가 발생했습니다!");
