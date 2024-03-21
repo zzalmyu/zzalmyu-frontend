@@ -1,4 +1,4 @@
-import { Fragment, useEffect } from "react";
+import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom } from "jotai";
@@ -62,15 +62,9 @@ const Header = () => {
         <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
         {role !== "GUEST" && <DropdownMenu />}
         {role === "GUEST" && (
-          <Fragment>
-            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
-            <button
-              className="btn btn-ghost hidden h-6 min-h-9 sm:block"
-              onClick={handleClickLogin}
-            >
-              로그인
-            </button>
-          </Fragment>
+          <button className="btn btn-ghost hidden h-6 min-h-9 sm:block" onClick={handleClickLogin}>
+            로그인
+          </button>
         )}
       </div>
     </div>
