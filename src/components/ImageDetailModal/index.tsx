@@ -7,18 +7,21 @@ import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
 import { debounce } from "@/utils/debounce";
+import { ZzalType } from "@/types/queryKey";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
-import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
-import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
+import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
+import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   imageId: number;
+  imageIndex: number;
+  queryKey: [ZzalType, string[]];
 }
 
 interface CustomErrorResponse {
@@ -26,15 +29,25 @@ interface CustomErrorResponse {
   code: string;
 }
 
-const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
+interface ImageDetailModalContentProps {
+  imageId: number;
+  imageIndex: number;
+  queryKey: [ZzalType, string[]];
+}
+
+const ImageDetailModalContent = ({
+  imageId,
+  imageIndex,
+  queryKey,
+}: ImageDetailModalContentProps) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { zzalDetails } = useGetZzalDetails(imageId);
   const { reportZzal } = usePostReportZzal();
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
-  const { addImageLike } = useAddImageDetailLike(imageId);
-  const { removeImageLike } = useRemoveImageDetailLike(imageId);
+  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -204,11 +217,11 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   );
 };
 
-const ImageDetailModal = ({ isOpen, onClose, imageId }: Props) => {
+const ImageDetailModal = ({ isOpen, onClose, imageId, imageIndex, queryKey }: Props) => {
   return (
     <Suspense fallback={"...pending"}>
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
-        <ImageDetailModalContent imageId={imageId} />
+        <ImageDetailModalContent imageId={imageId} imageIndex={imageIndex} queryKey={queryKey} />
       </Modal>
     </Suspense>
   );
