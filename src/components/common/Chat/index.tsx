@@ -1,5 +1,6 @@
 import { Fragment, Suspense, useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { ErrorBoundary } from "@sentry/react";
 import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
 import MessagePeek from "./MessagePeek";
@@ -18,8 +19,6 @@ const ChatRoom = () => {
   const { email } = useAtomValue($userInformation);
   const setScrollDirection = useSetAtom($scrollDirection);
   const previousScrollTopRef = useRef(0);
-
-  // TODO: [2023.03.17]: chat intersection 시 scroll action 구현
 
   useIntersectionObserver({
     target: scrollTargetRef,
@@ -80,9 +79,11 @@ const Chat = () => {
           isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
         )}
       >
-        <Suspense fallback={"chatroom pending..."}>
-          <ChatRoom />
-        </Suspense>
+        <ErrorBoundary fallback={() => <div>채팅 연결 중 에러 발생</div>}>
+          <Suspense fallback={"chatroom pending..."}>
+            <ChatRoom />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </Fragment>
   );
