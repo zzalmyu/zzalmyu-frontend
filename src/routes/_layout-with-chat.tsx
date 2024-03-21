@@ -1,14 +1,22 @@
-import { Outlet, createFileRoute, redirect } from "@tanstack/react-router";
-import { useAtom } from "jotai";
+import { useEffect } from "react";
+import { Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
+import { useAtom, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
 import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import Chat from "@/components/common/Chat";
 import { $isChatOpen } from "@/store/chat";
 import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
+import { $selectedTags } from "@/store/tag";
 
 const LayoutWithChat = () => {
+  const { location } = useRouterState();
+  const setSelectedTags = useSetAtom($selectedTags);
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
+
+  useEffect(() => {
+    setSelectedTags([]);
+  }, [location.pathname, setSelectedTags]);
 
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
@@ -35,7 +43,7 @@ const LayoutWithChat = () => {
           </button>
         </div>
       </div>
-      <div className="relative flex h-[calc(100%-135px)] w-full overflow-hidden">
+      <div className="relative flex h-[calc(100%-7.5rem)] w-full overflow-hidden sm:h-[calc(100%-9.375rem)]">
         <div
           className={cn(
             "h-full overflow-auto border-r border-border px-6 py-4 transition-[width] duration-500 ease-in-out",

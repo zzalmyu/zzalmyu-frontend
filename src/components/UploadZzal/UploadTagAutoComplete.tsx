@@ -42,7 +42,7 @@ const UploadTagAutoComplete = ({
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedUploadTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
-          <div className="text-10pxr mb-20pxr font-semibold text-neutral">
+          <div className="text-10pxr mb-20pxr font-semibold text-text-primary">
             선택된 태그
             <span className="ml-5pxr">
               {selectedUploadTags.length}/{MAX_SEARCH_TAG_UPLOAD}
@@ -74,7 +74,7 @@ const UploadTagAutoComplete = ({
           </li>
         ))}
       </ul>
-      <div className="text-10pxr font-semibold text-neutral">추천 태그</div>
+      <div className="text-10pxr font-semibold text-text-primary">추천 태그</div>
       <ul>
         {recommendedTags.map(({ tagId, tagName }, index) => {
           const recommendedIndex = index + autoCompletedTags.length;
@@ -89,8 +89,8 @@ const UploadTagAutoComplete = ({
               )}
               onMouseDown={handleMouseDownTagName(tagId, tagName)}
             >
-              <div className="flex items-center gap-2">
-                <Bookmark size={16} color="#807F7F" />
+              <div className="flex items-center gap-2 text-text-primary">
+                <Bookmark size={16} />
                 {tagName}
               </div>
             </li>

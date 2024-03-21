@@ -134,7 +134,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
   return (
     <div
       className={cn(
-        "relative flex h-50pxr max-h-70pxr min-w-340pxr max-w-650pxr flex-col sm:h-60pxr sm:min-w-400pxr",
+        "relative flex h-50pxr max-h-70pxr min-w-340pxr max-w-650pxr flex-col sm:h-60pxr sm:min-w-440pxr",
         className,
       )}
     >

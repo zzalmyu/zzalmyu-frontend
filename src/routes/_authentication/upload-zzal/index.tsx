@@ -4,11 +4,12 @@ import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
+import { convertFileToJpg } from "@/utils/convertFileToJpg";
+import ImageUpload from "@/components/UploadZzal/ImageUpload";
+import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
-import ImageUpload from "@/components/UploadZzal/ImageUpload";
-import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
@@ -41,10 +42,28 @@ const UploadZzal = () => {
     handleUploadZzal(file);
   };
 
-  const handleUploadZzal = (file: File) => {
+  const handleFileFormat = async (file: File) => {
+    if (!file.name.toLowerCase().endsWith(".jpg")) {
+      try {
+        return await convertFileToJpg(file);
+      } catch (error) {
+        return null;
+      }
+    }
+    return file;
+  };
+
+  const handleUploadZzal = async (file: File) => {
+    const jpgFile = await handleFileFormat(file);
+
+    if (!jpgFile) {
+      toast.error("사진 업로드에 실패했습니다.");
+      return;
+    }
+
     uploadZzal(
       {
-        file: file,
+        file: jpgFile,
         tagIdList: selectedTags.map((selectedTag) => selectedTag.tagId),
         title: imageTitle,
       },
@@ -83,7 +102,7 @@ const UploadZzal = () => {
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
-      <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
+      <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr">
         <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
           <div className="mx-auto pb-50pxr">
@@ -98,7 +117,7 @@ const UploadZzal = () => {
             </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <div className="mx-auto mt-10 flex min-w-400pxr flex-col sm:mt-0 sm:w-640pxr sm:px-10pxr">
+          <div className="mx-auto mt-10 flex min-w-440pxr flex-col sm:mt-0 sm:w-640pxr sm:px-24pxr">
             <div>
               <div className="mb-4 text-sm font-bold">
                 짤 제목
