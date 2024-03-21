@@ -3,22 +3,29 @@ import { toast } from "react-toastify";
 import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
+import { useAtomValue, useSetAtom } from "jotai";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
 import { debounce } from "@/utils/debounce";
+import { ZzalType } from "@/types/queryKey";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
 import useGetZzalDetails from "@/hooks/api/zzal/useGetZzalDetails";
 import usePostReportZzal from "@/hooks/api/zzal/usePostReportZzal";
-import { useRemoveImageDetailLike } from "@/hooks/api/zzal/useRemoveImageDetailLike";
-import { useAddImageDetailLike } from "@/hooks/api/zzal/useAddImageDetailLike";
+import { $userInformation } from "@/store/user";
+import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
+import { useRemoveImageLike } from "@/hooks/api/zzal/useRemoveImageLike";
+import { $setMessagePreview } from "@/store/chat";
+import useModalContext from "@/hooks/modals/useModalContext";
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
   imageId: number;
+  imageIndex: number;
+  queryKey: [ZzalType, string[]];
 }
 
 interface CustomErrorResponse {
@@ -26,15 +33,28 @@ interface CustomErrorResponse {
   code: string;
 }
 
-const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
+interface ImageDetailModalContentProps {
+  imageId: number;
+  imageIndex: number;
+  queryKey: [ZzalType, string[]];
+}
+
+const ImageDetailModalContent = ({
+  imageId,
+  imageIndex,
+  queryKey,
+}: ImageDetailModalContentProps) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const { zzalDetails } = useGetZzalDetails(imageId);
   const { reportZzal } = usePostReportZzal();
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
-  const { addImageLike } = useAddImageDetailLike(imageId);
-  const { removeImageLike } = useRemoveImageDetailLike(imageId);
+  const { role } = useAtomValue($userInformation);
+  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
+  const setPreviewImage = useSetAtom($setMessagePreview);
+  const onClose = useModalContext();
 
   const errorMessage = {
     REPORT_ALREADY_EXIST_ERROR: "이미 신고가 완료되었습니다.",
@@ -44,7 +64,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   const handleClickReportCompeleteButton = (imageId: number) => () => {
     reportZzal(imageId, {
       onSuccess: () => {
-        toast.success("신고가 완료되었습니다.");
+        toast.success("신고가 완료되었습니다.", { autoClose: 1500 });
         gtag("event", "user_action", { event_category: "짤_신고" });
       },
       onError: (error: Error | AxiosError) => {
@@ -55,15 +75,20 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
         const { statusCode, code } = error.response?.data as CustomErrorResponse;
 
         if (statusCode === 400 && code === "REPORT_ALREADY_EXIST_ERROR") {
-          toast.error(errorMessage[code]);
+          toast.error(errorMessage[code], { autoClose: 1500 });
         } else {
-          toast.error(errorMessage["DEFAULT"]);
+          toast.error(errorMessage["DEFAULT"], { autoClose: 1500 });
         }
       },
     });
   };
 
   const handleClickReportButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+      return;
+    }
+
     gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
@@ -101,7 +126,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
             toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
           }
           if (error.response?.status === 401) {
-            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+            toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
           }
         },
       });
@@ -119,21 +144,27 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
           toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
         }
         if (error.response?.status === 401) {
-          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
         }
       },
     });
   };
 
-  const handleClickSendButton = () => {};
-  //TODO: [2024.03.05] 해당 handler함수 로직 추가하기
+  const handleClickSendButton = () => {
+    if (role === "GUEST") {
+      toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+      return;
+    }
+    setPreviewImage(imageUrl);
+    onClose();
+  };
 
   const toggleTagNavigator = () => setIsTagNavigatorOpen(!isTagNavigatorOpen);
 
   return (
     <Fragment>
       <div className="relative flex w-full justify-center">
-        <div className="z-30 flex h-90pxr w-full justify-center bg-background">
+        <div className="z-30 flex h-90pxr w-full justify-center bg-background  drop-shadow-[0_0_5px_rgba(0,0,0,0.1)] ">
           <div className=" flex flex-grow items-center justify-between space-x-4 bg-background px-50pxr py-10pxr">
             <ButtonWithIcon
               Icon={FolderDown}
@@ -204,11 +235,11 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
   );
 };
 
-const ImageDetailModal = ({ isOpen, onClose, imageId }: Props) => {
+const ImageDetailModal = ({ isOpen, onClose, imageId, imageIndex, queryKey }: Props) => {
   return (
     <Suspense fallback={"...pending"}>
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
-        <ImageDetailModalContent imageId={imageId} />
+        <ImageDetailModalContent imageId={imageId} imageIndex={imageIndex} queryKey={queryKey} />
       </Modal>
     </Suspense>
   );

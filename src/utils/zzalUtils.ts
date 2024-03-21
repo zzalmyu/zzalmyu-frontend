@@ -68,12 +68,12 @@ const copyImageToClipboard = (imageBlob: Blob) => {
         return;
       }
 
-      console.error("Canvas to Blob 변환 실패");
+      console.error("Canvas to Blob 변환에 실패했습니다.");
     }, "image/png");
   };
 
   image.onerror = () => {
-    console.error("이미지 로딩 실패");
+    console.error("이미지 로딩 실패했습니다.");
   };
 };
 

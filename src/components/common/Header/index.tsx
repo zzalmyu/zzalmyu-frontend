@@ -1,4 +1,4 @@
-import { useEffect, Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom } from "jotai";
@@ -40,10 +40,6 @@ const Header = () => {
     gtag("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
   };
 
-  const handleClickAdminButton = () => {
-    gtag("event", "page_view", { event_category: "관리자_페이지로_이동" });
-  };
-
   return (
     <div className="navbar bg-background">
       <Link
@@ -57,16 +53,14 @@ const Header = () => {
       <div className="flex flex-1 items-center justify-end space-x-1 px-2 sm:space-x-3">
         <ThemeToggle />
         {role === "USER" && (
-          <Fragment>
-            <Link to="/upload-zzal" onClick={handleClickUploadButton}>
-              <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
-                업로드
-              </button>
-            </Link>
-            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
-            <DropdownMenu />
-          </Fragment>
+          <Link to="/upload-zzal" onClick={handleClickUploadButton}>
+            <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
+              업로드
+            </button>
+          </Link>
         )}
+        <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
+        {role !== "GUEST" && <DropdownMenu />}
         {role === "GUEST" && (
           <Fragment>
             <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
@@ -76,18 +70,6 @@ const Header = () => {
             >
               로그인
             </button>
-          </Fragment>
-        )}
-        {role === "ADMIN" && (
-          <Fragment>
-            <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
-            <Link
-              to="/admin/reports"
-              className="btn btn-ghost hidden h-6 min-h-9 text-text-primary sm:block"
-              onClick={handleClickAdminButton}
-            >
-              Admin
-            </Link>
           </Fragment>
         )}
       </div>

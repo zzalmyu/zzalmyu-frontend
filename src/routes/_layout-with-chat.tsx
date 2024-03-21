@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { Link, Outlet, createFileRoute, redirect } from "@tanstack/react-router";
+import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
 import axios from "axios";
@@ -12,6 +12,7 @@ import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import { $userInformation } from "@/store/user";
 import { $scrollDirection } from "@/store/scroll";
+import { $selectedTags } from "@/store/tag";
 
 const zzalPaths = [
   {
@@ -27,8 +28,11 @@ const zzalPaths = [
     path: "/my-uploaded-zzals",
   },
 ];
+
 const LayoutWithChat = () => {
+  const { location } = useRouterState();
   const [isChatOpen, setIsChatOpen] = useAtom($isChatOpen);
+  const setSelectedTags = useSetAtom($selectedTags);
   const userInformation = useAtomValue($userInformation);
   const setScrollDirection = useSetAtom($scrollDirection);
   const scrollTrackerRef = useRef<HTMLDivElement>(null);
@@ -36,6 +40,10 @@ const LayoutWithChat = () => {
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
   const role = refreshToken && userInformation ? userInformation.role : "GUEST";
+
+  useEffect(() => {
+    setSelectedTags([]);
+  }, [location.pathname, setSelectedTags]);
 
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
@@ -49,10 +57,8 @@ const LayoutWithChat = () => {
     const handleScroll = debounce(() => {
       if (scrollTracker.scrollTop > previousScrollTopRef.current) {
         setScrollDirection("down");
-        console.log("down");
       } else {
         setScrollDirection("up");
-        console.log("up");
       }
       previousScrollTopRef.current = scrollTracker.scrollTop;
     }, 200);

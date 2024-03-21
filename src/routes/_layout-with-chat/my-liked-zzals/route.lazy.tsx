@@ -7,6 +7,7 @@ import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import ZzalCard from "@/components/common/ZzalCard";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
+import NoSearchResults from "@/components/common/NoSearchResults";
 
 const MyLikedZzals = () => {
   const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
@@ -25,7 +26,8 @@ const MyLikedZzals = () => {
   }, [topTags, setRecommendedTags]);
 
   return (
-    <div className="flex w-full flex-col items-center">
+    <div className="flex h-full w-full flex-col items-center">
+      {zzals.length === 0 && <NoSearchResults />}
       <MasonryLayout className="mt-15pxr w-full">
         {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
           <ZzalCard

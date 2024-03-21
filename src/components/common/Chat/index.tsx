@@ -4,7 +4,6 @@ import { cn } from "@/utils/tailwind";
 import { debounce } from "@/utils/debounce";
 import MessagePeek from "./MessagePeek";
 import ZzalMessage from "./ZzalMessage";
-import GreetMessage from "./GreetMessage";
 import { $isChatOpen } from "@/store/chat";
 import useChat from "@/hooks/chat/useChat";
 import useGetChat from "@/hooks/api/chat/useGetChat";
@@ -28,8 +27,6 @@ const ChatRoom = () => {
   });
 
   const { handleSendMessage } = useChat(chatRoomRef);
-
-  const handleClickSend = () => handleSendMessage("zzal");
 
   useEffect(() => {
     const scrollTracker = chatRoomRef.current;
@@ -58,20 +55,16 @@ const ChatRoom = () => {
         <div ref={scrollTargetRef}></div>
         {messageHistory.map((message, index) => {
           return (
-            <Fragment key={`${index}-${message.nickname}`}>
-              {message.type === "IMAGE" && (
-                <ZzalMessage
-                  src={message.message}
-                  isMyMessage={message.email === email}
-                  nickname={message.nickname}
-                />
-              )}
-              {message.type === "HELLO" && <GreetMessage nickname={message.nickname} />}
-            </Fragment>
+            <ZzalMessage
+              key={`${index}-${message.nickname}`}
+              src={message.message}
+              isMyMessage={message.email === email}
+              nickname={message.nickname}
+            />
           );
         })}
       </div>
-      <MessagePeek onClickSend={handleClickSend} />
+      <MessagePeek onClickSend={handleSendMessage} />
     </Fragment>
   );
 };
