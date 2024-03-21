@@ -157,7 +157,7 @@ const TagSearchForm = ({ className }: Props) => {
         </div>
       </form>
       <div className="absolute top-25pxr flex w-full justify-center sm:top-30pxr">
-        {showAutoComplete && allTags.length && (
+        {showAutoComplete && allTags.length > 0 && (
           <TagAutoComplete
             autoCompletedTags={autoCompletedTags}
             cursorIndex={cursorIndex}
