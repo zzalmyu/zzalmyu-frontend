@@ -38,7 +38,7 @@ const UploadTagAutoComplete = ({
   };
 
   return (
-    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-white px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedUploadTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
@@ -64,7 +64,7 @@ const UploadTagAutoComplete = ({
             key={tagId}
             className={cn(
               "py-2",
-              index === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
+              index === cursorIndex && "box-border rounded-md bg-gray-200 font-bold text-black",
             )}
           >
             <div className="flex items-center gap-2">
@@ -85,11 +85,12 @@ const UploadTagAutoComplete = ({
               key={tagId}
               className={cn(
                 "px-2 py-2",
-                recommendedIndex === cursorIndex && "box-border rounded-md bg-gray-200 font-bold",
+                recommendedIndex === cursorIndex &&
+                  "box-border rounded-md bg-gray-200 font-bold text-black",
               )}
               onMouseDown={handleMouseDownTagName(tagId, tagName)}
             >
-              <div className="flex items-center gap-2 text-text-primary">
+              <div className="flex items-center gap-2">
                 <Bookmark size={16} />
                 {tagName}
               </div>
