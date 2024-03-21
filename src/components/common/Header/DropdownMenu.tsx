@@ -77,12 +77,6 @@ const DropdownMenu = () => {
 
   const adminMenuItems = [
     {
-      path: "/",
-      Icon: Home,
-      name: "홈",
-      event: { category: "page_view", eventName: "홈_페이지로_이동" },
-    },
-    {
       path: "/admin/reports/",
       Icon: Siren,
       name: "신고된 짤",
@@ -122,7 +116,7 @@ const DropdownMenu = () => {
                 </li>
               ),
             )}
-            {refreshToken && (
+            {refreshToken && role === "USER" && (
               <Link
                 to="/delete-account"
                 className="mt-3pxr block text-center text-[9px] text-text-primary text-opacity-70 underline"
