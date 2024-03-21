@@ -5,4 +5,4 @@ export const $selectedTags = atom<string[]>([]);
 
 export const $recommendedTags = atom<Tag[]>([]);
 
-export const $selectedTagsUpload = atom<TagUpload[]>([]);
+export const $selectedUploadTags = atom<TagUpload[]>([]);
