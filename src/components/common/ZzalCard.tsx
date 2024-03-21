@@ -210,7 +210,7 @@ const DeleteButton = ({ imageId }: DeleteButtonProps) => {
 
   return (
     <button
-      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-black  bg-opacity-50 hover:bg-opacity-80"
       onClick={handleClickDeleteButton(imageId)}
     >
       <Trash2 aria-label="짤 삭제" size={18} className="text-white" />
