@@ -12,9 +12,10 @@ interface Props {
   tagClassName?: string;
   onClick?: () => void;
   isClickable?: boolean;
+  tagGap?: number;
 }
 
-const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) => {
+const TagSlider = ({ tags, tagClassName, onClick, isClickable = true, tagGap = 5 }: Props) => {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const navigationPrevRef = useRef<HTMLButtonElement>(null);
   const navigationNextRef = useRef<HTMLButtonElement>(null);
@@ -37,7 +38,7 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true }: Props) =
     <div className={"relative flex bg-none"}>
       <Swiper
         slidesPerView={"auto"}
-        spaceBetween={10}
+        spaceBetween={tagGap}
         allowTouchMove={false}
         slideToClickedSlide={true}
         pagination={{
