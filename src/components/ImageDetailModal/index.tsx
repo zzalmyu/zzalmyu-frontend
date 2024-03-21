@@ -101,7 +101,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
             toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
           }
           if (error.response?.status === 401) {
-            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+            toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
           }
         },
       });
@@ -119,7 +119,7 @@ const ImageDetailModalContent = ({ imageId }: { imageId: number }) => {
           toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
         }
         if (error.response?.status === 401) {
-          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          toast.info("로그인이 필요한 기능입니다.", { autoClose: 1500 });
         }
       },
     });
