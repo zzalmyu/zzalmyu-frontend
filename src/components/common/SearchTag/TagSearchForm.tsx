@@ -21,7 +21,8 @@ const TagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [cursorIndex, setCursorIndex] = useState(-2);
+  const [cursorIndex, setCursorIndex] = useState(-1);
+  const allTags = [...autoCompletedTags, ...recommendedTags];
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -38,7 +39,7 @@ const TagSearchForm = ({ className }: Props) => {
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
-    setCursorIndex(0);
+    setCursorIndex(-1);
     setTagKeyword("");
     setShowAutoComplete(false);
   };
@@ -66,11 +67,18 @@ const TagSearchForm = ({ className }: Props) => {
     setTagKeyword(event.target.value);
 
     if (event.target.value.length > 0) setCursorIndex(-2);
-    else setCursorIndex(0);
+    else setCursorIndex(-1);
   };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (allTags[cursorIndex]) {
+          setTagKeyword(allTags[cursorIndex].tagName);
+        }
+        return;
+      }
+
       if (event.key === "Escape") {
         setShowAutoComplete(false);
         setCursorIndex(-1);
@@ -99,7 +107,7 @@ const TagSearchForm = ({ className }: Props) => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [autoCompletedTags.length, recommendedTags.length]);
+  }, [autoCompletedTags.length, recommendedTags.length, cursorIndex]);
 
   return (
     <div
