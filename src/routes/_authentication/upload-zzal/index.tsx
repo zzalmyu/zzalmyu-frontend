@@ -5,21 +5,18 @@ import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
 import { convertFileToJpg } from "@/utils/convertFileToJpg";
-import UploadGuide from "@/components/UploadZzal/UploadGuide";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
-import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
-import ImageUpload from "@/components/UploadZzal/ImageUpload";
-import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
+import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
   const { uploadZzal } = usePostUploadZzal();
   const [file, setFile] = useState<File | null>(null);
   const [imageTitle, setImageTitle] = useState<string>("");
-  const [selectedTags, setSelectedTags] = useAtom($selectedTagsUpload);
+  const [selectedTags, setSelectedTags] = useAtom($selectedUploadTags);
   const setRecommendedTags = useSetAtom($recommendedTags);
 
   const changeFile = (file: File | null) => {
@@ -153,7 +150,7 @@ const UploadZzal = () => {
               </div>
               <UploadTagSearchForm />
             </div>
-            <div className="pb-60pxr pt-60pxr sm:pt-30pxr">
+            <div className="pb-60pxr pt-120pxr sm:pt-30pxr">
               <button
                 className="mt-20pxr h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:mt-100pxr sm:max-w-650pxr"
                 onClick={handleClickUploadButton}
