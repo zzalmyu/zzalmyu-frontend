@@ -83,7 +83,7 @@ const UploadZzal = () => {
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
-      <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr sm:px-100pxr">
+      <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr">
         <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
           <div className="mx-auto pb-50pxr">
@@ -98,7 +98,7 @@ const UploadZzal = () => {
             </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <div className="mx-auto mt-10 flex min-w-400pxr flex-col sm:mt-0 sm:w-640pxr sm:px-10pxr">
+          <div className="mx-auto mt-10 flex min-w-440pxr flex-col sm:mt-0 sm:w-640pxr sm:px-24pxr">
             <div>
               <div className="mb-4 text-sm font-bold">
                 짤 제목
