@@ -16,6 +16,7 @@ const useGetMyLikedZzals = () => {
         return lastPageParam + 1;
       },
       initialPageParam: 0,
+      refetchOnMount: false,
     });
 
   const handleFetchNextPage = () => {

@@ -1,3 +1,5 @@
+import { ChatMessage } from "./chat";
+
 export interface GreetMessageRequest {
   channelId: string;
   email: string;
@@ -17,3 +19,5 @@ export interface ZzalMessageResponse {
   nickname: string;
   image: string;
 }
+
+export type GetChatResponse = ChatMessage[];

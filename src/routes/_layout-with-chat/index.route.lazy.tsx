@@ -1,16 +1,17 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
-import { useSetAtom } from "jotai";
-import useGetHomeZzlas from "@/hooks/api/zzal/useGetHomeZzals";
+import { useAtom, useSetAtom } from "jotai";
+import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
-import { $recommendedTags } from "@/store/tag";
+import { $recommendedTags, $selectedTags } from "@/store/tag";
 
 const HomeZzals = () => {
-  const { zzals, handleFetchNextPage } = useGetHomeZzlas();
+  const { zzals, handleFetchNextPage } = useGetHomeZzals();
   const { topTags } = useGetTopTagsFromHome();
+  const [selectedTags] = useAtom($selectedTags);
   const setRecommendedTags = useSetAtom($recommendedTags);
   const fetchMoreRef = useRef(null);
 
@@ -35,7 +36,7 @@ const HomeZzals = () => {
             imageId={imageId}
             isLiked={imageLikeYn}
             imageIndex={index}
-            queryKey="likedZzals"
+            queryKey={["homeZzals", selectedTags]}
           />
         ))}
       </MasonryLayout>

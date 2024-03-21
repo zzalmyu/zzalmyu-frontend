@@ -1,21 +1,18 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { useAtom } from "jotai";
-import { getMyUploadedZzals } from "@/apis/zzal";
-import { $selectedTags } from "@/store/tag";
+import { getChat } from "@/apis/chat";
 
-const useGetMyUploadedZzals = () => {
-  const [selectedTags] = useAtom($selectedTags);
-
+const useGetChat = () => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
     useSuspenseInfiniteQuery({
-      queryKey: ["uploadedZzals", selectedTags],
-      queryFn: ({ pageParam = 0 }) => getMyUploadedZzals({ page: pageParam, selectedTags }),
+      queryKey: ["chat"],
+      queryFn: ({ pageParam = 0 }) => getChat(pageParam),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
 
         return lastPageParam + 1;
       },
       initialPageParam: 0,
+      refetchOnWindowFocus: false,
       refetchOnMount: false,
     });
 
@@ -26,13 +23,12 @@ const useGetMyUploadedZzals = () => {
   };
 
   return {
-    zzals: data?.pages.flatMap((page) => page),
+    messageHistory: data?.pages.flatMap((page) => page.reverse()).reverse(),
     handleFetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-    fetchNextPage,
     ...rest,
   };
 };
 
-export default useGetMyUploadedZzals;
+export default useGetChat;

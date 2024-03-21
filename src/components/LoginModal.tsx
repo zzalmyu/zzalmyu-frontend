@@ -10,7 +10,7 @@ interface Props {
 
 const LoginModal = ({ isOpen, onClose }: Props) => {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} className="p-40pxr">
       <Modal.Header>로그인</Modal.Header>
       <Modal.Body>
         <div className="flex flex-col items-center gap-3">

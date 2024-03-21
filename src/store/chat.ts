@@ -9,6 +9,7 @@ export const $previewImage = atom("");
 export const $setMessagePreview = atom(null, (_get, set, previewImage: string) => {
   set($previewImage, previewImage);
   set($isMessagePeekOpen, true);
+  set($isChatOpen, true);
 });
 
 export const $deleteMessagePreview = atom(null, (_get, set) => {

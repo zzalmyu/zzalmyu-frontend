@@ -2,7 +2,6 @@ import { FormEvent, ChangeEvent, useState, useEffect } from "react";
 import { useAtom } from "jotai";
 import { Search, RotateCw } from "lucide-react";
 import { cn } from "@/utils/tailwind";
-import { debounce } from "@/utils/debounce";
 import { sleep } from "@/utils/sleep";
 import { useGetTags } from "@/hooks/api/tag/useGetTags";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
@@ -22,7 +21,8 @@ const TagSearchForm = ({ className }: Props) => {
   const [tagKeyword, setTagKeyword] = useState("");
   const { autoCompletedTags } = useGetTags(tagKeyword);
   const [showAutoComplete, setShowAutoComplete] = useState(false);
-  const [cursorIndex, setCursorIndex] = useState(-2);
+  const [cursorIndex, setCursorIndex] = useState(-1);
+  const allTags = [...autoCompletedTags, ...recommendedTags];
 
   const handleSubmitForm = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -30,13 +30,18 @@ const TagSearchForm = ({ className }: Props) => {
     const formData = new FormData(event.currentTarget);
     const userInputTag = formData.get("tag") as string;
 
-    if (selectedTags.length < MAX_SEARCH_TAG && !selectedTags.includes(userInputTag)) {
+    if (
+      selectedTags.length < MAX_SEARCH_TAG &&
+      !selectedTags.includes(userInputTag) &&
+      userInputTag.length
+    ) {
       increaseTagUsage(userInputTag);
       setSelectedTags((previousState) => [...previousState, userInputTag]);
     }
 
-    setCursorIndex(0);
+    setCursorIndex(-1);
     setTagKeyword("");
+    setShowAutoComplete(false);
   };
 
   const handleClickResetTagButton = () => {
@@ -53,15 +58,27 @@ const TagSearchForm = ({ className }: Props) => {
     setCursorIndex(-1);
   };
 
-  const handleChangeTagInput = debounce((event: ChangeEvent<HTMLInputElement>) => {
+  const handleResetTagInput = () => {
+    setTagKeyword("");
+  };
+
+  const handleChangeTagInput = (event: ChangeEvent<HTMLInputElement>) => {
+    setShowAutoComplete(true);
     setTagKeyword(event.target.value);
 
     if (event.target.value.length > 0) setCursorIndex(-2);
-    else setCursorIndex(0);
-  }, 200);
+    else setCursorIndex(-1);
+  };
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Enter") {
+        if (allTags[cursorIndex]) {
+          setTagKeyword(allTags[cursorIndex].tagName);
+        }
+        return;
+      }
+
       if (event.key === "Escape") {
         setShowAutoComplete(false);
         setCursorIndex(-1);
@@ -90,7 +107,7 @@ const TagSearchForm = ({ className }: Props) => {
     document.addEventListener("keydown", handleKeyDown);
 
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [autoCompletedTags.length, recommendedTags.length]);
+  }, [autoCompletedTags.length, recommendedTags.length, cursorIndex]);
 
   return (
     <div
@@ -107,6 +124,7 @@ const TagSearchForm = ({ className }: Props) => {
           <input
             id="tagInput"
             name="tag"
+            value={tagKeyword}
             onFocus={handleFocusTagInput}
             onBlur={handleBlurTagInput}
             onChange={handleChangeTagInput}
@@ -115,19 +133,20 @@ const TagSearchForm = ({ className }: Props) => {
           />
           <button
             type="submit"
-            className="z-20 flex items-center gap-6pxr rounded-full bg-primary text-white sm:p-2"
+            className="z-20 flex items-center gap-6pxr rounded-full bg-gradient-to-r from-primary from-30% to-[#78C6FF] p-1 text-sm font-bold text-white sm:px-2.5 sm:py-2 sm:text-base"
           >
-            <Search aria-label="검색" size={20} />
+            <Search aria-label="검색" size={17} strokeWidth={3} />
             검색
           </button>
         </div>
       </form>
       <div className="absolute flex w-full justify-center sm:top-35pxr">
-        {showAutoComplete && (
+        {showAutoComplete && allTags.length && (
           <TagAutoComplete
             autoCompletedTags={autoCompletedTags}
             cursorIndex={cursorIndex}
             setCursorIndex={setCursorIndex}
+            handleResetTagInput={handleResetTagInput}
           />
         )}
       </div>
@@ -142,7 +161,9 @@ const TagSearchForm = ({ className }: Props) => {
             초기화
           </button>
         )}
-        <div className="w-full">{!showAutoComplete && <TagSlider tags={selectedTags} />}</div>
+        <div className="w-full">
+          <TagSlider tags={selectedTags} />
+        </div>
       </div>
     </div>
   );

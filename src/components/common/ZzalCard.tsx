@@ -2,6 +2,7 @@ import { toast } from "react-toastify";
 import { Heart, SendHorizontal, Copy } from "lucide-react";
 import { useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
+import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
@@ -16,7 +17,7 @@ interface Props {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: ZzalType;
+  queryKey: [ZzalType, string[]];
   width?: number | string;
   className?: string;
 }
@@ -35,12 +36,20 @@ const ZzalCard = ({
 
   const handleClickZzal = () => {
     zzalModalOverlay.open(({ isOpen, close }) => (
-      <ImageDetailModal isOpen={isOpen} onClose={close} imageId={imageId} />
+      <ImageDetailModal
+        isOpen={isOpen}
+        onClose={close}
+        imageId={imageId}
+        queryKey={queryKey}
+        imageIndex={imageIndex}
+      />
     ));
   };
 
   return (
-    <div className={cn(`group relative w-${width} rounded-lg bg-base-100 shadow-xl`, className)}>
+    <div
+      className={cn(`group relative w-${width} m-1.5 rounded-lg bg-base-100 shadow-xl`, className)}
+    >
       <div className="button-container absolute bottom-2 right-2 z-10 flex w-fit gap-1.5 opacity-0 transition-opacity duration-500 ease-in-out group-hover:opacity-100">
         <CopyButton src={src} />
         <SendButton src={src} />
@@ -69,11 +78,11 @@ interface LikeButtonProps {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: ZzalType;
+  queryKey: [ZzalType, string[]];
 }
 const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
-  const { addImageLike } = useAddImageLike(imageIndex, queryKey);
-  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey);
+  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
 
   const handleClickImageLike = () => {
     if (!isLiked) {
@@ -81,8 +90,15 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
         onSuccess: () => {
           gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
         },
-        onError: () =>
-          toast.error("좋아요 요청이 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+        onError: (error) => {
+          if (!axios.isAxiosError(error)) return;
+          if (error.response?.status === 400) {
+            toast.error("이미 좋아요가 요청 되었습니다.", { autoClose: 1500 });
+          }
+          if (error.response?.status === 401) {
+            toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+          }
+        },
       });
 
       return;
@@ -92,21 +108,27 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
       onSuccess: () => {
         gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
       },
-      onError: () =>
-        toast.error("좋아요 취소에 실패하였습니다 다시 시도해주세요.", { autoClose: 1500 }),
+      onError: (error) => {
+        if (!axios.isAxiosError(error)) return;
+        if (error.response?.status === 400) {
+          toast.error("이미 좋아요가 취소 되었습니다.", { autoClose: 1500 });
+        }
+        if (error.response?.status === 401) {
+          toast.error("로그인이 필요한 기능입니다.", { autoClose: 1500 });
+        }
+      },
     });
   };
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-white"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-white"
       onClick={handleClickImageLike}
     >
       <Heart
         aria-label="좋아요"
         size={18}
-        strokeWidth={isLiked ? 0 : 2}
-        fill={isLiked ? "#ED0000" : "none"}
+        className={cn({ "fill-primary text-primary": isLiked, "text-black": !isLiked })}
       />
     </button>
   );
@@ -124,10 +146,10 @@ const SendButton = ({ src }: SendButtonProps) => {
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
       onClick={handleClickSendImageSrc}
     >
-      <SendHorizontal aria-label="채팅창 보내기" size={20} fill="white" />
+      <SendHorizontal aria-label="채팅창 보내기" size={18} color="white" />
     </button>
   );
 };
@@ -142,10 +164,10 @@ const CopyButton = ({ src }: CopyButtonProps) => {
 
   return (
     <button
-      className="mt-1 flex h-8 w-8 items-center justify-center rounded-full bg-primary"
+      className="mt-1 flex h-9 w-9 items-center justify-center rounded-full bg-primary"
       onClick={handleClickCopytoClipboard}
     >
-      <Copy aria-label="이미지 복사" size={20} stroke="white" />
+      <Copy aria-label="이미지 복사" size={18} color="white" />
     </button>
   );
 };

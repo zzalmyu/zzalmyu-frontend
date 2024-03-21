@@ -34,6 +34,7 @@ jobs:
         env:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
           VITE_CHAT_URL: ${{ secrets.VITE_CHAT_URL }}
+          VITE_SENTRY_DSN: ${{ secrets.VITE_SENTRY_DSN }}
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1

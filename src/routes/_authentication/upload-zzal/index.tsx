@@ -4,6 +4,10 @@ import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
+import { convertFileToJpg } from "@/utils/convertFileToJpg";
+import UploadGuide from "@/components/UploadZzal/UploadGuide";
+import ImageUpload from "@/components/UploadZzal/ImageUpload";
+import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $recommendedTags, $selectedTagsUpload } from "@/store/tag";
@@ -41,10 +45,28 @@ const UploadZzal = () => {
     handleUploadZzal(file);
   };
 
-  const handleUploadZzal = (file: File) => {
+  const handleFileFormat = async (file: File) => {
+    if (!file.name.toLowerCase().endsWith(".jpg")) {
+      try {
+        return await convertFileToJpg(file);
+      } catch (error) {
+        return null;
+      }
+    }
+    return file;
+  };
+
+  const handleUploadZzal = async (file: File) => {
+    const jpgFile = await handleFileFormat(file);
+
+    if (!jpgFile) {
+      toast.error("사진 업로드에 실패했습니다.");
+      return;
+    }
+
     uploadZzal(
       {
-        file: file,
+        file: jpgFile,
         tagIdList: selectedTags.map((selectedTag) => selectedTag.tagId),
         title: imageTitle,
       },

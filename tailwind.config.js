@@ -46,6 +46,7 @@ export default {
         secondary: "var(--secondary)",
         "text-primary": "rgb(var(--text-primary) / <alpha-value>)",
         "text-secondary": "var(--text-secondary)",
+        "text-tertiary": "var(--text-tertiary)",
         surface1: "var(--surface1)",
         surface2: "var(--surface2)",
         background: "var(--background)",
@@ -55,6 +56,7 @@ export default {
         icon: "var(--icon)",
         delete: "#ED0000",
         tag: "#570DF8",
+        badge: "var(--badge)"
       },
     },
   },
@@ -67,6 +69,7 @@ export default {
           "--secondary": "#E2F4FF",
           "--text-primary": "0 0 0",
           "--text-secondary": "#535353",
+          "--text-tertiary":"#FFFFFF",
           "--surface1": "#78C6FF",
           "--surface2": "#FFB015",
           "--background": "#FFFFFF",
@@ -74,12 +77,14 @@ export default {
           "--tooltip": "#535353",
           "--toolbar": "#858383",
           "--icon": "#807F7F",
+          "--badge": "#000000"
         },
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
           "--secondary": "#2600BD",
           "--text-primary": "255 255 255",
           "--text-secondary": "#8EB4FF",
+          "--text-tertiary":"#000000",
           "--surface1": "#552AFF",
           "--surface2": "#B2B9FF",
           "--background": "#000D27",
@@ -87,6 +92,7 @@ export default {
           "--tooltip": "#11419E",
           "--toolbar": "#002873",
           "--icon": "#FFFFFF",
+          "--badge": "#FFFFFF"
         },
       },
     ],
