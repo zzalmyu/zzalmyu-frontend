@@ -67,7 +67,7 @@ const TagSlider = ({ tags, tagClassName, onClick, isClickable = true, tagGap = 5
             <button onClick={onClick} className={cn({ "cursor-default": !onClick })}>
               <TagBadge
                 content={tagName}
-                className={cn("px-2 py-1 text-xs", tagClassName)}
+                className={cn("px-2 py-0.5 text-sm", tagClassName)}
                 isClickable={isClickable}
               />
             </button>

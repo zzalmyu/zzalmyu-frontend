@@ -1,6 +1,8 @@
-import { Fragment, Suspense, useRef } from "react";
-import { useAtomValue } from "jotai";
+import { Fragment, Suspense, useEffect, useRef } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { ErrorBoundary } from "@sentry/react";
 import { cn } from "@/utils/tailwind";
+import { debounce } from "@/utils/debounce";
 import MessagePeek from "./MessagePeek";
 import ZzalMessage from "./ZzalMessage";
 import { $isChatOpen } from "@/store/chat";
@@ -8,14 +10,15 @@ import useChat from "@/hooks/chat/useChat";
 import useGetChat from "@/hooks/api/chat/useGetChat";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import { $userInformation } from "@/store/user";
+import { $scrollDirection } from "@/store/scroll";
 
 const ChatRoom = () => {
   const { messageHistory, handleFetchNextPage } = useGetChat();
   const chatRoomRef = useRef<HTMLDivElement>(null);
   const scrollTargetRef = useRef<HTMLDivElement>(null);
   const { email } = useAtomValue($userInformation);
-
-  // TODO: [2023.03.17]: chat intersection 시 scroll action 구현
+  const setScrollDirection = useSetAtom($scrollDirection);
+  const previousScrollTopRef = useRef(0);
 
   useIntersectionObserver({
     target: scrollTargetRef,
@@ -24,9 +27,30 @@ const ChatRoom = () => {
 
   const { handleSendMessage } = useChat(chatRoomRef);
 
+  useEffect(() => {
+    const scrollTracker = chatRoomRef.current;
+    if (!scrollTracker) return;
+
+    const handleScroll = debounce(() => {
+      if (scrollTracker.scrollTop > previousScrollTopRef.current) {
+        setScrollDirection("down");
+      } else {
+        setScrollDirection("up");
+      }
+      previousScrollTopRef.current = scrollTracker.scrollTop;
+    }, 200);
+
+    scrollTracker?.addEventListener("scroll", handleScroll);
+
+    return () => scrollTracker?.removeEventListener("scroll", handleScroll);
+  }, [setScrollDirection]);
+
   return (
     <Fragment>
-      <div ref={chatRoomRef} className="flex h-full flex-1 flex-col overflow-y-auto pb-30pxr">
+      <div
+        ref={chatRoomRef}
+        className="flex h-full flex-1 flex-col overflow-y-auto overflow-x-hidden pb-30pxr"
+      >
         <div ref={scrollTargetRef}></div>
         {messageHistory.map((message, index) => {
           return (
@@ -51,13 +75,15 @@ const Chat = () => {
     <Fragment>
       <div
         className={cn(
-          "absolute right-0 h-full w-[33%] px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out",
+          "absolute right-0 h-full w-full overflow-hidden px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out md:w-[33%]",
           isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
         )}
       >
-        <Suspense fallback={"chatroom pending..."}>
-          <ChatRoom />
-        </Suspense>
+        <ErrorBoundary fallback={() => <div>채팅 연결 중 에러 발생</div>}>
+          <Suspense fallback={"chatroom pending..."}>
+            <ChatRoom />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </Fragment>
   );

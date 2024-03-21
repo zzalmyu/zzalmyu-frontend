@@ -62,7 +62,7 @@ const Header = () => {
         <div className="hidden h-6 w-0.5 bg-text-primary sm:block"></div>
         {role !== "GUEST" && <DropdownMenu />}
         {role === "GUEST" && (
-          <button className="btn btn-ghost h-6 min-h-9" onClick={handleClickLogin}>
+          <button className="btn btn-ghost hidden h-6 min-h-9 sm:block" onClick={handleClickLogin}>
             로그인
           </button>
         )}

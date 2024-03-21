@@ -102,7 +102,7 @@ const UploadZzal = () => {
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
-      <div className="flex flex-col justify-center gap-20pxr px-50pxr pt-30pxr">
+      <div className="flex flex-col justify-center gap-20pxr overflow-auto px-10pxr pb-60pxr pt-30pxr sm:px-100pxr sm:pb-0">
         <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
           <div className="mx-auto pb-50pxr">
