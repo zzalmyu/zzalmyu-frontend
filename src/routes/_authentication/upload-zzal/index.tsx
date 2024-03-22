@@ -103,10 +103,10 @@ const UploadZzal = () => {
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
       <div className="flex flex-col justify-center gap-20pxr overflow-auto px-10pxr pb-60pxr pt-30pxr sm:px-100pxr sm:pb-0">
-        <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
+        <div className="text-xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
-          <div className="mx-auto pb-50pxr">
-            <div className="mb-4 text-sm font-bold">
+          <div className="mx-auto mb-8">
+            <div className="mb-2 font-bold">
               업로드할 파일
               <Asterisk
                 aria-label="필수 입력 항목 표시"
@@ -117,9 +117,9 @@ const UploadZzal = () => {
             </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <div className="mx-auto mt-10 flex min-w-440pxr flex-col sm:mt-0 sm:w-640pxr sm:px-24pxr">
+          <div className="mx-auto mt-4 flex w-full flex-col sm:mt-0 sm:w-640pxr sm:min-w-440pxr sm:px-24pxr">
             <div>
-              <div className="mb-4 text-sm font-bold">
+              <div className="mb-2 font-bold">
                 짤 제목
                 <Asterisk
                   aria-label="필수 입력 항목 표시"
@@ -128,18 +128,18 @@ const UploadZzal = () => {
                   size={16}
                 />
               </div>
-              <div className="mb-10 flex max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-xl">
+              <div className="mb-4 flex h-50pxr max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-md sm:h-60pxr sm:min-w-440pxr">
                 <input
                   id="imageTitleInput"
                   name="imageTitle"
                   onChange={handleChangeImageTitle}
                   value={imageTitle}
-                  className="z-20 min-h-12 flex-1 rounded-xl border-none bg-transparent outline-none"
+                  className="z-20 h-50pxr flex-1 rounded-xl border-none bg-transparent outline-none"
                 />
               </div>
             </div>
             <div>
-              <div className="mb-4 text-sm font-bold">
+              <div className="mb-2 font-bold">
                 태그 검색 및 추가
                 <Asterisk
                   aria-label="필수 입력 항목 표시"
