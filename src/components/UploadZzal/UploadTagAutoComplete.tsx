@@ -38,19 +38,21 @@ const UploadTagAutoComplete = ({
   };
 
   return (
-    <div className="absolute top-[-5px] box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-[40px] shadow-xl outline-none sm:rounded-b-30pxr">
+    <div className="absolute z-10 box-border w-full rounded-b-25pxr border border-t-0 border-gray-300 bg-background px-4 pb-4 pt-40pxr shadow-md outline-none sm:rounded-b-30pxr">
       <hr className="absolute left-0 top-25pxr w-full sm:top-30pxr" />
       {selectedUploadTags.length > 0 && (
         <div className="mb-10pxr border-b-2">
-          <div className="text-10pxr mb-20pxr font-semibold text-text-primary">
+          <div className="mb-10pxr text-sm font-semibold text-text-primary">
             선택된 태그
             <span className="ml-5pxr">
               {selectedUploadTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
-          <div className="mb-10pxr flex flex-wrap gap-6pxr">
-            <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
-          </div>
+          <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
+            <div className="w-full">
+              <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
+            </div>
+          </ul>
         </div>
       )}
       <ul
@@ -74,7 +76,11 @@ const UploadTagAutoComplete = ({
           </li>
         ))}
       </ul>
-      <div className="text-10pxr font-semibold text-text-primary">추천 태그</div>
+
+      {recommendedTags.length && (
+        <div className="text-sm font-semibold text-neutral">추천 태그</div>
+      )}
+
       <ul>
         {recommendedTags.map(({ tagId, tagName }, index) => {
           const recommendedIndex = index + autoCompletedTags.length;
