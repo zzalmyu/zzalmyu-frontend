@@ -57,8 +57,19 @@ axiosInstance.interceptors.response.use(
 
     return response.data;
   },
-  (error) => {
+  async (error) => {
     Sentry.captureException(error);
+
+    if (!axios.isAxiosError(error)) return;
+    if (
+      error.response?.status === 401 &&
+      error.response?.data.message === "refresh token이 유효하지 않습니다."
+    ) {
+      removeLocalStorage(ACCESS_TOKEN);
+      removeLocalStorage(REFRESH_TOKEN);
+
+      window.location.href = "/";
+    }
 
     return Promise.reject(error);
   },
