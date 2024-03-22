@@ -202,7 +202,7 @@ const UploadTagSearchForm = ({ className }: Props) => {
           />
         )}
       </div>
-      <div className="mt-1 flex items-center justify-around sm:mt-0">
+      <div className="mt-1 flex items-center justify-start sm:mt-0">
         {selectedUploadTags.length > 0 && (
           <button
             onClick={handleClickResetTagButton}

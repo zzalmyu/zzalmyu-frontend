@@ -48,9 +48,11 @@ const UploadTagAutoComplete = ({
               {selectedUploadTags.length}/{MAX_SEARCH_TAG_UPLOAD}
             </span>
           </div>
-          <div className="mb-10pxr flex flex-wrap gap-6pxr">
-            <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
-          </div>
+          <ul className="flex-column mb-10pxr flex flex-wrap gap-6pxr">
+            <div className="w-full">
+              <TagSlider tags={selectedUploadTags.map(({ tagName }) => tagName)} />
+            </div>
+          </ul>
         </div>
       )}
       <ul
