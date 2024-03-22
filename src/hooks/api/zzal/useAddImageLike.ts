@@ -9,19 +9,18 @@ export const useAddImageLike = (
   zzalKey: [ZzalType, string[]],
   imageId: number,
 ) => {
-  const zzalQueryClient = useQueryClient();
-  const zzalDetailQueryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const { mutate, ...rest } = useMutation({
     mutationFn: (imageId: number) => postImageLike(imageId),
     onMutate: async () => {
       await Promise.all([
-        zzalQueryClient.cancelQueries({ queryKey: [...zzalKey] }),
-        zzalDetailQueryClient.cancelQueries({ queryKey: ["zzalDetails", imageId] }),
+        queryClient.cancelQueries({ queryKey: [...zzalKey] }),
+        queryClient.cancelQueries({ queryKey: ["zzalDetails", imageId] }),
       ]);
 
-      const zzalOldData = zzalQueryClient.getQueryData<GetZzalResponse>([...zzalKey]);
-      const zzalDetailOldData = zzalDetailQueryClient.getQueryData<GetZzalDetailsResponse>([
+      const zzalOldData = queryClient.getQueryData<GetZzalResponse>([...zzalKey]);
+      const zzalDetailOldData = queryClient.getQueryData<GetZzalDetailsResponse>([
         "zzalDetails",
         imageId,
       ]);
@@ -31,7 +30,7 @@ export const useAddImageLike = (
       if (zzalDetailOldData) {
         const zzalDetailUpdatedData = JSON.parse(JSON.stringify(zzalDetailOldData));
         zzalDetailUpdatedData.imageLikeYn = true;
-        zzalDetailQueryClient.setQueryData(["zzalDetails", imageId], zzalDetailUpdatedData);
+        queryClient.setQueryData(["zzalDetails", imageId], zzalDetailUpdatedData);
       }
 
       const zzalUpdatedData = JSON.parse(
@@ -41,14 +40,17 @@ export const useAddImageLike = (
         }),
       );
       zzalUpdatedData.pages[imageIndex].imageLikeYn = true;
-      zzalQueryClient.setQueryData([...zzalKey], zzalUpdatedData);
+      queryClient.setQueryData([...zzalKey], zzalUpdatedData);
 
       return { zzalOldData, zzalDetailOldData };
     },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["likedZzals"] });
+    },
     onError: (_error, _zzalId, context) => {
-      zzalQueryClient.setQueryData([...zzalKey], context?.zzalOldData);
+      queryClient.setQueryData([...zzalKey], context?.zzalOldData);
       if (context?.zzalDetailOldData) {
-        zzalDetailQueryClient.setQueryData(["zzalDetails", imageId], context?.zzalDetailOldData);
+        queryClient.setQueryData(["zzalDetails", imageId], context?.zzalDetailOldData);
       }
     },
   });
