@@ -53,7 +53,7 @@ const NavigationFooter = () => {
   return (
     <div
       className={cn(
-        "absolute bottom-0 z-10 flex h-60pxr w-full items-center justify-evenly bg-background text-text-primary shadow-[0_-1px_10px_1px_rgba(0,0,0,0.1)] transition-transform sm:hidden",
+        "sticky bottom-0 z-10 flex h-60pxr w-full items-center justify-evenly bg-background text-text-primary shadow-[0_-1px_10px_1px_rgba(0,0,0,0.1)] transition-transform sm:hidden",
         scrollDirection === "up" ? "" : "translate-y-full",
       )}
     >
@@ -122,7 +122,7 @@ interface RouterContext {
 
 const RootComponent = () => {
   return (
-    <div className="relative h-[calc(100vh-50px)] w-screen overflow-hidden sm:h-screen">
+    <div className="relative h-screen w-screen overflow-hidden sm:h-screen">
       <Header />
       <div className="h-[calc(100vh-4.25rem)] sm:pb-0">
         <Outlet />
