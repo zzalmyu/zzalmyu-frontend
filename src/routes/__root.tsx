@@ -5,7 +5,6 @@ import { Link, Outlet, createRootRouteWithContext, useNavigate } from "@tanstack
 import { CircleUser, FolderUp, Heart, Home, LogOut, Plus } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom, useAtomValue } from "jotai";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { AuthContextType } from "@/components/Auth";
 import LoginModal from "@/components/LoginModal";
@@ -130,7 +129,6 @@ const RootComponent = () => {
       <NavigationFooter />
       <ToastContainer />
       <ReactQueryDevtools buttonPosition="top-right" />
-      <TanStackRouterDevtools position="bottom-right" />
     </div>
   );
 };
