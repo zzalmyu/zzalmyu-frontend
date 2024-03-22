@@ -4,18 +4,19 @@ import { getLocalStorage } from "@/utils/localStorage";
 import { GetUserInformationResponse } from "@/types/user.dto";
 import { ReissueTokenResponse } from "@/types/auth.dto";
 import http from "./core";
-import { REFRESH_TOKEN } from "@/constants/auth";
+import { ACCESS_TOKEN, REFRESH_TOKEN } from "@/constants/auth";
 
 export const patchLogOut = async () => {
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
-
+  const accessToken = getLocalStorage(ACCESS_TOKEN);
   try {
     await axios.patch<void>(
       `${import.meta.env.VITE_BASE_URL}/v1/user/logout`,
       {},
       {
         headers: {
-          "Authorization-refresh": `Bearer ${refreshToken}`,
+          authorization: `Bearer ${accessToken}`,
+          "authorization-refresh": `Bearer ${refreshToken}`,
           "Content-Type": "application/json",
         },
       },
