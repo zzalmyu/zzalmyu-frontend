@@ -22,17 +22,17 @@ const Admin = () => {
         <title>관리자 - 짤뮤니티</title>
         <meta name="description" content="짤뮤니티 관리자 페이지입니다" />
       </Helmet>
-      <div className="flex h-full w-full flex-col items-center p-45pxr">
+      <div className="flex h-full w-full flex-col items-center overflow-auto p-45pxr">
         <div className="flex w-5/6 flex-col">
-          <div className="breadcrumbs pb-20pxr text-lg font-bold">
+          <div className="breadcrumbs overflow-hidden pb-20pxr text-lg font-bold">
             <ul>
               <li>
                 <h1>신고 내역</h1>
               </li>
             </ul>
           </div>
-          <div className="flex flex-col ">
-            <table className="table">
+          <div className="flex flex-col">
+            <table className="table overflow-hidden">
               <ReportTableHead>
                 <ReportTableHead.Th>Date</ReportTableHead.Th>
                 <ReportTableHead.Th>이미지 제목</ReportTableHead.Th>
@@ -42,7 +42,6 @@ const Admin = () => {
               <ReportsTableBody reports={reports} />
             </table>
             <div ref={fetchMoreRef} />
-            <div />
           </div>
         </div>
       </div>

@@ -39,7 +39,7 @@ const AdminImageDetail = () => {
   return (
     <div className="flex h-full w-full flex-col items-center p-45pxr">
       <div className="flex w-5/6 flex-col">
-        <div className="breadcrumbs pb-20pxr text-lg font-bold">
+        <div className="breadcrumbs overflow-hidden pb-20pxr text-lg font-bold">
           <ul>
             <li>
               <Link to="/admin/reports" onClick={handleClickAdminButton}>
@@ -51,7 +51,9 @@ const AdminImageDetail = () => {
         </div>
         <div className="flex justify-center">
           <div className="flex w-4/6 flex-col items-center sm:flex-row sm:items-start">
-            <img src={imageUrl} alt={imageTitle} width="2/6" />
+            <div className="w-1/2">
+              <img src={imageUrl} alt={imageTitle} className="rounded-xl" />
+            </div>
             <div className="mb-50pxr mt-3 flex max-h-420pxr flex-col  sm:ml-5 sm:mt-0 sm:w-4/6 ">
               <div className="w-full overflow-auto rounded-xl">
                 <table className="table bg-card">
