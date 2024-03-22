@@ -98,7 +98,7 @@ const DropdownMenu = () => {
           <summary className="h-9 font-bold text-text-primary hover:bg-gray-300 focus:bg-transparent">
             {role === "USER" ? userName : "Admin"}
           </summary>
-          <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary">
+          <ul className="right-1 z-[1] w-44 rounded-box bg-background text-text-primary shadow-md shadow-adaptive-shadow">
             {(role === "USER" ? userMenuItems : adminMenuItems).map(
               ({ path, Icon, name, onClick, event }, index) => (
                 <li key={`${index}-${name}`} className="group" onClick={onClick || toggleDetails}>

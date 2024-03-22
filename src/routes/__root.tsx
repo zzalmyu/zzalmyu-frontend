@@ -53,7 +53,7 @@ const NavigationFooter = () => {
   return (
     <div
       className={cn(
-        "absolute bottom-0 z-10 flex h-60pxr w-full items-center justify-evenly bg-background text-text-primary shadow-[0_-1px_10px_1px_rgba(0,0,0,0.1)] transition-transform sm:hidden",
+        "absolute bottom-0 z-10 flex h-60pxr w-full items-center justify-evenly bg-background text-text-primary shadow-[0_-1px_10px_1px_rgba(0,0,0,0.1)] shadow-adaptive-shadow transition-transform sm:hidden",
         scrollDirection === "up" ? "" : "translate-y-full",
       )}
     >
