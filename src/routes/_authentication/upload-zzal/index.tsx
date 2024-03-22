@@ -106,7 +106,7 @@ const UploadZzal = () => {
         <div className="mb-10 text-2xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
           <div className="mx-auto pb-50pxr">
-            <div className="mb-4 text-sm font-bold">
+            <div className="mb-4 font-bold">
               업로드할 파일
               <Asterisk
                 aria-label="필수 입력 항목 표시"
@@ -119,7 +119,7 @@ const UploadZzal = () => {
           </div>
           <div className="mx-auto mt-10 flex min-w-440pxr flex-col sm:mt-0 sm:w-640pxr sm:px-24pxr">
             <div>
-              <div className="mb-4 text-sm font-bold">
+              <div className="mb-4 font-bold">
                 짤 제목
                 <Asterisk
                   aria-label="필수 입력 항목 표시"
@@ -139,7 +139,7 @@ const UploadZzal = () => {
               </div>
             </div>
             <div>
-              <div className="mb-4 text-sm font-bold">
+              <div className="mb-4 font-bold">
                 태그 검색 및 추가
                 <Asterisk
                   aria-label="필수 입력 항목 표시"
