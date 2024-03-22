@@ -121,7 +121,6 @@ const LayoutWithChat = () => {
 export const Route = createFileRoute("/_layout-with-chat")({
   component: LayoutWithChat,
   beforeLoad: async ({ context, location }) => {
-    console.log(location.pathname);
     if (location.pathname === "/") return;
     await context.authorize.isAuthenticated();
   },

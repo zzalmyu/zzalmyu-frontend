@@ -29,15 +29,15 @@ const queryClient = new QueryClient();
 
 const App = () => {
   return (
-    <HelmetProvider>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <HelmetProvider>
         <OverlayProvider>
           <AuthProvider>
             <InnerApp />
           </AuthProvider>
         </OverlayProvider>
-      </QueryClientProvider>
-    </HelmetProvider>
+      </HelmetProvider>
+    </QueryClientProvider>
   );
 };
 
