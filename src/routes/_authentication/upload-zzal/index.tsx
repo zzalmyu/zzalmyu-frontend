@@ -102,9 +102,43 @@ const UploadZzal = () => {
         <title>짤 업로드 - 짤뮤니티</title>
         <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
       </Helmet>
-      <div className="flex flex-col justify-center gap-20pxr overflow-auto px-10pxr pb-60pxr pt-30pxr sm:px-100pxr sm:pb-0">
+      <div className="mx-auto flex h-full flex-col justify-start overflow-auto px-10pxr pb-70pxr">
         <div className="text-xl font-extrabold text-text-primary">짤 업로드</div>
-        <div className="m-auto flex w-full flex-col flex-wrap sm:mt-30pxr sm:flex-row">
+        <div className="mt-30pxr flex w-full flex-col flex-wrap sm:flex-row">
+          <div className="mx-auto mb-8 flex w-full flex-col gap-8 sm:w-640pxr sm:min-w-440pxr sm:px-24pxr">
+            <div className="mb-8">
+              <div className="font-bold">
+                태그 검색 및 추가
+                <Asterisk
+                  aria-label="필수 입력 항목 표시"
+                  className="inline-block"
+                  color="#ED0000"
+                  size={16}
+                />
+              </div>
+              <UploadTagSearchForm />
+            </div>
+            <div>
+              <div className="font-bold">
+                짤 제목
+                <Asterisk
+                  aria-label="필수 입력 항목 표시"
+                  className="inline-block"
+                  color="#ED0000"
+                  size={16}
+                />
+              </div>
+              <div className="flex h-50pxr max-w-650pxr rounded-full border border-gray-300 px-2 shadow-md sm:h-60pxr sm:min-w-440pxr sm:px-4">
+                <input
+                  id="imageTitleInput"
+                  name="imageTitle"
+                  onChange={handleChangeImageTitle}
+                  value={imageTitle}
+                  className="h-50pxr flex-1 rounded-xl border-none bg-transparent outline-none sm:h-60pxr"
+                />
+              </div>
+            </div>
+          </div>
           <div className="mx-auto mb-8">
             <div className="mb-2 font-bold">
               업로드할 파일
@@ -117,48 +151,14 @@ const UploadZzal = () => {
             </div>
             <ImageUpload changeFile={changeFile} file={file} />
           </div>
-          <div className="mx-auto mt-4 flex w-full flex-col sm:mt-0 sm:w-640pxr sm:min-w-440pxr sm:px-24pxr">
-            <div>
-              <div className="mb-2 font-bold">
-                짤 제목
-                <Asterisk
-                  aria-label="필수 입력 항목 표시"
-                  className="inline-block"
-                  color="#ED0000"
-                  size={16}
-                />
-              </div>
-              <div className="mb-4 flex h-50pxr max-w-650pxr flex-wrap rounded-full border border-gray-300 py-1 pl-4 pr-2 shadow-md sm:h-60pxr sm:min-w-440pxr">
-                <input
-                  id="imageTitleInput"
-                  name="imageTitle"
-                  onChange={handleChangeImageTitle}
-                  value={imageTitle}
-                  className="z-20 h-50pxr flex-1 rounded-xl border-none bg-transparent outline-none"
-                />
-              </div>
-            </div>
-            <div>
-              <div className="mb-2 font-bold">
-                태그 검색 및 추가
-                <Asterisk
-                  aria-label="필수 입력 항목 표시"
-                  className="inline-block"
-                  color="#ED0000"
-                  size={16}
-                />
-              </div>
-              <UploadTagSearchForm />
-            </div>
-            <div className="pb-60pxr pt-120pxr sm:pt-30pxr">
-              <button
-                className="mt-20pxr h-60pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:mt-100pxr sm:max-w-650pxr"
-                onClick={handleClickUploadButton}
-              >
-                업로드하기
-              </button>
-            </div>
-          </div>
+        </div>
+        <div className="flex w-full items-center justify-center">
+          <button
+            className="mt-20pxr h-50pxr w-full rounded-full bg-gradient-to-r from-primary to-[#78C6FF] text-lg font-bold text-white sm:h-60pxr sm:max-w-360pxr"
+            onClick={handleClickUploadButton}
+          >
+            업로드하기
+          </button>
         </div>
       </div>
     </div>
