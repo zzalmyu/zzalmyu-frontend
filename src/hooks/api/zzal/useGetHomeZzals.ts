@@ -16,7 +16,7 @@ const useGetHomeZzals = () => {
         return lastPageParam + 1;
       },
       initialPageParam: 0,
-      refetchOnMount: false,
+      // refetchOnMount: false,
     });
 
   const handleFetchNextPage = () => {
