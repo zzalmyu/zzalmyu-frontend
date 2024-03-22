@@ -4,6 +4,7 @@
 
 @layer base {
   html {
+    overflow: hidden;
     font-family:
       "Pretendard Variable",
       Pretendard,
@@ -26,6 +27,8 @@
   body {
     font-size: 16px;
     @apply bg-background text-text-primary;
+    overflow: hidden;
+    position: relative;
   }
 }
 
