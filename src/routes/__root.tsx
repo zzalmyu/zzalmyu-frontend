@@ -122,7 +122,7 @@ interface RouterContext {
 
 const RootComponent = () => {
   return (
-    <div className="relative h-[100dvh] w-[100dvw] overflow-hidden sm:h-screen">
+    <div className="relative h-[100dvh] w-[100dvw] overflow-hidden">
       <Header />
       <div className="h-[calc(100%-4.25rem)] sm:pb-0">
         <Outlet />
