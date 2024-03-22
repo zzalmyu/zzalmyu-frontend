@@ -159,6 +159,12 @@ const UploadTagSearchForm = ({ className }: Props) => {
             autoComplete="off"
             minLength={1}
             maxLength={10}
+            onInput={(event: FormEvent<HTMLInputElement>) => {
+              const inputValue = event.currentTarget.value;
+              if (inputValue.length > 10) {
+                inputValue.slice(0, 10);
+              }
+            }}
             className="z-20 h-50pxr min-h-8 flex-1 rounded-xl border-none bg-transparent outline-none sm:h-60pxr"
           />
           <button
