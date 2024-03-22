@@ -7,7 +7,7 @@ const useGetChat = () => {
       queryKey: ["chat"],
       queryFn: ({ pageParam = 0 }) => getChat(pageParam),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-        if (!lastPage) return;
+        if (lastPage.length === 0) return;
 
         return lastPageParam + 1;
       },

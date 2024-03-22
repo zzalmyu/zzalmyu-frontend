@@ -70,7 +70,7 @@ const LayoutWithChat = () => {
 
   return (
     <div className="h-full w-full overflow-hidden">
-      <div className="relative flex h-150pxr w-full flex-col items-center gap-4 px-10pxr pt-50pxr shadow-md sm:h-150pxr sm:px-6 sm:pt-10pxr">
+      <div className="relative flex h-150pxr w-full flex-col items-center gap-4 px-10pxr pt-50pxr shadow-md shadow-adaptive-shadow sm:h-150pxr sm:px-6 sm:pt-10pxr">
         <div className="hidden items-center justify-center gap-4 text-sm font-bold text-border sm:flex">
           {role === "USER" &&
             zzalPaths.map(({ title, path }) => (
@@ -104,7 +104,7 @@ const LayoutWithChat = () => {
         <div
           ref={scrollTrackerRef}
           className={cn(
-            "h-full overflow-auto px-6 py-4 shadow-md transition-[width_transform] duration-500 ease-in-out",
+            "shadow-shadow h-full overflow-auto px-6 py-4 shadow-md transition-[width_transform] duration-500 ease-in-out",
             isChatOpen
               ? "w-full -translate-x-full md:w-[67%] md:translate-x-0"
               : "w-full md:w-full",
