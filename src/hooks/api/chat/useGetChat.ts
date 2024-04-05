@@ -2,7 +2,7 @@ import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getChat } from "@/apis/chat";
 
 const useGetChat = () => {
-  const { data, hasNextPage, isFetchingNextPage, isFetching, fetchNextPage, ...rest } =
+  const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
     useSuspenseInfiniteQuery({
       queryKey: ["chat"],
       queryFn: async ({ pageParam = 0 }) => await getChat(pageParam),
@@ -26,7 +26,6 @@ const useGetChat = () => {
     }
   };
 
-  console.log(data, isFetchingNextPage, isFetching);
   return {
     messageHistory: data?.pages.flatMap((page) => page),
     handleFetchNextPage,
