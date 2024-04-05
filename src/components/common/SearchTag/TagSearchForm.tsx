@@ -134,7 +134,7 @@ const TagSearchForm = ({ className }: Props) => {
           <button
             type="submit"
             className={cn(
-              "relative z-20 flex h-30pxr items-center gap-6pxr overflow-hidden rounded-full bg-primary p-2 text-white transition-[width_height] sm:h-35pxr  sm:p-2",
+              "relative z-20 flex h-30pxr shrink-0 items-center gap-6pxr overflow-hidden rounded-full bg-primary p-2 text-white transition-[width_height] sm:h-35pxr  sm:p-2",
               showAutoComplete ? "w-65pxr sm:w-70pxr" : "w-30pxr sm:w-35pxr",
             )}
           >
