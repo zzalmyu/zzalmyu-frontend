@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
@@ -10,6 +9,7 @@ import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
+import CommonHelmet from "@/helmets/CommonHelmet";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
@@ -98,10 +98,11 @@ const UploadZzal = () => {
 
   return (
     <div className="h-full overflow-y-auto">
-      <Helmet>
-        <title>짤 업로드 - 짤뮤니티</title>
-        <meta name="description" content="새로운 짤을 짤뮤니티에 업로드해보세요!" />
-      </Helmet>
+      <CommonHelmet
+        pageTitle="짤 업로드 - 짤뮤니티"
+        url="https://zzalmyu.site/upload-zzal"
+        description="새로운 짤을 짤뮤니티에 업로드해보세요!"
+      />
       <div className="mx-auto flex h-full flex-col justify-start overflow-auto px-10pxr pb-70pxr">
         <div className="text-xl font-extrabold text-text-primary">짤 업로드</div>
         <div className="mt-30pxr flex w-full flex-col flex-wrap sm:flex-row">

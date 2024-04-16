@@ -1,11 +1,11 @@
 import { Fragment, useRef } from "react";
-import { Helmet } from "react-helmet-async";
 import { createFileRoute } from "@tanstack/react-router";
 import Pending from "./AdminReports.pendingComponent";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportsTableBody from "@/components/AdminReports/ReportsTableBody ";
 import useGetReports from "@/hooks/api/report/useGetReports";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
+import CommonHelmet from "@/helmets/CommonHelmet";
 
 const Admin = () => {
   const fetchMoreRef = useRef(null);
@@ -18,10 +18,11 @@ const Admin = () => {
 
   return (
     <Fragment>
-      <Helmet>
-        <title>관리자 - 짤뮤니티</title>
-        <meta name="description" content="짤뮤니티 관리자 페이지입니다" />
-      </Helmet>
+      <CommonHelmet
+        pageTitle="관리자 - 짤뮤니티"
+        url="https://zzalmyu.site/admin/reports"
+        description="짤뮤니티 관리자 페이지"
+      />
       <div className="flex h-full w-full flex-col items-center overflow-auto p-45pxr">
         <div className="flex w-5/6 flex-col">
           <div className="breadcrumbs overflow-hidden pb-20pxr text-lg font-bold">

@@ -1,14 +1,15 @@
-import { Helmet } from "react-helmet-async";
 import { Fragment } from "react";
 import { createFileRoute } from "@tanstack/react-router";
+import CommonHelmet from "@/helmets/CommonHelmet";
 
 const PendingComponent = () => {
   return (
     <Fragment>
-      <Helmet>
-        <title>업로드한 짤 - 짤뮤니티</title>
-        <meta name="description" content="본인이 업로드한 짤들을 확인 및 관리해보세요!" />
-      </Helmet>
+      <CommonHelmet
+        pageTitle="업로드한 짤 - 짤뮤니티"
+        url="https://zzalmyu.site/my-uploaded-zzals"
+        description="본인이 업로드한 짤들을 확인 및 관리해보세요!"
+      />
       <div>pending</div>
     </Fragment>
   );
