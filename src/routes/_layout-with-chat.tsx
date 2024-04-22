@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
@@ -6,13 +6,15 @@ import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import { getLocalStorage } from "@/utils/localStorage";
 import { debounce } from "@/utils/debounce";
-import Chat from "@/components/common/Chat";
+
 import { $isChatOpen } from "@/store/chat";
-import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import { $userInformation } from "@/store/user";
 import { $scrollDirection } from "@/store/scroll";
 import { $selectedTags } from "@/store/tag";
+
+const TagSearchForm = lazy(() => import("@/components/common/SearchTag/TagSearchForm"));
+const Chat = lazy(() => import("@/components/common/Chat"));
 
 const zzalPaths = [
   {
@@ -80,7 +82,9 @@ const LayoutWithChat = () => {
             ))}
         </div>
         <div className="relative flex w-full flex-1">
-          <TagSearchForm className="z-10 mx-auto w-400pxr md:w-550pxr lg:w-full" />
+          <Suspense fallback={null}>
+            <TagSearchForm className="z-10 mx-auto w-400pxr md:w-550pxr lg:w-full" />
+          </Suspense>
           <button
             className={cn(
               "btn btn-ghost btn-sm absolute bottom-[calc(100%+8px)] right-0 flex h-35pxr w-35pxr items-center justify-center rounded-full border border-border p-2 sm:bottom-5pxr sm:flex md:w-120pxr md:bg-background md:text-text-primary",
@@ -112,7 +116,7 @@ const LayoutWithChat = () => {
         >
           <Outlet />
         </div>
-        <Chat />
+        <Suspense fallback={null}>{isChatOpen && <Chat />}</Suspense>
       </div>
     </div>
   );
