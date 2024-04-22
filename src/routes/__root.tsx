@@ -17,13 +17,13 @@ interface RouterContext {
 const RootComponent = () => {
   return (
     <div className="relative h-[100dvh] w-[100dvw] overflow-hidden">
-      <Suspense fallback={"...header"}>
+      <Suspense fallback={null}>
         <Header />
       </Suspense>
       <div className="h-[calc(100%-4.25rem)] sm:pb-0">
         <Outlet />
       </div>
-      <Suspense fallback={"...NavigationFooter"}>
+      <Suspense fallback={null}>
         <NavigationFooter />
       </Suspense>
       <ToastContainer />
