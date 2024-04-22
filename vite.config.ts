@@ -12,6 +12,19 @@ export default defineConfig({
     }),
     TanStackRouterVite(),
   ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          sentry: ["@sentry/react", "@sentry/tracing"],
+          ws: ["@stomp/stompjs", "sockjs-client"],
+          router: ["@tanstack/react-router", "react-dom"],
+          tailwindCSS: ["tailwind-merge", "clsx"],
+          icon: ["lucide-react"],
+        },
+      },
+    },
+  },
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
