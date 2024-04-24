@@ -1,7 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { toast } from "react-toastify";
-import { Link, createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
 import { convertFileToJpg } from "@/utils/convertFileToJpg";
@@ -165,6 +166,6 @@ const UploadZzal = () => {
   );
 };
 
-export const Route = createFileRoute("/_authentication/upload-zzal/")({
+export const Route = createLazyFileRoute("/_authentication/upload-zzal")({
   component: UploadZzal,
 });

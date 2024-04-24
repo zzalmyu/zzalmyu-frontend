@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const Route = createFileRoute("/_authentication")({
   beforeLoad: async ({ context, location }) => {
-    console.log(location.pathname);
     if (location.pathname === "/") return;
     await context.authorize.isAuthenticated();
   },

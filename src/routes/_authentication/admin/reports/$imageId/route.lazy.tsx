@@ -1,5 +1,5 @@
+import { createLazyFileRoute } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
-import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
@@ -7,7 +7,6 @@ import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
 import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
 import useDeleteReportedZzal from "@/hooks/api/report/useDeleteReportedZzal";
-import Pending from "@/routes/_authentication/admin/reports/AdminReports.pendingComponent";
 
 const AdminImageDetail = () => {
   const { imageId } = Route.useParams();
@@ -79,7 +78,6 @@ const AdminImageDetail = () => {
   );
 };
 
-export const Route = createFileRoute("/_authentication/admin/reports/$imageId/")({
+export const Route = createLazyFileRoute("/_authentication/admin/reports/$imageId")({
   component: AdminImageDetail,
-  pendingComponent: Pending,
 });

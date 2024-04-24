@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, Suspense, lazy } from "react";
 import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
@@ -6,13 +6,14 @@ import axios from "axios";
 import { cn } from "@/utils/tailwind";
 import { getLocalStorage } from "@/utils/localStorage";
 import { debounce } from "@/utils/debounce";
-import Chat from "@/components/common/Chat";
-import { $isChatOpen } from "@/store/chat";
 import TagSearchForm from "@/components/common/SearchTag/TagSearchForm";
+import { $isChatOpen } from "@/store/chat";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import { $userInformation } from "@/store/user";
 import { $scrollDirection } from "@/store/scroll";
 import { $selectedTags } from "@/store/tag";
+
+const Chat = lazy(() => import("@/components/common/Chat"));
 
 const zzalPaths = [
   {
@@ -112,7 +113,7 @@ const LayoutWithChat = () => {
         >
           <Outlet />
         </div>
-        <Chat />
+        <Suspense fallback={null}>{isChatOpen && <Chat />}</Suspense>
       </div>
     </div>
   );

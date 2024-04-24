@@ -1,7 +1,6 @@
 import { Fragment, useRef } from "react";
 import { Helmet } from "react-helmet-async";
-import { createFileRoute } from "@tanstack/react-router";
-import Pending from "./AdminReports.pendingComponent";
+import { createLazyFileRoute } from "@tanstack/react-router";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportsTableBody from "@/components/AdminReports/ReportsTableBody ";
 import useGetReports from "@/hooks/api/report/useGetReports";
@@ -49,7 +48,6 @@ const Admin = () => {
   );
 };
 
-export const Route = createFileRoute("/_authentication/admin/reports/")({
+export const Route = createLazyFileRoute("/_authentication/admin/reports")({
   component: Admin,
-  pendingComponent: Pending,
 });

@@ -1,6 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Fragment } from "react";
-import { createFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute } from "@tanstack/react-router";
+
 import { cn } from "@/utils/tailwind";
 import useFunnel from "@/hooks/common/useFunnel";
 import DeleteConfirm from "@/components/DeleteAccount/DeleteConfirm";
@@ -51,6 +52,6 @@ const DeleteAccount = () => {
   );
 };
 
-export const Route = createFileRoute("/_authentication/delete-account/")({
+export const Route = createLazyFileRoute("/_authentication/delete-account")({
   component: DeleteAccount,
 });
