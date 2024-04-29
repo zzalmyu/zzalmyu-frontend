@@ -42,7 +42,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
             }
             const updatedPages = oldData.pages.map((page, idx) => {
               if (idx === 0) {
-                return [parsedMessages, ...page];
+                return [...page, parsedMessages];
               }
               return page;
             });
