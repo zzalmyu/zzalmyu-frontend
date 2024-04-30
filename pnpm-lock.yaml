@@ -14,6 +14,9 @@ dependencies:
   '@stomp/stompjs':
     specifier: ^7.0.0
     version: 7.0.0
+  '@suspensive/react':
+    specifier: ^1.26.7
+    version: 1.26.7(react@18.2.0)
   '@tanstack/react-query':
     specifier: ^5.18.1
     version: 5.18.1(react@18.2.0)
@@ -1115,6 +1118,15 @@ packages:
 
   /@stomp/stompjs@7.0.0:
     resolution: {integrity: sha512-fGdq4wPDnSV/KyOsjq4P+zLc8MFWC3lMmP5FBgLWKPJTYcuCbAIrnRGjB7q2jHZdYCOD5vxLuFoKIYLy5/u8Pw==}
+    dev: false
+
+  /@suspensive/react@1.26.7(react@18.2.0):
+    resolution: {integrity: sha512-75f7oMj32zFNfvexCiBtZCE7L+/4Lr1Gw7wlpf72CTT8fFWKF+XKcPFXWqIUM/cMKK8HeSwd2gUeMXh+AQ7Rhw==}
+    peerDependencies:
+      react: ^16.8 || ^17 || ^18
+    dependencies:
+      react: 18.2.0
+      use-sync-external-store: 1.2.0(react@18.2.0)
     dev: false
 
   /@svgr/babel-plugin-add-jsx-attribute@8.0.0(@babel/core@7.23.9):
