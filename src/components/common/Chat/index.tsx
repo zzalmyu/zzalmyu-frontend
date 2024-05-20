@@ -1,11 +1,11 @@
-import { Fragment, Suspense, useEffect, useRef } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ErrorBoundary } from "@sentry/react";
-import { cn } from "@/utils/tailwind";
+import { ErrorBoundary } from "@suspensive/react";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { debounce } from "@/utils/debounce";
+import ErrorBoundaryFallback from "../Fallback/ErrorBoundaryFallback";
 import MessagePeek from "./MessagePeek";
 import ZzalMessage from "./ZzalMessage";
-import { $isChatOpen } from "@/store/chat";
 import useChat from "@/hooks/chat/useChat";
 import useGetChat from "@/hooks/api/chat/useGetChat";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -41,7 +41,6 @@ const ChatRoom = () => {
     }, 200);
 
     scrollTracker?.addEventListener("scroll", handleScroll);
-
     return () => scrollTracker?.removeEventListener("scroll", handleScroll);
   }, [setScrollDirection]);
 
@@ -69,23 +68,14 @@ const ChatRoom = () => {
 };
 
 const Chat = () => {
-  const isChatOpen = useAtomValue($isChatOpen);
-
   return (
-    <Fragment>
-      <div
-        className={cn(
-          "absolute right-0 h-full w-full overflow-hidden px-6 py-4 transition-[opacity_transform] duration-500 ease-in-out md:w-[33%]",
-          isChatOpen ? "opacity-100" : "translate-x-full opacity-0",
-        )}
-      >
-        <ErrorBoundary fallback={() => <div>채팅 연결 중 에러 발생</div>}>
-          <Suspense fallback={"chatroom pending..."}>
-            <ChatRoom />
-          </Suspense>
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary onReset={reset} fallback={ErrorBoundaryFallback}>
+          <ChatRoom />
         </ErrorBoundary>
-      </div>
-    </Fragment>
+      )}
+    </QueryErrorResetBoundary>
   );
 };
 

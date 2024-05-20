@@ -1,12 +1,15 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
+import { ErrorBoundary } from "@suspensive/react";
+import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const HomeZzals = () => {
   const { zzals, handleFetchNextPage } = useGetHomeZzals();
@@ -45,6 +48,20 @@ const HomeZzals = () => {
   );
 };
 
+const ErrorCaughtHomeZzals = () => {
+  const [selectedTags] = useAtom($selectedTags);
+
+  return (
+    <QueryErrorResetBoundary>
+      {({ reset }) => (
+        <ErrorBoundary resetKeys={[selectedTags]} onReset={reset} fallback={ErrorBoundaryFallback}>
+          <HomeZzals />
+        </ErrorBoundary>
+      )}
+    </QueryErrorResetBoundary>
+  );
+};
+
 export const Route = createLazyFileRoute("/_layout-with-chat/")({
-  component: HomeZzals,
+  component: ErrorCaughtHomeZzals,
 });
