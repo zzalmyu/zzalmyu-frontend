@@ -17,6 +17,9 @@ dependencies:
   '@suspensive/react':
     specifier: ^1.26.7
     version: 1.26.7(react@18.2.0)
+  '@suspensive/react-query':
+    specifier: ^2.0.0
+    version: 2.0.0(@suspensive/react@1.26.7)(@tanstack/react-query@5.18.1)(react@18.2.0)
   '@tanstack/react-query':
     specifier: ^5.18.1
     version: 5.18.1(react@18.2.0)
@@ -1118,6 +1121,21 @@ packages:
 
   /@stomp/stompjs@7.0.0:
     resolution: {integrity: sha512-fGdq4wPDnSV/KyOsjq4P+zLc8MFWC3lMmP5FBgLWKPJTYcuCbAIrnRGjB7q2jHZdYCOD5vxLuFoKIYLy5/u8Pw==}
+    dev: false
+
+  /@suspensive/react-query@2.0.0(@suspensive/react@1.26.7)(@tanstack/react-query@5.18.1)(react@18.2.0):
+    resolution: {integrity: sha512-gz0FSo+OuC9Sxl9h8ihJ7/kTBiMYFD33qUGHtsy1w/0hRdvA+1Vln9kLAWeO/oYti2gJdEMv63Rj3beMg7kzqQ==}
+    peerDependencies:
+      '@suspensive/react': ^2.0.0
+      '@tanstack/react-query': ^4
+      react: ^18
+    peerDependenciesMeta:
+      '@suspensive/react':
+        optional: true
+    dependencies:
+      '@suspensive/react': 1.26.7(react@18.2.0)
+      '@tanstack/react-query': 5.18.1(react@18.2.0)
+      react: 18.2.0
     dev: false
 
   /@suspensive/react@1.26.7(react@18.2.0):
