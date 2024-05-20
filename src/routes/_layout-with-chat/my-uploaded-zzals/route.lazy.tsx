@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
-import { ErrorBoundary } from "@suspensive/react";
-import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -55,13 +54,9 @@ const ErrorCaughtMyUploadedZzals = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary onReset={reset} resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
-          <MyUploadedZzals />
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
+    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+      <MyUploadedZzals />
+    </QueryErrorBoundary>
   );
 };
 

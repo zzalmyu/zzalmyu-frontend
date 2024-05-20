@@ -1,7 +1,6 @@
 import { Fragment, useEffect, useRef } from "react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ErrorBoundary } from "@suspensive/react";
-import { QueryErrorResetBoundary } from "@tanstack/react-query";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import { debounce } from "@/utils/debounce";
 import ErrorBoundaryFallback from "../Fallback/ErrorBoundaryFallback";
 import MessagePeek from "./MessagePeek";
@@ -67,16 +66,10 @@ const ChatRoom = () => {
   );
 };
 
-const Chat = () => {
-  return (
-    <QueryErrorResetBoundary>
-      {({ reset }) => (
-        <ErrorBoundary onReset={reset} fallback={ErrorBoundaryFallback}>
-          <ChatRoom />
-        </ErrorBoundary>
-      )}
-    </QueryErrorResetBoundary>
-  );
-};
+const Chat = () => (
+  <QueryErrorBoundary fallback={ErrorBoundaryFallback}>
+    <ChatRoom />
+  </QueryErrorBoundary>
+);
 
 export default Chat;

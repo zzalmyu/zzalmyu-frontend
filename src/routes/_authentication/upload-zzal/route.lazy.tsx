@@ -5,8 +5,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
-import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import { ErrorBoundary } from "@suspensive/react";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import { convertFileToJpg } from "@/utils/convertFileToJpg";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
@@ -169,15 +168,12 @@ const UploadZzal = () => {
   );
 };
 
-const ErrorCaughtUploadZzal = () => {
-  <QueryErrorResetBoundary>
-    {({ reset }) => (
-      <ErrorBoundary onReset={reset} fallback={ErrorBoundaryFallback}>
-        <UploadZzal />
-      </ErrorBoundary>
-    )}
-  </QueryErrorResetBoundary>;
-};
+const ErrorCaughtUploadZzal = () => (
+  <QueryErrorBoundary fallback={ErrorBoundaryFallback}>
+    <UploadZzal />
+  </QueryErrorBoundary>
+);
+
 export const Route = createLazyFileRoute("/_authentication/upload-zzal")({
   component: ErrorCaughtUploadZzal,
 });
