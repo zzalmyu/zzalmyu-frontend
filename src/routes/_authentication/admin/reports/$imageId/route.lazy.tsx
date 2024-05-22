@@ -9,7 +9,7 @@ import useGetReportsDetails from "@/hooks/api/report/useGetReportDetails";
 import useDeleteReportedZzal from "@/hooks/api/report/useDeleteReportedZzal";
 
 const AdminImageDetail = () => {
-  const { imageId } = Route.useParams();
+  const { imageId } = Route.useParams<{ imageId: string }>();
   const { deleteReportedZzal } = useDeleteReportedZzal();
   const deleteConfirmOverlay = useOverlay();
   const { reportDetails } = useGetReportsDetails(imageId);
