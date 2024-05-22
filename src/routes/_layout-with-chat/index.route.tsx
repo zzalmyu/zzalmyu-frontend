@@ -5,7 +5,7 @@ import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { ACCESS_TOKEN, REDIRECT_PATH, REFRESH_TOKEN } from "@/constants/auth";
-import MasonrySkeleton from "@/components/common/Skeleton/MasonrySkeleton";
+import MasonrySkeleton from "@/components/common/Fallback/MasonrySkeleton";
 const route = getRouteApi("/_layout-with-chat/");
 
 const PendingComponent = () => {

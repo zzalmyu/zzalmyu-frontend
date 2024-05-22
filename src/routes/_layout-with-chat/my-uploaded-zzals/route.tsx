@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import { Fragment } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import MasonrySkeleton from "@/components/common/Skeleton/MasonrySkeleton";
+import MasonrySkeleton from "@/components/common/Fallback/MasonrySkeleton";
 
 const PendingComponent = () => {
   return (
