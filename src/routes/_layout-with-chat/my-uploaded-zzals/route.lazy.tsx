@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -8,6 +9,7 @@ import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import NoSearchResults from "@/components/common/NoSearchResults";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const MyUploadedZzals = () => {
   const { topTags } = useGetTopTagsFromUploaded();
@@ -48,6 +50,16 @@ const MyUploadedZzals = () => {
   );
 };
 
+const ErrorCaughtMyUploadedZzals = () => {
+  const [selectedTags] = useAtom($selectedTags);
+
+  return (
+    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+      <MyUploadedZzals />
+    </QueryErrorBoundary>
+  );
+};
+
 export const Route = createLazyFileRoute("/_layout-with-chat/my-uploaded-zzals")({
-  component: MyUploadedZzals,
+  component: ErrorCaughtMyUploadedZzals,
 });

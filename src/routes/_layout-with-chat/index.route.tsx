@@ -5,6 +5,7 @@ import { useOverlay } from "@toss/use-overlay";
 import LoginModal from "@/components/LoginModal";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import { ACCESS_TOKEN, REDIRECT_PATH, REFRESH_TOKEN } from "@/constants/auth";
+import MasonrySkeleton from "@/components/common/Fallback/MasonrySkeleton";
 const route = getRouteApi("/_layout-with-chat/");
 
 const PendingComponent = () => {
@@ -40,7 +41,7 @@ const PendingComponent = () => {
           content="본인의 취향과 선호도에 따라 선별된 짤 컬렉션을 추천 받아 보세요!"
         />
       </Helmet>
-      <div>pending Home Zzlas</div>
+      <MasonrySkeleton />
     </Fragment>
   );
 };

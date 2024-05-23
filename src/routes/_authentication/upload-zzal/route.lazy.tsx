@@ -5,12 +5,14 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import { useAtom, useSetAtom } from "jotai";
 import { Asterisk } from "lucide-react";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import { convertFileToJpg } from "@/utils/convertFileToJpg";
 import ImageUpload from "@/components/UploadZzal/ImageUpload";
 import UploadTagSearchForm from "@/components/UploadZzal/UploadTagSearchForm";
 import usePostUploadZzal from "@/hooks/api/zzal/usePostUploadZzal";
 import useGetPopularTags from "@/hooks/api/tag/useGetPopularTags";
 import { $recommendedTags, $selectedUploadTags } from "@/store/tag";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const UploadZzal = () => {
   const { popularTags } = useGetPopularTags();
@@ -166,6 +168,12 @@ const UploadZzal = () => {
   );
 };
 
+const ErrorCaughtUploadZzal = () => (
+  <QueryErrorBoundary fallback={ErrorBoundaryFallback}>
+    <UploadZzal />
+  </QueryErrorBoundary>
+);
+
 export const Route = createLazyFileRoute("/_authentication/upload-zzal")({
-  component: UploadZzal,
+  component: ErrorCaughtUploadZzal,
 });

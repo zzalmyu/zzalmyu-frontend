@@ -1,4 +1,4 @@
-import { useEffect, useRef, Suspense, lazy } from "react";
+import { useEffect, useRef, lazy, Suspense } from "react";
 import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tanstack/react-router";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
@@ -12,6 +12,7 @@ import { REFRESH_TOKEN } from "@/constants/auth";
 import { $userInformation } from "@/store/user";
 import { $scrollDirection } from "@/store/scroll";
 import { $selectedTags } from "@/store/tag";
+import SuspenseSpinnerFallback from "@/components/common/Fallback/SuspenseSpinnerFallback";
 
 const Chat = lazy(() => import("@/components/common/Chat"));
 
@@ -105,7 +106,7 @@ const LayoutWithChat = () => {
         <div
           ref={scrollTrackerRef}
           className={cn(
-            "shadow-shadow h-full overflow-auto px-6 py-4 shadow-md transition-[width_transform] duration-500 ease-in-out",
+            "shadow-shadow h-full overflow-auto px-6 py-4 shadow-md ease-in-out",
             isChatOpen
               ? "w-full -translate-x-full md:w-[67%] md:translate-x-0"
               : "w-full md:w-full",
@@ -113,7 +114,13 @@ const LayoutWithChat = () => {
         >
           <Outlet />
         </div>
-        <Suspense fallback={null}>{isChatOpen && <Chat />}</Suspense>
+        {isChatOpen && (
+          <div className="absolute right-0 h-full w-full overflow-hidden px-6 py-4 md:w-[33%]">
+            <Suspense fallback={<SuspenseSpinnerFallback />}>
+              <Chat />
+            </Suspense>
+          </div>
+        )}
       </div>
     </div>
   );
