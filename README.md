@@ -1,5 +1,4 @@
 <div align=center>
-  
   <img width="300" alt="스크린샷 2024-04-27 오전 1 45 54" src="https://github.com/choi-ik/zzalmyu-frontend/assets/91654577/95c823ff-41c4-4c0a-8757-622b1c2204b4">
 </div>
 
