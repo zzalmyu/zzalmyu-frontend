@@ -11,7 +11,7 @@ export const patchLogOut = async () => {
   const accessToken = getLocalStorage(ACCESS_TOKEN);
   try {
     await axios.patch<void>(
-      `${import.meta.env.VITE_BASE_URL}/v1/user/logout`,
+      `${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/logout`,
       {},
       {
         headers: {
@@ -33,7 +33,7 @@ export const postReissueToken = async (): Promise<{
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
 
   const { headers } = await axios.post<ReissueTokenResponse>(
-    `${import.meta.env.VITE_BASE_URL}/v1/user/reissue`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/v1/user/reissue`,
     {},
     {
       headers: {

@@ -5,7 +5,7 @@ import App from "./App";
 import "./index.css";
 
 Sentry.init({
-  dsn: import.meta.env.VITE_SENTRY_DSN,
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   integrations: [Sentry.browserTracingIntegration()],
   tracesSampleRate: 1.0,
   tracePropagationTargets: [/^https:\/\/www\.zzalmyu\.site/],

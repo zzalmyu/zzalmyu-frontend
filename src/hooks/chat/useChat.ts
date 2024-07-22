@@ -22,7 +22,7 @@ const useChat = (targetRef: RefObject<HTMLDivElement>) => {
     if (stompRef.current) return;
 
     stompRef.current = Stomp.over(() => {
-      return new SockJS(import.meta.env.VITE_CHAT_URL);
+      return new SockJS(process.env.NEXT_PUBLIC_CHAT_URL || "");
     });
 
     stompRef.current.debug = () => {};
