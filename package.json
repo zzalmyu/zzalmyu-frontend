@@ -45,6 +45,7 @@
   "devDependencies": {
     "@commitlint/cli": "^18.6.0",
     "@commitlint/config-conventional": "^18.6.0",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.24.7",
     "@tanstack/router-devtools": "^1.18.3",
     "@types/gtag.js": "^0.0.19",

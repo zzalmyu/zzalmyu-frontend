@@ -30,6 +30,6 @@
     },
     "plugins": [{ "name": "next" }]
   },
-  "include": ["./src", "./dist/types/**/*.ts", "./next-env.d.ts"],
+  "include": ["svgr.d.ts", "./next-env.d.ts", "./src", "./dist/types/**/*.ts"],
   "exclude": ["./node_modules"]
 }
