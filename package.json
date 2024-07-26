@@ -18,6 +18,7 @@
     "*.{css,json,html}": "prettier --check"
   },
   "dependencies": {
+    "@next/third-parties": "^14.2.5",
     "@sentry/nextjs": "8",
     "@sentry/react": "^7.107.0",
     "@sentry/tracing": "^7.107.0",
