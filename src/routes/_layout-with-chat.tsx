@@ -3,6 +3,7 @@ import { Link, Outlet, createFileRoute, redirect, useRouterState } from "@tansta
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { MessageCircle } from "lucide-react";
 import axios from "axios";
+import { sendGAEvent } from "@next/third-parties/google";
 import { cn } from "@/utils/tailwind";
 import { getLocalStorage } from "@/utils/localStorage";
 import { debounce } from "@/utils/debounce";
@@ -49,7 +50,9 @@ const LayoutWithChat = () => {
 
   const handleClickChatToggleButton = () => {
     setIsChatOpen((prev) => !prev);
-    gtag("event", "user_action", { event_category: isChatOpen ? "채팅창_닫힘" : "채팅창_열림" });
+    sendGAEvent("event", "user_action", {
+      event_category: isChatOpen ? "채팅창_닫힘" : "채팅창_열림",
+    });
   };
 
   useEffect(() => {

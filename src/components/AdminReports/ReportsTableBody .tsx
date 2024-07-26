@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { sendGAEvent } from "@next/third-parties/google";
 import { formatDate } from "@/utils/formatDate";
 import { Report } from "@/types/report";
 
@@ -8,7 +9,7 @@ interface Props {
 
 const ReportsTableBody = ({ reports }: Props) => {
   const handleClickReportDetail = () => {
-    gtag("event", "page_view", { event_category: "신고_상세보기_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "신고_상세보기_페이지로_이동" });
   };
 
   return (

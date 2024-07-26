@@ -1,4 +1,5 @@
 import localFont from "next/font/local";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import type { Metadata } from "next";
 
 const pretendard = localFont({
@@ -28,17 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" data-theme="light" className={`${pretendard.variable}`}>
-      <head>
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6PY1WDK5P6"></script>
-        {/* <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-6PY1WDK5P6");
-    </script> */}
-      </head>
+      <GoogleAnalytics gaId="G-6PY1WDK5P6" />
       <body className={pretendard.className}>
         <div id="root">{children}</div>
       </body>

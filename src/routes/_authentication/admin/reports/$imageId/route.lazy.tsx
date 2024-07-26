@@ -2,6 +2,7 @@ import { createLazyFileRoute } from "@tanstack/react-router";
 import { Trash2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
+import { sendGAEvent } from "@next/third-parties/google";
 import DeleteConfirmModal from "@/components/common/DeleteConfirmModal";
 import ReportTableHead from "@/components/common/admin/ReportTableHead";
 import ReportDetailsTableBody from "@/components/AdminReportsDetail/ReportDetailsTableBody";
@@ -16,16 +17,16 @@ const AdminImageDetail = () => {
   const { imageUrl, imageTitle, reports } = reportDetails;
 
   const handleClickAdminButton = () => {
-    gtag("event", "page_view", { event_category: "관리자_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "관리자_페이지로_이동" });
   };
 
   const handleClickDeleteConfirm = (imageId: string) => () => {
     deleteReportedZzal(imageId);
-    gtag("event", "admin_action", { event_category: "짤_영구_삭제" });
+    sendGAEvent("event", "admin_action", { event_category: "짤_영구_삭제" });
   };
 
   const handleClickDeleteButton = () => {
-    gtag("event", "modal_open", { event_category: "짤_영구_삭제_확인_모달_띄우기" });
+    sendGAEvent("event", "modal_open", { event_category: "짤_영구_삭제_확인_모달_띄우기" });
     deleteConfirmOverlay.open(({ isOpen, close }) => (
       <DeleteConfirmModal
         isOpen={isOpen}

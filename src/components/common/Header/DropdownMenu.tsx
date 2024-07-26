@@ -3,6 +3,7 @@ import { Home, Heart, FolderUp, LogOut } from "lucide-react";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { Siren } from "lucide-react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { getLocalStorage } from "@/utils/localStorage";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
@@ -25,7 +26,7 @@ const DropdownMenu = () => {
   const handleClickButton =
     ({ category, eventName }: eventProps) =>
     () => {
-      gtag("event", category, { event_category: eventName });
+      sendGAEvent("event", category, { event_category: eventName });
     };
 
   const handleClickLogout = () => {

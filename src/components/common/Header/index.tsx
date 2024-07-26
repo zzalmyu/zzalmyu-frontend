@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom } from "jotai";
+import { sendGAEvent } from "@next/third-parties/google";
 import LoginModal from "@/components/LoginModal";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import ThemeToggle from "./ThemeToggle.tsx";
@@ -28,16 +29,16 @@ const Header = () => {
   const handleClickLogin = () => {
     setLocalStorage(REDIRECT_PATH, "/");
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
-    gtag("event", "modal_open", { event_category: "로그인_모달_띄우기" });
+    sendGAEvent("event", "modal_open", { event_category: "로그인_모달_띄우기" });
   };
 
   const handleClickLogo = () => {
     setLocalStorage(REDIRECT_PATH, "/");
-    gtag("event", "page_view", { event_category: "홈_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "홈_페이지로_이동" });
   };
 
   const handleClickUploadButton = () => {
-    gtag("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
   };
 
   return (

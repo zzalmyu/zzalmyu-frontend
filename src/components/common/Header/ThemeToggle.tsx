@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { SunDim, Moon } from "lucide-react";
+import { sendGAEvent } from "@next/third-parties/google";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState(
@@ -9,10 +10,10 @@ const ThemeToggle = () => {
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       setTheme("dark");
-      gtag("event", "user_action", { event_category: "테마_변경_Dark" });
+      sendGAEvent("event", "user_action", { event_category: "테마_변경_Dark" });
     } else {
       setTheme("light");
-      gtag("event", "user_action", { event_category: "테마_변경_Light" });
+      sendGAEvent("event", "user_action", { event_category: "테마_변경_Light" });
     }
   };
 

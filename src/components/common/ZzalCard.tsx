@@ -4,6 +4,7 @@ import { useSetAtom } from "jotai";
 import { useOverlay } from "@toss/use-overlay";
 import axios from "axios";
 import { Trash2 } from "lucide-react";
+import { sendGAEvent } from "@next/third-parties/google";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
 import { ZzalType } from "@/types/queryKey";
@@ -94,7 +95,7 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
     if (!isLiked) {
       addImageLike(imageId, {
         onSuccess: () => {
-          gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
+          sendGAEvent("event", "user_action", { event_category: "짤_좋아요_등록" });
         },
         onError: (error) => {
           if (!axios.isAxiosError(error)) return;
@@ -112,7 +113,7 @@ const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps)
 
     removeImageLike(imageId, {
       onSuccess: () => {
-        gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
+        sendGAEvent("event", "user_action", { event_category: "짤_좋아요_삭제" });
       },
       onError: (error) => {
         if (!axios.isAxiosError(error)) return;
@@ -189,13 +190,13 @@ const DeleteButton = ({ imageId }: DeleteButtonProps) => {
     deleteMyZzal(imageId, {
       onSuccess: () => {
         toast.success("사진이 삭제되었습니다.");
-        gtag("event", "user_action", { event_category: "짤_삭제" });
+        sendGAEvent("event", "user_action", { event_category: "짤_삭제" });
       },
       onError: () => {
         toast.error("사진 삭제에 실패했습니다.");
       },
     });
-    gtag("event", "user_action", { event_category: "짤_삭제" });
+    sendGAEvent("event", "user_action", { event_category: "짤_삭제" });
   };
 
   const handleClickDeleteButton = (imageId: number) => () => {

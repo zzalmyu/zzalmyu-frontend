@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import { CheckCircle2 } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
+import { sendGAEvent } from "@next/third-parties/google";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
 import { $userInformation } from "@/store/user";
@@ -20,7 +21,7 @@ const DeleteCompleted = () => {
           role: "GUEST",
         });
         toast.success("계정이 삭제되었습니다.", { autoClose: 1500 });
-        gtag("event", "user_action", { event_category: "계정_삭제" });
+        sendGAEvent("event", "user_action", { event_category: "계정_삭제" });
       },
     });
   }, []);

@@ -4,6 +4,7 @@ import { Heart, Copy, FolderDown, SendHorizontal, Siren, Hash } from "lucide-rea
 import { useOverlay } from "@toss/use-overlay";
 import axios, { AxiosError } from "axios";
 import { useAtomValue, useSetAtom } from "jotai";
+import { sendGAEvent } from "@next/third-parties/google";
 import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
@@ -65,7 +66,7 @@ const ImageDetailModalContent = ({
     reportZzal(imageId, {
       onSuccess: () => {
         toast.success("신고가 완료되었습니다.", { autoClose: 1500 });
-        gtag("event", "user_action", { event_category: "짤_신고" });
+        sendGAEvent("event", "user_action", { event_category: "짤_신고" });
       },
       onError: (error: Error | AxiosError) => {
         if (!axios.isAxiosError(error)) {
@@ -89,7 +90,7 @@ const ImageDetailModalContent = ({
       return;
     }
 
-    gtag("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
+    sendGAEvent("event", "modal_open", { event_category: "신고_확인_모달_띄우기" });
     reportConfirmOverlay.open(({ isOpen, close }) => (
       <ReportConfirmModal
         isOpen={isOpen}
@@ -118,7 +119,7 @@ const ImageDetailModalContent = ({
     if (!isLiked) {
       addImageLike(imageId, {
         onSuccess: () => {
-          gtag("event", "user_action", { event_category: "짤_좋아요_등록" });
+          sendGAEvent("event", "user_action", { event_category: "짤_좋아요_등록" });
         },
         onError: (error) => {
           if (!axios.isAxiosError(error)) return;
@@ -136,7 +137,7 @@ const ImageDetailModalContent = ({
 
     removeImageLike(imageId, {
       onSuccess: () => {
-        gtag("event", "user_action", { event_category: "짤_좋아요_삭제" });
+        sendGAEvent("event", "user_action", { event_category: "짤_좋아요_삭제" });
       },
       onError: (error) => {
         if (!axios.isAxiosError(error)) return;

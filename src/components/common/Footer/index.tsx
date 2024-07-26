@@ -3,6 +3,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { CircleUser, FolderUp, Heart, Home, LogOut, Plus } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom, useAtomValue } from "jotai";
+import { sendGAEvent } from "@next/third-parties/google";
 import LoginModal from "@/components/LoginModal";
 import { cn } from "@/utils/tailwind";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
@@ -21,13 +22,13 @@ const NavigationFooter = () => {
   const scrollDirection = useAtomValue($scrollDirection);
 
   const handleClickButton = (eventName: string) => () => {
-    gtag("event", "page_view", { event_category: eventName });
+    sendGAEvent("event", "page_view", { event_category: eventName });
   };
 
   const handleClickLogin = () => {
     setLocalStorage(REDIRECT_PATH, "/");
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
-    gtag("event", "modal_open", { event_category: "로그인_모달_띄우기" });
+    sendGAEvent("event", "modal_open", { event_category: "로그인_모달_띄우기" });
   };
 
   const handleClickLogout = () => {
