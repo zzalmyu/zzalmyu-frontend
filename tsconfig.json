@@ -6,7 +6,6 @@
     "module": "ESNext",
     "esModuleInterop": true,
     "skipLibCheck": true,
-
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -14,7 +13,6 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -23,13 +21,22 @@
     "allowJs": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-
     "baseUrl": "./",
     "paths": {
       "@/*": ["src/*"]
     },
-    "plugins": [{ "name": "next" }]
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["svgr.d.ts", "./next-env.d.ts", "./src", "./dist/types/**/*.ts"],
+  "include": [
+    "svgr.d.ts",
+    "./next-env.d.ts",
+    "./src",
+    "./dist/types/**/*.ts",
+    ".next/types/**/*.ts"
+  ],
   "exclude": ["./node_modules"]
 }
