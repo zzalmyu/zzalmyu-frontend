@@ -2,8 +2,8 @@ import { infiniteQueryOptions } from "@tanstack/react-query";
 import { getChat } from "@/apis/chat";
 
 export const chatQueries = {
-  all: () => ["chat"] as const,
-  chatListKey: () => [...chatQueries.all(), "chatList"] as const,
+  all: ["chat"] as const,
+  chatListKey: () => [...chatQueries.all, "chatList"] as const,
   getChatList: () =>
     infiniteQueryOptions({
       queryKey: [...chatQueries.chatListKey()] as const,
