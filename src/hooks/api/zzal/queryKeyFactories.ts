@@ -39,10 +39,10 @@ export const zzalQueries = {
       },
       initialPageParam: 0,
     }),
-  myUploadedZzlasKey: () => [...zzalQueries.all, "uploadedZzals"] as const,
+  myUploadedZzalsKey: () => [...zzalQueries.all, "uploadedZzals"] as const,
   getMyUploadedZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.myUploadedZzlasKey(), selectedTags] as const,
+      queryKey: [...zzalQueries.myUploadedZzalsKey(), selectedTags] as const,
       queryFn: ({ pageParam = 0 }) => getMyUploadedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
