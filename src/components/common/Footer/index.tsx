@@ -1,9 +1,12 @@
+"use client";
+
 import { Fragment } from "react";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { CircleUser, FolderUp, Heart, Home, LogOut, Plus } from "lucide-react";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom, useAtomValue } from "jotai";
 import { sendGAEvent } from "@next/third-parties/google";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import LoginModal from "@/components/LoginModal";
 import { cn } from "@/utils/tailwind";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
@@ -16,7 +19,8 @@ const NavigationFooter = () => {
   const loginModalOverlay = useOverlay();
   const [userInformation, setUserInformation] = useAtom($userInformation);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const { logout } = useLogout();
   const role = refreshToken && userInformation ? userInformation.role : "GUEST";
   const scrollDirection = useAtomValue($scrollDirection);
@@ -39,7 +43,7 @@ const NavigationFooter = () => {
           email: "",
           role: "GUEST",
         });
-        navigate({ to: "/" });
+        router.push("/");
       },
     });
   };
@@ -52,9 +56,11 @@ const NavigationFooter = () => {
       )}
     >
       <Link
-        to="/"
-        className="flex w-65pxr flex-col items-center gap-1"
-        activeProps={{ className: "text-primary" }}
+        href="/"
+        className={cn(
+          "flex w-65pxr flex-col items-center gap-1",
+          pathname === "/" ? "text-primary" : "",
+        )}
         onClick={handleClickButton("홈_페이지로_이동")}
       >
         <Fragment>
@@ -63,9 +69,12 @@ const NavigationFooter = () => {
         </Fragment>
       </Link>
       <Link
-        to="/my-liked-zzals"
-        className={cn("flex w-65pxr flex-col items-center gap-1", role === "GUEST" ? "hidden" : "")}
-        activeProps={{ className: "text-primary" }}
+        href="/my-liked-zzals"
+        className={cn(
+          "flex w-65pxr flex-col items-center gap-1",
+          pathname === "/" ? "text-primary" : "",
+          role === "GUEST" ? "hidden" : "",
+        )}
         onClick={handleClickButton("좋아요한_짤_페이지로_이동")}
       >
         <Fragment>
@@ -74,9 +83,11 @@ const NavigationFooter = () => {
         </Fragment>
       </Link>
       <Link
-        to="/upload-zzal"
-        className="flex w-65pxr flex-col items-center gap-1"
-        activeProps={{ className: "text-primary" }}
+        href="/upload-zzal"
+        className={cn(
+          "flex w-65pxr flex-col items-center gap-1",
+          pathname === "/" ? "text-primary" : "",
+        )}
         onClick={handleClickButton("짤_업로드_페이지로_이동")}
       >
         <div className="flex h-45pxr w-45pxr items-center justify-center rounded-full bg-primary font-bold text-white">
@@ -84,9 +95,12 @@ const NavigationFooter = () => {
         </div>
       </Link>
       <Link
-        to="/my-uploaded-zzals"
-        className={cn("flex w-65pxr flex-col items-center gap-1", role === "GUEST" ? "hidden" : "")}
-        activeProps={{ className: "text-primary" }}
+        href="/my-uploaded-zzals"
+        className={cn(
+          "flex w-65pxr flex-col items-center gap-1",
+          pathname === "/" ? "text-primary" : "",
+          role === "GUEST" ? "hidden" : "",
+        )}
         onClick={handleClickButton("업로드한_짤_페이지로_이동")}
       >
         <Fragment>

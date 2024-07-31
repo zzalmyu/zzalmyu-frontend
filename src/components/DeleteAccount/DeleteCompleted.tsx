@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import { CheckCircle2 } from "lucide-react";
-import { Link } from "@tanstack/react-router";
 import { useSetAtom } from "jotai";
 import { sendGAEvent } from "@next/third-parties/google";
+import Link from "next/link";
 import AccountDeletionNotice from "./AccountDeletionNotice";
 import useDeleteUserWithdraw from "@/hooks/api/auth/useDeleteUserWithdraw";
 import { $userInformation } from "@/store/user";
@@ -42,7 +42,7 @@ const DeleteCompleted = () => {
         <AccountDeletionNotice />
       </div>
       <div className={"my-10pxr flex w-full max-w-950pxr flex-row-reverse sm:my-0"}>
-        <Link to="/">
+        <Link href="/">
           <button className={"btn m-0 w-auto rounded-full hover:opacity-75 sm:my-10  sm:w-40"}>
             닫기
           </button>

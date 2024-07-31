@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
 import { sendGAEvent } from "@next/third-parties/google";
+import Link from "next/link";
 import { formatDate } from "@/utils/formatDate";
 import { Report } from "@/types/report";
 
@@ -21,7 +21,7 @@ const ReportsTableBody = ({ reports }: Props) => {
             <td className="text-center text-text-primary">{imageTitle}</td>
             <td className="text-center text-text-primary">{reportCount}</td>
             <td className="text-center text-text-primary">
-              <Link to="/admin/reports/$imageId" params={{ imageId: String(imageId) }}>
+              <Link href={`/admin/reports/${String(imageId)}`}>
                 <button
                   className="btn btn-neutral btn-sm text-xs"
                   onClick={handleClickReportDetail}
