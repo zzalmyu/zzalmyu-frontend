@@ -1,6 +1,12 @@
+import { ToastContainer } from "react-toastify";
 import localFont from "next/font/local";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import Provider from "@/components/Provider";
 import type { Metadata } from "next";
+import Header from "@/components/common/Header";
+import NavigationFooter from "@/components/common/Footer";
+import "./globals.css";
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",
@@ -31,7 +37,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" data-theme="light" className={`${pretendard.variable}`}>
       <GoogleAnalytics gaId="G-6PY1WDK5P6" />
       <body className={pretendard.className}>
-        <div id="root">{children}</div>
+        <Provider>
+          <div className="relative h-[100dvh] w-[100dvw] overflow-hidden">
+            <Header />
+            <div className="h-[calc(100%-4.25rem)] sm:pb-0">{children}</div>
+            <NavigationFooter />
+            <ToastContainer />
+            <ReactQueryDevtools buttonPosition="top-right" />
+          </div>
+        </Provider>
       </body>
     </html>
   );
