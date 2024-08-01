@@ -1,11 +1,12 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import { SunDim, Moon } from "lucide-react";
 import { sendGAEvent } from "@next/third-parties/google";
+import { getLocalStorage } from "@/utils/localStorage";
 
 const ThemeToggle = () => {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light",
-  );
+  const [theme, setTheme] = useState(getLocalStorage("theme") || "");
 
   const handleToggle = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
