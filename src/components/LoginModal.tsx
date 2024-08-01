@@ -1,3 +1,5 @@
+"use client";
+
 import NaverLoginButton from "@/assets/svg/naver-login-btn.svg";
 import KakaoLoginButton from "@/assets/svg/kakao-login-btn.svg";
 import GoogleLoginButton from "@/assets/svg/google-login-btn.svg";
@@ -14,13 +16,13 @@ const LoginModal = ({ isOpen, onClose }: Props) => {
       <Modal.Header>로그인</Modal.Header>
       <Modal.Body>
         <div className="flex flex-col items-center gap-3">
-          <a href="https://api.zzalmyu.site/oauth2/authorization/google">
+          <a href="https://api.zzalmyu.asia/oauth2/authorization/google">
             <GoogleLoginButton aria-label="구글 로그인" />
           </a>
-          <a href="https://api.zzalmyu.site/oauth2/authorization/kakao">
+          <a href="https://api.zzalmyu.asia/oauth2/authorization/kakao">
             <KakaoLoginButton aria-label="카카오 로그인" />
           </a>
-          <a href="https://api.zzalmyu.site/oauth2/authorization/naver">
+          <a href="https://api.zzalmyu.asia/oauth2/authorization/naver">
             <NaverLoginButton aria-label="네이버 로그인" />
           </a>
         </div>

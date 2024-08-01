@@ -1,3 +1,5 @@
+"use client";
+
 import { ReactNode, createContext } from "react";
 
 export const ModalContext = createContext<(() => void) | undefined>(undefined);
