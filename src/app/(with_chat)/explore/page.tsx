@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { QueryErrorBoundary } from "@suspensive/react-query";
+import * as Sentry from "@sentry/nextjs";
 import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
@@ -52,7 +53,13 @@ const ErrorCaughtExplorePage = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   return (
-    <QueryErrorBoundary resetKeys={[selectedTags]} fallback={ErrorBoundaryFallback}>
+    <QueryErrorBoundary
+      resetKeys={[selectedTags]}
+      fallback={ErrorBoundaryFallback}
+      onError={(error) => {
+        Sentry.captureException(error);
+      }}
+    >
       <ExplorePage />
     </QueryErrorBoundary>
   );

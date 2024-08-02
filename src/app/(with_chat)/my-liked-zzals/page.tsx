@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { QueryErrorBoundary } from "@suspensive/react-query";
+import * as Sentry from "@sentry/nextjs";
 import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
 import useGetTopTagsFromLiked from "@/hooks/api/tag/useGetTopTagsFromLiked";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -54,7 +55,13 @@ const ErrorCaughtMyLikedZzalsPage = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   return (
-    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+    <QueryErrorBoundary
+      resetKeys={selectedTags}
+      fallback={ErrorBoundaryFallback}
+      onError={(error) => {
+        Sentry.captureException(error);
+      }}
+    >
       <MyLikedZzalsPage />
     </QueryErrorBoundary>
   );

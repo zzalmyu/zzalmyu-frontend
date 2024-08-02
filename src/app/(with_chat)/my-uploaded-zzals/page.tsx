@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
 import { QueryErrorBoundary } from "@suspensive/react-query";
+import * as Sentry from "@sentry/nextjs";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -55,7 +56,13 @@ const ErrorCaughtMyUploadedZzalsPage = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   return (
-    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+    <QueryErrorBoundary
+      resetKeys={selectedTags}
+      fallback={ErrorBoundaryFallback}
+      onError={(error) => {
+        Sentry.captureException(error);
+      }}
+    >
       <MyUploadedZzalsPage />
     </QueryErrorBoundary>
   );
