@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
 import useGetTopTagsFromLiked from "@/hooks/api/tag/useGetTopTagsFromLiked";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -9,6 +10,7 @@ import ZzalCard from "@/components/common/ZzalCard";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import NoSearchResults from "@/components/common/NoSearchResults";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const MyLikedZzalsPage = () => {
   const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
@@ -48,4 +50,14 @@ const MyLikedZzalsPage = () => {
   );
 };
 
-export default MyLikedZzalsPage;
+const ErrorCaughtMyLikedZzalsPage = () => {
+  const [selectedTags] = useAtom($selectedTags);
+
+  return (
+    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+      <MyLikedZzalsPage />
+    </QueryErrorBoundary>
+  );
+};
+
+export default ErrorCaughtMyLikedZzalsPage;

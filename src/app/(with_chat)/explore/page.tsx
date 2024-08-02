@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
 import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const ExplorePage = () => {
   const { zzals, handleFetchNextPage } = useGetHomeZzals();
@@ -46,4 +48,14 @@ const ExplorePage = () => {
   );
 };
 
-export default ExplorePage;
+const ErrorCaughtExplorePage = () => {
+  const [selectedTags] = useAtom($selectedTags);
+
+  return (
+    <QueryErrorBoundary resetKeys={[selectedTags]} fallback={ErrorBoundaryFallback}>
+      <ExplorePage />
+    </QueryErrorBoundary>
+  );
+};
+
+export default ErrorCaughtExplorePage;

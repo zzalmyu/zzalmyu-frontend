@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import { useAtom, useSetAtom } from "jotai";
+import { QueryErrorBoundary } from "@suspensive/react-query";
 import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
 import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
 import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
@@ -9,6 +10,7 @@ import MasonryLayout from "@/components/common/MasonryLayout";
 import ZzalCard from "@/components/common/ZzalCard";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import NoSearchResults from "@/components/common/NoSearchResults";
+import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
 const MyUploadedZzalsPage = () => {
   const { topTags } = useGetTopTagsFromUploaded();
@@ -49,4 +51,14 @@ const MyUploadedZzalsPage = () => {
   );
 };
 
-export default MyUploadedZzalsPage;
+const ErrorCaughtMyUploadedZzalsPage = () => {
+  const [selectedTags] = useAtom($selectedTags);
+
+  return (
+    <QueryErrorBoundary resetKeys={selectedTags} fallback={ErrorBoundaryFallback}>
+      <MyUploadedZzalsPage />
+    </QueryErrorBoundary>
+  );
+};
+
+export default ErrorCaughtMyUploadedZzalsPage;
