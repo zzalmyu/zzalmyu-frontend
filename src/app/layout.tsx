@@ -1,4 +1,3 @@
-import { ToastContainer } from "react-toastify";
 import localFont from "next/font/local";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -42,7 +41,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <Header />
             <div className="h-[calc(100%-4.25rem)] sm:pb-0">{children}</div>
             <NavigationFooter />
-            <ToastContainer />
             <ReactQueryDevtools buttonPosition="top-right" />
           </div>
         </Provider>
