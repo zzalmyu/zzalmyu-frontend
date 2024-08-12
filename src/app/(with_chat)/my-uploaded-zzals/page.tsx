@@ -1,71 +1,32 @@
-"use client";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { getMyUploadedZzals } from "@/apis/zzal";
+import { getTopTagsFromUploaded } from "@/apis/tag";
+import ErrorCaughtMyUploadedZzals from "./MyUploadedZzals";
 
-import { useEffect, useRef } from "react";
-import { useAtom, useSetAtom } from "jotai";
-import { QueryErrorBoundary } from "@suspensive/react-query";
-import * as Sentry from "@sentry/nextjs";
-import useGetTopTagsFromUploaded from "@/hooks/api/tag/useGetTopTagsFromUploaded";
-import useGetMyUploadedZzals from "@/hooks/api/zzal/useGetMyUploadedZzals";
-import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
-import MasonryLayout from "@/components/common/MasonryLayout";
-import ZzalCard from "@/components/common/ZzalCard";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
-import NoSearchResults from "@/components/common/NoSearchResults";
-import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
+const MyUploadedZzalsPage = async () => {
+  const queryClient = new QueryClient();
 
-const MyUploadedZzalsPage = () => {
-  const { topTags } = useGetTopTagsFromUploaded();
-  const { zzals, handleFetchNextPage } = useGetMyUploadedZzals();
-  const [selectedTags] = useAtom($selectedTags);
-  const setRecommendedTags = useSetAtom($recommendedTags);
-  const fetchMoreRef = useRef(null);
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["uploadedZzals", []],
+    queryFn: ({ pageParam = 0 }) => getMyUploadedZzals({ page: pageParam, selectedTags: [] }),
+    getNextPageParam: (lastPage: unknown, _allPages: unknown, lastPageParam: number) => {
+      if (!lastPage) return;
 
-  useIntersectionObserver({
-    target: fetchMoreRef,
-    handleIntersect: handleFetchNextPage,
+      return lastPageParam + 1;
+    },
+    initialPageParam: 0,
   });
 
-  useEffect(() => {
-    setRecommendedTags(topTags);
-  }, [topTags, setRecommendedTags]);
+  await queryClient.prefetchQuery({
+    queryKey: ["topTagsFromUploaded"],
+    queryFn: () => getTopTagsFromUploaded(),
+  });
 
   return (
-    <div className="flex w-full flex-col items-center">
-      {zzals.length === 0 && <NoSearchResults />}
-      <MasonryLayout className="mt-15pxr w-full">
-        {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
-          <ZzalCard
-            className="mb-10pxr"
-            key={`${imageId}-${index}`}
-            src={path}
-            alt={title}
-            imageId={imageId}
-            imageIndex={index}
-            isLiked={imageLikeYn}
-            queryKey={["uploadedZzals", selectedTags]}
-            hasDeleteButton={true}
-          />
-        ))}
-      </MasonryLayout>
-      <div ref={fetchMoreRef} />
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ErrorCaughtMyUploadedZzals />
+    </HydrationBoundary>
   );
 };
 
-const ErrorCaughtMyUploadedZzalsPage = () => {
-  const [selectedTags] = useAtom($selectedTags);
-
-  return (
-    <QueryErrorBoundary
-      resetKeys={selectedTags}
-      fallback={ErrorBoundaryFallback}
-      onError={(error) => {
-        Sentry.captureException(error);
-      }}
-    >
-      <MyUploadedZzalsPage />
-    </QueryErrorBoundary>
-  );
-};
-
-export default ErrorCaughtMyUploadedZzalsPage;
+export default MyUploadedZzalsPage;
