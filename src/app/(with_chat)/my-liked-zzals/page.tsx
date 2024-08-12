@@ -1,70 +1,26 @@
-"use client";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { getMyLikedZzals } from "@/apis/zzal";
+import ErrorCaughtMyLikedZzals from "./MyLikedZzals";
 
-import { useEffect, useRef } from "react";
-import { useAtom, useSetAtom } from "jotai";
-import { QueryErrorBoundary } from "@suspensive/react-query";
-import * as Sentry from "@sentry/nextjs";
-import useGetMyLikedZzals from "@/hooks/api/zzal/useGetMyLikedZzals";
-import useGetTopTagsFromLiked from "@/hooks/api/tag/useGetTopTagsFromLiked";
-import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
-import ZzalCard from "@/components/common/ZzalCard";
-import MasonryLayout from "@/components/common/MasonryLayout";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
-import NoSearchResults from "@/components/common/NoSearchResults";
-import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
+const MyLikedZzalsPage = async () => {
+  const queryClient = new QueryClient();
 
-const MyLikedZzalsPage = () => {
-  const { zzals, handleFetchNextPage } = useGetMyLikedZzals();
-  const { topTags } = useGetTopTagsFromLiked();
-  const [selectedTags] = useAtom($selectedTags);
-  const setRecommendedTags = useSetAtom($recommendedTags);
-  const fetchMoreRef = useRef(null);
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["likedZzals", []],
+    queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags: [] }),
+    getNextPageParam: (lastPage: unknown, _allPages: unknown, lastPageParam: number) => {
+      if (!lastPage) return;
 
-  useIntersectionObserver({
-    target: fetchMoreRef,
-    handleIntersect: handleFetchNextPage,
+      return lastPageParam + 1;
+    },
+    initialPageParam: 0,
   });
 
-  useEffect(() => {
-    setRecommendedTags(topTags);
-  }, [topTags, setRecommendedTags]);
-
   return (
-    <div className="flex w-full flex-col items-center">
-      {zzals.length === 0 && <NoSearchResults />}
-      <MasonryLayout className="mt-15pxr w-full">
-        {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
-          <ZzalCard
-            className="mb-10pxr"
-            key={imageId}
-            src={path}
-            alt={title}
-            imageId={imageId}
-            isLiked={imageLikeYn}
-            imageIndex={index}
-            queryKey={["likedZzals", selectedTags]}
-          />
-        ))}
-      </MasonryLayout>
-      <div ref={fetchMoreRef} />
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ErrorCaughtMyLikedZzals />
+    </HydrationBoundary>
   );
 };
 
-const ErrorCaughtMyLikedZzalsPage = () => {
-  const [selectedTags] = useAtom($selectedTags);
-
-  return (
-    <QueryErrorBoundary
-      resetKeys={selectedTags}
-      fallback={ErrorBoundaryFallback}
-      onError={(error) => {
-        Sentry.captureException(error);
-      }}
-    >
-      <MyLikedZzalsPage />
-    </QueryErrorBoundary>
-  );
-};
-
-export default ErrorCaughtMyLikedZzalsPage;
+export default MyLikedZzalsPage;
