@@ -1,68 +1,26 @@
-"use client";
+import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import { getHomeZzals } from "@/apis/zzal";
+import ErrorCaughtExplore from "./Explore";
 
-import { useEffect, useRef } from "react";
-import { useAtom, useSetAtom } from "jotai";
-import { QueryErrorBoundary } from "@suspensive/react-query";
-import * as Sentry from "@sentry/nextjs";
-import useGetHomeZzals from "@/hooks/api/zzal/useGetHomeZzals";
-import useIntersectionObserver from "@/hooks/common/useIntersectionObserver";
-import MasonryLayout from "@/components/common/MasonryLayout";
-import ZzalCard from "@/components/common/ZzalCard";
-import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
-import { $recommendedTags, $selectedTags } from "@/store/tag";
-import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
+const ExplorePage = async () => {
+  const queryClient = new QueryClient();
 
-const ExplorePage = () => {
-  const { zzals, handleFetchNextPage } = useGetHomeZzals();
-  const { topTags } = useGetTopTagsFromHome();
-  const [selectedTags] = useAtom($selectedTags);
-  const setRecommendedTags = useSetAtom($recommendedTags);
-  const fetchMoreRef = useRef(null);
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["homeZzals", []],
+    queryFn: ({ pageParam = 0 }) => getHomeZzals({ page: pageParam, selectedTags: [] }),
+    getNextPageParam: (lastPage: unknown, _allPages: unknown, lastPageParam: number) => {
+      if (!lastPage) return;
 
-  useIntersectionObserver({
-    target: fetchMoreRef,
-    handleIntersect: handleFetchNextPage,
+      return lastPageParam + 1;
+    },
+    initialPageParam: 0,
   });
 
-  useEffect(() => {
-    setRecommendedTags(topTags);
-  }, [topTags, setRecommendedTags]);
-
   return (
-    <div className="flex w-full flex-col items-center">
-      <MasonryLayout className="mt-15pxr w-full">
-        {zzals.map(({ imageId, path, title, imageLikeYn }, index) => (
-          <ZzalCard
-            className="mb-10pxr"
-            key={`${imageId}-${index}`}
-            src={path}
-            alt={title}
-            imageId={imageId}
-            isLiked={imageLikeYn}
-            imageIndex={index}
-            queryKey={["homeZzals", selectedTags]}
-          />
-        ))}
-      </MasonryLayout>
-      <div ref={fetchMoreRef} />
-    </div>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <ErrorCaughtExplore />
+    </HydrationBoundary>
   );
 };
 
-const ErrorCaughtExplorePage = () => {
-  const [selectedTags] = useAtom($selectedTags);
-
-  return (
-    <QueryErrorBoundary
-      resetKeys={[selectedTags]}
-      fallback={ErrorBoundaryFallback}
-      onError={(error) => {
-        Sentry.captureException(error);
-      }}
-    >
-      <ExplorePage />
-    </QueryErrorBoundary>
-  );
-};
-
-export default ErrorCaughtExplorePage;
+export default ExplorePage;
