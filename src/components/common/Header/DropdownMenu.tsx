@@ -1,9 +1,14 @@
+"use client";
+
 import { useRef } from "react";
 import { Home, Heart, FolderUp, LogOut } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
 import { useAtom } from "jotai";
 import { Siren } from "lucide-react";
+import { sendGAEvent } from "@next/third-parties/google";
+import { usePathname, useRouter } from "next/navigation";
+import Link from "next/link";
 import { getLocalStorage } from "@/utils/localStorage";
+import { cn } from "@/utils/tailwind";
 import { REFRESH_TOKEN } from "@/constants/auth";
 import useLogout from "@/hooks/api/auth/useLogout";
 import { $userInformation } from "@/store/user";
@@ -16,7 +21,8 @@ interface eventProps {
 const DropdownMenu = () => {
   const detailsRef = useRef<HTMLDetailsElement>(null);
   const refreshToken = getLocalStorage(REFRESH_TOKEN);
-  const navigate = useNavigate();
+  const router = useRouter();
+  const pathname = usePathname();
   const { logout } = useLogout();
   const [userInformation, setUserInformation] = useAtom($userInformation);
   const { role, email } = userInformation;
@@ -25,7 +31,7 @@ const DropdownMenu = () => {
   const handleClickButton =
     ({ category, eventName }: eventProps) =>
     () => {
-      gtag("event", category, { event_category: eventName });
+      sendGAEvent("event", category, { event_category: eventName });
     };
 
   const handleClickLogout = () => {
@@ -36,7 +42,7 @@ const DropdownMenu = () => {
           email: "",
           role: "GUEST",
         });
-        navigate({ to: "/" });
+        router.push("/");
       },
     });
   };
@@ -103,9 +109,11 @@ const DropdownMenu = () => {
               ({ path, Icon, name, onClick, event }, index) => (
                 <li key={`${index}-${name}`} className="group" onClick={onClick || toggleDetails}>
                   <Link
-                    to={path}
-                    className="[&.active]:text-white "
-                    activeProps={{ className: "bg-transparent" }}
+                    href={path}
+                    className={cn(
+                      "[&.active]:text-white",
+                      pathname === path ? "bg-transparent" : "",
+                    )}
                     onClick={handleClickButton(event)}
                   >
                     <div className="h-6 w-6 group-hover:text-blue-500">
@@ -118,7 +126,7 @@ const DropdownMenu = () => {
             )}
             {refreshToken && role === "USER" && (
               <Link
-                to="/delete-account"
+                href="/delete-account"
                 className="mt-3pxr block text-center text-[9px] text-text-primary text-opacity-70 underline"
                 onClick={toggleDetails}
               >

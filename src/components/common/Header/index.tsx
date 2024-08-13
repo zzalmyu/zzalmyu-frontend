@@ -1,7 +1,10 @@
+"use client";
+
 import { useEffect } from "react";
-import { Link } from "@tanstack/react-router";
 import { useOverlay } from "@toss/use-overlay";
 import { useAtom } from "jotai";
+import { sendGAEvent } from "@next/third-parties/google";
+import Link from "next/link";
 import LoginModal from "@/components/LoginModal";
 import { getLocalStorage, setLocalStorage } from "@/utils/localStorage";
 import ThemeToggle from "./ThemeToggle.tsx";
@@ -28,22 +31,22 @@ const Header = () => {
   const handleClickLogin = () => {
     setLocalStorage(REDIRECT_PATH, "/");
     loginModalOverlay.open(({ isOpen, close }) => <LoginModal isOpen={isOpen} onClose={close} />);
-    gtag("event", "modal_open", { event_category: "로그인_모달_띄우기" });
+    sendGAEvent("event", "modal_open", { event_category: "로그인_모달_띄우기" });
   };
 
   const handleClickLogo = () => {
     setLocalStorage(REDIRECT_PATH, "/");
-    gtag("event", "page_view", { event_category: "홈_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "홈_페이지로_이동" });
   };
 
   const handleClickUploadButton = () => {
-    gtag("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
+    sendGAEvent("event", "page_view", { event_category: "짤_업로드_페이지로_이동" });
   };
 
   return (
     <div className="navbar bg-background">
       <Link
-        to="/"
+        href="/"
         className="btn btn-ghost flex items-center hover:bg-transparent"
         onClick={handleClickLogo}
       >
@@ -53,7 +56,7 @@ const Header = () => {
       <div className="flex flex-1 items-center justify-end space-x-1 px-2 sm:space-x-3">
         <ThemeToggle />
         {role === "USER" && (
-          <Link to="/upload-zzal" onClick={handleClickUploadButton}>
+          <Link href="/upload-zzal" onClick={handleClickUploadButton}>
             <button className="btn hidden h-9 min-h-9 border-primary bg-primary text-white hover:bg-gray-300 sm:block">
               업로드
             </button>

@@ -1,4 +1,6 @@
-/** @type {import('tailwindcss').Config} */
+import daisyui from "daisyui";
+import daisyThemes from "daisyui/src/theming/themes";
+import type { Config } from "tailwindcss";
 
 const pxToRem = (px, base = 16) => `${px / base}rem`;
 
@@ -13,8 +15,12 @@ const getPxrSystem = () => {
   }, {});
 };
 
-export default {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html"],
+const config: Config = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
   safelist: [
     { pattern: /rounded-/ },
     { pattern: /w-/ },
@@ -62,12 +68,12 @@ export default {
       },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [daisyui],
   daisyui: {
     themes: [
       {
         light: {
-          ...require("daisyui/src/theming/themes")["light"],
+          ...daisyThemes.light,
           "--secondary": "#E2F4FF",
           "--text-primary": "0 0 0",
           "--text-secondary": "#535353",
@@ -83,7 +89,7 @@ export default {
           "--shadow": "0 0 0",
         },
         dark: {
-          ...require("daisyui/src/theming/themes")["dark"],
+          ...daisyThemes.dark,
           "--secondary": "#2600BD",
           "--text-primary": "255 255 255",
           "--text-secondary": "#8EB4FF",
@@ -102,3 +108,4 @@ export default {
     ],
   },
 };
+export default config;

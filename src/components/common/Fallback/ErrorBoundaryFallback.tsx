@@ -1,3 +1,5 @@
+"use client";
+
 import { ErrorBoundaryFallbackProps } from "@suspensive/react";
 
 const ErrorBoundaryFallback = ({ reset }: ErrorBoundaryFallbackProps) => (

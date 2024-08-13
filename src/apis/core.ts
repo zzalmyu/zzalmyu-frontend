@@ -14,7 +14,7 @@ const HTTP_METHODS = {
 } as const;
 
 const axiosInstance: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   timeout: 10000,
   headers: { "Content-Type": "application/json" },
 });
