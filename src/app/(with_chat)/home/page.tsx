@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { getHomeZzals } from "@/apis/zzal";
-import ErrorCaughtExplore from "./Explore";
+import ErrorCaughtHome from "./Home";
 
 const ExplorePage = async () => {
   const queryClient = new QueryClient();
@@ -18,7 +18,7 @@ const ExplorePage = async () => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ErrorCaughtExplore />
+      <ErrorCaughtHome />
     </HydrationBoundary>
   );
 };

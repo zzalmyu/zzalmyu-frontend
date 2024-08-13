@@ -12,7 +12,7 @@ import useGetTopTagsFromHome from "@/hooks/api/tag/useGetTopTagsFromHome";
 import { $recommendedTags, $selectedTags } from "@/store/tag";
 import ErrorBoundaryFallback from "@/components/common/Fallback/ErrorBoundaryFallback";
 
-const Explore = () => {
+const Home = () => {
   const { zzals, handleFetchNextPage } = useGetHomeZzals();
   const { topTags } = useGetTopTagsFromHome();
   const [selectedTags] = useAtom($selectedTags);
@@ -49,7 +49,7 @@ const Explore = () => {
   );
 };
 
-const ErrorCaughtExplore = () => {
+const ErrorCaughtHome = () => {
   const [selectedTags] = useAtom($selectedTags);
 
   return (
@@ -60,9 +60,9 @@ const ErrorCaughtExplore = () => {
         Sentry.captureException(error);
       }}
     >
-      <Explore />
+      <Home />
     </QueryErrorBoundary>
   );
 };
 
-export default ErrorCaughtExplore;
+export default ErrorCaughtHome;
