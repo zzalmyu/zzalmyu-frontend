@@ -15,9 +15,10 @@ export const zzalQueries = {
         ...data,
       }),
     }),
-  homeZzals: (selectedTags: string[]) =>
+  homeZzals: () => [...zzalQueries.all(), "home"],
+  selectedHomeZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.all(), "home", selectedTags],
+      queryKey: [...zzalQueries.homeZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getHomeZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -26,9 +27,10 @@ export const zzalQueries = {
       },
       initialPageParam: 0,
     }),
-  myLikedZzals: (selectedTags: string[]) =>
+  myLikedZzals: () => [...zzalQueries.all(), "liked"],
+  selectedMyLikedZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.all(), "liked", selectedTags],
+      queryKey: [...zzalQueries.myLikedZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -37,9 +39,10 @@ export const zzalQueries = {
       },
       initialPageParam: 0,
     }),
-  myUploadedZzals: (selectedTags: string[]) =>
+  myUploadedZzals: () => [...zzalQueries.all(), "uploaded"],
+  selectedMyUploadedZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.all(), "uploaded", selectedTags],
+      queryKey: [...zzalQueries.myUploadedZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getMyUploadedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;

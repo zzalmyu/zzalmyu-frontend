@@ -5,7 +5,7 @@ export const reportQueries = {
   all: () => ["report"],
   reports: () =>
     infiniteQueryOptions({
-      queryKey: [...reportQueries.all(), "report"],
+      queryKey: [...reportQueries.all(), "list"],
       queryFn: ({ pageParam = 0 }) => getReports(pageParam),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
