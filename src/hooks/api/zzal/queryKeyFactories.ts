@@ -1,12 +1,12 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { getHomeZzals, getMyLikedZzals, getMyUploadedZzals, getZzalDetails } from "@/apis/zzal";
 
-export const zzalQueries = {
-  all: ["zzal"] as const,
-  zzalDetailKey: () => [...zzalQueries.all, "zzalDetails"] as const,
-  getZzalDetail: (imageId: number) =>
+const zzalQueries = {
+  all: () => ["zzal"],
+  details: () => [...zzalQueries.all(), "detail"],
+  detail: (imageId: number) =>
     queryOptions({
-      queryKey: [...zzalQueries.zzalDetailKey(), imageId] as const,
+      queryKey: [...zzalQueries.details(), imageId],
       queryFn: () => getZzalDetails(imageId),
       select: (data) => ({
         isLiked: data.imageLikeYn,
@@ -15,10 +15,10 @@ export const zzalQueries = {
         ...data,
       }),
     }),
-  homeZzalsKey: () => [...zzalQueries.all, "homeZzals"] as const,
-  getHomeZzals: (selectedTags: string[]) =>
+  homeZzals: () => [...zzalQueries.all(), "home"],
+  selectedHomeZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.homeZzalsKey(), selectedTags] as const,
+      queryKey: [...zzalQueries.homeZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getHomeZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -27,10 +27,10 @@ export const zzalQueries = {
       },
       initialPageParam: 0,
     }),
-  myLikedZzalsKey: () => [...zzalQueries.all, "likedZzals"] as const,
-  getMyLikedZzals: (selectedTags: string[]) =>
+  myLikedZzals: () => [...zzalQueries.all(), "liked"],
+  selectedMyLikedZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.myLikedZzalsKey(), selectedTags] as const,
+      queryKey: [...zzalQueries.myLikedZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -39,10 +39,10 @@ export const zzalQueries = {
       },
       initialPageParam: 0,
     }),
-  myUploadedZzalsKey: () => [...zzalQueries.all, "uploadedZzals"] as const,
-  getMyUploadedZzals: (selectedTags: string[]) =>
+  myUploadedZzals: () => [...zzalQueries.all(), "uploaded"],
+  selectedMyUploadedZzals: (selectedTags: string[]) =>
     infiniteQueryOptions({
-      queryKey: [...zzalQueries.myUploadedZzalsKey(), selectedTags] as const,
+      queryKey: [...zzalQueries.myUploadedZzals(), selectedTags],
       queryFn: ({ pageParam = 0 }) => getMyUploadedZzals({ page: pageParam, selectedTags }),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -52,3 +52,5 @@ export const zzalQueries = {
       initialPageParam: 0,
     }),
 };
+
+export default zzalQueries;

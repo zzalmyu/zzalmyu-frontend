@@ -7,40 +7,39 @@ import {
   getTopTagsFromUploaded,
 } from "@/apis/tag";
 
-export const tagQueries = {
-  all: ["tag"] as const,
-  tagListKey: () => [...tagQueries.all, "tagList"] as const,
-  getTagList: (tag: string) => {
+const tagQueries = {
+  all: () => ["tags"],
+  searchResults: () => [...tagQueries.all(), "search"],
+  searchResult: (tag: string) => {
     const MAX_TAG_RESPONSE_COUNT = 10;
 
     return queryOptions({
-      queryKey: [...tagQueries.tagListKey(), tag] as const,
+      queryKey: [...tagQueries.searchResults(), tag],
       queryFn: () => getSearchTag(tag),
       select: (tags) => tags.filter((_tag, index) => index < MAX_TAG_RESPONSE_COUNT),
     });
   },
-  popularTagsKey: () => [...tagQueries.all, "popularTags"] as const,
-  getPopularTags: () =>
+  popularTags: () =>
     queryOptions({
-      queryKey: [...tagQueries.popularTagsKey()] as const,
+      queryKey: [...tagQueries.all(), "popularTags"],
       queryFn: getPopularTags,
     }),
-  topTagsFromHomeKey: () => [...tagQueries.all, "topTagsFromHome"] as const,
-  getTopTagsFromHome: () =>
+  topTags: () => [...tagQueries.all(), "topTags"],
+  topTagsFromHome: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTagsFromHomeKey()] as const,
+      queryKey: [...tagQueries.topTags(), "home"],
       queryFn: getTopTagsFromHome,
     }),
-  topTagsFromLikedKey: () => [...tagQueries.all, "topTagsFromLiked"] as const,
-  getTopTagsFromLiked: () =>
+  topTagsFromLiked: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTagsFromLikedKey()] as const,
+      queryKey: [...tagQueries.topTags(), "liked"],
       queryFn: getTopTagsFromLiked,
     }),
-  topTagsFromUploadedKey: () => [...tagQueries.all, "topTagsFromUploaded"] as const,
-  getTopTagsFromUploaded: () =>
+  topTagsFromUploaded: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTagsFromUploadedKey()] as const,
+      queryKey: [...tagQueries.topTags(), "uploaded"],
       queryFn: getTopTagsFromUploaded,
     }),
 };
+
+export default tagQueries;
