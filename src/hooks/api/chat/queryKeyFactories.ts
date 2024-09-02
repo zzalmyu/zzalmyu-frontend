@@ -1,16 +1,11 @@
 import { infiniteQueryOptions } from "@tanstack/react-query";
 import { getChat } from "@/apis/chat";
 
-const chatQueryKeys = {
-  all: () => ["chat"],
-  messages: () => [...chatQueryKeys.all(), "message"],
-};
-
 const chatQueries = {
-  all: () => chatQueryKeys.all(),
+  all: () => ["chat"],
   messages: () =>
     infiniteQueryOptions({
-      queryKey: chatQueryKeys.messages(),
+      queryKey: [...chatQueries.all(), "message"],
       queryFn: async ({ pageParam = 0 }) => await getChat(pageParam),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (lastPage.length === 0) return;

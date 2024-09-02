@@ -1,18 +1,12 @@
 import { queryOptions } from "@tanstack/react-query";
 import { getUserInformation } from "@/apis/auth";
 
-const authQueryKeys = {
-  all: () => ["auth"],
-  usersInformation: () => [...authQueryKeys.all(), "userInformation"],
-  userInformation: (refreshToken: string) => [...authQueryKeys.usersInformation(), refreshToken],
-};
-
 const authQueries = {
-  all: () => authQueryKeys.all(),
-  usersInformation: () => authQueryKeys.usersInformation(),
+  all: () => ["auth"],
+  usersInformation: () => [...authQueries.all(), "userInformation"],
   userInformation: (refreshToken: string) =>
     queryOptions({
-      queryKey: authQueryKeys.userInformation(refreshToken),
+      queryKey: [...authQueries.usersInformation(), refreshToken],
       queryFn: getUserInformation,
       enabled: !!refreshToken,
     }),
