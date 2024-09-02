@@ -1,11 +1,17 @@
 import { infiniteQueryOptions, queryOptions } from "@tanstack/react-query";
 import { getReportDetails, getReports } from "@/apis/report";
 
-export const reportQueries = {
+const reportQueryKeys = {
   all: () => ["report"],
+  reports: () => [reportQueryKeys.all(), "list"],
+  report: (imageId: string) => [reportQueryKeys.reports(), imageId],
+};
+
+const reportQueries = {
+  all: () => reportQueryKeys.all(),
   reports: () =>
     infiniteQueryOptions({
-      queryKey: [...reportQueries.all(), "list"],
+      queryKey: reportQueryKeys.reports(),
       queryFn: ({ pageParam = 0 }) => getReports(pageParam),
       getNextPageParam: (lastPage, _allPages, lastPageParam) => {
         if (!lastPage) return;
@@ -16,7 +22,9 @@ export const reportQueries = {
     }),
   report: (imageId: string) =>
     queryOptions({
-      queryKey: [...reportQueries.reports().queryKey, imageId],
+      queryKey: reportQueryKeys.report(imageId),
       queryFn: () => getReportDetails(imageId),
     }),
 };
+
+export default reportQueries;

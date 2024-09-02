@@ -7,37 +7,50 @@ import {
   getTopTagsFromUploaded,
 } from "@/apis/tag";
 
-export const tagQueries = {
+const tagQueryKeys = {
   all: () => ["tags"],
-  searchResults: () => [...tagQueries.all(), "search"],
+  searchResults: () => [...tagQueryKeys.all(), "search"],
+  searchResult: (tag: string) => [...tagQueryKeys.searchResults(), tag],
+  popularTags: () => [...tagQueryKeys.all(), "popularTags"],
+  topTags: () => [...tagQueryKeys.all(), "topTags"],
+  topTagsFromHome: () => [...tagQueryKeys.topTags(), "home"],
+  topTagsFromLiked: () => [...tagQueryKeys.topTags(), "liked"],
+  topTagsFromUploaded: () => [...tagQueryKeys.topTags(), "uploaded"],
+};
+
+const tagQueries = {
+  all: () => tagQueryKeys.all(),
+  searchResults: () => tagQueryKeys.searchResults(),
   searchResult: (tag: string) => {
     const MAX_TAG_RESPONSE_COUNT = 10;
 
     return queryOptions({
-      queryKey: [...tagQueries.searchResults(), tag],
+      queryKey: tagQueryKeys.searchResult(tag),
       queryFn: () => getSearchTag(tag),
       select: (tags) => tags.filter((_tag, index) => index < MAX_TAG_RESPONSE_COUNT),
     });
   },
   popularTags: () =>
     queryOptions({
-      queryKey: [...tagQueries.all(), "popularTags"],
+      queryKey: tagQueryKeys.popularTags(),
       queryFn: getPopularTags,
     }),
-  topTags: () => [...tagQueries.all(), "topTags"],
-  getTopTagsFromHome: () =>
+  topTags: () => tagQueryKeys.topTags(),
+  topTagsFromHome: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTags(), "home"],
+      queryKey: tagQueryKeys.topTagsFromHome(),
       queryFn: getTopTagsFromHome,
     }),
   topTagsFromLiked: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTags(), "liked"],
+      queryKey: tagQueryKeys.topTagsFromLiked(),
       queryFn: getTopTagsFromLiked,
     }),
   topTagsFromUploaded: () =>
     queryOptions({
-      queryKey: [...tagQueries.topTags(), "uploaded"],
+      queryKey: tagQueryKeys.topTagsFromUploaded(),
       queryFn: getTopTagsFromUploaded,
     }),
 };
+
+export default tagQueries;
