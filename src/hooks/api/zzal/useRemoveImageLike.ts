@@ -1,12 +1,18 @@
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { deleteImageLike } from "@/apis/zzal";
-import { GetZzalResponse } from "@/types/zzal.dto";
-import { ZzalType } from "@/types/queryKey";
-import { GetZzalDetailsResponse } from "@/types/zzal.dto";
+import { ZzalCardType } from "@/types/zzal";
+import zzalQueries from "./queryKeyFactories";
+
+const queryPerType = {
+  liked: zzalQueries.selectedMyLikedZzals,
+  home: zzalQueries.selectedHomeZzals,
+  uploaded: zzalQueries.selectedMyUploadedZzals,
+};
 
 export const useRemoveImageLike = (
   imageIndex: number,
-  zzalKey: [ZzalType, string[]],
+  type: ZzalCardType,
+  selectedTags: string[],
   imageId: number,
 ) => {
   const queryClient = useQueryClient();
@@ -15,22 +21,19 @@ export const useRemoveImageLike = (
     mutationFn: (imageId: number) => deleteImageLike(imageId),
     onMutate: async () => {
       await Promise.all([
-        queryClient.cancelQueries({ queryKey: [...zzalKey] }),
-        queryClient.cancelQueries({ queryKey: ["zzalDetails", imageId] }),
+        queryClient.cancelQueries({ queryKey: queryPerType[type](selectedTags).queryKey }),
+        queryClient.cancelQueries({ queryKey: zzalQueries.detail(imageId).queryKey }),
       ]);
 
-      const zzalOldData = queryClient.getQueryData<GetZzalResponse>([...zzalKey]);
-      const zzalDetailOldData = queryClient.getQueryData<GetZzalDetailsResponse>([
-        "zzalDetails",
-        imageId,
-      ]);
+      const zzalOldData = queryClient.getQueryData(queryPerType[type](selectedTags).queryKey);
+      const zzalDetailOldData = queryClient.getQueryData(zzalQueries.detail(imageId).queryKey);
 
       if (!zzalOldData) return;
 
       if (zzalDetailOldData) {
         const zzalDetailUpdatedData = JSON.parse(JSON.stringify(zzalDetailOldData));
         zzalDetailUpdatedData.imageLikeYn = false;
-        queryClient.setQueryData(["zzalDetails", imageId], zzalDetailUpdatedData);
+        queryClient.setQueryData(zzalQueries.detail(imageId).queryKey, zzalDetailUpdatedData);
       }
 
       const zzalUpdatedData = JSON.parse(
@@ -40,17 +43,17 @@ export const useRemoveImageLike = (
         }),
       );
       zzalUpdatedData.pages[imageIndex].imageLikeYn = false;
-      queryClient.setQueryData([...zzalKey], zzalUpdatedData);
+      queryClient.setQueryData(queryPerType[type](selectedTags).queryKey, zzalUpdatedData);
 
       return { zzalOldData, zzalDetailOldData };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["likedZzals"] });
+      queryClient.invalidateQueries({ queryKey: zzalQueries.myLikedZzals() });
     },
     onError: (_error, _zzalId, context) => {
-      queryClient.setQueryData([...zzalKey], context?.zzalOldData);
+      queryClient.setQueryData(queryPerType[type](selectedTags).queryKey, context?.zzalOldData);
       if (context?.zzalDetailOldData) {
-        queryClient.setQueryData(["zzalDetails", imageId], context?.zzalDetailOldData);
+        queryClient.setQueryData(zzalQueries.detail(imageId).queryKey, context?.zzalDetailOldData);
       }
     },
   });

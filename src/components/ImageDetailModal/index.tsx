@@ -9,7 +9,7 @@ import ReportConfirmModal from "@/components/ReportConfirmModal";
 import { cn } from "@/utils/tailwind";
 import { copyZzal, downloadZzal } from "@/utils/zzalUtils";
 import { debounce } from "@/utils/debounce";
-import { ZzalType } from "@/types/queryKey";
+import { ZzalCardType } from "@/types/zzal";
 import ButtonWithIcon from "./ButtonWithIcon";
 import TagSlider from "@/components/common/TagSlider";
 import Modal from "@/components/common/modals/Modal";
@@ -26,7 +26,8 @@ interface Props {
   onClose: () => void;
   imageId: number;
   imageIndex: number;
-  queryKey: [ZzalType, string[]];
+  type: ZzalCardType;
+  selectedTags: string[];
 }
 
 interface CustomErrorResponse {
@@ -37,13 +38,15 @@ interface CustomErrorResponse {
 interface ImageDetailModalContentProps {
   imageId: number;
   imageIndex: number;
-  queryKey: [ZzalType, string[]];
+  type: ZzalCardType;
+  selectedTags: string[];
 }
 
 const ImageDetailModalContent = ({
   imageId,
   imageIndex,
-  queryKey,
+  type,
+  selectedTags,
 }: ImageDetailModalContentProps) => {
   const [isTagNavigatorOpen, setIsTagNavigatorOpen] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -52,8 +55,8 @@ const ImageDetailModalContent = ({
   const reportConfirmOverlay = useOverlay();
   const { isLiked, imageUrl, tagNames, imageTitle } = zzalDetails;
   const { role } = useAtomValue($userInformation);
-  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
-  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
+  const { addImageLike } = useAddImageLike(imageIndex, type, selectedTags, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, type, selectedTags, imageId);
   const setPreviewImage = useSetAtom($setMessagePreview);
   const onClose = useModalContext();
 
@@ -236,11 +239,16 @@ const ImageDetailModalContent = ({
   );
 };
 
-const ImageDetailModal = ({ isOpen, onClose, imageId, imageIndex, queryKey }: Props) => {
+const ImageDetailModal = ({ isOpen, onClose, imageId, imageIndex, type, selectedTags }: Props) => {
   return (
     <Suspense fallback={"...pending"}>
       <Modal isOpen={isOpen} onClose={onClose} size="sm">
-        <ImageDetailModalContent imageId={imageId} imageIndex={imageIndex} queryKey={queryKey} />
+        <ImageDetailModalContent
+          imageId={imageId}
+          imageIndex={imageIndex}
+          type={type}
+          selectedTags={selectedTags}
+        />
       </Modal>
     </Suspense>
   );

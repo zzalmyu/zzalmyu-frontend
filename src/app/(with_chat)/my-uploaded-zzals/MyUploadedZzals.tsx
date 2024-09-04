@@ -42,7 +42,8 @@ const MyUploadedZzals = () => {
             imageId={imageId}
             imageIndex={index}
             isLiked={imageLikeYn}
-            queryKey={["uploadedZzals", selectedTags]}
+            type="uploaded"
+            selectedTags={selectedTags}
             hasDeleteButton={true}
           />
         ))}

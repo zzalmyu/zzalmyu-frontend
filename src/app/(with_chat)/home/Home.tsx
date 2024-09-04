@@ -40,7 +40,8 @@ const Home = () => {
             imageId={imageId}
             isLiked={imageLikeYn}
             imageIndex={index}
-            queryKey={["homeZzals", selectedTags]}
+            type="home"
+            selectedTags={selectedTags}
           />
         ))}
       </MasonryLayout>

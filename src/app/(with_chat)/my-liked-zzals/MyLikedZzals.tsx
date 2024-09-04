@@ -42,7 +42,8 @@ const MyLikedZzals = () => {
             imageId={imageId}
             isLiked={imageLikeYn}
             imageIndex={index}
-            queryKey={["likedZzals", selectedTags]}
+            type="liked"
+            selectedTags={selectedTags}
           />
         ))}
       </MasonryLayout>
