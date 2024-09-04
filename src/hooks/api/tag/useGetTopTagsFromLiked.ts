@@ -1,11 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTopTagsFromLiked } from "@/apis/tag";
+import tagQueries from "./queryKeyFactories";
 
 const useGetTopTagsFromLiked = () => {
-  const { data, ...rest } = useSuspenseQuery({
-    queryKey: ["topTagsFromLiked"],
-    queryFn: getTopTagsFromLiked,
-  });
+  const { data, ...rest } = useSuspenseQuery(tagQueries.topTagsFromLiked());
 
   return {
     topTags: data,

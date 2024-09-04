@@ -1,14 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { getSearchTag } from "@/apis/tag";
+import tagQueries from "./queryKeyFactories";
 
 export const useGetTags = (tag: string) => {
-  const MAX_TAG_RESPONSE_COUNT = 10;
-
-  const { data, ...rest } = useQuery({
-    queryKey: ["tag", tag] as const,
-    queryFn: () => getSearchTag(tag),
-    select: (tags) => tags.filter((_tag, index) => index < MAX_TAG_RESPONSE_COUNT),
-  });
+  const { data, ...rest } = useQuery(tagQueries.searchResult(tag));
 
   return {
     autoCompletedTags: data || [],

@@ -1,11 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTopTagsFromHome } from "@/apis/tag";
+import tagQueries from "./queryKeyFactories";
 
 const useGetTopTagsFromHome = () => {
-  const { data, ...rest } = useSuspenseQuery({
-    queryKey: ["topTagsFromHome"],
-    queryFn: getTopTagsFromHome,
-  });
+  const { data, ...rest } = useSuspenseQuery(tagQueries.topTagsFromHome());
 
   return {
     topTags: data,
