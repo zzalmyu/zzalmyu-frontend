@@ -49,13 +49,11 @@ export const zzalHandlers = [
     const file = data.get("file");
 
     if (!file) {
-      return new HttpResponse("Missing document", { status: 400 });
+      return HttpResponse.error();
     }
 
     if (!(file instanceof File)) {
-      return new HttpResponse("Uploaded document is not a File", {
-        status: 400,
-      });
+      return HttpResponse.error();
     }
 
     return HttpResponse.json({ status: 200 });

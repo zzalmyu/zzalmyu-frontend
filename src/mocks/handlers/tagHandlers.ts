@@ -33,13 +33,15 @@ export const TagHandlers = [
     const { name } = data as { name: string };
     const isExistedTag = MockTags.some(({ tagName }) => tagName === name);
 
-    if (isExistedTag) return;
+    if (isExistedTag) return HttpResponse.error();
 
     MockTags.push({
       tagId: MockTags.length + 1,
       tagName: name,
       count: 1,
     });
+
+    return HttpResponse.json({ status: 200 });
   }),
   http.post(`${TAG_BASE_URL}/use`, async ({ request }) => {
     const data = await request.json();
@@ -48,6 +50,8 @@ export const TagHandlers = [
     MockTags.forEach(({ tagName }, index) => {
       if (tagName === name) MockTags[index].count += 1;
     });
+
+    return HttpResponse.json({ status: 200 });
   }),
 ];
 
