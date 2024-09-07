@@ -41,7 +41,7 @@ export const TagHandlers = [
       count: 1,
     });
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
   http.post(`${TAG_BASE_URL}/use`, async ({ request }) => {
     const data = await request.json();
@@ -51,7 +51,7 @@ export const TagHandlers = [
       if (tagName === name) MockTags[index].count += 1;
     });
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
 ];
 

@@ -34,7 +34,7 @@ export const zzalHandlers = [
 
     zzalAddLike(Number(imgId));
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
   http.post(`${ZZAL_BASE_URL}/:imageId/like/cancel`, ({ request }) => {
     const url = new URL(request.url);
@@ -42,7 +42,7 @@ export const zzalHandlers = [
 
     zzalCancelLike(Number(imgId));
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
   http.post(ZZAL_BASE_URL, async ({ request }) => {
     const data = await request.formData();
@@ -56,7 +56,7 @@ export const zzalHandlers = [
       return HttpResponse.error();
     }
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
 ];
 

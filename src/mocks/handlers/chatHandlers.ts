@@ -17,6 +17,6 @@ export const chatHandlers = [
       createdAt: "임시 날짜 1",
     });
 
-    return HttpResponse.json({ status: 200 });
+    return HttpResponse.json();
   }),
 ];

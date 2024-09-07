@@ -12,8 +12,8 @@ export const reportHandlers = [
 
     return HttpResponse.json<GetReportDetailsResponse>(getReport(Number(imageId)));
   }),
-  http.post(`${REPORT_BASE_URL}/:imageId`, () => HttpResponse.json({ status: 200 })),
-  http.delete(`${REPORT_BASE_URL}/:imageId`, () => HttpResponse.json({ status: 200 })),
+  http.post(`${REPORT_BASE_URL}/:imageId`, () => HttpResponse.json()),
+  http.delete(`${REPORT_BASE_URL}/:imageId`, () => HttpResponse.json()),
 ];
 
 const getReport = (id: number) => {
