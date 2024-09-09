@@ -6,8 +6,10 @@ import tagQueries from "@/hooks/api/tag/queryKeyFactories";
 const MyUploadedZzalsPage = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery(zzalQueries.selectedMyUploadedZzals([]));
-  await queryClient.prefetchQuery(tagQueries.topTagsFromUploaded());
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery(zzalQueries.selectedMyUploadedZzals([])),
+    queryClient.prefetchQuery(tagQueries.topTagsFromUploaded()),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
