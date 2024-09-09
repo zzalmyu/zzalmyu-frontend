@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import Provider from "@/components/Provider";
+import MswProvider from "@/components/MswProvider";
 import type { Metadata } from "next";
 import Header from "@/components/common/Header";
 import NavigationFooter from "@/components/common/Footer";
@@ -36,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" data-theme="light" className={`${pretendard.variable}`}>
       <GoogleAnalytics gaId="G-6PY1WDK5P6" />
       <body className={pretendard.className}>
+        <MswProvider />
         <Provider>
           <div className="relative h-[100dvh] w-[100dvw] overflow-hidden">
             <Header />
