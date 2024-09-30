@@ -1,24 +1,9 @@
 import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
-import { getChat } from "@/apis/chat";
+import chatQueries from "./queryKeyFactories";
 
 const useGetChat = () => {
   const { data, hasNextPage, isFetchingNextPage, fetchNextPage, ...rest } =
-    useSuspenseInfiniteQuery({
-      queryKey: ["chat"],
-      queryFn: async ({ pageParam = 0 }) => await getChat(pageParam),
-      getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-        if (lastPage.length === 0) return;
-
-        return lastPageParam + 1;
-      },
-      select: (data) => ({
-        pages: [...data.pages].reverse(),
-        pageParams: [...data.pageParams],
-      }),
-      initialPageParam: 0,
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-    });
+    useSuspenseInfiniteQuery(chatQueries.messages());
 
   const handleFetchNextPage = () => {
     if (hasNextPage && !isFetchingNextPage) {

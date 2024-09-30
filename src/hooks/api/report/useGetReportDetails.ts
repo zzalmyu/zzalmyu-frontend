@@ -1,11 +1,8 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getReportDetails } from "@/apis/report";
+import reportQueries from "./queryKeyFactories";
 
 const useGetReportsDetails = (imageId: string) => {
-  const { data: reportDetails, ...rest } = useSuspenseQuery({
-    queryKey: ["reportDetails", imageId],
-    queryFn: () => getReportDetails(imageId),
-  });
+  const { data: reportDetails, ...rest } = useSuspenseQuery(reportQueries.report(imageId));
 
   return { reportDetails, ...rest };
 };

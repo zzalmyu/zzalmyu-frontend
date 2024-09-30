@@ -1,20 +1,15 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { getMyLikedZzals } from "@/apis/zzal";
 import ErrorCaughtMyLikedZzals from "./MyLikedZzals";
+import zzalQueries from "@/hooks/api/zzal/queryKeyFactories";
+import tagQueries from "@/hooks/api/tag/queryKeyFactories";
 
 const MyLikedZzalsPage = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["likedZzals", []],
-    queryFn: ({ pageParam = 0 }) => getMyLikedZzals({ page: pageParam, selectedTags: [] }),
-    getNextPageParam: (lastPage: unknown, _allPages: unknown, lastPageParam: number) => {
-      if (!lastPage) return;
-
-      return lastPageParam + 1;
-    },
-    initialPageParam: 0,
-  });
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery(zzalQueries.selectedMyLikedZzals([])),
+    queryClient.prefetchQuery(tagQueries.topTagsFromLiked()),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

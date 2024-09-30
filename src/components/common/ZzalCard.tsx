@@ -7,7 +7,7 @@ import { Trash2 } from "lucide-react";
 import { sendGAEvent } from "@next/third-parties/google";
 import { cn } from "@/utils/tailwind";
 import { copyZzal } from "@/utils/zzalUtils";
-import { ZzalType } from "@/types/queryKey";
+import { ZzalCardType } from "@/types/zzal";
 import ImageDetailModal from "../ImageDetailModal";
 import { useAddImageLike } from "@/hooks/api/zzal/useAddImageLike";
 import { $setMessagePreview } from "@/store/chat";
@@ -21,7 +21,8 @@ interface Props {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: [ZzalType, string[]];
+  type: ZzalCardType;
+  selectedTags: string[];
   width?: number | string;
   className?: string;
   hasDeleteButton?: boolean;
@@ -33,7 +34,8 @@ const ZzalCard = ({
   imageId,
   isLiked,
   imageIndex,
-  queryKey,
+  type,
+  selectedTags,
   width = 72,
   className,
   hasDeleteButton = false,
@@ -46,7 +48,8 @@ const ZzalCard = ({
         isOpen={isOpen}
         onClose={close}
         imageId={imageId}
-        queryKey={queryKey}
+        type={type}
+        selectedTags={selectedTags}
         imageIndex={imageIndex}
       />
     ));
@@ -64,7 +67,8 @@ const ZzalCard = ({
           imageId={imageId}
           isLiked={isLiked}
           imageIndex={imageIndex}
-          queryKey={queryKey}
+          type={type}
+          selectedTags={selectedTags}
         />
       </div>
       <figure className="h-fit transition duration-300 ease-in-out hover:brightness-75">
@@ -85,11 +89,12 @@ interface LikeButtonProps {
   imageId: number;
   isLiked: boolean;
   imageIndex: number;
-  queryKey: [ZzalType, string[]];
+  type: ZzalCardType;
+  selectedTags: string[];
 }
-const LikeButton = ({ imageId, isLiked, imageIndex, queryKey }: LikeButtonProps) => {
-  const { addImageLike } = useAddImageLike(imageIndex, queryKey, imageId);
-  const { removeImageLike } = useRemoveImageLike(imageIndex, queryKey, imageId);
+const LikeButton = ({ imageId, isLiked, imageIndex, type, selectedTags }: LikeButtonProps) => {
+  const { addImageLike } = useAddImageLike(imageIndex, type, selectedTags, imageId);
+  const { removeImageLike } = useRemoveImageLike(imageIndex, type, selectedTags, imageId);
 
   const handleClickImageLike = () => {
     if (!isLiked) {

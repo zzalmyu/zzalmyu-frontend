@@ -1,20 +1,15 @@
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { getHomeZzals } from "@/apis/zzal";
 import ErrorCaughtHome from "./Home";
+import zzalQueries from "@/hooks/api/zzal/queryKeyFactories";
+import tagQueries from "@/hooks/api/tag/queryKeyFactories";
 
 const ExplorePage = async () => {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchInfiniteQuery({
-    queryKey: ["homeZzals", []],
-    queryFn: ({ pageParam = 0 }) => getHomeZzals({ page: pageParam, selectedTags: [] }),
-    getNextPageParam: (lastPage: unknown, _allPages: unknown, lastPageParam: number) => {
-      if (!lastPage) return;
-
-      return lastPageParam + 1;
-    },
-    initialPageParam: 0,
-  });
+  await Promise.all([
+    queryClient.prefetchInfiniteQuery(zzalQueries.selectedHomeZzals([])),
+    queryClient.prefetchQuery(tagQueries.topTagsFromHome()),
+  ]);
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
